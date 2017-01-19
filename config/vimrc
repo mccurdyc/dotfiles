@@ -37,6 +37,7 @@ Plug 'git@github.com:tomtom/tcomment_vim.git'
 Plug 'git@github.com:kien/rainbow_parentheses.vim.git'
 Plug 'git@github.com:tpope/vim-fugitive.git'
 Plug 'git@github.com:geetarista/ego.vim.git'
+Plug 'git@github.com:chrisbra/Colorizer.git'
 Plug 'tpope/vim-fireplace', { 'for': 'clojure' }
 Plug 'scrooloose/nerdtree'
 Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
@@ -102,7 +103,7 @@ set expandtab
 " map jk to escape key
 ino kj <Esc>
 
-" toggle paste mode on and off with F3
+" toggle paste mode on and off with F9
 set pastetoggle=<F9>
 
 " remove trailing whitespace
@@ -287,3 +288,8 @@ let java_highlight_functions=1
 let java_highlight_java_lang_ids=1
 let java_space_errors=1
 let java_comment_strings=1
+
+" Colorizer for html and css
+let g:colorizer_auto_filetype='css,html'
+" Automatic loading
+let g:colorizer_auto_color = 1

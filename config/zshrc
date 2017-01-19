@@ -105,6 +105,7 @@ alias all="cnl ~/allegheny/"
 ## secondyear
 alias mr="cnl ~/allegheny/cs610s2016/mrstudyr"
 alias dotcon="cnl ~/dotfiles/config"
+alias pasc="cnl ~/projects/PaSandwichCompany.github.io"
 
 ## }}}
 ##### aliases ##### {{{
@@ -152,9 +153,9 @@ alias gita="git add"
 alias gitaa="git add -A"
 alias gitr="git reset"
 alias gitc="git commit"
+alias gits="git status"
 alias gitpush="git push"
 alias gitpull="git pull"
-alias gits="git status"
 alias gitl="git log --graph --pretty=format:"{%Cblue%h%Creset}~{%Cblue%cn%Creset}~{%s}""
 alias gitll="git log --graph --pretty=format:"{%Cblue%h%Creset}~{%Cblue%cn%Creset}~{%Cblue%ce%Creset}~{%cr}%n  {%s}%n""
 alias gitflat="gitch --orphan new-master master; gitc -m 'flatten'; gitb -M new-master master; gitc --amend"
