@@ -22,6 +22,7 @@ syntax on
 " Vim plugin manager Vim-Plug
 call plug#begin('~/.vim/plugged')
 
+Plug 'conradirwin/vim-bracketed-paste'
 Plug 'git@github.com:w0ng/vim-hybrid.git'
 Plug 'git@github.com:jalvesaq/Nvim-R.git'
 Plug 'git@github.com:powerline/powerline.git'
@@ -51,13 +52,10 @@ Plug 'fatih/vim-go'
 call plug#end()
 
 " tomorrow-night colorscheme
-set t_Co=256
+" set t_Co=256
+set termguicolors
 set background=dark
 colorscheme Tomorrow-Night
-
-" vim-hybrid colorscheme
-" set background=dark
-" colorscheme hybrid
 
 " turn spell check on for markdown and tex files
 autocmd BufRead,BufNewFile *.md setlocal spell
