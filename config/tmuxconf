@@ -30,10 +30,10 @@ bind | split-window -h
 bind - split-window -v
 
 # moving between panes
-bind -r C-h select-pane -L
-bind -r C-j select-pane -D
-bind -r C-k select-pane -U
-bind -r C-l select-pane -R
+bind -r C-j select-pane -L
+bind -r C-k select-pane -D
+bind -r C-l select-pane -U
+bind -r C-; select-pane -R
 
 # Pane resizing
 bind -r H resize-pane -L 5
