@@ -50,8 +50,8 @@ Plug 'fatih/vim-go'
 call plug#end()
 
 " tomorrow-night colorscheme
-set background=dark
 set t_Co=256
+set background=dark
 colorscheme Tomorrow-Night
 
 " vim-hybrid colorscheme
