@@ -200,7 +200,8 @@ set updatetime=250
 
 """"" NERDTree
 " open NERDTree upon opening vim
-autocmd vimenter * NERDTree
+" autocmd vimenter * NERDTree
+
 " start cursor out of NERDTree
 au VimEnter * wincmd p
 " open a NERDTree automatically when vim starts up if no files were specified
