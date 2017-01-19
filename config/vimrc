@@ -118,9 +118,16 @@ no <silent><Leader>cs :nohls<CR>
 "au Syntax * RainbowParenthesesLoadBraces
 "au Syntax * RainbowParenthesesLoadChevrons
 
-" send to tmux
+
 let g:slime_target = "tmux"
 nmap <C-c><C-m> ggVG<C-c><C-c>
+
+" try to fix vim background mis-coloring
+" http://vi.stackexchange.com/questions/238/tmux-is-changing-part-of-the-background-in-vim
+if &term =~ '256color'
+  " disable Background Color Erase (BCE)
+  set t_ut=
+endif
 
 " TComment toggle
 map <Leader>/ :TComment<CR>
