@@ -8,7 +8,7 @@ unbind C-b
 set -sg escape-time 1
 
 # set repeat time
-set-option repeat-time 100
+# set-option repeat-time 100
 
 # Ensure that we can send Ctrl-A to other apps
 bind C-a send-prefix
@@ -18,6 +18,7 @@ set -g base-index 1
 
 # Set the base index for panes to 1 instead of 0
 setw -g pane-base-index 1
+
 # increase scrollback buffer history size/length
 set -g history-limit 500000
 
@@ -39,15 +40,6 @@ bind -r H resize-pane -L 5
 bind -r J resize-pane -D 5
 bind -r K resize-pane -U 5
 bind -r L resize-pane -R 5
-
-# mouse support - set to on if you want to use the mouse
-setw -g mode-mouse off
-set -g mouse-select-pane off
-set -g mouse-resize-pane off
-set -g mouse-select-window off
-
-# Set the default terminal mode to 256color mode
-set -g default-terminal "screen-256color"
 
 # enable activity alerts
 setw -g monitor-activity on
@@ -81,7 +73,7 @@ set -g message-attr bright
 # Status line left side
 set -g status-left-length 40
 set -g status-left "#[fg=green]Session: #S #[fg=yellow]#I #[fg=cyan]#P"
-set -g status-utf8 on
+# set -g status-utf8 on
 # Status line right side
 # 15% | 28 Nov 18:15
 # set -g status-right "#[fg=cyan]%b %d %R"
