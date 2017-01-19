@@ -103,21 +103,8 @@ alias dfi="cnl ~/dotfiles/"
 alias all="cnl ~/allegheny/"
 
 ## secondyear
-alias f16="cnl ~/allegheny/sem3f2016/"
-alias cs210="cnl ~/allegheny/cs210f2016/"
-alias cs230="cnl ~/allegheny/cs230f2016/"
-alias cs370="cnl ~/allegheny/cs370f2016/"
-alias ec200="cnl ~/allegheny/ec200f2016/"
-alias ma205="cnl ~/allegheny/ma205f2016/"
-alias cs590="cnl ~/allegheny/cs590f2016/"
-alias s17="cnl ~/allegheny/sem4s2017/"
-alias cs190="cnl ~/allegheny/cs190s2017/"
-alias cs191="cnl ~/allegheny/cs191s2017/"
-alias cs220="cnl ~/allegheny/cs220s2017/"
-alias cs440="cnl ~/allegheny/cs440s2017/"
-alias ma210="cnl ~/allegheny/ma210s2017/"
-alias fs201="cnl ~/allegheny/fs201s2017/"
-alias su17="cnl ~/allegheny/summer2017/"
+alias mr="cnl ~/allegheny/cs610s2016/mrstudyr"
+alias dotcon="cnl ~/dotfiles/config"
 
 ## }}}
 ##### aliases ##### {{{
