@@ -5,5 +5,12 @@
 export PATH="${PATH}:$HOME/scripts/"
 export PATH="`ruby -e 'puts Gem.user_dir'`/bin:$PATH"
 
+# try to fix vim background color
+if [ -e /usr/share/terminfo/x/xterm-256color ]; then
+        export TERM='xterm-256color'
+else
+        export TERM='xterm-color'
+fi
+
 [[ -z $DISPLAY && $XDG_VTNR -eq 1 ]] && exec startx /usr/bin/i3
 
