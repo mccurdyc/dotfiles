@@ -1,0 +1,18 @@
+[options]
+  font = Office Code Pro Medium 18
+  resize_grip = false
+  scroll_on_output = false
+  scroll_on_keystroke = true
+  audible_bell = false
+  visible_bell = false
+  mouse_autohide = true
+  allow_bold = true
+  dynamic_title = true
+  urgent_on_bell = true
+  clickable_url = true
+  scrollback_lines = 100000
+  search_wrap = true
+  icon_name = terminal
+  cursor_blink = system
+  cursor_shape = block
+  browser = firefox

@@ -1,0 +1,10 @@
+/*
+  ##@## ~/.config/gtk-3.0/gtk.css ##@##
+  purpose; add padding to vte-terminal windows.
+  reminder; gnome nonsense breaks this frequently.
+*/
+
+VteTerminal, vte-terminal {
+	padding: 5px;
+}
+

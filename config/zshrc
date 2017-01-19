@@ -1,0 +1,334 @@
+##@## ~/.zshrc ##@##{{{
+
+## purpose; zsh shell config; well integrated with vim and tmux.
+## warning; zsh aliases require double quotes; bash aliases do not.
+
+## }}}
+##### general ##### {{{
+export GOPATH="$HOME/dev/gocode"
+export PATH="$PATH:$GOPATH/bin"
+
+## use tmux but not nested
+# [[ -z $TMUX ]] && exec tmux
+
+## exported vars
+export EDITOR=vim
+export VISUAL=vim
+export TERMINAL=termite
+if [ "$TERM" != "linux" ]; then
+  export TERM=xterm-256color
+fi ## fix for scheme script
+
+## history
+HISTFILE="$HOME/.zsh_history"
+HISTSIZE=80000
+SAVEHIST=80000
+unsetopt EXTENDED_HISTORY
+setopt histignorespace
+setopt incappendhistory
+setopt sharehistory
+
+## autocomplete
+setopt COMPLETE_ALIASES
+autoload -Uz compinit
+compinit
+
+## etcetera
+bindkey -v        ## vim controls
+setopt nobeep     ## prevent annoying beeps
+setopt ignoreeof  ## prevent ctrl-d exits
+setopt CHECK_JOBS ## warn about bg jobs
+setopt autocd     ## mainly so ../ works
+setopt nonomatch  ## prevent glob crashes
+unsetopt CLOBBER  ## require >| to truncate
+REPORTTIME=2      ## stats if cmd takes >2sec
+
+## dircolors fix
+[[ "$(uname -s)" == "Linux" ]] && eval "$(dircolors $HOME/.dircolors)"
+
+## }}}
+##### prompt ##### {{{
+
+## prerequisites
+autoload -Uz promptinit
+promptinit
+setopt prompt_subst
+
+gitd(){
+
+  ## sidestep lag with git plumbing; was using a simple oneliner
+  ## with `git status --porcelain` but found it laggy when working
+  ## with heavy repositories; this method is harder to understand
+  ## at first glance but has yet to show any lag.
+
+  ## check for changes in tracked files
+  git diff-index --quiet HEAD 2>/dev/null
+  if [ $? -eq 1 ]; then tr="~"; fi ## check exit code
+
+  ## check for untracked, unignored files
+  u="$(git ls-files --others --exclude-standard 2>/dev/null)"
+  [ -n "$u" ] && un="*" ## checking exit code does nothing
+
+  ## push flags
+  echo "$tr$un"
+}
+
+gitbr(){git symbolic-ref --short HEAD 2>/dev/null || echo " "}
+tmuxfix(){[[ -z $TMUX  ]] && echo " "}
+
+## lefthand
+PROMPT="%F{179}"          ## primary coloring
+PROMPT+="%M "          ## hostname for ssh
+PROMPT+="%3~ "             ## trailing pwd dirs
+PROMPT+="%(1j.%jj .)"      ## jobs when present
+PROMPT+="%(0?,%F{122},%F{red})" ## colored exit codes
+PROMPT+="%f $(tmuxfix)"    ## breathing room
+
+## righthand; reqs single quotes
+RPROMPT='%F{179}$(gitd)$(gitbr)%f'
+ZLE_RPROMPT_INDENT=0 ## fix padding
+
+## multiline
+PROMPT2="> "
+
+## }}}
+##### dirjumps ##### {{{
+
+alias cd="cnl"
+alias ..="cnl .."
+alias ...="cnl ../.."
+alias ....="cnl ../../.."
+alias snd="cnl ~/sandbox/"
+alias dfi="cnl ~/dotfiles/"
+alias all="cnl ~/allegheny/"
+
+## secondyear
+alias f16="cnl ~/allegheny/sem3f2016/"
+alias cs210="cnl ~/allegheny/cs210f2016/"
+alias cs230="cnl ~/allegheny/cs230f2016/"
+alias cs370="cnl ~/allegheny/cs370f2016/"
+alias ec200="cnl ~/allegheny/ec200f2016/"
+alias ma205="cnl ~/allegheny/ma205f2016/"
+alias cs590="cnl ~/allegheny/cs590f2016/"
+alias s17="cnl ~/allegheny/sem4s2017/"
+alias cs190="cnl ~/allegheny/cs190s2017/"
+alias cs191="cnl ~/allegheny/cs191s2017/"
+alias cs220="cnl ~/allegheny/cs220s2017/"
+alias cs440="cnl ~/allegheny/cs440s2017/"
+alias ma210="cnl ~/allegheny/ma210s2017/"
+alias fs201="cnl ~/allegheny/fs201s2017/"
+alias su17="cnl ~/allegheny/summer2017/"
+
+## }}}
+##### aliases ##### {{{
+
+[[ "$(uname -s)" == "Linux" ]] && \
+  alias ls="ls --color=auto --group-directories-first -hFX" && \
+  alias ll="l -log --time-style=+%y%m%d\ %l:%M%P"
+[[ "$(uname -s)" == "FreeBSD" ]] && \
+  alias ls="ls -hFG" && \
+  alias ll="l -logD %y%m%d\ %l:%M%p"
+alias l="ls"         ## list
+alias la="l -A"      ## list all
+alias l.="l -pd .*"  ## list hidden
+alias lal="ll -A"    ## list all longform
+alias l.l="ll -d .*" ## list hidden longform
+## FIXME ~> freebsd version doesn't handle coloring quite as well
+## FIXME ~> freebsd version doesn't sort by extension or dirstfirst
+## FIXME ~> freebsd version doesn't use the same timedate formatting
+
+[[ "$(uname -s)" == "Linux" ]] && \
+  alias setshell="chsh -s /bin/zsh"
+[[ "$(uname -s)" == "FreeBSD" ]] && \
+  alias setshell="chsh -s /usr/local/bin/zsh"
+
+alias tree="tree --dirsfirst --noreport -ACF"
+alias treea="tree -a"                         ## tree all
+alias treed="tree -d"                         ## tree dirs
+alias tree1="tree -d -L 1"                    ## tree depth 1
+alias tree2="tree -d -L 2"                    ## tree depth 2
+alias tree3="tree -d -L 3"                    ## tree depth 3
+
+alias grep="grep --color=auto"
+alias fgrep="fgrep --color=auto"
+alias egrep="egrep --color=auto"
+alias fd="find . -type d -name"
+alias ff="find . -type f -name"
+alias dud="du -d 1 -h"
+
+alias giti="git init && gitignore"
+alias gitignore="cp ~/.gitignore ."
+alias gitb="git branch"
+alias gitch="git checkout"
+alias gitu="git remote update"
+alias gita="git add"
+alias gitaa="git add -A"
+alias gitr="git reset"
+alias gitc="git commit"
+alias gitpush="git push"
+alias gitpull="git pull"
+alias gits="git status"
+alias gitl="git log --graph --pretty=format:"{%Cblue%h%Creset}~{%Cblue%cn%Creset}~{%s}""
+alias gitll="git log --graph --pretty=format:"{%Cblue%h%Creset}~{%Cblue%cn%Creset}~{%Cblue%ce%Creset}~{%cr}%n  {%s}%n""
+alias gitflat="gitch --orphan new-master master; gitc -m 'flatten'; gitb -M new-master master; gitc --amend"
+alias gitflatabort="git fetch --all; gitr --hard origin/master"
+
+alias tl='tmux list-sessions'
+alias ta='tmux attach -t '
+alias td='tmux detach'
+alias tu='unset TMUX'
+alias tn='tmux new'
+alias tk='tmux kill-session -t'
+## FIXME ~> pairprog tmux solutions
+
+alias imv="imv -s -b e4e4e4"
+alias imvv="imv * &"
+alias sxi="sxiv */*/*.jpg */*.jpg *.jpg 2>/dev/null & disown"
+alias z="zathura --fork 2>/dev/null"
+
+alias presv="xrandr --output DP-1 --preferred" ## vga cable
+alias pres="xrandr --output HDMI-1 --mode 1024x768" ## hdmi cable
+alias presk="xrandr --output HDMI-1 --off"
+alias redon="redshift -O 3800 > /dev/null"
+alias redoff="redshift -x > /dev/null"
+
+# alias kl="sudo logkeys --start --output ~/.keylog.log"
+# alias kkl="sudo logkeys --kill"
+# alias mkl="sudo tail --follow ~/.keylog.log"
+
+alias rm="rm -i"
+alias mv="mv -i"
+alias mkdir="mkdir -pv"
+
+# alias dons="vim ~/documents/vimlists/dons.md"
+# alias donp="vim ~/documents/vimlists/donp.md"
+# alias din=". ~/scripts/dinew.sh"
+alias src="source ~/.zshrc"
+
+alias hi="history"
+alias jo="jobs -l"
+alias free="free -h"
+alias df="df -h"
+alias nf="echo && neofetch"
+alias ff="firefox 2>/dev/null" ## FIXME ~> buggy sometimes
+alias vi="vim"
+alias q="exit"
+alias timer="echo "timer~end~with~^D" && date && time cat && date"
+
+# alias nm='nmtui-connect'
+# alias nme='nmtui-edit'
+
+## }}}
+##### functions ##### {{{
+
+## link cd & ls;
+function cnl() { \cd "$@" && ll; }
+
+## colored man pages;
+function man() { env \
+  LESS_TERMCAP_mb=$'\e[01;31m' \
+  LESS_TERMCAP_md=$'\e[01;31m' \
+  LESS_TERMCAP_me=$'\e[0m' \
+  LESS_TERMCAP_se=$'\e[0m' \
+  LESS_TERMCAP_so=$'\e[01;33m' \
+  LESS_TERMCAP_ue=$'\e[0m' \
+  LESS_TERMCAP_us=$'\e[01;32m' \
+  man "$@"
+} ## man()
+
+## extraction;
+function extract() {
+  if [ -f "$1" ]; then
+    case "$1" in
+      *.tar.bz2) tar -jxvf "$1" ;;
+      *.tar.gz) tar -zxvf "$1" ;;
+      *.bz2) bunzip2 "$1" ;;
+      *.gz) gunzip "$1" ;;
+      *.tar) tar -xvf "$1" ;;
+      *.tbz2) tar -jxvf "$1" ;;
+      *.tgz) tar -zxvf "$1" ;;
+      *.zip) unzip "$1" ;;
+      *.ZIP) unzip "$1" ;;
+      *.Z) uncompress "$1" ;;
+      *) echo "{extraction-failed}" ;;
+    esac
+  else echo "{invalid-file}"; fi
+} ## extract()
+
+## compression;
+function compress() { tar czvf "$1".tar.gz "$1" }
+
+## }}}
+##### scheme ##### {{{
+
+## define colors;
+color00="1d/1f/21"
+color01="cc/66/66"
+color02="b5/bd/68"
+color03="f0/c6/74"
+color04="81/a2/be"
+color05="b2/94/bb"
+color06="8a/be/b7"
+color07="c5/c8/c6"
+color08="96/98/96"
+color09=$color01
+color10=$color02
+color11=$color03
+color12=$color04
+color13=$color05
+color14=$color06
+color15=$color07
+color_foreground=$color07
+color_background=$color00
+
+if [ -n "$TMUX" ]; then
+  printf_template='\033Ptmux;\033\033]4;%d;rgb:%s\033\033\\\033\\'
+  printf_template_var='\033Ptmux;\033\033]%d;rgb:%s\033\033\\\033\\'
+else
+  printf_template='\033]4;%d;rgb:%s\033\\'
+  printf_template_var='\033]%d;rgb:%s\033\\'
+fi
+
+## push-color-codes;
+printf $printf_template 0  $color00
+printf $printf_template 1  $color01
+printf $printf_template 2  $color02
+printf $printf_template 3  $color03
+printf $printf_template 4  $color04
+printf $printf_template 5  $color05
+printf $printf_template 6  $color06
+printf $printf_template 7  $color07
+printf $printf_template 8  $color08
+printf $printf_template 9  $color09
+printf $printf_template 10 $color10
+printf $printf_template 11 $color11
+printf $printf_template 12 $color12
+printf $printf_template 13 $color13
+printf $printf_template 14 $color14
+printf $printf_template 15 $color15
+printf $printf_template_var 10 $color_foreground
+printf $printf_template_var 11 $color_background
+
+## cleanup;
+unset printf_template
+unset printf_template_var
+unset color00
+unset color01
+unset color02
+unset color03
+unset color04
+unset color05
+unset color06
+unset color07
+unset color08
+unset color09
+unset color10
+unset color11
+unset color12
+unset color13
+unset color14
+unset color15
+unset color_foreground
+unset color_background
+
+## }}}

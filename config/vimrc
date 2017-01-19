@@ -1,0 +1,281 @@
+" copy and paste to system clipboard
+set clipboard=unnamed
+
+" set vertical line in vim at 100 characters for writing clean tex files
+set colorcolumn=100
+
+let mapleader = ","
+set nocompatible
+
+" set no swap files
+set noswapfile
+
+" enable syntax
+syntax enable
+
+" allow filetype to be on
+filetype plugin indent on
+
+" syntax highlighting
+syntax on
+
+" Vim plugin manager Vim-Plug
+call plug#begin('~/.vim/plugged')
+
+Plug 'git@github.com:w0ng/vim-hybrid.git'
+Plug 'git@github.com:jalvesaq/Nvim-R.git'
+Plug 'git@github.com:powerline/powerline.git'
+Plug 'git@github.com:ctrlpvim/ctrlp.vim.git'
+Plug 'git@github.com:guns/vim-clojure-static.git'
+Plug 'git@github.com:Raimondi/delimitMate.git'
+Plug 'git@github.com:lervag/vimtex.git'
+Plug 'git@github.com:chrisbra/csv.vim.git'
+Plug 'git@github.com:terryma/vim-multiple-cursors.git'
+Plug 'git@github.com:bronson/vim-trailing-whitespace.git'
+Plug 'git@github.com:ervandew/supertab.git'
+Plug 'git@github.com:tomtom/tcomment_vim.git'
+Plug 'git@github.com:kien/rainbow_parentheses.vim.git'
+Plug 'git@github.com:tpope/vim-fugitive.git'
+Plug 'git@github.com:geetarista/ego.vim.git'
+Plug 'tpope/vim-fireplace', { 'for': 'clojure' }
+Plug 'scrooloose/nerdtree'
+Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
+Plug 'airblade/vim-gitgutter'
+Plug 'godlygeek/tabular'
+Plug 'plasticboy/vim-markdown'
+Plug 'chriskempson/base16-vim'
+Plug 'artur-shaik/vim-javacomplete2'
+Plug 'fatih/vim-go'
+
+call plug#end()
+
+" tomorrow-night colorscheme
+set background=dark
+set t_Co=256
+colorscheme Tomorrow-Night
+
+" vim-hybrid colorscheme
+" set background=dark
+" colorscheme hybrid
+
+" turn spell check on for markdown and tex files
+autocmd BufRead,BufNewFile *.md setlocal spell
+autocmd BufRead,BufNewFile *.tex setlocal spell
+
+" navigating vim splits
+nnoremap <C-J> <C-W><C-J>
+nnoremap <C-K> <C-W><C-K>
+nnoremap <C-L> <C-W><C-L>
+nnoremap <C-H> <C-W><C-H>
+
+" don't wrap lines, leave them on same line
+set nowrap
+
+" highlight current line
+set cursorline
+
+" show line numbers
+set number
+
+" numbers in relation to current line
+" set relativenumber
+
+" set backspace
+set backspace=2
+
+" size of a hard tabstop
+set tabstop=2
+
+" size of an indent
+set shiftwidth=2
+
+" a combination of spaces and tabs are used to simulate tab stops at a width
+" other than the (hard)tabstop
+set softtabstop=2
+
+" make tab insert indents instead of tabs at the beginning of a line
+set smarttab
+
+" always uses spaces instead of tab characters
+set expandtab
+
+" map jk to escape key
+ino kj <Esc>
+
+" toggle paste mode on and off with F3
+set pastetoggle=<F9>
+
+" remove trailing whitespace
+nnoremap <Leader>rtw :%s/\s\+$//e<CR>
+
+" clear search highlights
+no <silent><Leader>cs :nohls<CR>
+
+" rainbow_parentheses
+"au VimEnter * RainbowParenthesesToggle
+"au Syntax * RainbowParenthesesLoadRound
+"au Syntax * RainbowParenthesesLoadSquare
+"au Syntax * RainbowParenthesesLoadBraces
+"au Syntax * RainbowParenthesesLoadChevrons
+
+" send to tmux
+let g:slime_target = "tmux"
+nmap <C-c><C-m> ggVG<C-c><C-c>
+
+" TComment toggle
+map <Leader>/ :TComment<CR>
+
+" Execute clear whitespace on save
+map <Leader>st :call Preserve("%s/\\s\\+$//e")<CR>
+
+" remove F1 help
+ino <F1> <nop>
+nno <F1> <nop>
+vno <F1> <nop>
+
+let g:clojure_align_multiline_strings = 0
+let g:clojure_fuzzy_indent = 1
+let g:clojure_fuzzy_indent_patterns = "with.*,def.*,let.*,send.*"
+let g:clojure_fuzzy_indent_patterns .= ",cli.*" " Clojure core
+let g:clojure_fuzzy_indent_patterns .= ",GET,POST,PUT,PATCH,DELETE,context" " Compojure
+let g:clojure_fuzzy_indent_patterns .= ",clone-for" " Enlive
+let g:clojure_fuzzy_indent_patterns .= ",select.*,insert.*,update.*,delete.*,with.*" " Korma
+let g:clojure_fuzzy_indent_patterns .= ",fact,facts,fact-group" " Midje
+let g:clojure_fuzzy_indent_patterns .= ",up,down,table" " Lobos
+let g:clojure_fuzzy_indent_patterns .= ",when-eiligible,with-eligible-values,url-of-form"
+
+""""" vim-powerline
+set rtp+=$HOME/.local/lib/python2.7/site-packages/powerline/bindings/vim/
+
+" Always show statusline
+set laststatus=2
+
+" python from powerline.vim import setup as powerline_setup
+" python powerline_setup()
+" python del powerline_setup
+
+""""" vim-markdown
+" disable the stupid folding
+let g:vim_markdown_folding_disabled = 1
+" for displaying LaTeX math
+let g:vim_markdown_math = 1
+
+"""" Ctrl-P
+" change the default mapping and the default command to invoke CtrlP:
+let g:ctrlp_map = '<c-p>'
+let g:ctrlp_cmd = 'CtrlP'
+
+""""" vimtex
+" make compile nice
+autocmd FileType tex :nmap <Leader>ll \ll
+nnoremap <Leader>ss :LatexmkStop<CR>
+
+" taken from @gkafham's (https://github.com/gkapfham/dotfiles) .vimrc
+let g:vimtex_latexmk_options="-pdf -pdflatex='pdflatex -file-line-error -shell-escape -interaction=nonstopmode -synctex=1'"
+let g:vimtex_fold_enabled = 0
+let g:vimtex_quickfix_mode = 2
+let g:vimtex_quickfix_open_on_warning = 0
+let g:vimtex_toc_resize = 0
+let g:vimtex_toc_hide_help = 1
+let g:vimtex_indent_enabled = 1
+let g:vimtex_latexmk_enabled = 1
+let g:vimtex_latexmk_callback = 1
+let g:vimtex_complete_recursive_bib = 0
+let g:vimtex_view_method = 'mupdf'
+let g:vimtex_view_mupdf_options = '-r 288'
+
+" ignore all warnings
+" let g:vimtex_quickfix_ignore_all_warnings = 1
+
+" ignore common warnings --- ignore_all_warnings has to be disabled
+" let g:vimtex_quickfix_ignored_warnings = [
+"         \ 'Underfull',
+"         \ 'Overfull',
+"         \ 'specifier changed to',
+"       \ ]
+
+""""" vim-gitgutter
+" reduce udpate time to 250 ms
+set updatetime=250
+
+""""" NERDTree
+" open NERDTree upon opening vim
+autocmd vimenter * NERDTree
+" start cursor out of NERDTree
+au VimEnter * wincmd p
+" open a NERDTree automatically when vim starts up if no files were specified
+autocmd StdinReadPre * let s:std_in=1
+autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
+
+" show current file NERDTree
+nno <silent> <C-n> :NERDTreeFind<CR>
+ino <C-d> <Del>
+
+" toggle NERDTree with ctrl + n
+map <Leader>nt :NERDTreeToggle<ENTER>
+
+" don't display junk in NERDTree
+let NERDTreeIgnore = ['\.class$', '\.pyc$', '\.aux$', 'fdb_latexmk$', '\.fls$', '\.out$']
+
+" shutdown vim if only window is a NERDTree window
+autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
+
+" change arrow appearance
+let g:NERDTreeDirArrowExpandable = '▸'
+let g:NERDTreeDirArrowCollapsible = '▾'
+
+" show hidden files
+let NERDTreeShowHidden=1
+
+" Javacomplete2 settings
+autocmd FileType java setlocal omnifunc=javacomplete#Complete
+
+" To enable smart (trying to guess import option) inserting class imports with F4, add:
+nmap <F4> <Plug>(JavaComplete-Imports-AddSmart)
+imap <F4> <Plug>(JavaComplete-Imports-AddSmart)
+
+"To enable usual (will ask for import option) inserting class imports with F5, add:
+nmap <F5> <Plug>(JavaComplete-Imports-Add)
+imap <F5> <Plug>(JavaComplete-Imports-Add)
+
+" To add all missing imports with F6:
+nmap <F6> <Plug>(JavaComplete-Imports-AddMissing)
+imap <F6> <Plug>(JavaComplete-Imports-AddMissing)
+
+" To remove all missing imports with F7:
+nmap <F7> <Plug>(JavaComplete-Imports-RemoveUnused)
+imap <F7> <Plug>(JavaComplete-Imports-RemoveUnused)
+
+" Default mapping for accessors generation:
+nmap <buffer> <leader>jA <Plug>(JavaComplete-Generate-Accessors)
+nmap <buffer> <leader>js <Plug>(JavaComplete-Generate-AccessorSetter)
+nmap <buffer> <leader>jg <Plug>(JavaComplete-Generate-AccessorGetter)
+nmap <buffer> <leader>ja <Plug>(JavaComplete-Generate-AccessorSetterGetter)
+
+imap <buffer> <C-j>s <Plug>(JavaComplete-Generate-AccessorSetter)
+imap <buffer> <C-j>g <Plug>(JavaComplete-Generate-AccessorGetter)
+imap <buffer> <C-j>a <Plug>(JavaComplete-Generate-AccessorSetterGetter)
+
+" R script settings
+let maplocalleader = ","
+" using tmux for R
+let R_tmux_split = 1
+let R_vsplit = 1
+" remove replacement of '_' with '<-' in R
+let R_assign = 0
+
+" Set encoding to UTF-8 to show glyphs - vim-devicons & vim-nerdtree-syntax-highlight
+set encoding=utf8
+let g:airline_powerline_fonts = 1
+let g:NERDTreeFileExtensionHighlightFullName = 1
+
+" Configure the syntax highlighting for the Java programming language
+
+autocmd FileType java setlocal omnifunc=javacomplete#Complete
+
+let java_highlight_all=1
+let java_highlight_functions=1
+let java_highlight_functions=1
+let java_highlight_java_lang_ids=1
+let java_space_errors=1
+let java_comment_strings=1

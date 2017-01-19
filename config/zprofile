@@ -1,0 +1,9 @@
+##@## ~/.zprofile ##@##
+## purpose; update path and kickoff xserver
+
+
+export PATH="${PATH}:$HOME/scripts/"
+export PATH="`ruby -e 'puts Gem.user_dir'`/bin:$PATH"
+
+[[ -z $DISPLAY && $XDG_VTNR -eq 1 ]] && exec startx /usr/bin/i3
+
