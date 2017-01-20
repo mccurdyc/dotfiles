@@ -70,7 +70,7 @@ gitd(){
   [ -n "$u" ] && un="*" ## checking exit code does nothing
 
   ## push flags
-  echo "$tr$un"
+  echo "$tr$un";
 }
 
 gitbr(){git symbolic-ref --short HEAD 2>/dev/null || echo " "}
@@ -85,8 +85,7 @@ PROMPT+="%(0?,%F{122},%F{red})" ## colored exit codes
 PROMPT+="%f $(tmuxfix)"    ## breathing room
 
 ## righthand; reqs single quotes
-RPROMPT='%F{179}$(gitd)$(gitbr)%f'
-ZLE_RPROMPT_INDENT=0 ## fix padding
+RPROMPT='%F{black}%B$(gitd)$(gitbr)%b%f'
 
 ## multiline
 PROMPT2="> "
