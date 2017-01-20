@@ -102,11 +102,11 @@ alias snd="cnl ~/sandbox/"
 alias dfi="cnl ~/dotfiles/"
 alias all="cnl ~/allegheny/"
 
-## secondyear
 alias mr="cnl ~/allegheny/cs610s2016/mrstudyr"
 alias dotcon="cnl ~/dotfiles/config"
 alias pasc="cnl ~/projects/PaSandwichCompany.github.io"
-
+alias cs190="cnl ~/allegheny/cs610s2016"
+alias cs610="cnl ~/allegheny/cs190s2016"
 ## }}}
 ##### aliases ##### {{{
 
