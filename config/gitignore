@@ -19,6 +19,9 @@
 .Trashes
 .Trash-*
 Thumbs.db
+*.swp
+*.swn
+*.swo
 
 ## compiled-source;
 *.class
