@@ -1,24 +1,66 @@
+##@## ~/.config/i3/config ##@##{{{
+
+## purpose; window manager configuration, and some usability helpers.
+## reminder; tightly integrated with i3status and other dependencies.
+
+#####}}}
+#
+##### miscellaneous #####{{{
+# Use Windows key as modifier
 set $mod Mod4
+
+# Use Mouse+$mod to drag floating windows to their wanted position
+floating_modifier $mod
 
 # Font for window titles. Will also be used by the bar unless a different font
 # is used in the bar {} block below.
-font pango:Office Code Pro Medium 12
+font pango:Office Code Pro Medium, FontAwesome 12
+#####}}}
 
-# This font is widely installed, provides lots of unicode glyphs, right-to-left
-# text rendering and scalability on retina/hidpi displays (thanks to pango).
-#font pango:DejaVu Sans Mono 8
+##### workspaces #####{{{
+set $workspace1 "1:"
+set $workspace2 "2:"
+set $workspace3 "3:cs190"
+set $workspace4 "4:cs383"
+set $workspace5 "5:cs440"
+set $workspace6 "6:cs610"
+set $workspace7 "7:"
+set $workspace8 "8:"
+set $workspace9 "9:"
+set $workspace10 "10:"
+set $workspace11 "11:"
+set $workspace12 "12:"
+#####}}}
 
-# Before i3 v4.8, we used to recommend this one as the default:
-# font -misc-fixed-medium-r-normal--13-120-75-75-C-70-iso10646-1
-# The font above is very space-efficient, that is, it looks good, sharp and
-# clear in small sizes. However, its unicode glyph coverage is limited, the old
-# X core fonts rendering does not support right-to-left and this being a bitmap
-# font, it doesn’t scale on retina/hidpi displays.
+##### keybindings #####{{{
+bindsym $mod+1 workspace $workspace1
+bindsym $mod+2 workspace $workspace2
+bindsym $mod+3 workspace $workspace3
+bindsym $mod+4 workspace $workspace4
+bindsym $mod+5 workspace $workspace5
+bindsym $mod+6 workspace $workspace6
+bindsym $mod+7 workspace $workspace7
+bindsym $mod+8 workspace $workspace8
+bindsym $mod+9 workspace $workspace9
+bindsym $mod+0 workspace $workspace10
+bindsym $mod+minus workspace $workspace11
+bindsym $mod+equal workspace $workspace12
+
+# move focused container to workspace
+bindsym $mod+Shift+1 move container to workspace $workspace1
+bindsym $mod+Shift+2 move container to workspace $workspace2
+bindsym $mod+Shift+3 move container to workspace $workspace3
+bindsym $mod+Shift+4 move container to workspace $workspace4
+bindsym $mod+Shift+5 move container to workspace $workspace5
+bindsym $mod+Shift+6 move container to workspace $workspace6
+bindsym $mod+Shift+7 move container to workspace $workspace7
+bindsym $mod+Shift+8 move container to workspace $workspace8
+bindsym $mod+Shift+9 move container to workspace $workspace9
+bindsym $mod+Shift+0 move container to workspace $workspace10
+bindsym $mod+Shift+minus move container to workspace $workspace11
+bindsym $mod+Shift+equal move container to workspace $workspace12
 
 # Pulse Audio controls
-# bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume 0 +5% #increase sound volume
-# bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume 0 -5% #decrease sound volume
-# bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute 0 toggle # mute sound
 bindsym XF86MonBrightnessUp exec xbacklight -inc 20 # increase screen brightness
 bindsym XF86MonBrightnessDown exec xbacklight -dec 20 # decrease screen brightness
 bindsym XF86AudioMute         exec "/usr/bin/pactl set-sink-mute @DEFAULT_SINK@ toggle"
@@ -27,21 +69,8 @@ bindsym XF86AudioRaiseVolume  exec "/usr/bin/pactl set-sink-volume @DEFAULT_SINK
 # bindsym Print                 exec "scrot '%y.%m.%d.%T.png' -e 'mv $f ~/pictures/screenshots/'"
 # bindsym Shift+Print           exec "scrot '%y.%m.%d.%T.png' -ub -e 'mv $f ~/pictures/screenshots/'"
 
-# Use Mouse+$mod to drag floating windows to their wanted position
-floating_modifier $mod
-
-# start a terminal
-# bindsym $mod+Return exec i3-sensible-terminal
-
 # kill focused window
 bindsym $mod+Shift+q kill
-
-# start dmenu (a program launcher)
-# bindsym $mod+d exec dmenu_run
-# There also is the (new) i3-dmenu-desktop which only displays applications
-# shipping a .desktop file. It is a wrapper around dmenu, so you need that
-# installed.
-# bindsym $mod+d exec --no-startup-id i3-dmenu-desktop
 
 # change focus
 bindsym $mod+j focus left
@@ -67,10 +96,8 @@ bindsym $mod+Shift+Down move down
 bindsym $mod+Shift+Up move up
 bindsym $mod+Shift+Right move right
 
-# split in horizontal orientation
+# split in horizontal and vertical orientation, respectively
 bindsym $mod+h split h
-
-# split in vertical orientation
 bindsym $mod+v split v
 
 # enter fullscreen mode for the focused container
@@ -87,35 +114,10 @@ bindsym $mod+Shift+space floating toggle
 # change focus between tiling / floating windows
 bindsym $mod+space focus mode_toggle
 
-# focus the parent container
+# focus the parent or child container, respectively
 bindsym $mod+a focus parent
-
-# focus the child container
 #bindsym $mod+d focus child
 
-# switch to workspace
-bindsym $mod+1 workspace 1
-bindsym $mod+2 workspace 2
-bindsym $mod+3 workspace 3
-bindsym $mod+4 workspace 4
-bindsym $mod+5 workspace 5
-bindsym $mod+6 workspace 6
-bindsym $mod+7 workspace 7
-bindsym $mod+8 workspace 8
-bindsym $mod+9 workspace 9
-bindsym $mod+0 workspace 10
-
-# move focused container to workspace
-bindsym $mod+Shift+1 move container to workspace 1
-bindsym $mod+Shift+2 move container to workspace 2
-bindsym $mod+Shift+3 move container to workspace 3
-bindsym $mod+Shift+4 move container to workspace 4
-bindsym $mod+Shift+5 move container to workspace 5
-bindsym $mod+Shift+6 move container to workspace 6
-bindsym $mod+Shift+7 move container to workspace 7
-bindsym $mod+Shift+8 move container to workspace 8
-bindsym $mod+Shift+9 move container to workspace 9
-bindsym $mod+Shift+0 move container to workspace 10
 
 # reload the configuration file
 bindsym $mod+Shift+c reload
@@ -127,11 +129,6 @@ bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcu
 # resize window (you can also use the mouse for that)
 mode "resize" {
         # These bindings trigger as soon as you enter the resize mode
-
-        # Pressing left will shrink the window’s width.
-        # Pressing right will grow the window’s width.
-        # Pressing up will shrink the window’s height.
-        # Pressing down will grow the window’s height.
         bindsym j resize shrink width 10 px or 10 ppt
         bindsym k resize grow height 10 px or 10 ppt
         bindsym l resize shrink height 10 px or 10 ppt
@@ -150,11 +147,28 @@ mode "resize" {
 
 bindsym $mod+r mode "resize"
 
+bindsym F7                   exec "xset -display :0.0 dpms force off #@laptop!"
+bindsym $mod+BackSpace       exec "i3lock -c 1d1f21"
+bindsym $mod+Shift+BackSpace exec "i3lock -c 1d1f21 && sleep 0.15 && systemctl suspend"
+
+# Some quickstart key combinations
+bindsym $mod+Return exec "termite"
+bindsym $mod+Shift+Return exec "termite -e su"
+bindsym $mod+backslash exec "firefox"
+bindsym $mod+Shift+backslash exec "slack"
+bindsym $mod+Tab exec "rofi -show run"
+bindsym $mod+Shift+Tab exec "rofi -show window"
+
+# Make CAPS_LOCK into another, more convenient, control
+exec --no-startup-id setxkbmap -option ctrl:nocaps
+#####}}}
+
 ##### decorations #####{{{
 # hide_edge_borders both
-new_window pixel 1
-new_float pixel 1
+new_window pixel 5
+new_float pixel 5
 #####}}}
+
 ##### colorscheme #####{{{
 set $varGrey0 #1d1f21
 set $varGrey1 #282a2e
@@ -165,7 +179,7 @@ set $varGrey5 #707880
 set $varGrey6 #c7c9d1
 set $varRed   #cc6666
 set $varFocus #f0c674
-## fixme; highlights in purplish
+
 ## <text> used for tabbed window title text
 ## <bgcol> used for normal borders everywhere
 ## <border> used for tabbed separator borders
@@ -178,6 +192,7 @@ client.urgent           $varRed   $varRed   $varRed   $varRed
 client.background       $varGrey0 ##(only takes one parameter)
 client.placeholder      $varGrey0 $varGrey0 $varGrey0 $varGrey0
 #####}}}
+
 ##### status bar #####{{{
 bar {
   font pango:Office Code Pro Medium, FontAwesome 18
@@ -202,19 +217,10 @@ bar {
 }
 #####}}}
 
-bindsym F7                   exec "xset -display :0.0 dpms force off #@laptop!"
-bindsym $mod+BackSpace       exec "i3lock -c 1d1f21"
-bindsym $mod+Shift+BackSpace exec "i3lock -c 1d1f21 && sleep 0.15 && systemctl suspend"
-
-bindsym $mod+Return exec "termite"
-bindsym $mod+Shift+Return exec "termite -e su"
-bindsym $mod+backslash exec "firefox"
-bindsym $mod+Shift+backslash exec "slack"
-bindsym $mod+Tab exec "rofi -show run"
-bindsym $mod+Shift+Tab exec "rofi -show window"
-
-exec --no-startup-id setxkbmap -option ctrl:nocaps # Make Caps Lock a Control
+##### autostart #####{{{
+# Display settings
 exec_always xandr --output eDP1 --dpi 220 --primary --preferred
 
 ## set quicker delay and repeat rate for keyboard;
 exec_always xset r rate 300 20 ## especially helps vim and vimfx
+#####}}}
