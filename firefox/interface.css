@@ -1,0 +1,69 @@
+/* modified from userstyle by miscoined */
+@namespace url(http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul);
+
+/* remove or hide unwanted elements */
+#new-tab-button, .tabs-newtab-button,
+dropmarker.urlbar-history-dropmarker,
+#alltabs-button, #toolbar-menubar,
+#tabbrowser-tabs > tab:before,
+#tabbrowser-tabs .tab-content .tab-text,
+#tabbrowser-tabs .tab-content .tab-close-button,
+#tabbrowser-tabs .tab-content .tab-throbber,
+#tabbrowser-tabs .tab-background .tab-background-start,
+#tabbrowser-tabs .tab-background .tab-background-end,
+#tabbrowser-tabs > arrowscrollbox > toolbarbutton,
+#tabbrowser-tabs > arrowscrollbox > spacer,
+#TabsToolbar > toolbarbutton:nth-child(2),
+#urlbar-go-button, #urlbar-reload-button, #urlbar-stop-button,
+#identity-box, #urlbar > hbox > dropmarker,
+#nav-bar-customization-target > .toolbarbutton-1,
+#back-button, #forward-button,
+#nav-bar-overflow-button, #reader-mode-button,
+#notification-popup-box
+{display:none;}
+#PanelUI-menu-button .toolbarbutton-icon
+{visibility:hidden;}
+
+/* add required elements. shouldn't need this */
+#tabbrowser-tabs .tab-content .tab-icon-image {display:block;}
+#addon-bar {display:none}
+
+/* clear existing styles */
+#TabsToolbar:not([collapsed]) + #nav-bar {border:none !important;}
+#tabbrowser-tabs .tab-background *, #urlbar,
+#PanelUI-button {border:none;}
+.tabbrowser-tab:hover > .tab-stack > .tab-background:not([visuallyselected]),
+.tab-background-middle[visuallyselected],
+#navigator-toolbox > toolbar:not(:-moz-lwtheme):not(#toolbar-menubar):not(#TabsToolbar),
+#urlbar, #PanelUI-menu-button:hover > stack {background:none;}
+#TabsToolbar,
+.tabbrowser-tab .tab-background,
+.tabbrowser-tab .tab-background-middle,
+.tabbrowser-tab .tab-icon-image,
+window:not([chromehidden~="toolbar"]) #urlbar-wrapper {margin:0;}
+#tabbrowser-tabs .tab-content,
+#tabbrowser-tabs .arrowscrollbox-scrollbox,
+#nav-bar, #nav-bar #PanelUI-menu-button,
+#PanelUI-menu-button > stack {padding:0;}
+#tabbrowser-tabs {min-height:auto;}
+#tabbrowser-tabs .tabbrowser-tab {min-width:auto;}
+
+/* layout flexboxes everywhere */
+#navigator-toolbox, #nav-bar {display:flex;}
+#nav-bar {flex:1;}
+#nav-bar-customization-target, #urlbar-container {width:100%;}
+#navigator-toolbox {border-bottom:2px solid #bcbcbc;}
+
+/* styling the actual urlbar */
+#urlbar {color:#000000; padding-left:1px; padding-top:3px;
+	text-align:center; font:9.5pt Office Code Pro Medium;}
+#navigator-toolbox {margin:-1px -1px -1px -1px;}
+
+/* workaround to get rid of odd white line */
+#TabsToolbar:not([collapsed]) + #nav-bar {margin-top:-2px; padding-top:2px;}
+#PanelUI-menu-button {background:#d0d0d0; height:100%;}
+.tabbrowser-tab {padding:3px; margin-right:0; margin-bottom:0;}
+#tab-view-deck {background:#e4e4e4;}
+.tabbrowser-tab:hover {background:#d0d0d0;}
+.tabbrowser-tab {background:#d0d0d0; outline: 1px solid #9e9e9e; border-bottom:1px solid #d0d0d0;}
+.tabbrowser-tab[selected] {background:#bcbcbc; border-bottom:1px solid #005f5f;}

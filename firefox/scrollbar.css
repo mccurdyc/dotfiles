@@ -1,0 +1,40 @@
+/* AGENT_SHEET */
+@namespace url(http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul);
+/* adapted ever so slightly from the following source; */
+/* https://userstyles.org/styles/97012/ys-ff-scrollbar */
+scrollbar {
+	-moz-appearance: none !important;
+	position: relative !important;
+	background: transparent !important;
+	z-index: 2147483647 !important;
+	overflow: hidden !important; }
+scrollbar[orient="vertical"] {
+	-moz-margin-start: -6px !important;
+	min-width: 6px !important;
+	max-width: 6px !important;
+	padding: 2px 0 !important; }
+scrollbar[orient="horizontal"] {
+	margin-top: -6px !important;
+	min-height: 6px !important;
+	max-height: 6px !important;
+	padding: 0 2px !important; }
+scrollbar thumb {
+	opacity: 0.9 !important;
+	-moz-appearance: none !important;
+	border: none !important;
+	border-radius: 0 !important;
+	background: transparent !important; }
+scrollbar[orient="vertical"] thumb {
+	min-height: 90px !important;
+	border-right: 2px solid #bcbcbc !important; }
+scrollbar[orient="vertical"]:hover thumb,
+scrollbar[orient="vertical"]:active thumb {
+	border-right: 6px solid #bcbcbc !important; }
+scrollbar[orient="horizontal"] thumb {
+	min-width: 90px !important;
+	border-bottom: 2px solid #bcbcbc !important; }
+scrollbar[orient="horizontal"]:hover thumb,
+scrollbar[orient="horizontal"]:active thumb {
+	border-bottom: 6px solid #bcbcbc !important; }
+scrollbar scrollbarbutton {
+	visibility: collapse !important; }
