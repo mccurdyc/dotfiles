@@ -16,9 +16,16 @@ font pango:Office Code Pro Medium 12
 # font, it doesn’t scale on retina/hidpi displays.
 
 # Pulse Audio controls
-bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume 0 +5% #increase sound volume
-bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume 0 -5% #decrease sound volume
-bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute 0 toggle # mute sound
+# bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume 0 +5% #increase sound volume
+# bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume 0 -5% #decrease sound volume
+# bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute 0 toggle # mute sound
+bindsym XF86MonBrightnessUp exec xbacklight -inc 20 # increase screen brightness
+bindsym XF86MonBrightnessDown exec xbacklight -dec 20 # decrease screen brightness
+bindsym XF86AudioMute         exec "/usr/bin/pactl set-sink-mute @DEFAULT_SINK@ toggle"
+bindsym XF86AudioLowerVolume  exec "/usr/bin/pactl set-sink-volume @DEFAULT_SINK@ '-4%'"
+bindsym XF86AudioRaiseVolume  exec "/usr/bin/pactl set-sink-volume @DEFAULT_SINK@ '+2%'"
+# bindsym Print                 exec "scrot '%y.%m.%d.%T.png' -e 'mv $f ~/pictures/screenshots/'"
+# bindsym Shift+Print           exec "scrot '%y.%m.%d.%T.png' -ub -e 'mv $f ~/pictures/screenshots/'"
 
 # Use Mouse+$mod to drag floating windows to their wanted position
 floating_modifier $mod
