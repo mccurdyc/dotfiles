@@ -1,0 +1,145 @@
+\documentclass[11pt,twoside,titlepage]{article}
+%%NEED TO ADD epsf!!
+\usepackage{assets/threeparttop}
+\usepackage{latexsym}
+\usepackage{color}
+\usepackage{listings}
+\usepackage{fancyvrb}
+\usepackage{booktabs}
+\usepackage[titletoc]{appendix}
+
+% packages I use frequently and added myself
+\usepackage{verbatim}
+\usepackage{caption,subcaption}
+\usepackage{graphicx}
+\usepackage{tikz}
+\usepackage{amsmath, amssymb, amsthm}
+
+\definecolor{mygreen}{rgb}{0,0.6,0}
+\definecolor{mygray}{rgb}{0.5,0.5,0.5}
+\definecolor{mymauve}{rgb}{0.58,0,0.82}
+
+\lstset{ %
+  backgroundcolor=\color{white},   % choose the background color; you must add \usepackage{color} or \usepackage{xcolor}
+  basicstyle=\footnotesize,        % the size of the fonts that are used for the code
+  breakatwhitespace=false,         % sets if automatic breaks should only happen at whitespace
+  breaklines=true,                 % sets automatic line breaking
+  captionpos=b,                    % sets the caption-position to bottom
+  commentstyle=\color{mygreen},    % comment style
+  deletekeywords={...},            % if you want to delete keywords from the given language
+  escapeinside={\%*}{*)},          % if you want to add LaTeX within your code
+  extendedchars=true,              % lets you use non-ASCII characters; for 8-bits encodings only, does not work with UTF-8
+  frame=single,                    % adds a frame around the code
+  keepspaces=true,                 % keeps spaces in text, useful for keeping indentation of code (possibly needs columns=flexible)
+  keywordstyle=\color{blue},       % keyword style
+  language=Octave,                 % the language of the code
+  morekeywords={*,...},            % if you want to add more keywords to the set
+  numbers=left,                    % where to put the line-numbers; possible values are (none, left, right)
+  numbersep=5pt,                   % how far the line-numbers are from the code
+  numberstyle=\tiny\color{mygray}, % the style that is used for the line-numbers
+  rulecolor=\color{black},         % if not set, the frame-color may be changed on line-breaks within not-black text (e.g. comments (green here))
+  showspaces=false,                % show spaces everywhere adding particular underscores; it overrides 'showstringspaces'
+  showstringspaces=false,          % underline spaces within strings only
+  showtabs=false,                  % show tabs within strings adding particular underscores
+  stepnumber=2,                    % the step between two line-numbers. If it's 1, each line will be numbered
+  stringstyle=\color{mymauve},     % string literal style
+  tabsize=2,                       % sets default tabsize to 2 spaces
+  title=\lstname                   % show the filename of files included with \lstinputlisting; also try caption instead of title
+}
+
+\usepackage[noend]{algorithmic}
+\usepackage[noend]{algorithm}
+\newcommand{\bfor}{{\bf for\ }}
+\newcommand{\bthen}{{\bf then\ }}
+\newcommand{\bwhile}{{\bf while\ }}
+\newcommand{\btrue}{{\bf true\ }}
+\newcommand{\bfalse}{{\bf false\ }}
+\newcommand{\bto}{{\bf to\ }}
+\newcommand{\bdo}{{\bf do\ }}
+\newcommand{\bif}{{\bf if\ }}
+\newcommand{\belse}{{\bf else\ }}
+\newcommand{\band}{{\bf and\ }}
+\newcommand{\breturn}{{\bf return\ }}
+% \newcommand{\mod}{{\rm mod}}
+\renewcommand{\algorithmiccomment}[1]{$\rhd$ #1}
+\newenvironment{checklist}{\par\noindent\hspace{-.25in}{\bf Checklist:}\renewcommand{\labelitemi}{$\Box$}%
+\begin{itemize}}{\end{itemize}}
+% \pagestyle{threepartheadings}
+\usepackage{url}
+\usepackage{wrapfig}
+\usepackage[hidelinks]{hyperref}
+% added in the dtklogos for the bibtex formatting
+\usepackage{dtklogos}
+%=========================
+% One-inch margins everywhere
+%=========================
+\setlength{\topmargin}{0in}
+\setlength{\textheight}{8.5in}
+\setlength{\oddsidemargin}{0in}
+\setlength{\evensidemargin}{0in}
+\setlength{\textwidth}{6.5in}
+%===============================
+%===============================
+% Macro for document title:
+%===============================
+\newcommand{\MYTITLE}[1]%
+   {\begin{center}
+     \begin{center}
+     \bf
+     CMPSC 190 \\ Introduction to Software Testing \\ Spring 2017
+     \medskip
+     \end{center}
+     \bf
+     #1
+     \end{center}
+}
+%================================
+% Macro for headings:
+%================================
+\newcommand{\MYHEADERS}
+   {
+   \lhead{Assignment One}
+   \rhead{Due: 23 January 2017}
+    %\immediate\write16{}
+    %\immediate\write16{DATE OF HANDOUT?}
+    %\read16 to \dateofhandout
+    %\immediate\write16{}
+    %\immediate\write16{HANDOUT NUMBER?}
+    %\read16 to\handoutnum
+   }
+
+%================================
+% Macro for bold italic:r
+%================================
+\newcommand{\bit}[1]{{\textit{\textbf{#1}}}}
+
+%=========================
+% Non-zero paragraph skips.
+%=========================
+\setlength{\parskip}{1ex}
+
+%=========================
+% Create various environments:
+%=========================
+\newcommand{\PURPOSE}{\par\noindent\hspace{-.25in}{\bf Purpose:\ }}
+\newcommand{\SUMMARY}{\par\noindent\hspace{-.25in}{\bf Summary:\ }}
+\newcommand{\DETAILS}{\par\noindent\hspace{-.25in}{\bf Details:\ }}
+\newcommand{\PLEDGE}{\par\noindent\hspace{-.25in}{\bf Pledge:\ }}
+\newcommand{\NAME}{\par\noindent\hspace{-.25in}{\bf Name:\ }}
+\newcommand{\SUBHEAD}[1]{\bigskip\par\noindent\hspace{-.1in}{\sc #1}\\}
+%\newenvironment{CHECKLIST}{\begin{itemize}}{\end{itemize}}
+\lstdefinestyle{appendixR}{%
+  belowcaptionskip=1\baselineskip,
+  breaklines=true,
+  xleftmargin=\parindent,
+  xrightmargin=\parindent,
+  language=R,
+  showstringspaces=false,
+  basicstyle=\small,
+  numberstyle=\tiny,
+  keywordstyle=\bfseries,
+  commentstyle=\itshape,
+  numbers = left,
+  tabsize=4,
+}
+
