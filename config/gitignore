@@ -34,6 +34,8 @@ Thumbs.db
 *.fls
 *.lof
 *.lot
+*.log
+*.out
 *.toc
 
 # ...even if they are in subdirectories
