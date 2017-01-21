@@ -192,6 +192,7 @@ alias mkdir="mkdir -pv"
 # alias dons="vim ~/documents/vimlists/dons.md"
 # alias donp="vim ~/documents/vimlists/donp.md"
 # alias din=". ~/scripts/dinew.sh"
+alias texplate="cp -r ~/dotfiles/etc/tex/* ."
 alias src="source ~/.zshrc"
 
 alias hi="history"
