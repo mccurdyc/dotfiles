@@ -36,6 +36,7 @@ Thumbs.db
 *.lot
 *.log
 *.out
+*.synctex.gz
 *.toc
 
 # ...even if they are in subdirectories
