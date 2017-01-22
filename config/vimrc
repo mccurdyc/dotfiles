@@ -265,9 +265,11 @@ imap <buffer> <C-j>a <Plug>(JavaComplete-Generate-AccessorSetterGetter)
 
 " R script settings
 let maplocalleader = ","
+
 " using tmux for R
 let R_tmux_split = 1
 let R_vsplit = 1
+
 " remove replacement of '_' with '<-' in R
 let R_assign = 0
 
