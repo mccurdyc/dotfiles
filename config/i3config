@@ -66,8 +66,8 @@ bindsym XF86MonBrightnessDown exec xbacklight -dec 20 # decrease screen brightne
 bindsym XF86AudioMute         exec "/usr/bin/pactl set-sink-mute @DEFAULT_SINK@ toggle"
 bindsym XF86AudioLowerVolume  exec "/usr/bin/pactl set-sink-volume @DEFAULT_SINK@ '-4%'"
 bindsym XF86AudioRaiseVolume  exec "/usr/bin/pactl set-sink-volume @DEFAULT_SINK@ '+2%'"
-# bindsym Print                 exec "scrot '%y.%m.%d.%T.png' -e 'mv $f ~/pictures/screenshots/'"
-# bindsym Shift+Print           exec "scrot '%y.%m.%d.%T.png' -ub -e 'mv $f ~/pictures/screenshots/'"
+bindsym Print                 exec "scrot '%y.%m.%d.%T.png' -e 'mv $f ~/pictures/screenshots/'"
+bindsym Shift+Print           exec "scrot '%y.%m.%d.%T.png' -ub -e 'mv $f ~/pictures/screenshots/'"
 
 # kill focused window
 bindsym $mod+Shift+q kill
