@@ -34,6 +34,7 @@ autoload -Uz compinit
 compinit
 
 ## etcetera
+bindkey "^R" history-incremental-search-backward
 bindkey -v        ## vim controls
 setopt nobeep     ## prevent annoying beeps
 setopt ignoreeof  ## prevent ctrl-d exits
@@ -207,7 +208,7 @@ alias vi="vim"
 alias q="exit"
 alias timer="echo "timer~end~with~^D" && date && time cat && date"
 
-# alias nm='nmtui-connect'
+alias nm='nmcli dev wifi'
 # alias nme='nmtui-edit'
 
 ## }}}
