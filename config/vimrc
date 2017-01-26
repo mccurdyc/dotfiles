@@ -10,9 +10,6 @@ set nocompatible
 " set no swap files
 set noswapfile
 
-" enable syntax
-syntax enable
-
 " allow filetype to be on
 filetype plugin indent on
 
@@ -21,6 +18,8 @@ syntax on
 
 " Vim plugin manager Vim-Plug
 call plug#begin('~/.vim/plugged')
+
+Plug 'mccurdyc/vischeme', {'branch': 'master'}
 
 Plug 'conradirwin/vim-bracketed-paste'
 Plug 'git@github.com:w0ng/vim-hybrid.git'
@@ -53,9 +52,13 @@ call plug#end()
 
 " tomorrow-night colorscheme
 " set t_Co=256
-set termguicolors
-set background=dark
-colorscheme Tomorrow-Night
+" set termguicolors
+" set background=dark
+" colorscheme Tomorrow-Night
+
+" personal tomorrow-night colorscheme using true colors
+set termguicolors | syntax enable | colorscheme tomorrow-night
+" set termguicolors | syntax enable | colorscheme hybrid
 
 " turn spell check on for markdown and tex files
 autocmd BufRead,BufNewFile *.md setlocal spell
@@ -104,6 +107,9 @@ ino kj <Esc>
 " toggle paste mode on and off with F9
 set pastetoggle=<F9>
 
+" toggle Colorizer color highlight mode
+map <Leader>cc :ColorToggle<CR>
+
 " remove trailing whitespace
 nnoremap <Leader>rtw :%s/\s\+$//e<CR>
 
@@ -111,12 +117,11 @@ nnoremap <Leader>rtw :%s/\s\+$//e<CR>
 no <silent><Leader>cs :nohls<CR>
 
 " rainbow_parentheses
-"au VimEnter * RainbowParenthesesToggle
-"au Syntax * RainbowParenthesesLoadRound
-"au Syntax * RainbowParenthesesLoadSquare
-"au Syntax * RainbowParenthesesLoadBraces
-"au Syntax * RainbowParenthesesLoadChevrons
-
+au VimEnter * RainbowParenthesesToggle
+au Syntax * RainbowParenthesesLoadRound
+au Syntax * RainbowParenthesesLoadSquare
+au Syntax * RainbowParenthesesLoadBraces
+au Syntax * RainbowParenthesesLoadChevrons
 
 let g:slime_target = "tmux"
 nmap <C-c><C-m> ggVG<C-c><C-c>
@@ -288,8 +293,3 @@ let java_highlight_functions=1
 let java_highlight_java_lang_ids=1
 let java_space_errors=1
 let java_comment_strings=1
-
-" Colorizer for html and css
-let g:colorizer_auto_filetype='css,html'
-" Automatic loading
-let g:colorizer_auto_color = 1
