@@ -52,12 +52,12 @@ call plug#end()
 
 " tomorrow-night colorscheme
 " set t_Co=256
-" set termguicolors
-" set background=dark
-" colorscheme Tomorrow-Night
+set termguicolors
+set background=dark
+colorscheme Tomorrow-Night
 
 " personal tomorrow-night colorscheme using true colors
-set termguicolors | syntax enable | colorscheme tomorrow-night
+" set termguicolors | syntax enable | colorscheme tomorrow-night
 " set termguicolors | syntax enable | colorscheme hybrid
 
 " turn spell check on for markdown and tex files
@@ -115,13 +115,6 @@ nnoremap <Leader>rtw :%s/\s\+$//e<CR>
 
 " clear search highlights
 no <silent><Leader>cs :nohls<CR>
-
-" rainbow_parentheses
-au VimEnter * RainbowParenthesesToggle
-au Syntax * RainbowParenthesesLoadRound
-au Syntax * RainbowParenthesesLoadSquare
-au Syntax * RainbowParenthesesLoadBraces
-au Syntax * RainbowParenthesesLoadChevrons
 
 let g:slime_target = "tmux"
 nmap <C-c><C-m> ggVG<C-c><C-c>
