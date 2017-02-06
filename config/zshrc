@@ -104,7 +104,7 @@ alias all="cnl ~/allegheny/"
 
 alias mr="cnl ~/allegheny/cs610s2017/mrstudyr"
 alias dotcon="cnl ~/dotfiles/config"
-alias pasc="cnl ~/projects/PaSandwichCompany.github.io"
+alias pasc="cnl ~/dev/PaSandwichCompany.github.io"
 alias cs190="cnl ~/allegheny/cs190s2017"
 alias cs383="cnl ~/allegheny/cs383s2017"
 alias cs440="cnl ~/allegheny/cs440s2017"
