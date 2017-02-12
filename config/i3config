@@ -67,7 +67,8 @@ bindsym XF86AudioMute         exec "/usr/bin/pactl set-sink-mute @DEFAULT_SINK@ 
 bindsym XF86AudioLowerVolume  exec "/usr/bin/pactl set-sink-volume @DEFAULT_SINK@ '-4%'"
 bindsym XF86AudioRaiseVolume  exec "/usr/bin/pactl set-sink-volume @DEFAULT_SINK@ '+2%'"
 bindsym Print                 exec "scrot '%y.%m.%d.%T.png' -e 'mv $f ~/pictures/screenshots/'"
-bindsym Shift+Print           exec "scrot '%y.%m.%d.%T.png' -ub -e 'mv $f ~/pictures/screenshots/'"
+# bindsym Shift+Print           exec "scrot '%y.%m.%d.%T.png' -ub -e 'mv $f ~/pictures/screenshots/'"
+bindsym --release Shift+Print exec scrot -s '%y.%m.%d.$T.png' -e 'mv $f ~/pictures/screenshots/'
 
 # kill focused window
 bindsym $mod+Shift+q kill
@@ -220,6 +221,7 @@ bar {
 ##### autostart #####{{{
 # Display settings
 exec_always xandr --output eDP1 --dpi 220 --primary --preferred
+# xrandr --output DP1 --mode 2560x1440 --dpi 440
 
 ## set quicker delay and repeat rate for keyboard;
 exec_always xset r rate 300 20 ## especially helps vim and vimfx
