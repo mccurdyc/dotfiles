@@ -25,7 +25,7 @@ volume master {
 	device = "default" }
 battery 0 {
 	format = "  %percentage"
-	low_threshold = 62
+	low_threshold = 30
 	threshold_type = percentage
 	integer_battery_capacity = true
 	last_full_capacity = true }
