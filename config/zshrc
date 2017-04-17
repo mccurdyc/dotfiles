@@ -5,7 +5,7 @@
 
 ## }}}
 ##### general ##### {{{
-export GOPATH="$HOME/dev/gocode"
+export GOPATH="$HOME/go"
 export PATH="$PATH:$GOPATH/bin"
 
 ## use tmux but not nested
