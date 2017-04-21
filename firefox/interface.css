@@ -52,11 +52,11 @@ window:not([chromehidden~="toolbar"]) #urlbar-wrapper {margin:0;}
 #navigator-toolbox, #nav-bar {display:flex;}
 #nav-bar {flex:1;}
 #nav-bar-customization-target, #urlbar-container {width:100%;}
-#navigator-toolbox {border-bottom:2px solid #222222;}
+#navigator-toolbox {border-bottom:5px solid #f0c674;}
 
 /* styling the actual urlbar */
-#urlbar {color:#c7c7c7; padding-left:1px; padding-top:5px;
-  text-align:center; font:10pt PxPlus IBM VGA8;}
+#urlbar {color:#c7c7c7; padding-left:1px; padding-top:2px;
+  text-align:center; font:10pt Office Code Pro;}
 #navigator-toolbox {margin:-1px -1px -1px -1px;}
 
 /* workaround to get rid of odd white line */
@@ -66,5 +66,5 @@ window:not([chromehidden~="toolbar"]) #urlbar-wrapper {margin:0;}
 #tab-view-deck {background:#000000;}
 .tabbrowser-tab:hover {background:#222222;}
 .tabbrowser-tab {background:#222222; outline: 1px solid #444444; border-bottom:1px solid #222222;}
-.tabbrowser-tab[selected] {background:#222222; border-bottom:1px solid #60fdff;}
+.tabbrowser-tab[selected] {background:#f0c674; border-bottom:1px solid #f0c674;}
 
