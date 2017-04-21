@@ -267,7 +267,7 @@ let maplocalleader = ","
 " using tmux for R
 let R_tmux_split = 1
 let R_vsplit = 1
-
+let R_term_cmd = "termite R"
 " remove replacement of '_' with '<-' in R
 let R_assign = 0
 
@@ -286,3 +286,7 @@ let java_highlight_functions=1
 let java_highlight_java_lang_ids=1
 let java_space_errors=1
 let java_comment_strings=1
+
+" Vim-Go
+" automagically get dependencies
+let g:go_fmt_command = "goimports"
