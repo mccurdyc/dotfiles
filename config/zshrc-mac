@@ -298,7 +298,7 @@ fbr() {
   git checkout $(echo "$branch" | sed "s/.* //")
 }
 
-## open FZF in a tmux window
+# open FZF in a tmux window
 export FZF_TMUX=1
 export FZF_DEFAULT_OPTS='--height 20% --border'
 
