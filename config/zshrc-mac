@@ -8,7 +8,7 @@
 export KUBECONFIG="$HOME/.kube.d/k8s.stockx.com"
 
 export GOPATH="$HOME/go"
-export PATH="$PATH:$GOPATH/bin"
+export PATH="/Users/mccurdyc/dev/protoc/protoc-3.3.0-osx-x86_64/bin:$PATH:$GOPATH/bin"
 
 ## use tmux but not nested
 # [[ -z $TMUX ]] && exec tmux
@@ -16,10 +16,6 @@ export PATH="$PATH:$GOPATH/bin"
 ## exported vars
 export EDITOR=vim
 export VISUAL=vim
-export TERMINAL=termite
-if [ "$TERM" != "linux" ]; then
-  export TERM=xterm-256color
-fi ## fix for scheme script
 
 ## history
 HISTFILE="$HOME/.zsh_history"
@@ -77,15 +73,15 @@ gitd(){
 }
 
 gitbr(){git symbolic-ref --short HEAD 2>/dev/null || echo " "}
-tmuxfix(){[[ -z $TMUX  ]] && echo " "}
+# tmuxfix(){[[ -z $TMUX  ]] && echo " "}
 
 ## lefthand
 PROMPT="%F{179}"          ## primary coloring
 PROMPT+="%M "          ## hostname for ssh
 PROMPT+="%3~ "             ## trailing pwd dirs
 PROMPT+="%(1j.%jj .)"      ## jobs when present
-PROMPT+="%(0?,%F{122},%F{red})" ## colored exit codes
-PROMPT+="%f $(tmuxfix)"    ## breathing room
+PROMPT+="%(0?,%F{122}%F{red}" ## colored exit codes
+# PROMPT+="%f $(tmuxfix)"    ## breathing room
 
 ## righthand; reqs single quotes
 RPROMPT='%F{black}%B$(gitd)$(gitbr)%b%f'
@@ -100,16 +96,6 @@ alias cd="cnl"
 alias ..="cnl .."
 alias ...="cnl ../.."
 alias ....="cnl ../../.."
-alias snd="cnl ~/sandbox/"
-alias dfi="cnl ~/dotfiles/"
-alias all="cnl ~/allegheny/"
-
-alias mr="cnl ~/allegheny/cs610s2017/mrstudyr"
-alias dotcon="cnl ~/dotfiles/config"
-alias pasc="cnl ~/dev/PaSandwichCompany.github.io"
-alias cs383="cnl ~/allegheny/cs383s2017"
-alias cs440="cnl ~/allegheny/cs440s2017"
-alias cs610="cnl ~/allegheny/cs610s2017"
 
 ## }}}
 ##### aliases ##### {{{
@@ -125,11 +111,10 @@ alias la="l -A"      ## list all
 alias l.="l -pd .*"  ## list hidden
 alias lal="ll -A"    ## list all longform
 alias l.l="ll -d .*" ## list hidden longform
-## FIXME ~> freebsd version doesn't handle coloring quite as well
-## FIXME ~> freebsd version doesn't sort by extension or dirstfirst
-## FIXME ~> freebsd version doesn't use the same timedate formatting
 
 [[ "$(uname -s)" == "Linux" ]] && \
+  alias setshell="chsh -s /bin/zsh"
+[[ "$(uname -s)" == "Darwin" ]] && \
   alias setshell="chsh -s /bin/zsh"
 [[ "$(uname -s)" == "FreeBSD" ]] && \
   alias setshell="chsh -s /usr/local/bin/zsh"
@@ -172,18 +157,6 @@ alias td='tmux detach'
 alias tu='unset TMUX'
 alias tn='tmux new'
 alias tk='tmux kill-session -t'
-## FIXME ~> pairprog tmux solutions
-
-alias imv="imv -s -b e4e4e4"
-alias imvv="imv * &"
-alias sxi="sxiv */*/*.jpg */*.jpg *.jpg 2>/dev/null & disown"
-alias z="zathura --fork 2>/dev/null"
-
-alias presv="xrandr --output DP-1 --preferred" ## vga cable
-alias pres="xrandr --output HDMI-1 --mode 1024x768" ## hdmi cable
-alias presk="xrandr --output HDMI-1 --off"
-alias redon="redshift -O 3800 > /dev/null"
-alias redoff="redshift -x > /dev/null"
 
 alias rm="rm -i"
 alias mv="mv -i"
@@ -201,14 +174,11 @@ alias nf="echo && neofetch"
 alias q="exit"
 alias timer="echo "timer~end~with~^D" && date && time cat && date"
 
-alias nm='nmcli dev wifi'
-# alias nme='nmtui-edit'
-
 ## }}}
 ##### functions ##### {{{
 
 ## link cd & ls;
-function cnl() { \cd "$@" && ll; }
+function cnl() { \cd "$@" && ls; }
 
 ## colored man pages;
 function man() { env \
@@ -316,5 +286,24 @@ unset color14
 unset color15
 unset color_foreground
 unset color_background
-
 ## }}}
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+# fbr - checkout git branch
+fbr() {
+  local branches branch
+  branches=$(git branch) &&
+  branch=$(echo "$branches" | fzf-tmux -d 15 +m) &&
+  git checkout $(echo "$branch" | sed "s/.* //")
+}
+
+## open FZF in a tmux window
+export FZF_TMUX=1
+export FZF_DEFAULT_OPTS='--height 20% --border'
+
+# Setting ag as the default source for fzf
+export FZF_DEFAULT_COMMAND='ag -g ""'
+
+# To apply the command to CTRL-T as well
+export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
