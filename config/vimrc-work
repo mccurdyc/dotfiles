@@ -281,3 +281,6 @@ let g:NERDTreeFileExtensionHighlightFullName = 1
 " Vim-Go
 " automagically get dependencies
 let g:go_fmt_command = "goimports"
+
+command JSONPrettyPrint execute ":%!python -m json.tool"
+map <Leader>jj :JSONPrettyPrint<CR>

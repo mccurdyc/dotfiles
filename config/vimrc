@@ -19,13 +19,10 @@ syntax on
 " Vim plugin manager Vim-Plug
 call plug#begin('~/.vim/plugged')
 
-Plug 'mccurdyc/vischeme', {'branch': 'master'}
-
 Plug 'conradirwin/vim-bracketed-paste'
 Plug 'git@github.com:w0ng/vim-hybrid.git'
 Plug 'git@github.com:jalvesaq/Nvim-R.git'
 Plug 'git@github.com:powerline/powerline.git'
-Plug 'git@github.com:ctrlpvim/ctrlp.vim.git'
 Plug 'git@github.com:guns/vim-clojure-static.git'
 Plug 'git@github.com:Raimondi/delimitMate.git'
 Plug 'git@github.com:lervag/vimtex.git'
@@ -47,6 +44,9 @@ Plug 'plasticboy/vim-markdown'
 Plug 'chriskempson/base16-vim'
 Plug 'artur-shaik/vim-javacomplete2'
 Plug 'fatih/vim-go'
+Plug 'nsf/gocode', { 'rtp': 'vim', 'do': '~/.vim/plugged/gocode/vim/symlink.sh' }
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+Plug 'junegunn/fzf.vim'
 
 call plug#end()
 
@@ -362,3 +362,7 @@ imap <C-l> <C-x><C-o>
 " Vim-Go
 " automagically get dependencies
 let g:go_fmt_command = "goimports"
+
+command JSONPrettyPrint execute ":%!python -m json.tool"
+map <Leader>jj :JSONPrettyPrint<CR>
+
