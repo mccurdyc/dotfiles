@@ -110,6 +110,8 @@ set pastetoggle=<F9>
 " toggle Colorizer color highlight mode
 map <Leader>cc :ColorToggle<CR>
 
+map <Leader>jj :%!python -m json.tool<CR>
+
 " remove trailing whitespace
 nnoremap <Leader>rtw :%s/\s\+$//e<CR>
 
@@ -362,3 +364,6 @@ nnoremap <silent> <Leader>ag :FzfAg <C-R><C-W><CR>
 
 " map control-L to auto-complete in Go
 imap <C-l> <C-x><C-o>
+
+" run golint on save
+autocmd BufWritePost,FileWritePost *.go execute 'Lint' | cwindow

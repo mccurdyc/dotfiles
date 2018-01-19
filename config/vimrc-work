@@ -38,6 +38,7 @@ Plug 'plasticboy/vim-markdown'
 Plug 'fatih/vim-go'
 Plug 'chriskempson/base16-vim'
 Plug 'nsf/gocode', { 'rtp': 'vim', 'do': '~/.vim/plugged/gocode/vim/symlink.sh' }
+Plug 'junegunn/vim-easy-align'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 
@@ -58,7 +59,6 @@ autocmd BufRead,BufNewFile *.tex setlocal spell
 nnoremap <C-J> <C-W><C-J>
 nnoremap <C-K> <C-W><C-K>
 nnoremap <C-L> <C-W><C-L>
-nnoremap <C-H> <C-W><C-H>
 
 " don't wrap lines, leave them on same line
 set nowrap
@@ -159,7 +159,7 @@ command! FZFMine call fzf#run({
 \ 'down': '25%'})
 
 " Define key combinations
-nmap <C-h> :FZFHidden<CR>
+" nmap <C-h> :FZFHidden<CR>
 nmap <C-p> :FZFMine<CR>
 nmap <C-i> :FzfTags <C-R><C-W><CR>
 nmap <C-t> :FzfBTags <CR>
@@ -250,6 +250,12 @@ ino <C-d> <Del>
 " toggle NERDTree with ctrl + n
 map <Leader>nt :NERDTreeToggle<ENTER>
 
+" pop off ctags stack
+map >pp :%!python -m json.tool<ENTER>
+
+" align csv on comma
+map <C-[> :pop<ENTER>
+
 " don't display junk in NERDTree
 let NERDTreeIgnore = ['\.class$', '\.pyc$', '\.aux$', 'fdb_latexmk$', '\.fls$', '\.out$']
 
@@ -281,3 +287,9 @@ let g:NERDTreeFileExtensionHighlightFullName = 1
 " Vim-Go
 " automagically get dependencies
 let g:go_fmt_command = "goimports"
+
+" Start interactive EasyAlign in visual mode (e.g. vipga)
+xmap ga <Plug>(EasyAlign)
+
+" Start interactive EasyAlign for a motion/text object (e.g. gaip)
+nmap ga <Plug>(EasyAlign)
