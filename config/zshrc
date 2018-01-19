@@ -5,8 +5,6 @@
 
 ## }}}
 ##### general ##### {{{
-export KUBECONFIG="$HOME/.kube.d/k8s.stockx.com"
-
 export GOPATH="$HOME/go"
 export PATH="$PATH:$GOPATH/bin"
 
@@ -100,16 +98,10 @@ alias cd="cnl"
 alias ..="cnl .."
 alias ...="cnl ../.."
 alias ....="cnl ../../.."
-alias snd="cnl ~/sandbox/"
 alias dfi="cnl ~/dotfiles/"
-alias all="cnl ~/allegheny/"
 
-alias mr="cnl ~/allegheny/cs610s2017/mrstudyr"
+alias stockx="cnl ~/go/src/github.com/stockx"
 alias dotcon="cnl ~/dotfiles/config"
-alias pasc="cnl ~/dev/PaSandwichCompany.github.io"
-alias cs383="cnl ~/allegheny/cs383s2017"
-alias cs440="cnl ~/allegheny/cs440s2017"
-alias cs610="cnl ~/allegheny/cs610s2017"
 
 ## }}}
 ##### aliases ##### {{{
@@ -318,3 +310,23 @@ unset color_foreground
 unset color_background
 
 ## }}}
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+# fbr - checkout git branch
+fbr() {
+  local branches branch
+  branches=$(git branch) &&
+  branch=$(echo "$branches" | fzf-tmux -d 15 +m) &&
+  git checkout $(echo "$branch" | sed "s/.* //")
+}
+
+# open FZF in a tmux window
+export FZF_TMUX=1
+export FZF_DEFAULT_OPTS='--height 20% --border'
+
+# Setting ag as the default source for fzf
+export FZF_DEFAULT_COMMAND='ag -g ""'
+
+# To apply the command to CTRL-T as well
+export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"

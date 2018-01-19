@@ -1,3 +1,5 @@
 [user]
-	email = mccurdyc@allegheny.edu
+	email = mccurdyc22@gmail.com
 	name = Colton McCurdy
+[url "git@github.com:"]
+	insteadOf = https://github.com/
