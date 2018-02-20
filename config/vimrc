@@ -95,6 +95,8 @@ set pastetoggle=<F9>
 " toggle Colorizer color highlight mode
 map <Leader>cc :ColorToggle<CR>
 
+map <Leader>jj :%!python -m json.tool<CR>
+
 " remove trailing whitespace
 nnoremap <Leader>rtw :%s/\s\+$//e<CR>
 
@@ -277,6 +279,13 @@ nmap <C-p> :FZFMine<CR>
 nmap <C-f> :FzfAg<CR>
 " nnoremap <Tab> :FzfBuffers<Cr>
 nnoremap <silent> <Leader>ag :FzfAg <C-R><C-W><CR>
+" }}
+
+" map control-L to auto-complete in Go
+imap <C-l> <C-x><C-o>
+
+" run golint on save
+autocmd BufWritePost,FileWritePost *.go execute 'Lint' | cwindow
 
 " Vim-Go
 " automagically get dependencies
@@ -284,4 +293,3 @@ let g:go_fmt_command = "goimports"
 
 command! JSONPrettyPrint execute ":%!python -m json.tool"
 nmap <Leader>jj :JSONPrettyPrint<CR>
-

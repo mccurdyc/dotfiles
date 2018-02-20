@@ -5,8 +5,6 @@
 
 ## }}}
 ##### general ##### {{{
-export KUBECONFIG="$HOME/.kube.d/k8s.stockx.com"
-
 export GOPATH="$HOME/go"
 export PATH="/Users/mccurdyc/dev/protoc/protoc-3.3.0-osx-x86_64/bin:$PATH:$GOPATH/bin"
 
@@ -97,8 +95,16 @@ alias ..="cnl .."
 alias ...="cnl ../.."
 alias ....="cnl ../../.."
 
+alias gostockx="cnl ~/go/src/github.com/stockx"
+
 ## }}}
 ##### aliases ##### {{{
+alias prod="export KUBECONFIG=~/.kube.d/stockx.production"
+alias stage="export KUBECONFIG=~/.kube.d/stockx.staging"
+alias stagev2="export KUBECONFIG=~/.kube.d/stockx.v2staging"
+alias feed="export KUBECONFIG=~/.kube.d/stockx.warehausfeed"
+alias supp="export KUBECONFIG=~/.kube.d/stockx.support-picard"
+
 
 [[ "$(uname -s)" == "Linux" ]] && \
   alias ls="ls --color=auto --group-directories-first -hFX" && \
@@ -307,3 +313,9 @@ export FZF_DEFAULT_COMMAND='ag -g ""'
 
 # To apply the command to CTRL-T as well
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
+
+# use local ctags -- the right one
+alias ctags="/usr/local/bin/ctags"
+
+# Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
+export PATH="$PATH:$HOME/.rvm/bin"
