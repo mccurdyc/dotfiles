@@ -17,8 +17,11 @@ floating_modifier $mod
 font pango:Office Code Pro Medium, FontAwesome 12
 #####}}}
 
+# Open a new shell in the current directory of the previous shell
+bindsym $mod+Return exec $HOME/dotfiles/scripts/i3/open-cwd.sh
+
 ##### workspaces #####{{{
-set $workspace1 "1:"
+set $workspace1 "1:"
 set $workspace2 "2:"
 set $workspace3 "3:"
 set $workspace4 "4:"
@@ -62,8 +65,8 @@ bindsym $mod+Shift+minus move container to workspace $workspace11
 bindsym $mod+Shift+equal move container to workspace $workspace12
 
 # Pulse Audio controls
-bindsym XF86MonBrightnessUp exec xbacklight -inc 20 # increase screen brightness
-bindsym XF86MonBrightnessDown exec xbacklight -dec 20 # decrease screen brightness
+bindsym XF86MonBrightnessUp exec xbacklight -inc 5 # increase screen brightness
+bindsym XF86MonBrightnessDown exec xbacklight -dec 5 # decrease screen brightness
 bindsym XF86AudioMute         exec "/usr/bin/pactl set-sink-mute @DEFAULT_SINK@ toggle"
 bindsym XF86AudioLowerVolume  exec "/usr/bin/pactl set-sink-volume @DEFAULT_SINK@ '-4%'"
 bindsym XF86AudioRaiseVolume  exec "/usr/bin/pactl set-sink-volume @DEFAULT_SINK@ '+2%'"
@@ -221,8 +224,7 @@ bar {
 
 ##### autostart #####{{{
 # Display settings
-exec_always xandr --output eDP1 --dpi 220 --primary --preferred
-# xrandr --output DP1 --mode 2560x1440 --dpi 440
+exec_always xrandr --output eDP1 --mode 2560x1440 --dpi 220 --primary --preferred
 
 ## set quicker delay and repeat rate for keyboard;
 exec_always xset r rate 300 20 ## especially helps vim and vimfx

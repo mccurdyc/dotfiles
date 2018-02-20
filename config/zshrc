@@ -6,10 +6,11 @@
 ## }}}
 ##### general ##### {{{
 export GOPATH="$HOME/go"
-export PATH="$PATH:$GOPATH/bin"
+export PATH="/usr/local/sbin:/usr/local/bin:/usr/bin:/mccurdyc/go/bin:/home/mccurdyc/.fzf/bin:."
 
-## use tmux but not nested
-# [[ -z $TMUX ]] && exec tmux
+## write current directory to tmp file; used to open new windows in current directory.
+export PROMPT_COMMAND="pwd >! /tmp/whereami"
+precmd() { eval $PROMPT_COMMAND }
 
 ## exported vars
 export EDITOR=vim
@@ -100,9 +101,6 @@ alias ...="cnl ../.."
 alias ....="cnl ../../.."
 alias dfi="cnl ~/dotfiles/"
 
-alias stockx="cnl ~/go/src/github.com/stockx"
-alias dotcon="cnl ~/dotfiles/config"
-
 ## }}}
 ##### aliases ##### {{{
 
@@ -171,6 +169,7 @@ alias imvv="imv * &"
 alias sxi="sxiv */*/*.jpg */*.jpg *.jpg 2>/dev/null & disown"
 alias z="zathura --fork 2>/dev/null"
 
+alias monhome="xrandr --output HDMI2 --mode 3840x2160 --above eDP1 -r 75 --brightness 0.7" ## home monitor
 alias presv="xrandr --output DP-1 --preferred" ## vga cable
 alias pres="xrandr --output HDMI-1 --mode 1024x768" ## hdmi cable
 alias presk="xrandr --output HDMI-1 --off"

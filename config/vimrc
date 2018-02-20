@@ -1,9 +1,10 @@
 " copy and paste to system clipboard
-set clipboard=unnamed
+set clipboard=unnamedplus
 
 " set vertical line in vim at 100 characters for writing clean tex files
-set colorcolumn=100
+set colorcolumn=80
 
+let maplocalleader = ","
 let mapleader = ","
 set nocompatible
 
@@ -20,29 +21,19 @@ syntax on
 call plug#begin('~/.vim/plugged')
 
 Plug 'conradirwin/vim-bracketed-paste'
-Plug 'git@github.com:w0ng/vim-hybrid.git'
 Plug 'git@github.com:jalvesaq/Nvim-R.git'
-Plug 'git@github.com:powerline/powerline.git'
-Plug 'git@github.com:guns/vim-clojure-static.git'
 Plug 'git@github.com:Raimondi/delimitMate.git'
 Plug 'git@github.com:lervag/vimtex.git'
 Plug 'git@github.com:chrisbra/csv.vim.git'
-Plug 'git@github.com:terryma/vim-multiple-cursors.git'
 Plug 'git@github.com:bronson/vim-trailing-whitespace.git'
-Plug 'git@github.com:ervandew/supertab.git'
 Plug 'git@github.com:tomtom/tcomment_vim.git'
-Plug 'git@github.com:kien/rainbow_parentheses.vim.git'
 Plug 'git@github.com:tpope/vim-fugitive.git'
-Plug 'git@github.com:geetarista/ego.vim.git'
 Plug 'git@github.com:chrisbra/Colorizer.git'
-Plug 'tpope/vim-fireplace', { 'for': 'clojure' }
 Plug 'scrooloose/nerdtree'
 Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
 Plug 'airblade/vim-gitgutter'
 Plug 'godlygeek/tabular'
 Plug 'plasticboy/vim-markdown'
-Plug 'chriskempson/base16-vim'
-Plug 'artur-shaik/vim-javacomplete2'
 Plug 'fatih/vim-go'
 Plug 'nsf/gocode', { 'rtp': 'vim', 'do': '~/.vim/plugged/gocode/vim/symlink.sh' }
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
@@ -50,15 +41,9 @@ Plug 'junegunn/fzf.vim'
 
 call plug#end()
 
-" tomorrow-night colorscheme
-" set t_Co=256
 set termguicolors
 set background=dark
 colorscheme Tomorrow-Night
-
-" personal tomorrow-night colorscheme using true colors
-" set termguicolors | syntax enable | colorscheme tomorrow-night
-" set termguicolors | syntax enable | colorscheme hybrid
 
 " turn spell check on for markdown and tex files
 autocmd BufRead,BufNewFile *.md setlocal spell
@@ -101,7 +86,7 @@ set smarttab
 " always uses spaces instead of tab characters
 set expandtab
 
-" map jk to escape key
+" map kj to escape key
 ino kj <Esc>
 
 " toggle paste mode on and off with F9
@@ -137,26 +122,8 @@ ino <F1> <nop>
 nno <F1> <nop>
 vno <F1> <nop>
 
-let g:clojure_align_multiline_strings = 0
-let g:clojure_fuzzy_indent = 1
-let g:clojure_fuzzy_indent_patterns = "with.*,def.*,let.*,send.*"
-let g:clojure_fuzzy_indent_patterns .= ",cli.*" " Clojure core
-let g:clojure_fuzzy_indent_patterns .= ",GET,POST,PUT,PATCH,DELETE,context" " Compojure
-let g:clojure_fuzzy_indent_patterns .= ",clone-for" " Enlive
-let g:clojure_fuzzy_indent_patterns .= ",select.*,insert.*,update.*,delete.*,with.*" " Korma
-let g:clojure_fuzzy_indent_patterns .= ",fact,facts,fact-group" " Midje
-let g:clojure_fuzzy_indent_patterns .= ",up,down,table" " Lobos
-let g:clojure_fuzzy_indent_patterns .= ",when-eiligible,with-eligible-values,url-of-form"
-
-""""" vim-powerline
-set rtp+=$HOME/.local/lib/python2.7/site-packages/powerline/bindings/vim/
-
 " Always show statusline
 set laststatus=2
-
-" python from powerline.vim import setup as powerline_setup
-" python powerline_setup()
-" python del powerline_setup
 
 """"" vim-markdown
 " disable the stupid folding
@@ -164,10 +131,10 @@ let g:vim_markdown_folding_disabled = 1
 " for displaying LaTeX math
 let g:vim_markdown_math = 1
 
-"""" Ctrl-P
-" change the default mapping and the default command to invoke CtrlP:
-let g:ctrlp_map = '<c-p>'
-let g:ctrlp_cmd = 'CtrlP'
+" " Ctrl-P
+" " change the default mapping and the default command to invoke CtrlP:
+" let g:ctrlp_map = '<c-p>'
+" let g:ctrlp_cmd = 'CtrlP'
 
 """"" vimtex
 " make compile nice
@@ -204,7 +171,7 @@ set updatetime=250
 
 """"" NERDTree
 " open NERDTree upon opening vim
-" autocmd vimenter * NERDTree
+autocmd vimenter * NERDTree
 
 " start cursor out of NERDTree
 au VimEnter * wincmd p
@@ -232,38 +199,6 @@ let g:NERDTreeDirArrowCollapsible = '▾'
 " show hidden files
 let NERDTreeShowHidden=1
 
-" Javacomplete2 settings
-autocmd FileType java setlocal omnifunc=javacomplete#Complete
-
-" To enable smart (trying to guess import option) inserting class imports with F4, add:
-nmap <F4> <Plug>(JavaComplete-Imports-AddSmart)
-imap <F4> <Plug>(JavaComplete-Imports-AddSmart)
-
-"To enable usual (will ask for import option) inserting class imports with F5, add:
-nmap <F5> <Plug>(JavaComplete-Imports-Add)
-imap <F5> <Plug>(JavaComplete-Imports-Add)
-
-" To add all missing imports with F6:
-nmap <F6> <Plug>(JavaComplete-Imports-AddMissing)
-imap <F6> <Plug>(JavaComplete-Imports-AddMissing)
-
-" To remove all missing imports with F7:
-nmap <F7> <Plug>(JavaComplete-Imports-RemoveUnused)
-imap <F7> <Plug>(JavaComplete-Imports-RemoveUnused)
-
-" Default mapping for accessors generation:
-nmap <buffer> <leader>jA <Plug>(JavaComplete-Generate-Accessors)
-nmap <buffer> <leader>js <Plug>(JavaComplete-Generate-AccessorSetter)
-nmap <buffer> <leader>jg <Plug>(JavaComplete-Generate-AccessorGetter)
-nmap <buffer> <leader>ja <Plug>(JavaComplete-Generate-AccessorSetterGetter)
-
-imap <buffer> <C-j>s <Plug>(JavaComplete-Generate-AccessorSetter)
-imap <buffer> <C-j>g <Plug>(JavaComplete-Generate-AccessorGetter)
-imap <buffer> <C-j>a <Plug>(JavaComplete-Generate-AccessorSetterGetter)
-
-" R script settings
-let maplocalleader = ","
-
 " using tmux for R
 let R_tmux_split = 1
 let R_vsplit = 1
@@ -275,17 +210,6 @@ let R_assign = 0
 set encoding=utf8
 let g:airline_powerline_fonts = 1
 let g:NERDTreeFileExtensionHighlightFullName = 1
-
-" Configure the syntax highlighting for the Java programming language
-
-autocmd FileType java setlocal omnifunc=javacomplete#Complete
-
-let java_highlight_all=1
-let java_highlight_functions=1
-let java_highlight_functions=1
-let java_highlight_java_lang_ids=1
-let java_space_errors=1
-let java_comment_strings=1
 
 " FZF {{
 let g:fzf_command_prefix = 'Fzf'
@@ -346,23 +270,18 @@ command! FZFMine call fzf#run({
 \ 'down': '25%'})
 
 " Define key combinations
-nmap <C-h> :FZFHidden<CR>
+" nmap <C-h> :FZFHidden<CR>
 nmap <C-p> :FZFMine<CR>
-nmap <C-i> :FzfTags <C-R><C-W><CR>
-nmap <C-t> :FzfBTags <CR>
+" nmap <C-i> :FzfTags <C-R><C-W><CR>
+" nmap <C-t> :FzfBTags <CR>
 nmap <C-f> :FzfAg<CR>
-nnoremap <Tab> :FzfBuffers<Cr>
+" nnoremap <Tab> :FzfBuffers<Cr>
 nnoremap <silent> <Leader>ag :FzfAg <C-R><C-W><CR>
-
-" }}
-
-" map control-L to auto-complete in Go
-imap <C-l> <C-x><C-o>
 
 " Vim-Go
 " automagically get dependencies
 let g:go_fmt_command = "goimports"
 
-command JSONPrettyPrint execute ":%!python -m json.tool"
-map <Leader>jj :JSONPrettyPrint<CR>
+command! JSONPrettyPrint execute ":%!python -m json.tool"
+nmap <Leader>jj :JSONPrettyPrint<CR>
 
