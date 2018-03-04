@@ -17,9 +17,6 @@ floating_modifier $mod
 font pango:Office Code Pro Medium, FontAwesome 12
 #####}}}
 
-# Open a new shell in the current directory of the previous shell
-bindsym $mod+Return exec $HOME/dotfiles/scripts/i3/open-cwd.sh
-
 ##### workspaces #####{{{
 set $workspace1 "1:"
 set $workspace2 "2:"
@@ -157,8 +154,7 @@ bindsym $mod+BackSpace       exec "i3lock -c 1d1f21"
 bindsym $mod+Shift+BackSpace exec "i3lock -c 1d1f21 && sleep 0.15 && systemctl suspend"
 
 # Some quickstart key combinations
-bindsym $mod+Return exec "termite"
-bindsym $mod+Shift+Return exec "termite -e su"
+bindsym $mod+Return exec "alacritty"
 bindsym $mod+backslash exec "firefox"
 bindsym $mod+Shift+backslash exec "slack"
 bindsym $mod+Tab exec "rofi -show run"

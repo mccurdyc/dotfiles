@@ -6,11 +6,12 @@
 ## }}}
 ##### general ##### {{{
 export GOPATH="$HOME/go"
-export PATH="/usr/local/sbin:/usr/local/bin:/usr/bin:/mccurdyc/go/bin:/home/mccurdyc/.fzf/bin:."
+export PATH="/usr/local/sbin:/usr/local/bin:/usr/bin:/mccurdyc/go/bin:/home/mccurdyc/.fzf/bin:/home/mccurdyc/.cargo/bin:."
 
 ## write current directory to tmp file; used to open new windows in current directory.
-export PROMPT_COMMAND="pwd >! /tmp/whereami"
-precmd() { eval $PROMPT_COMMAND }
+# export PROMPT_COMMAND="pwd >! /tmp/whereami"
+# precmd() { eval $PROMPT_COMMAND }
+. /etc/profile.d/vte.sh
 
 ## exported vars
 export EDITOR=vim
@@ -329,3 +330,7 @@ export FZF_DEFAULT_COMMAND='ag -g ""'
 
 # To apply the command to CTRL-T as well
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
+
+# base-16 colorscheme
+BASE16_SHELL=$HOME/.config/base16-shell/
+[ -n "$PS1" ] && [ -s $BASE16_SHELL/profile_helper.sh ] && eval "$($BASE16_SHELL/profile_helper.sh)"

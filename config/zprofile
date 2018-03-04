@@ -14,3 +14,5 @@ fi
 
 [[ -z $DISPLAY && $XDG_VTNR -eq 1 ]] && exec startx /usr/bin/i3
 
+
+export PATH="$HOME/.cargo/bin:$PATH"

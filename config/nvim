@@ -45,7 +45,10 @@ call plug#end()
 set termguicolors
 colorscheme base16-eighties
 
-" tell vim-gitgutter to leave sign column highlight alone
+" fix grey line number bar
+highlight LineNr term=bold cterm=NONE ctermfg=DarkGrey ctermbg=NONE gui=NONE guifg=DarkGrey guibg=NONE
+
+" remove background from git gutter
 let g:gitgutter_override_sign_column_highlight = 0
 
 " turn spell check on for markdown and tex files
