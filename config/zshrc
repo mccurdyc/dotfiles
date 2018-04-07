@@ -4,22 +4,25 @@
 ## warning; zsh aliases require double quotes; bash aliases do not.
 
 ## }}}
-##### general ##### {{{
+
+## Environment Variables {{{
+
+## go
 export GOPATH="$HOME/go"
-export PATH="/usr/local/sbin:/usr/local/bin:/usr/bin:/mccurdyc/go/bin:/home/mccurdyc/.fzf/bin:/home/mccurdyc/.cargo/bin:."
 
-## write current directory to tmp file; used to open new windows in current directory.
-# export PROMPT_COMMAND="pwd >! /tmp/whereami"
-# precmd() { eval $PROMPT_COMMAND }
-. /etc/profile.d/vte.sh
-
-## exported vars
+## general
+export PATH="/usr/local/sbin:/usr/local/bin:/usr/bin:$GOPATH/bin:$HOME/.fzf/bin:$HOME/.cargo/bin:."
 export EDITOR=vim
 export VISUAL=vim
-export TERMINAL=termite
+export TERMINAL=alcritty
+
 if [ "$TERM" != "linux" ]; then
   export TERM=xterm-256color
 fi ## fix for scheme script
+
+## }}}
+
+## General {{{
 
 ## history
 HISTFILE="$HOME/.zsh_history"
@@ -50,7 +53,8 @@ REPORTTIME=2      ## stats if cmd takes >2sec
 [[ "$(uname -s)" == "Linux" ]] && eval "$(dircolors $HOME/.dircolors)"
 
 ## }}}
-##### prompt ##### {{{
+
+## Display {{{
 
 ## prerequisites
 autoload -Uz promptinit
@@ -58,7 +62,6 @@ promptinit
 setopt prompt_subst
 
 gitd(){
-
   ## sidestep lag with git plumbing; was using a simple oneliner
   ## with `git status --porcelain` but found it laggy when working
   ## with heavy repositories; this method is harder to understand
@@ -94,37 +97,29 @@ RPROMPT='%F{black}%B$(gitd)$(gitbr)%b%f'
 PROMPT2="> "
 
 ## }}}
-##### dirjumps ##### {{{
 
+## aliases {{{
+
+## cd
 alias cd="cnl"
 alias ..="cnl .."
-alias ...="cnl ../.."
-alias ....="cnl ../../.."
-alias dfi="cnl ~/dotfiles/"
 
-## }}}
-##### aliases ##### {{{
-
+## ls
 [[ "$(uname -s)" == "Linux" ]] && \
   alias ls="ls --color=auto --group-directories-first -hFX" && \
   alias ll="l -log --time-style=+%y%m%d\ %l:%M%P"
-[[ "$(uname -s)" == "FreeBSD" ]] && \
-  alias ls="ls -hFG" && \
-  alias ll="l -logD %y%m%d\ %l:%M%p"
+
 alias l="ls"         ## list
 alias la="l -A"      ## list all
 alias l.="l -pd .*"  ## list hidden
 alias lal="ll -A"    ## list all longform
 alias l.l="ll -d .*" ## list hidden longform
-## FIXME ~> freebsd version doesn't handle coloring quite as well
-## FIXME ~> freebsd version doesn't sort by extension or dirstfirst
-## FIXME ~> freebsd version doesn't use the same timedate formatting
 
+## chsh
 [[ "$(uname -s)" == "Linux" ]] && \
   alias setshell="chsh -s /bin/zsh"
-[[ "$(uname -s)" == "FreeBSD" ]] && \
-  alias setshell="chsh -s /usr/local/bin/zsh"
 
+## tree
 alias tree="tree --dirsfirst --noreport -ACF"
 alias treea="tree -a"                         ## tree all
 alias treed="tree -d"                         ## tree dirs
@@ -132,13 +127,19 @@ alias tree1="tree -d -L 1"                    ## tree depth 1
 alias tree2="tree -d -L 2"                    ## tree depth 2
 alias tree3="tree -d -L 3"                    ## tree depth 3
 
+## grep
 alias grep="grep --color=auto"
 alias fgrep="fgrep --color=auto"
 alias egrep="egrep --color=auto"
+
+## find
 alias fd="find . -type d -name"
 alias ff="find . -type f -name"
+
+## du
 alias dud="du -d 1 -h"
 
+## git
 alias giti="git init && gitignore"
 alias gitignore="cp ~/.gitignore ."
 alias gitb="git branch"
@@ -157,47 +158,52 @@ alias gitll="git log --graph --pretty=format:"{%Cblue%h%Creset}~{%Cblue%cn%Crese
 alias gitflat="gitch --orphan new-master master; gitc -m 'flatten'; gitb -M new-master master; gitc --amend"
 alias gitflatabort="git fetch --all; gitr --hard origin/master"
 
+## tmux
 alias tl='tmux list-sessions'
 alias ta='tmux attach -t '
 alias td='tmux detach'
 alias tu='unset TMUX'
 alias tn='tmux new'
 alias tk='tmux kill-session -t'
-## FIXME ~> pairprog tmux solutions
 
+## imv
 alias imv="imv -s -b e4e4e4"
 alias imvv="imv * &"
 alias sxi="sxiv */*/*.jpg */*.jpg *.jpg 2>/dev/null & disown"
+
+## zathura
 alias z="zathura --fork 2>/dev/null"
 
+## xrandr
 alias monhome="xrandr --output HDMI2 --mode 3840x2160 --above eDP1 -r 75 --brightness 0.7" ## home monitor
 alias presv="xrandr --output DP-1 --preferred" ## vga cable
 alias pres="xrandr --output HDMI-1 --mode 1024x768" ## hdmi cable
 alias presk="xrandr --output HDMI-1 --off"
-alias redon="redshift -O 3800 > /dev/null"
-alias redoff="redshift -x > /dev/null"
 
+## rm
 alias rm="rm -i"
 alias mv="mv -i"
+
+## mkdir
 alias mkdir="mkdir -pv"
 
+## copying keys
 alias idrsa="xclip -sel clip < ~/.ssh/id_rsa.pub"
-alias texplate="cp -r ~/dotfiles/etc/tex/* ."
+
+## reloading terminal with zshrc
 alias src="source ~/.zshrc"
 
-alias hi="history"
+## resource usage
 alias jo="jobs -l"
 alias free="free -h"
 alias df="df -h"
-alias nf="echo && neofetch"
-alias q="exit"
-alias timer="echo "timer~end~with~^D" && date && time cat && date"
 
+## wifi
 alias nm='nmcli dev wifi'
-# alias nme='nmtui-edit'
 
 ## }}}
-##### functions ##### {{{
+
+## functions {{{
 
 ## link cd & ls;
 function cnl() { \cd "$@" && ll; }
@@ -212,7 +218,7 @@ function man() { env \
   LESS_TERMCAP_ue=$'\e[0m' \
   LESS_TERMCAP_us=$'\e[01;32m' \
   man "$@"
-} ## man()
+}
 
 ## extraction;
 function extract() {
@@ -231,13 +237,22 @@ function extract() {
       *) echo "{extraction-failed}" ;;
     esac
   else echo "{invalid-file}"; fi
-} ## extract()
+}
 
 ## compression;
 function compress() { tar czvf "$1".tar.gz "$1" }
 
+## fbr - checkout git branch
+fbr() {
+  local branches branch
+  branches=$(git branch) &&
+  branch=$(echo "$branches" | fzf-tmux -d 15 +m) &&
+  git checkout $(echo "$branch" | sed "s/.* //")
+}
+
 ## }}}
-##### scheme ##### {{{
+
+## scheme {{{
 
 ## define colors;
 color00="1d/1f/21"
@@ -311,26 +326,21 @@ unset color_background
 
 ## }}}
 
+## fzf {{{
+
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
-# fbr - checkout git branch
-fbr() {
-  local branches branch
-  branches=$(git branch) &&
-  branch=$(echo "$branches" | fzf-tmux -d 15 +m) &&
-  git checkout $(echo "$branch" | sed "s/.* //")
-}
-
-# open FZF in a tmux window
+## open FZF in a tmux window
 export FZF_TMUX=1
 export FZF_DEFAULT_OPTS='--height 20% --border'
 
-# Setting ag as the default source for fzf
+## Setting ag as the default source for fzf
 export FZF_DEFAULT_COMMAND='ag -g ""'
 
-# To apply the command to CTRL-T as well
+## To apply the command to CTRL-T as well
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
+# }}}
 
-# base-16 colorscheme
+## base-16 colorscheme
 BASE16_SHELL=$HOME/.config/base16-shell/
 [ -n "$PS1" ] && [ -s $BASE16_SHELL/profile_helper.sh ] && eval "$($BASE16_SHELL/profile_helper.sh)"

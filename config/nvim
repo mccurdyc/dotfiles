@@ -1,21 +1,7 @@
-" copy and paste to system clipboard
-set clipboard=unnamedplus
-
-" set vertical line in vim at 100 characters for writing clean tex files
-set colorcolumn=80
-
-let maplocalleader = ","
-let mapleader = ","
+" when compatible is set, all the enhancements and improvements of Vi Improved are turned off.
 set nocompatible
 
-" set no swap files
-set noswapfile
-
-" allow filetype to be on
-filetype plugin indent on
-
-" syntax highlighting
-syntax on
+" Plug {{{
 
 " Vim plugin manager Vim-Plug
 call plug#begin('~/.vim/plugged')
@@ -42,102 +28,32 @@ Plug 'chriskempson/base16-vim'
 
 call plug#end()
 
-set termguicolors
-colorscheme base16-eighties
+"" vim-go
 
-" fix grey line number bar
-highlight LineNr term=bold cterm=NONE ctermfg=DarkGrey ctermbg=NONE gui=NONE guifg=DarkGrey guibg=NONE
+let g:go_metalinter_enabled = ['vet', 'golint', 'errcheck']
 
-" remove background from git gutter
-let g:gitgutter_override_sign_column_highlight = 0
+" automagically get dependencies
+let g:go_fmt_command = "goimports"
 
-" turn spell check on for markdown and tex files
-autocmd BufRead,BufNewFile *.md setlocal spell
-autocmd BufRead,BufNewFile *.tex setlocal spell
+" because the following wasnt working
+" let g:go_metalinter_autosave = 1
+autocmd BufWritePost *.go :GoMetaLinter
 
-" navigating vim splits
-nnoremap <C-J> <C-W><C-J>
-nnoremap <C-K> <C-W><C-K>
-nnoremap <C-L> <C-W><C-L>
-nnoremap <C-H> <C-W><C-H>
+"" tcomment
 
-" don't wrap lines, leave them on same line
-set nowrap
-
-" highlight current line
-set cursorline
-
-" show line numbers
-set number
-
-" numbers in relation to current line
-" set relativenumber
-
-" set backspace
-set backspace=2
-
-" size of a hard tabstop
-set tabstop=2
-
-" size of an indent
-set shiftwidth=2
-
-" a combination of spaces and tabs are used to simulate tab stops at a width
-" other than the (hard)tabstop
-set softtabstop=2
-
-" make tab insert indents instead of tabs at the beginning of a line
-set smarttab
-
-" always uses spaces instead of tab characters
-set expandtab
-
-" map kj to escape key
-ino kj <Esc>
-
-" toggle paste mode on and off with F9
-set pastetoggle=<F9>
-
-" toggle Colorizer color highlight mode
-map <Leader>cc :ColorToggle<CR>
-
-map <Leader>jj :%!python -m json.tool<CR>
-
-" remove trailing whitespace
-nnoremap <Leader>rtw :%s/\s\+$//e<CR>
-
-" clear search highlights
-no <silent><Leader>cs :nohls<CR>
-
-let g:slime_target = "tmux"
-nmap <C-c><C-m> ggVG<C-c><C-c>
-
-" TComment toggle
+" toggle
 map <Leader>/ :TComment<CR>
 
-" Execute clear whitespace on save
-map <Leader>st :call Preserve("%s/\\s\\+$//e")<CR>
+"" vim-markdown
 
-" remove F1 help
-ino <F1> <nop>
-nno <F1> <nop>
-vno <F1> <nop>
-
-" Always show statusline
-set laststatus=2
-
-""""" vim-markdown
 " disable the stupid folding
 let g:vim_markdown_folding_disabled = 1
+
 " for displaying LaTeX math
 let g:vim_markdown_math = 1
 
-" " Ctrl-P
-" " change the default mapping and the default command to invoke CtrlP:
-" let g:ctrlp_map = '<c-p>'
-" let g:ctrlp_cmd = 'CtrlP'
+"" vimtex
 
-""""" vimtex
 " make compile nice
 autocmd FileType tex :nmap <Leader>ll \ll
 nnoremap <Leader>ss :LatexmkStop<CR>
@@ -156,35 +72,28 @@ let g:vimtex_complete_recursive_bib = 0
 let g:vimtex_view_method = 'mupdf'
 let g:vimtex_view_mupdf_options = '-r 288'
 
-" ignore all warnings
-" let g:vimtex_quickfix_ignore_all_warnings = 1
+"" vim-gitgutter
 
-" ignore common warnings --- ignore_all_warnings has to be disabled
-" let g:vimtex_quickfix_ignored_warnings = [
-"         \ 'Underfull',
-"         \ 'Overfull',
-"         \ 'specifier changed to',
-"       \ ]
-
-""""" vim-gitgutter
 " reduce udpate time to 250 ms
 set updatetime=250
 
-""""" NERDTree
+"" NERDTree
+
 " open NERDTree upon opening vim
 autocmd vimenter * NERDTree
 
 " start cursor out of NERDTree
-au VimEnter * wincmd p
+autocmd VimEnter * wincmd p
+
 " open a NERDTree automatically when vim starts up if no files were specified
 autocmd StdinReadPre * let s:std_in=1
 autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
 
 " show current file NERDTree
-nno <silent> <C-n> :NERDTreeFind<CR>
-ino <C-d> <Del>
+nnoremap <silent> <C-n> :NERDTreeFind<CR>
+inoremap <C-d> <Del>
 
-" toggle NERDTree with ctrl + n
+" toggle NERDTree with ,nt
 map <Leader>nt :NERDTreeToggle<ENTER>
 
 " don't display junk in NERDTree
@@ -200,20 +109,15 @@ let g:NERDTreeDirArrowCollapsible = '▾'
 " show hidden files
 let NERDTreeShowHidden=1
 
-" using tmux for R
-let R_tmux_split = 1
-let R_vsplit = 1
-let R_term_cmd = "termite R"
-" remove replacement of '_' with '<-' in R
-let R_assign = 0
-
 " Set encoding to UTF-8 to show glyphs - vim-devicons & vim-nerdtree-syntax-highlight
 set encoding=utf8
 let g:airline_powerline_fonts = 1
 let g:NERDTreeFileExtensionHighlightFullName = 1
 
-" FZF {{
+"" fzf
+
 let g:fzf_command_prefix = 'Fzf'
+
 " This is the default extra key bindings
 let g:fzf_action = {
   \ 'ctrl-t': 'tab split',
@@ -271,24 +175,138 @@ command! FZFMine call fzf#run({
 \ 'down': '25%'})
 
 " Define key combinations
-" nmap <C-h> :FZFHidden<CR>
 nmap <C-p> :FZFMine<CR>
-" nmap <C-i> :FzfTags <C-R><C-W><CR>
-" nmap <C-t> :FzfBTags <CR>
 nmap <C-f> :FzfAg<CR>
-" nnoremap <Tab> :FzfBuffers<Cr>
 nnoremap <silent> <Leader>ag :FzfAg <C-R><C-W><CR>
-" }}
 
-" map control-L to auto-complete in Go
-imap <C-l> <C-x><C-o>
+" }}}
 
-" run golint on save
-autocmd BufWritePost,FileWritePost *.go execute 'Lint' | cwindow
+" System {{{
 
-" Vim-Go
-" automagically get dependencies
-let g:go_fmt_command = "goimports"
+" copy and paste to system clipboard
+set clipboard=unnamedplus
+
+let maplocalleader = ","
+let mapleader = ","
+
+" set no swap files
+set noswapfile
+
+" allow filetype to be on
+filetype plugin indent on
+
+" set backspace
+set backspace=2
+
+" size of a hard tabstop
+set tabstop=2
+
+" size of an indent
+set shiftwidth=2
+
+" a combination of spaces and tabs are used to simulate tab stops at a width
+" other than the (hard)tabstop
+set softtabstop=2
+
+" make tab insert indents instead of tabs at the beginning of a line
+set smarttab
+
+" always uses spaces instead of tab characters
+set expandtab
+
+" map kj to escape key
+inoremap kj <Esc>
+
+" turn spell check on for markdown and tex files
+autocmd BufRead,BufNewFile *.md setlocal spell
+autocmd BufRead,BufNewFile *.tex setlocal spell
+
+" taken from Gregory M. Kapfhammer's dotfiles (github.com/gkapfham/dotfiles)
+
+" Source the vimrc file
+command! Reload :source $MYVIMRC
+
+" }}}
+
+" Display {{{
+
+" ugly green/yellow bars without this set
+set termguicolors
+colorscheme base16-eighties
+
+" line numbers
+set number
+set relativenumber
+
+" don't wrap lines, leave them on same line
+set nowrap
+
+" redraw screen faster
+set nocursorcolumn
+set nocursorline
+set ttyfast
+
+" fix slow screen redrawing
+set lazyredraw
+
+" always show statusline
+set laststatus=2
+
+" matching parentheses
+set showmatch
+
+set colorcolumn=80
+
+" syntax highlighting
+syntax on
+
+" fix grey line number bar
+highlight LineNr term=bold cterm=NONE ctermfg=DarkGrey ctermbg=NONE gui=NONE guifg=DarkGrey guibg=NONE
+
+" remove background from git gutter
+let g:gitgutter_override_sign_column_highlight = 0
+
+" }}}
+
+" Navigation {{{
+
+" navigating vim splits
+nnoremap <C-J> <C-W><C-J>
+nnoremap <C-K> <C-W><C-K>
+nnoremap <C-L> <C-W><C-L>
+nnoremap <C-H> <C-W><C-H>
+
+" }}}
+
+" Extra {{{
+
+" Execute clear whitespace on save
+map <Leader>st :call Preserve("%s/\\s\\+$//e")<CR>
+
+" remove trailing whitespace
+nnoremap <Leader>rtw :%s/\s\+$//e<CR>
+
+" clear search highlights
+no <silent><Leader>cs :nohls<CR>
+
+" if the last window open is a quickfix window or only a quickfix and NERDTree, quit all
+autocmd BufEnter * call LastWindow()
+function! LastWindow()
+  " if the window is quickfix go on
+  if len(getbufinfo({'buflisted':1})) == 1
+    if &buftype=="quickfix"
+      quit!
+    elseif buffer_name(2) == "NERD_tree_1"
+      quit!
+    endif
+  elseif len(getbufinfo({'buflisted':1})) == 2
+    if buffer_name(2) == "NERD_tree_1" && getbufvar(winbufnr(win_getid(2)), '&buftype')=="quickfix"
+      quitall!
+    endif
+  endif
+endfunction
 
 command! JSONPrettyPrint execute ":%!python -m json.tool"
 nmap <Leader>jj :JSONPrettyPrint<CR>
+
+" }}}

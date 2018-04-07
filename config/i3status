@@ -6,6 +6,7 @@ order += "path_exists vpn"
 order += "wireless _first_"
 order += "battery 0"
 order += "volume master"
+order += "cpu_usage"
 order += "tztime date"
 order += "tztime us"
 
@@ -19,12 +20,14 @@ general {
 	output_format = "i3bar" }
 
 ## styling;
+cpu_usage {
+	format = " %usage"}
 volume master {
-	format = "  %volume"
+	format = " %volume"
 	format_muted = " mute"
 	device = "default" }
 battery 0 {
-	format = "  %percentage"
+	format = " %percentage"
 	low_threshold = 30
 	threshold_type = percentage
 	integer_battery_capacity = true
