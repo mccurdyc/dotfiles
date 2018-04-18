@@ -1,6 +1,54 @@
 " when compatible is set, all the enhancements and improvements of Vi Improved are turned off.
 set nocompatible
 
+" System {{{
+
+" copy and paste to system clipboard
+set clipboard=unnamedplus
+
+let maplocalleader = ","
+let mapleader = ","
+
+" set no swap files
+set noswapfile
+
+" allow filetype to be on
+filetype plugin indent on
+
+" set backspace
+set backspace=2
+
+" size of a hard tabstop
+set tabstop=2
+
+" size of an indent
+set shiftwidth=2
+
+" a combination of spaces and tabs are used to simulate tab stops at a width
+" other than the (hard)tabstop
+set softtabstop=2
+
+" make tab insert indents instead of tabs at the beginning of a line
+set smarttab
+
+" always uses spaces instead of tab characters
+set expandtab
+
+" map kj to escape key
+inoremap kj <Esc>
+
+" turn spell check on for markdown and tex files
+autocmd BufRead,BufNewFile *.md setlocal spell
+autocmd BufRead,BufNewFile *.tex setlocal spell
+
+" taken from Gregory M. Kapfhammer's dotfiles (github.com/gkapfham/dotfiles)
+
+" Source the vimrc file
+command! Reload :source $MYVIMRC
+
+" }}}
+
+
 " Plug {{{
 
 " Vim plugin manager Vim-Plug
@@ -30,19 +78,14 @@ call plug#end()
 
 "" vim-go
 
-let g:go_metalinter_enabled = ['vet', 'golint', 'errcheck']
+let g:go_metalinter_enabled = ['vet', 'golint']
 
 " automagically get dependencies
 let g:go_fmt_command = "goimports"
 
 " because the following wasnt working
-" let g:go_metalinter_autosave = 1
-autocmd BufWritePost *.go :GoMetaLinter
-
-"" tcomment
-
-" toggle
-map <Leader>/ :TComment<CR>
+let g:go_metalinter_autosave = 1
+" autocmd BufWritePost *.go :GoMetaLinter
 
 "" vim-markdown
 
@@ -94,7 +137,7 @@ nnoremap <silent> <C-n> :NERDTreeFind<CR>
 inoremap <C-d> <Del>
 
 " toggle NERDTree with ,nt
-map <Leader>nt :NERDTreeToggle<ENTER>
+map <leader>nt :NERDTreeToggle<cr>
 
 " don't display junk in NERDTree
 let NERDTreeIgnore = ['\.class$', '\.pyc$', '\.aux$', 'fdb_latexmk$', '\.fls$', '\.out$']
@@ -181,53 +224,6 @@ nnoremap <silent> <Leader>ag :FzfAg <C-R><C-W><CR>
 
 " }}}
 
-" System {{{
-
-" copy and paste to system clipboard
-set clipboard=unnamedplus
-
-let maplocalleader = ","
-let mapleader = ","
-
-" set no swap files
-set noswapfile
-
-" allow filetype to be on
-filetype plugin indent on
-
-" set backspace
-set backspace=2
-
-" size of a hard tabstop
-set tabstop=2
-
-" size of an indent
-set shiftwidth=2
-
-" a combination of spaces and tabs are used to simulate tab stops at a width
-" other than the (hard)tabstop
-set softtabstop=2
-
-" make tab insert indents instead of tabs at the beginning of a line
-set smarttab
-
-" always uses spaces instead of tab characters
-set expandtab
-
-" map kj to escape key
-inoremap kj <Esc>
-
-" turn spell check on for markdown and tex files
-autocmd BufRead,BufNewFile *.md setlocal spell
-autocmd BufRead,BufNewFile *.tex setlocal spell
-
-" taken from Gregory M. Kapfhammer's dotfiles (github.com/gkapfham/dotfiles)
-
-" Source the vimrc file
-command! Reload :source $MYVIMRC
-
-" }}}
-
 " Display {{{
 
 " ugly green/yellow bars without this set
@@ -289,24 +285,7 @@ nnoremap <Leader>rtw :%s/\s\+$//e<CR>
 " clear search highlights
 no <silent><Leader>cs :nohls<CR>
 
-" if the last window open is a quickfix window or only a quickfix and NERDTree, quit all
-autocmd BufEnter * call LastWindow()
-function! LastWindow()
-  " if the window is quickfix go on
-  if len(getbufinfo({'buflisted':1})) == 1
-    if &buftype=="quickfix"
-      quit!
-    elseif buffer_name(2) == "NERD_tree_1"
-      quit!
-    endif
-  elseif len(getbufinfo({'buflisted':1})) == 2
-    if buffer_name(2) == "NERD_tree_1" && getbufvar(winbufnr(win_getid(2)), '&buftype')=="quickfix"
-      quitall!
-    endif
-  endif
-endfunction
-
 command! JSONPrettyPrint execute ":%!python -m json.tool"
-nmap <Leader>jj :JSONPrettyPrint<CR>
+nmap <leader>jj :JSONPrettyPrint<cr>
 
 " }}}

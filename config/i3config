@@ -155,7 +155,7 @@ bindsym $mod+Shift+BackSpace exec "i3lock -c 1d1f21 && sleep 0.15 && systemctl s
 
 # Some quickstart key combinations
 bindsym $mod+Return exec "alacritty"
-bindsym $mod+backslash exec "firefox"
+bindsym $mod+backslash exec "chromium"
 bindsym $mod+Shift+backslash exec "slack"
 bindsym $mod+Tab exec "rofi -show run"
 bindsym $mod+Shift+Tab exec "rofi -show window"
