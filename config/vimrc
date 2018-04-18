@@ -30,14 +30,14 @@ call plug#end()
 
 "" vim-go
 
-let g:go_metalinter_enabled = ['vet', 'golint', 'errcheck']
+let g:go_metalinter_enabled = ['vet', 'golint']
 
 " automagically get dependencies
 let g:go_fmt_command = "goimports"
 
 " because the following wasnt working
-" let g:go_metalinter_autosave = 1
-autocmd BufWritePost *.go :GoMetaLinter
+let g:go_metalinter_autosave = 1
+" autocmd BufWritePost *.go :GoMetaLinter
 
 "" tcomment
 
@@ -231,8 +231,8 @@ command! Reload :source $MYVIMRC
 " Display {{{
 
 " ugly green/yellow bars without this set
-set termguicolors
-colorscheme base16-eighties
+" set termguicolors
+colorscheme Tomorrow-Night-Eighties
 
 " line numbers
 set number

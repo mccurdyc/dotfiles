@@ -1,5 +1,54 @@
 " when compatible is set, all the enhancements and improvements of Vi Improved are turned off.
-set nocompatible
+" this no longer needs to be set for NeoVim
+" set nocompatible
+
+" System {{{
+
+" copy and paste to system clipboard
+set clipboard=unnamedplus
+
+let maplocalleader = ","
+let mapleader = ","
+
+" set no swap files
+set noswapfile
+
+" allow filetype to be on
+filetype plugin indent on
+
+" set backspace
+set backspace=2
+
+" size of a hard tabstop
+set tabstop=2
+
+" size of an indent
+set shiftwidth=2
+
+" a combination of spaces and tabs are used to simulate tab stops at a width
+" other than the (hard)tabstop
+set softtabstop=2
+
+" make tab insert indents instead of tabs at the beginning of a line
+set smarttab
+
+" always uses spaces instead of tab characters
+set expandtab
+
+" map kj to escape key
+inoremap kj <Esc>
+
+" turn spell check on for markdown and tex files
+autocmd BufRead,BufNewFile *.md setlocal spell
+autocmd BufRead,BufNewFile *.tex setlocal spell
+
+" taken from Gregory M. Kapfhammer's dotfiles (github.com/gkapfham/dotfiles)
+
+" Source the vimrc file
+command! Reload :source $MYVIMRC
+
+" }}}
+
 
 " System {{{
 
@@ -73,7 +122,7 @@ Plug 'nsf/gocode', { 'rtp': 'vim', 'do': '~/.vim/plugged/gocode/vim/symlink.sh' 
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 Plug 'chriskempson/base16-vim'
-
+" 
 call plug#end()
 
 "" vim-go
@@ -137,7 +186,7 @@ nnoremap <silent> <C-n> :NERDTreeFind<CR>
 inoremap <C-d> <Del>
 
 " toggle NERDTree with ,nt
-map <leader>nt :NERDTreeToggle<cr>
+map <Leader>nt :NERDTreeToggle<CR>
 
 " don't display junk in NERDTree
 let NERDTreeIgnore = ['\.class$', '\.pyc$', '\.aux$', 'fdb_latexmk$', '\.fls$', '\.out$']

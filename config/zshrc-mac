@@ -6,7 +6,7 @@
 ## }}}
 ##### general ##### {{{
 export GOPATH="$HOME/go"
-export PATH="/Users/mccurdyc/dev/protoc/protoc-3.3.0-osx-x86_64/bin:$PATH:$GOPATH/bin"
+export PATH="/Users/mccurdyc/dev/protoc/protoc-3.3.0-osx-x86_64/bin:$PATH:$GOPATH/bin:$HOME/.cargo/bin:."
 
 ## use tmux but not nested
 # [[ -z $TMUX ]] && exec tmux
@@ -319,3 +319,6 @@ alias ctags="/usr/local/bin/ctags"
 
 # Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
 export PATH="$PATH:$HOME/.rvm/bin"
+
+# added by travis gem
+[ -f /Users/mccurdyc/.travis/travis.sh ] && source /Users/mccurdyc/.travis/travis.sh
