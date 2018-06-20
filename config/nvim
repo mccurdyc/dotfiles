@@ -150,6 +150,26 @@ call plug#end()
 
 "" deoplete
 
+let g:deoplete#enable_at_startup = 1
+
+" map TAB, C-j to down in popup and C-k to up in popup
+inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
+inoremap <expr> <C-j> pumvisible() ? "\<C-n>" : "\<C-j>"
+inoremap <expr> <C-k> pumvisible() ? "\<C-p>" : "\<C-k>"
+
+" manually trigger deoplete with TAB
+call deoplete#custom#option('auto_complete', v:false)
+
+inoremap <silent><expr> <TAB>
+		\ pumvisible() ? "\<C-n>" :
+		\ <SID>check_back_space() ? "\<TAB>" :
+		\ deoplete#mappings#manual_complete()
+		function! s:check_back_space() abort "{{{
+		let col = col('.') - 1
+		return !col || getline('.')[col - 1]  =~ '\s'
+		endfunction"}}}
+
+
 " set sources
 let g:deoplete#sources = {}
 let g:deoplete#sources.python = ['LanguageClient']
@@ -183,13 +203,13 @@ let g:go_auto_type_info = 1
 
 "" ale
 
+" always keep sign gutter open to avoid jumpiness
+let g:ale_sign_column_always = 1
+
 " Error and warning signs.
 let g:ale_sign_error = '⤫'
 let g:ale_sign_warning = '⚠'
 
-"" deoplete
-
-let g:deoplete#enable_at_startup = 1
 
 "" vim-markdown
 
