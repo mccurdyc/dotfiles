@@ -122,19 +122,74 @@ Plug 'nsf/gocode', { 'rtp': 'vim', 'do': '~/.vim/plugged/gocode/vim/symlink.sh' 
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 Plug 'chriskempson/base16-vim'
-" 
+
+Plug 'w0rp/ale'
+
+" for deoplete Vim8
+Plug 'roxma/nvim-yarp'
+Plug 'roxma/vim-hug-neovim-rpc'
+
+if has('nvim')
+  Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+else
+  Plug 'Shougo/deoplete.nvim'
+  Plug 'roxma/nvim-yarp'
+  Plug 'roxma/vim-hug-neovim-rpc'
+endif
+
+" for deoplete go
+Plug 'nsf/gocode'
+Plug 'neovim/neovim'
+Plug 'neovim/python-client'
+Plug 'zchee/deoplete-go', { 'do': 'make'}
+
+" delve support for debugging
+Plug 'sebdah/vim-delve'
+
 call plug#end()
+
+"" deoplete
+
+" set sources
+let g:deoplete#sources = {}
+let g:deoplete#sources.python = ['LanguageClient']
+let g:deoplete#sources.python3 = ['LanguageClient']
+let g:deoplete#sources.vim = ['vim']
 
 "" vim-go
 
-let g:go_metalinter_enabled = ['vet', 'golint']
+" let g:go_metalinter_enabled = ['vet', 'golint']
 
 " automagically get dependencies
 let g:go_fmt_command = "goimports"
 
 " because the following wasnt working
-let g:go_metalinter_autosave = 1
+"let g:go_metalinter_autosave = 1
 " autocmd BufWritePost *.go :GoMetaLinter
+
+" display function declarations
+au FileType go nmap <leader>gt :GoDeclsDir<cr>
+
+" GoAlternate; open in splits
+au Filetype go nmap <leader>ga <Plug>(go-alternate-edit)
+au Filetype go nmap <leader>gah <Plug>(go-alternate-split)
+au Filetype go nmap <leader>gav <Plug>(go-alternate-vertical)
+
+" GoCoverage
+au FileType go nmap <leader>gct :GoCoverageToggle -short<cr>
+
+" show type information in status line
+let g:go_auto_type_info = 1
+
+"" ale
+
+" Error and warning signs.
+let g:ale_sign_error = '⤫'
+let g:ale_sign_warning = '⚠'
+
+"" deoplete
+
+let g:deoplete#enable_at_startup = 1
 
 "" vim-markdown
 
@@ -318,6 +373,9 @@ let g:gitgutter_override_sign_column_highlight = 0
 " }}}
 
 " Navigation {{{
+
+" Autosave buffers before leaving them
+autocmd BufLeave * silent! :wa
 
 " navigating vim splits
 nnoremap <C-J> <C-W><C-J>
