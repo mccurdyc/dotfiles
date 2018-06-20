@@ -6,10 +6,7 @@
 ## }}}
 ##### general ##### {{{
 export GOPATH="$HOME/go"
-export PATH="/Users/mccurdyc/dev/protoc/protoc-3.3.0-osx-x86_64/bin:$PATH:$GOPATH/bin:$HOME/.cargo/bin:."
-
-## use tmux but not nested
-# [[ -z $TMUX ]] && exec tmux
+export PATH="/bin:/sbin:/usr/bin:/usr/local/bin:/usr/local/sbin:/usr/sbin:/sbin:$GOPATH/bin:$HOME/.cargo/bin:."
 
 ## exported vars
 export EDITOR=vim
@@ -39,9 +36,6 @@ setopt autocd     ## mainly so ../ works
 setopt nonomatch  ## prevent glob crashes
 unsetopt CLOBBER  ## require >| to truncate
 REPORTTIME=2      ## stats if cmd takes >2sec
-
-## dircolors fix
-[[ "$(uname -s)" == "Linux" ]] && eval "$(dircolors $HOME/.dircolors)"
 
 ## }}}
 ##### prompt ##### {{{
@@ -90,12 +84,7 @@ PROMPT2="> "
 ## }}}
 ##### dirjumps ##### {{{
 
-alias cd="cnl"
-alias ..="cnl .."
-alias ...="cnl ../.."
-alias ....="cnl ../../.."
-
-alias gostockx="cnl ~/go/src/github.com/stockx"
+alias gostockx="cd ~/go/src/github.com/stockx"
 
 ## }}}
 ##### aliases ##### {{{
@@ -105,25 +94,11 @@ alias stagev2="export KUBECONFIG=~/.kube.d/stockx.v2staging"
 alias feed="export KUBECONFIG=~/.kube.d/stockx.warehausfeed"
 alias supp="export KUBECONFIG=~/.kube.d/stockx.support-picard"
 
-
-[[ "$(uname -s)" == "Linux" ]] && \
-  alias ls="ls --color=auto --group-directories-first -hFX" && \
-  alias ll="l -log --time-style=+%y%m%d\ %l:%M%P"
-[[ "$(uname -s)" == "FreeBSD" ]] && \
-  alias ls="ls -hFG" && \
-  alias ll="l -logD %y%m%d\ %l:%M%p"
 alias l="ls"         ## list
 alias la="l -A"      ## list all
 alias l.="l -pd .*"  ## list hidden
 alias lal="ll -A"    ## list all longform
 alias l.l="ll -d .*" ## list hidden longform
-
-[[ "$(uname -s)" == "Linux" ]] && \
-  alias setshell="chsh -s /bin/zsh"
-[[ "$(uname -s)" == "Darwin" ]] && \
-  alias setshell="chsh -s /bin/zsh"
-[[ "$(uname -s)" == "FreeBSD" ]] && \
-  alias setshell="chsh -s /usr/local/bin/zsh"
 
 alias tree="tree --dirsfirst --noreport -ACF"
 alias treea="tree -a"                         ## tree all
@@ -182,21 +157,6 @@ alias timer="echo "timer~end~with~^D" && date && time cat && date"
 
 ## }}}
 ##### functions ##### {{{
-
-## link cd & ls;
-function cnl() { \cd "$@" && ls; }
-
-## colored man pages;
-function man() { env \
-  LESS_TERMCAP_mb=$'\e[01;31m' \
-  LESS_TERMCAP_md=$'\e[01;31m' \
-  LESS_TERMCAP_me=$'\e[0m' \
-  LESS_TERMCAP_se=$'\e[0m' \
-  LESS_TERMCAP_so=$'\e[01;33m' \
-  LESS_TERMCAP_ue=$'\e[0m' \
-  LESS_TERMCAP_us=$'\e[01;32m' \
-  man "$@"
-} ## man()
 
 ## extraction;
 function extract() {

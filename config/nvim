@@ -275,9 +275,13 @@ nnoremap <silent> <Leader>ag :FzfAg <C-R><C-W><CR>
 
 " Display {{{
 
-" ugly green/yellow bars without this set
-set termguicolors
-colorscheme base16-eighties
+if exists('$TMUX')
+  set termguicolors
+  colorscheme base16-eighties
+else
+  set t_Co=256
+  colorscheme morning 
+endif
 
 " line numbers
 set number
