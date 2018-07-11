@@ -11,7 +11,7 @@
 export GOPATH="$HOME/go"
 
 ## general
-export PATH="/usr/local/sbin:/usr/local/bin:/usr/bin:$GOPATH/bin:$HOME/.fzf/bin:$HOME/.cargo/bin:/home/mccurdyc/.local/bin:."
+export PATH="/usr/local/sbin:/usr/local/bin:/usr/bin:$GOPATH/bin:$HOME/.fzf/bin:$HOME/.cargo/bin:/home/mccurdyc/.local/bin:/usr/bin/core_perl."
 export EDITOR=vim
 export VISUAL=vim
 export TERMINAL=alcritty

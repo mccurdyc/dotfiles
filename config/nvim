@@ -122,6 +122,7 @@ Plug 'nsf/gocode', { 'rtp': 'vim', 'do': '~/.vim/plugged/gocode/vim/symlink.sh' 
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 Plug 'chriskempson/base16-vim'
+Plug 'ambv/black'
 
 Plug 'w0rp/ale'
 
@@ -147,6 +148,9 @@ Plug 'zchee/deoplete-go', { 'do': 'make'}
 Plug 'sebdah/vim-delve'
 
 call plug#end()
+
+"" Black
+autocmd BufWritePre *.py execute ':Black'
 
 "" deoplete
 
@@ -350,13 +354,8 @@ nnoremap <silent> <Leader>ag :FzfAg <C-R><C-W><CR>
 
 " Display {{{
 
-if exists('$TMUX')
   set termguicolors
   colorscheme base16-eighties
-else
-  set t_Co=256
-  colorscheme morning 
-endif
 
 " line numbers
 set number
