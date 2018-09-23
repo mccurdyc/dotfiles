@@ -1,52 +1,53 @@
-##@## ~/.config/i3status/config ##@##
 ## purpose; status bar configuration, righthand portion.
-
-## enabling;
-order += "path_exists vpn"
+# enabling
 order += "wireless _first_"
-order += "battery 0"
+order += "disk /"
 order += "volume master"
 order += "cpu_usage"
+order += "battery 0"
 order += "tztime date"
 order += "tztime us"
 
-## coloring;
+# coloring
 general {
-		interval = 1
-		colors = true
-		color_good     = "#f7ca88"
-		color_degraded = "#dc9656"
-		color_bad      = "#ab4642"
-		output_format = "i3bar" 
+	interval = 1
+	colors = true
+	color_good     = "#f7ca88"
+	color_degraded = "#dc9656"
+	color_bad      = "#ab4642"
+	output_format = "i3bar" 
 	}
 
-## styling;
+# styling
 cpu_usage {
-	format = " %usage"}
+	format = "0: %cpu0 1: %cpu1 2: %cpu2 3: %cpu3"
+	}
 volume master {
 	format = " %volume"
 	format_muted = " mute"
-	device = "default" }
+	device = "default" 
+	}
 battery 0 {
 	format = " %percentage"
+	status_chr = " %percentage"
 	low_threshold = 30
 	threshold_type = percentage
 	integer_battery_capacity = true
-	last_full_capacity = true }
+	last_full_capacity = true 
+	}
 tztime us {
 	format = "%time"
 	format_time = " %l:%M:%S%P"
-	timezone = "US/Eastern" }
+	timezone = "US/Eastern" 
+	}
 tztime date {
 	format = "%time"
-	format_time = " %m/%d" }
-path_exists vpn {
-	format = "vpn"
-	format_down = ""
-	path = "/proc/sys/net/ipv4/conf/tun0" }
-ethernet _first_ {
-	format_up = "ethup"
-	format_down = "ethdown" }
+	format_time = " %m/%d" 
+	}
+disk "/" {
+        format = " %avail / %total"
+	}
 wireless _first_ {
-	format_up = "  %essid"
-	format_down = "offline" }
+	format_up = " %quality %essid %bitrate"
+	format_down = "offline" 
+	}
