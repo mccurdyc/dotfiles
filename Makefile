@@ -1,5 +1,5 @@
 .PHONY: all
-all: bin dotfiles etc ## Installs the bin and etc directory files and the dotfiles.
+all: dotfiles
 
 .PHONY: bin
 bin: ## Installs the bin directory files.
@@ -12,21 +12,23 @@ bin: ## Installs the bin directory files.
 .PHONY: dotfiles
 dotfiles: ## Installs the dotfiles.
 	# add aliases for dotfiles
-	for file in $(shell find $(CURDIR) -name ".*" -not -name ".gitignore" -not -name ".travis.yml" -not -name ".git" -not -name ".*.swp" -not -name ".gnupg"); do \
+	for file in $(shell find $(CURDIR) -name ".*" -not -name ".gitignore" -not -name ".travis.yml" -not -name ".git" -not -name ".*.swp" -not -name ".gnupg" -not -name ".config"); do \
 		f=$$(basename $$file); \
 		ln -sfn $$file $(HOME)/$$f; \
 	done; \
+	# symlink all files in .config to ~/.config
+	for file in $(shell find $(CURDIR)/.config -type d -maxdepth 1); do \
+		f=$$(basename $$file); \
+		ln -sfn $$file $(HOME)/.config/$$f; \
+	done; \
+	chmod +x $(HOME)/.xinitrc;
+	# yes, we want xsessionrc symlinked to xinitrc
+	# https://faq.i3wm.org/question/18/how-do-xsession-xinitrc-and-i3config-play-together.1.html
+	ln -snf $(CURDIR)/.xinitrc $(HOME)/.xsessionrc;
 	ln -fn $(CURDIR)/gitignore $(HOME)/.gitignore;
 	git update-index --skip-worktree $(CURDIR)/.gitconfig;
-	mkdir -p $(HOME)/.config;
-	ln -snf $(CURDIR)/.i3 $(HOME)/.config/i3;
 	mkdir -p $(HOME)/.local/share;
 	ln -snf $(CURDIR)/.fonts $(HOME)/.local/share/fonts;
-	ln -snf $(CURDIR)/.zprofile $(HOME)/.zprofile;
-	ln -snf $(CURDIR)/.zshrc $(HOME)/.zshrc;
-	ln -snf $(CURDIR)/.tmux.conf $(HOME)/.tmux.conf;
-	mkdir -p $(HOME)/.config/nvim;
-	ln -snf $(CURDIR)/.nvim $(HOME)/.config/nvim/init.vim;
 
 .PHONY: etc
 etc: ## Installs the etc directory files.

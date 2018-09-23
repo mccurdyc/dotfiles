@@ -1,20 +1,18 @@
 #!/bin/bash
 
-## prerequisites
+# prerequisites
 autoload -Uz promptinit
 promptinit
 setopt prompt_subst
 
-## lefthand
-PROMPT="%F{179}"          ## primary coloring
-PROMPT+="%M "          ## hostname for ssh
-PROMPT+="%3~ "             ## trailing pwd dirs
-PROMPT+="%(1j.%jj .)"      ## jobs when present
-PROMPT+="%(0?,%F{122}%,%F{red})" ## colored exit codes
-PROMPT+="%f $(tmuxfix)"    ## breathing room
+# lefthand
+PROMPT="%F{179}"                  ## primary coloring
+PROMPT+="%M "                     ## hostname for ssh
+PROMPT+="%3~ "                    ## trailing pwd dirs
+PROMPT+="%(1j.%jj .)"             ## jobs when present
+PROMPT+="%(?.%F{green}%% %F{white}.%F{red}%% %F{white})" ## colored exit codes
 
-## righthand; reqs single quotes
-RPROMPT='%F{black}%B$(gitd)$(gitbr)%b%f'
+# righthand; reqs single quotes
 
-## multiline
+# multiline
 PROMPT2="> "
