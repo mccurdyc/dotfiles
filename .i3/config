@@ -1,23 +1,15 @@
-##@## ~/.config/i3/config ##@##{{{
+# i3 config file (v4)
+# Please see http://i3wm.org/docs/userguide.html for a complete reference!
 
-## purpose; window manager configuration, and some usability helpers.
-## reminder; tightly integrated with i3status and other dependencies.
-
-#####}}}
-#
-##### miscellaneous #####{{{
-# Use Windows key as modifier
 set $mod Mod4
-
-# Use Mouse+$mod to drag floating windows to their wanted position
-floating_modifier $mod
 
 # Font for window titles. Will also be used by the bar unless a different font
 # is used in the bar {} block below.
 font pango:Office Code Pro Medium, FontAwesome 8
-#####}}}
 
-##### workspaces #####{{{
+# Use Mouse+$mod to drag floating windows to their wanted position
+floating_modifier $mod
+
 set $workspace1 "1:"
 set $workspace2 "2:"
 set $workspace3 "3:"
@@ -31,9 +23,7 @@ set $workspace9 "9:"
 set $workspace10 "10:"
 set $workspace11 "11:"
 set $workspace12 "12:"
-#####}}}
 
-##### keybindings #####{{{
 bindsym $mod+1 workspace $workspace1
 bindsym $mod+2 workspace $workspace2
 bindsym $mod+3 workspace $workspace3
@@ -44,8 +34,6 @@ bindsym $mod+7 workspace $workspace7
 bindsym $mod+8 workspace $workspace8
 bindsym $mod+9 workspace $workspace9
 bindsym $mod+0 workspace $workspace10
-bindsym $mod+minus workspace $workspace11
-bindsym $mod+equal workspace $workspace12
 
 # move focused container to workspace
 bindsym $mod+Shift+1 move container to workspace $workspace1
@@ -58,17 +46,19 @@ bindsym $mod+Shift+7 move container to workspace $workspace7
 bindsym $mod+Shift+8 move container to workspace $workspace8
 bindsym $mod+Shift+9 move container to workspace $workspace9
 bindsym $mod+Shift+0 move container to workspace $workspace10
-bindsym $mod+Shift+minus move container to workspace $workspace11
-bindsym $mod+Shift+equal move container to workspace $workspace12
 
-# Pulse Audio controls
+# audio controls
+bindsym XF86AudioRaiseVolume exec amixer set Master 5%+ #increase sound volume
+bindsym XF86AudioLowerVolume exec amixer set Master 5%- #decrease sound volume
+bindsym XF86AudioMute exec amixer set Master 1+ toggle # mute sound
+bindsym XF86AudioMicMute exec amixer set Capture toggle # mute mic
+
+# screen brightness controls
 bindsym XF86MonBrightnessUp exec xbacklight -inc 5 # increase screen brightness
 bindsym XF86MonBrightnessDown exec xbacklight -dec 5 # decrease screen brightness
-bindsym XF86AudioMute         exec "/usr/bin/pactl set-sink-mute @DEFAULT_SINK@ toggle"
-bindsym XF86AudioLowerVolume  exec "/usr/bin/pactl set-sink-volume @DEFAULT_SINK@ '-4%'"
-bindsym XF86AudioRaiseVolume  exec "/usr/bin/pactl set-sink-volume @DEFAULT_SINK@ '+2%'"
-bindsym Print                 exec "scrot '%y.%m.%d.%T.png' -e 'mv $f ~/pictures/screenshots/'"
+
 # bindsym Shift+Print           exec "scrot '%y.%m.%d.%T.png' -ub -e 'mv $f ~/pictures/screenshots/'"
+bindsym Print                 exec "scrot '%y.%m.%d.%T.png' -e 'mv $f ~/pictures/screenshots/'"
 bindsym --release Shift+Print exec scrot -s '%y.%m.%d.$T.png' -e 'mv $f ~/pictures/screenshots/'
 
 # kill focused window
@@ -118,8 +108,6 @@ bindsym $mod+space focus mode_toggle
 
 # focus the parent or child container, respectively
 bindsym $mod+a focus parent
-#bindsym $mod+d focus child
-
 
 # reload the configuration file
 bindsym $mod+Shift+c reload
@@ -156,54 +144,72 @@ bindsym $mod+Shift+BackSpace exec "i3lock -c 1d1f21 && sleep 0.15 && systemctl s
 # Some quickstart key combinations
 bindsym $mod+Return exec "termite"
 bindsym $mod+backslash exec "chromium"
-bindsym $mod+Shift+backslash exec "slack"
 bindsym $mod+Tab exec "rofi -show run"
 bindsym $mod+Shift+Tab exec "rofi -show window"
 
-# Make CAPS_LOCK into another, more convenient, control
-exec --no-startup-id setxkbmap -option ctrl:nocaps
-#####}}}
-
-##### decorations #####{{{
 # hide_edge_borders both
-new_window pixel 5
-new_float pixel 5
-#####}}}
+new_window pixel 3
+new_float pixel 3
 
-##### colorscheme #####{{{
-set $varGrey0 #1d1f21
-set $varGrey1 #282a2e
-set $varGrey2 #c5c8c6
-set $varGrey3 #373b41
-set $varGrey4 #707880
-set $varGrey5 #707880
-set $varGrey6 #c7c9d1
-set $varRed   #cc6666
-set $varFocus #f0c674
+## Base16 Default Dark
+# Author: Chris Kempson (http://chriskempson.com)
+#
+# You can use these variables anywhere in the i3 configuration file.
 
-## <text> used for tabbed window title text
-## <bgcol> used for normal borders everywhere
-## <border> used for tabbed separator borders
-## <indicator> used for showing split direction
-## <state>              <border>  <bgcol>   <text>    <indicator>
-client.focused          $varFocus $varFocus $varFocus $varFocus
-client.unfocused        $varGrey3 $varGrey3 $varGrey5 $varGrey3
-client.focused_inactive $varGrey3 $varGrey3 $varGrey5 $varGrey3
-client.urgent           $varRed   $varRed   $varRed   $varRed
-client.background       $varGrey0 ##(only takes one parameter)
-client.placeholder      $varGrey0 $varGrey0 $varGrey0 $varGrey0
-#####}}}
+set $base00 #181818
+set $base01 #282828
+set $base02 #383838
+set $base03 #585858
+set $base04 #b8b8b8
+set $base05 #d8d8d8
+set $base06 #e8e8e8
+set $base07 #f8f8f8
+set $base08 #ab4642
+set $base09 #dc9656
+set $base0A #f7ca88
+set $base0B #a1b56c
+set $base0C #86c1b9
+set $base0D #7cafc2
+set $base0E #ba8baf
+set $base0F #a16946
 
-##### status bar #####{{{
+# Basic bar configuration using the Base16 variables.
 bar {
-  font pango:Office Code Pro Medium, FontAwesome 8
-	mode dock
-	modifier $mod
-	position bottom
-	tray_output primary
-	strip_workspace_numbers yes
-	status_command i3status --config ~/.config/i3status/config
-	separator_symbol "|"
+    font pango:Office Code Pro Medium, FontAwesome 10
+    status_command i3status
+    mode dock
+    modifier $mod
+    position bottom
+    tray_output primary
+    strip_workspace_numbers yes
+    status_command i3status --config ~/.config/i3status/config
+    separator_symbol "|"
+
+    colors {
+        background $base00
+        separator  $base01
+        statusline $base04
+
+        # State             Border  BG      Text
+        focused_workspace   $base05 $base0D $base00
+        active_workspace    $base05 $base03 $base00
+        inactive_workspace  $base03 $base01 $base05
+        urgent_workspace    $base08 $base08 $base00
+        binding_mode        $base00 $base0A $base00
+    }
+}
+
+# Basic color configuration using the Base16 variables for windows and borders.
+# Property Name         Border  BG      Text    Indicator Child Border
+client.focused          $base05 $base0D $base00 $base0D $base0D
+client.focused_inactive $base01 $base01 $base05 $base03 $base01
+client.unfocused        $base01 $base00 $base05 $base01 $base01
+client.urgent           $base08 $base08 $base00 $base08 $base08
+client.placeholder      $base00 $base00 $base05 $base00 $base00
+client.background       $base07
+
+# status bar
+bar {
 	colors {
 		background $varGrey0
 		statusline $varGrey4
@@ -216,12 +222,10 @@ bar {
 		binding_mode       $varRed   $varGrey0 $varRed
 	}
 }
-#####}}}
 
-##### autostart #####{{{
 # Display settings
-exec_always xrandr --output eDP1 --mode 2560x1440 --dpi 220 --primary --preferred
+# exec_always xrandr --output eDP1 --mode 2560x1440 --dpi 220 --primary --preferred
 
 ## set quicker delay and repeat rate for keyboard;
-exec_always xset r rate 300 20 ## especially helps vim and vimfx
+# exec_always xset r rate 300 20 ## especially helps vim and vimfx
 #####}}}

@@ -1,0 +1,166 @@
+##@## ~/.Xresources ##@##
+## purpose; catchall configuration place for programs writing to X.
+## reminder; this file requires double ## comments for some reason.
+## reminder; this file can be reloaded via "xrdb -load ~/.Xresources".
+## reminder; see "rofi -dump-xresources" for listing of all options.
+
+## rofi-settings;
+rofi.font: Office Code Pro Medium 18
+rofi.lines: 5
+
+rofi.color-enabled: true
+rofi.color-window: #1d1f21, #1d1f21, #f0c674
+rofi.color-normal: #1d1f21, #c5c8c6, #1d1f21, #f0c674, #1d1f21
+rofi.color-active: #1d1f21, #f0c674, #1d1f21, #f0c674, #1d1f21
+rofi.color-urgent: #1d1f21, #cc6666, #1d1f21, #cc6666, #1d1f21
+rofi.location: 6
+rofi.yoffset: 0
+rofi.xoffset: 0
+rofi.width: 100
+rofi.fixed_num_lines: 1
+rofi.hmode: false
+
+rofi.separator-style: none
+rofi.hide-scrollbar: true
+
+!TomorrowNightEighties
+#define t_background            #2d2d2d
+#define t_current_line          #393939
+#define t_selection      	#515151
+#define t_foreground      	#cccccc
+#define t_comment	     	#999999
+#define t_red		     	#f2777a
+#define t_orange	     	#f99157
+#define t_yellow        	#ffcc66
+#define t_green	        	#99cc99
+#define t_aqua	        	#66cccc
+#define t_blue	        	#6699cc
+#define t_purple        	#cc99cc
+
+
+*.foreground:   t_foreground
+*.background:   t_background
+*.cursorColor:  #aeafad
+
+! Black / Grey
+*.color0:       #000000
+*.color8:       #666666
+
+! Red / Bright Red
+*.color1:       t_red
+*.color9:       #FF3334
+
+! Green + Bright Green
+*.color2:       t_green
+*.color10:      #9ec400
+
+! Yellow (Orange) + Bright Yellow (Yellow)
+*.color3:       t_orange
+*.color11:      t_yellow
+
+! Blue + Bright Blue
+*.color4:       t_blue
+*.color12:      t_blue
+
+! Magenta (Purple) + Bright Magenta
+*.color5:       t_purple
+*.color13:      #b777e0
+
+! Cyan (Aqua) + Bright Cyan
+*.color6:       t_aqua
+*.color14:      #54ced6
+
+! Light Grey (Selection) + White (Current Line)
+*.color7:       t_selection
+*.color15:      t_current_line
+
+!-- Xft settings -- !
+Xft.dpi:        144
+Xft.rgba:       rgb
+Xft.autohint:   0
+Xft.lcdfilter:  lcddefault
+Xft.hintstyle:  hintfull
+Xft.hinting:    1
+Xft.antialias:  1
+
+!! URxvt
+! do not scroll with output
+URxvt*scrollTtyOutput: false
+! scroll in relation to buffer (with mouse scroll or Shift+Page Up)
+URxvt*scrollWithBuffer: true
+! scroll back to the bottom on keypress
+URxvt*scrollTtyKeypress: true
+
+!! copy paste
+URxvt.clipboard.autocopy:   true
+URxvt.clipboard.copycmd:    xclip -i -selection clipboard
+URxvt.clipboard.pastecmd:   xclip -o -selection clipboard
+
+!! disable default bindings for Control-Shift
+URxvt.iso14755: false
+URxvt.iso14755_52: false
+
+!! Control-Shift-C for copy
+URxvt.keysym.C-C: perl:clipboard:copy
+URxvt.keysym.C-V: perl:clipboard:paste
+URxvt.keysym.Control-v: perl:clipboard:paste
+
+!! clickable url
+xvt.perl-ext-common:      default,matcher,selection-to-clipboard,clipboard
+URxvt.url-launcher:         /usr/bin/xdg-open
+URxvt.matcher.button:       1
+URxvt.url-select.underline: true
+! Base16 Default Dark
+! Scheme: Chris Kempson (http://chriskempson.com)
+
+#define base00 #181818
+#define base01 #282828
+#define base02 #383838
+#define base03 #585858
+#define base04 #b8b8b8
+#define base05 #d8d8d8
+#define base06 #e8e8e8
+#define base07 #f8f8f8
+#define base08 #ab4642
+#define base09 #dc9656
+#define base0A #f7ca88
+#define base0B #a1b56c
+#define base0C #86c1b9
+#define base0D #7cafc2
+#define base0E #ba8baf
+#define base0F #a16946
+
+*foreground:   base05
+#ifdef background_opacity
+*background:   [background_opacity]base00
+#else
+*background:   base00
+#endif
+*cursorColor:  base05
+
+*color0:       base00
+*color1:       base08
+*color2:       base0B
+*color3:       base0A
+*color4:       base0D
+*color5:       base0E
+*color6:       base0C
+*color7:       base05
+
+*color8:       base03
+*color9:       base08
+*color10:      base0B
+*color11:      base0A
+*color12:      base0D
+*color13:      base0E
+*color14:      base0C
+*color15:      base07
+
+! Note: colors beyond 15 might not be loaded (e.g., xterm, urxvt),
+! use 'shell' template to set these if necessary
+*color16:      base09
+*color17:      base0F
+*color18:      base01
+*color19:      base02
+*color20:      base04
+*color21:      base06

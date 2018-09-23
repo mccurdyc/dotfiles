@@ -3,3 +3,5 @@
 	name = Colton McCurdy
 [url "git@github.com:"]
 	insteadOf = https://github.com/
+[core]
+	excludesfile = /home/mccurdyc/.gitignore_global

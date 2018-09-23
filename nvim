@@ -49,55 +49,6 @@ command! Reload :source $MYVIMRC
 
 " }}}
 
-
-" System {{{
-
-" copy and paste to system clipboard
-set clipboard=unnamedplus
-
-let maplocalleader = ","
-let mapleader = ","
-
-" set no swap files
-set noswapfile
-
-" allow filetype to be on
-filetype plugin indent on
-
-" set backspace
-set backspace=2
-
-" size of a hard tabstop
-set tabstop=2
-
-" size of an indent
-set shiftwidth=2
-
-" a combination of spaces and tabs are used to simulate tab stops at a width
-" other than the (hard)tabstop
-set softtabstop=2
-
-" make tab insert indents instead of tabs at the beginning of a line
-set smarttab
-
-" always uses spaces instead of tab characters
-set expandtab
-
-" map kj to escape key
-inoremap kj <Esc>
-
-" turn spell check on for markdown and tex files
-autocmd BufRead,BufNewFile *.md setlocal spell
-autocmd BufRead,BufNewFile *.tex setlocal spell
-
-" taken from Gregory M. Kapfhammer's dotfiles (github.com/gkapfham/dotfiles)
-
-" Source the vimrc file
-command! Reload :source $MYVIMRC
-
-" }}}
-
-
 " Plug {{{
 
 " Vim plugin manager Vim-Plug
@@ -117,19 +68,14 @@ Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
 Plug 'airblade/vim-gitgutter'
 Plug 'godlygeek/tabular'
 Plug 'plasticboy/vim-markdown'
-Plug 'fatih/vim-go'
-Plug 'nsf/gocode', { 'rtp': 'vim', 'do': '~/.vim/plugged/gocode/vim/symlink.sh' }
+Plug 'mdempsky/gocode', { 'rtp': 'nvim', 'do': '~/.vim/plugged/gocode/nvim/symlink.sh' }
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 Plug 'chriskempson/base16-vim'
-Plug 'ambv/black'
 
-Plug 'w0rp/ale'
+Plug 'fatih/vim-go', { 'do': ':GoInstallBinaries' }
 
-" for deoplete Vim8
-Plug 'roxma/nvim-yarp'
-Plug 'roxma/vim-hug-neovim-rpc'
-
+"" http://github.com/zchee/deoplete-go/issues/128
 if has('nvim')
   Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 else
@@ -138,23 +84,23 @@ else
   Plug 'roxma/vim-hug-neovim-rpc'
 endif
 
-" for deoplete go
-Plug 'nsf/gocode'
-Plug 'neovim/neovim'
-Plug 'neovim/python-client'
-Plug 'zchee/deoplete-go', { 'do': 'make'}
+Plug 'zchee/deoplete-go', { 'do': 'make' }
+
+Plug 'w0rp/ale'
 
 " delve support for debugging
 Plug 'sebdah/vim-delve'
 
 call plug#end()
 
-"" Black
-autocmd BufWritePre *.py execute ':Black'
+set completeopt+=noselect
 
 "" deoplete
 
 let g:deoplete#enable_at_startup = 1
+"" let g:deoplete#sources#go#gocode_binary = '~/go/bin/gocode'
+"" let g:deoplete#sources#go#sort_class = ['package', 'func', 'type', 'var', 'const']
+"" let g:deoplete#sources#go#source_importer = 1
 
 " map TAB, C-j to down in popup and C-k to up in popup
 inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
@@ -354,8 +300,7 @@ nnoremap <silent> <Leader>ag :FzfAg <C-R><C-W><CR>
 
 " Display {{{
 
-  set termguicolors
-  colorscheme base16-eighties
+colorscheme base16-eighties
 
 " line numbers
 set number
@@ -419,3 +364,6 @@ command! JSONPrettyPrint execute ":%!python -m json.tool"
 nmap <leader>jj :JSONPrettyPrint<cr>
 
 " }}}
+
+""" just a hack for now to redraw screen to fix first line after resizing window
+autocmd BufWritePre * execute ':redraw!'

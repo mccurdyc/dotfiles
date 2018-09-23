@@ -12,13 +12,10 @@ export GOPATH="$HOME/go"
 
 ## general
 export PATH="/usr/local/sbin:/usr/local/bin:/usr/local/go:/usr/bin:$GOPATH/bin:/usr/local/go/bin:$HOME/.fzf/bin:$HOME/.cargo/bin:/home/mccurdyc/.local/bin:/usr/bin/core_perl."
-export EDITOR=vim
-export VISUAL=vim
-export TERMINAL=alcritty
+export EDITOR=nvim
+export VISUAL=nvim
 
-if [ "$TERM" != "linux" ]; then
-  export TERM=xterm-256color
-fi ## fix for scheme script
+export TERM=rxvt-unicode-256color
 
 ## }}}
 
@@ -48,11 +45,6 @@ setopt autocd     ## mainly so ../ works
 setopt nonomatch  ## prevent glob crashes
 unsetopt CLOBBER  ## require >| to truncate
 REPORTTIME=2      ## stats if cmd takes >2sec
-
-## dircolors fix
-[[ "$(uname -s)" == "Linux" ]] && eval "$(dircolors $HOME/.dircolors)"
-
-## }}}
 
 ## Display {{{
 
