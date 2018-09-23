@@ -32,6 +32,10 @@ alias mv="mv -i"
 ## mkdir
 alias mkdir="mkdir -pv"
 
+## git
+alias gits="git status"
+alias gitrt="git describe --tags `git rev-list --tags --max-count=1`"
+
 ## resource usage
 alias jo="jobs -l"
 alias free="free -h"
