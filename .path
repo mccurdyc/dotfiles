@@ -1,0 +1,16 @@
+#!/bin/sh
+
+# go path
+export GOPATH="${HOME}/.go"
+
+# update path
+export PATH=/usr/local/bin:${PATH}:/sbin
+
+# add go path
+export PATH="/usr/local/go/bin:${GOPATH}/bin:${PATH}"
+
+# add rust path
+export PATH="${HOME}/.cargo/bin:${PATH}"
+
+# update cdpath
+export CDPATH=${CDPATH}:${GOPATH}/src/github.com:${GOPATH}/src/golang.org:${GOPATH}/src

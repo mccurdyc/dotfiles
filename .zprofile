@@ -1,18 +1,10 @@
-##@## ~/.zprofile ##@##
-## purpose; update path and kickoff xserver
+#!/bin/bash
 
-
-export PATH="${PATH}:$HOME/scripts/"
-export PATH="`ruby -e 'puts Gem.user_dir'`/bin:$PATH"
-
-# try to fix vim background color
-if [ -e /usr/share/terminfo/x/xterm-256color ]; then
-        export TERM='xterm-256color'
-else
-        export TERM='xterm-color'
-fi
-
-[[ -z $DISPLAY && $XDG_VTNR -eq 1 ]] && exec startx /usr/bin/i3
-
-
-export PATH="$HOME/.cargo/bin:$PATH"
+# Load .bashrc and other files...
+for file in ~/.{zshrc,zprofile,zsh_prompt,aliases,functions,path,gofunc,dockerfunc,gitfunc,exports}; do
+	if [[ -r "$file" ]] && [[ -f "$file" ]]; then
+		# shellcheck source=/dev/null
+		source "$file"
+	fi
+done
+unset file

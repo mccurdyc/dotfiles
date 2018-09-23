@@ -12,7 +12,7 @@ floating_modifier $mod
 
 set $workspace1 "1:"
 set $workspace2 "2:"
-set $workspace3 "3:"
+set $workspace4 "3:"
 set $workspace4 "4:"
 set $workspace5 "5:"
 set $workspace6 "6:"
@@ -207,25 +207,3 @@ client.unfocused        $base01 $base00 $base05 $base01 $base01
 client.urgent           $base08 $base08 $base00 $base08 $base08
 client.placeholder      $base00 $base00 $base05 $base00 $base00
 client.background       $base07
-
-# status bar
-bar {
-	colors {
-		background $varGrey0
-		statusline $varGrey4
-		separator  $varGrey3
-		## <state>         <border>   <bgcol>    <text>
-		focused_workspace  $varFocus $varGrey0 $varFocus
-		active_workspace   $varGrey3 $varGrey0 $varGrey3
-		inactive_workspace $varGrey3 $varGrey0 $varGrey3
-		urgent_workspace   $varRed   $varGrey0 $varRed
-		binding_mode       $varRed   $varGrey0 $varRed
-	}
-}
-
-# Display settings
-# exec_always xrandr --output eDP1 --mode 2560x1440 --dpi 220 --primary --preferred
-
-## set quicker delay and repeat rate for keyboard;
-# exec_always xset r rate 300 20 ## especially helps vim and vimfx
-#####}}}
