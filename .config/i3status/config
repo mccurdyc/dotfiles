@@ -12,12 +12,13 @@ order += "tztime us"
 
 ## coloring;
 general {
-	interval = 1
-	colors = true
-	color_good     = "#f0c674"
-	color_degraded = "#f0c674"
-	color_bad      = "#cc6666"
-	output_format = "i3bar" }
+		interval = 1
+		colors = true
+		color_good     = "#f7ca88"
+		color_degraded = "#dc9656"
+		color_bad      = "#ab4642"
+		output_format = "i3bar" 
+	}
 
 ## styling;
 cpu_usage {
@@ -48,4 +49,4 @@ ethernet _first_ {
 	format_down = "ethdown" }
 wireless _first_ {
 	format_up = "  %essid"
-	format_down = "nmtui" }
+	format_down = "offline" }

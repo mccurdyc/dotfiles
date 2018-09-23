@@ -1,6 +1,29 @@
 ## purpose; zsh shell config; well integrated with vim and tmux.
 ## warning; zsh aliases require double quotes; bash aliases do not.
 
+#!/bin/bash
+
+# Autostart X at login
+# if you don't have this, i3 won't be started
+# https://wiki.archlinux.org/index.php/Xinit
+if [[ ! $DISPLAY && $XDG_VTNR -eq 1 ]]; then
+  exec startx
+fi
+
+# Load .bashrc and other files...
+for file in ~/.{zsh_prompt,aliases,functions,path,gofunc,dockerfunc,gitfunc,exports}; do
+	if [[ -r "$file" ]] && [[ -f "$file" ]]; then
+		# shellcheck source=/dev/null
+		source "$file"
+	fi
+done
+unset file
+
+# Open new terminal in same directory as last terminal:
+if [ -f ~/.last_dir ]; then
+        cd "`cat ~/.last_dir`"
+fi
+
 # autocomplete
 setopt COMPLETE_ALIASES
 autoload -Uz compinit
@@ -19,6 +42,9 @@ REPORTTIME=2      ## stats if cmd takes >2sec
 
 # fzf
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+# store prompt command
+PROMPT_COMMAND='echo -ne "\033]0;${USER}@${HOSTNAME}: ${PWD}\007"'
 
 # Base16 Shell
 BASE16_SHELL="$HOME/.config/base16-shell/"

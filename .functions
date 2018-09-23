@@ -4,6 +4,12 @@
 #
 # tmuxfix(){[[ -z $TMUX  ]] && echo " "}
 
+# Open new terminal in same directory as last terminal:
+function cd {
+        builtin cd $@
+        pwd > ~/.last_dir
+}
+
 # Simple calculator
 calc() {
 	local result=""
