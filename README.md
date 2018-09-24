@@ -25,10 +25,12 @@ Please, whatever you do, do not just blindly copy and paste ANYONE's dotfiles, i
 + remove the MacOS-specific files (do checks instead)
 
 ## Sources of Inspiration
-+ https://github.com/delgrecoj/nix
-+ https://github.com/jessfraz/dotfile://github.com/jessfraz/dotfiles
-+ https://www.reddit.com/r/i3wm/comments/6ugxvk/set_working_directory_for_terminal/dlsntaw
-+ https://github.com/gkapfham/dotfiles
++ [@delgrecoj's dotfiles](https://github.com/delgrecoj/nix)
++ [@gkapfham's dotfiles](https://github.com/gkapfham/dotfiles)
++ [@jessfraz's dotfiles](https://github.com/jessfraz/dotfile://github.com/jessfraz/dotfiles)
++ [urxvt video](https://www.youtube.com/watch?v=eaBf_yFHps8)
++ [open terminal in last working directory](https://www.reddit.com/r/i3wm/comments/6ugxvk/set_working_directory_for_terminal/dlsntaw)
+
 
 ## Bugs or Praise
 If you find these files useful or find a bug, please let me know.
