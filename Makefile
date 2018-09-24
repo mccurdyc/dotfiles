@@ -29,7 +29,7 @@ dotfiles: ## Installs the dotfiles.
 	git update-index --skip-worktree $(CURDIR)/.gitconfig;
 	mkdir -p $(HOME)/.local/share;
 	ln -snf $(CURDIR)/.fonts $(HOME)/.local/share/fonts;
-	mkdir -p $(HOME)/Pictures;
+	mkdir -p $(HOME)/Pictures/screenshots;
 	ln -snf $(CURDIR)/detroit-street-art.jpg $(HOME)/Pictures/detroit-street-art.jpg;
 
 .PHONY: etc
