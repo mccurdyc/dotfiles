@@ -19,9 +19,12 @@ for file in ~/.{zsh_prompt,aliases,functions,path,gofunc,dockerfunc,gitfunc,expo
 done
 unset file
 
+# clobber "file exists" warning
+# clobber is toggled off below
+setopt clobber
 # Open new terminal in same directory as last terminal:
 if [ -f ~/.last_dir ]; then
-        cd "`cat ~/.last_dir`"
+	cd "`cat ~/.last_dir`"
 fi
 
 # autocomplete
@@ -37,7 +40,7 @@ setopt ignoreeof  ## prevent ctrl-d exits
 setopt CHECK_JOBS ## warn about bg jobs
 setopt autocd     ## mainly so ../ works
 setopt nonomatch  ## prevent glob crashes
-unsetopt CLOBBER  ## require >| to truncate
+# unsetopt CLOBBER  ## require >| to truncate
 REPORTTIME=2      ## stats if cmd takes >2sec
 
 # fzf

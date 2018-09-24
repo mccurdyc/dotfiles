@@ -1,9 +1,5 @@
 #!/bin/bash
 
-# gitbr(){git symbolic-ref --short HEAD 2>/dev/null || echo " "}
-#
-# tmuxfix(){[[ -z $TMUX  ]] && echo " "}
-
 # Open new terminal in same directory as last terminal:
 function cd {
         builtin cd $@
