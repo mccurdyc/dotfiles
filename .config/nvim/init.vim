@@ -300,6 +300,7 @@ nnoremap <silent> <Leader>ag :FzfAg <C-R><C-W><CR>
 
 " Display {{{
 
+let base16colorspace=256  " Access colors present in 256 colorspace
 colorscheme base16-eighties
 
 " line numbers
@@ -366,4 +367,4 @@ nmap <leader>jj :JSONPrettyPrint<cr>
 " }}}
 
 """ just a hack for now to redraw screen to fix first line after resizing window
-autocmd BufWritePre * execute ':redraw!'
+" autocmd BufWritePre * execute ':redraw!'

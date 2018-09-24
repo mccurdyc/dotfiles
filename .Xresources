@@ -23,9 +23,8 @@ rofi.hmode: false
 rofi.separator-style: none
 rofi.hide-scrollbar: true
 
-! Base16 Eighties
+! Base16 Eighties (256)
 ! Scheme: Chris Kempson (http://chriskempson.com)
-
 #define base00 #2d2d2d
 #define base01 #393939
 #define base02 #515151
@@ -140,3 +139,4 @@ URxvt.keysym.M-Left:        \033[1;5D
 URxvt.keysym.M-Right:       \033[1;5C
 URxvt.keysym.Control-Left:  \033[1;5D
 URxvt.keysym.Control-Right: \033[1;5C
+
