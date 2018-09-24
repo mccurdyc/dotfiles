@@ -132,6 +132,9 @@ URxvt.keysym.C-C: perl:clipboard:copy
 URxvt.keysym.C-V: perl:clipboard:paste
 URxvt.keysym.Control-v: perl:clipboard:paste
 
+URxvt*inheritPixmap: false
+URxvt*transparent: false
+
 !! get option over to work
 URxvt.keysym.M-Left:        \033[1;5D
 URxvt.keysym.M-Right:       \033[1;5C
