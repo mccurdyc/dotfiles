@@ -8,6 +8,12 @@ alias tree1="tree -d -L 1"                    ## tree depth 1
 alias tree2="tree -d -L 2"                    ## tree depth 2
 alias tree3="tree -d -L 3"                    ## tree depth 3
 
+# source zsh config
+alias src="source $HOME/.zshrc"
+
+## quick cd routes
+alias cdd="cd $HOME/dotfiles"
+
 ## grep
 alias grep="grep --color=auto --exclude=tags --exclude-dir=.git"
 alias fgrep="fgrep --color=auto"

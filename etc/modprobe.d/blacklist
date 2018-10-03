@@ -1,0 +1,5 @@
+##
+## /etc/modprobe.d/blacklist
+## https://linuxconfig.org/turn-off-beep-bell-on-linux-terminal
+##
+blacklist pcspkr ## disable annoying beep sound even after reboot

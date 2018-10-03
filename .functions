@@ -1,10 +1,32 @@
 #!/bin/bash
 
 # Open new terminal in same directory as last terminal:
-function cd {
+cd() {
         builtin cd $@
         pwd > ~/.last_dir
 }
+
+## smart extraction;
+extract() {
+  if [ -f "$1" ]; then
+    case "$1" in
+      *.tar.bz2) tar -jxvf "$1" ;;
+      *.tar.gz) tar -zxvf "$1" ;;
+      *.bz2) bunzip2 "$1" ;;
+      *.gz) gunzip "$1" ;;
+      *.tar) tar -xvf "$1" ;;
+      *.tbz2) tar -jxvf "$1" ;;
+      *.tgz) tar -zxvf "$1" ;;
+      *.zip) unzip "$1" ;;
+      *.ZIP) unzip "$1" ;;
+      *.Z) uncompress "$1" ;;
+      *) echo "{extraction-failed}" ;;
+    esac
+  else echo "{invalid-file}"; fi
+}
+
+## compression;
+compress() { tar czvf "$1".tar.gz "$1" }
 
 # Simple calculator
 calc() {

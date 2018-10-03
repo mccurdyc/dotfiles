@@ -1,6 +1,6 @@
 # dotfiles
 
-I stole a lot from @jessfraz's [dotfiles](https://github.com/jessfraz/dotfiles), so check her's out too!
+![sample of setup](./sample.png)
 
 ## Getting Started
 ```
