@@ -3,14 +3,14 @@
 # Any items in the `env` entry below will be added as
 # environment variables. Some entries may override variables
 # set by alacritty itself.
-# env:
+env:
   # TERM variable
   #
   # This value is used to set the `$TERM` environment variable for
   # each instance of Alacritty. If it is not present, alacritty will
   # check the local terminfo database and use `alacritty` if it is
   # available, otherwise `xterm-256color` is used.
-# TERM: xterm-256color
+  TERM: xterm-256color
 
 window:
   # Window dimensions (changes require restart)
@@ -80,19 +80,20 @@ tabspaces: 4
 font:
   # The normal (roman) font face to use.
   normal:
-    family: Office Code Pro Medium
+    family: Source Code Pro Semibold
+    # https://github.com/adobe-fonts/source-code-pro/blob/b47764205aa316b2c172dc37921526dc45153e0a/FontMenuNameDB
     # style: Regular
 
   bold:
-    family: Office Code Pro Medium
+    family: Source Code Pro Black
     # style: Bold
 
   italic:
-    family: Office Code Pro Medium
+    family: Source Code Pro Medium Semibold Italic
     # style: Italic
 
   # Point size of the font
-  size: 12.0
+  size: 10.0
 
   # Offset is the extra space around each character. `offset.y` can be thought of
   # as modifying the line spacing, and `offset.x` as modifying the letter spacing.
