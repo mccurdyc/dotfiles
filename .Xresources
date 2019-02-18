@@ -5,7 +5,7 @@
 ## reminder; see "rofi -dump-xresources" for listing of all options.
 
 ## rofi-settings;
-rofi.font: Office Code Pro Medium 18
+rofi.font: Source Code Pro Black 18
 rofi.lines: 5
 
 rofi.color-enabled: true
