@@ -127,7 +127,7 @@ bindsym $mod+BackSpace       exec "i3lock -c 1d1f21"
 bindsym $mod+Shift+BackSpace exec "i3lock -c 1d1f21 && sleep 0.15 && systemctl suspend"
 
 # Some quickstart key combinations
-bindsym $mod+Return exec "urxvt"
+bindsym $mod+Return exec "alacritty --config-file=$HOME/dotfiles/.config/alacritty/alacritty.yml"
 bindsym $mod+backslash exec "chromium"
 bindsym $mod+Tab exec "rofi -show run"
 bindsym $mod+Shift+Tab exec "rofi -show window"
