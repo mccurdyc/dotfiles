@@ -1,8 +1,12 @@
 #!/bin/bash
 
+# Set config files for easy access
+export CONFIG_NVIM="$HOME/dotfiles/.config/nvim/init.vim"
+export CONFIG_TERM="$HOME/dotfiles/.config/alacritty/alacritty.yml"
+
 # Make vim the default editor
 export EDITOR=/usr/bin/nvim;
-export TERMINAL="urxvt";
+export TERMINAL="alacritty";
 
 # Larger bash history (allow 32³ entries; default is 500)
 export HISTSIZE=50000000;
