@@ -116,6 +116,7 @@ autocmd BufRead,BufNewFile *.tex setlocal spell
 "----------------------------------------------
 " color settings
 "----------------------------------------------
+set termguicolors
 let base16colorspace=256  " Access colors present in 256 colorspace
 colorscheme base16-eighties
 
