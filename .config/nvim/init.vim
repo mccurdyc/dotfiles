@@ -1,39 +1,86 @@
-" when compatible is set, all the enhancements and improvements of Vi Improved are turned off.
-" this no longer needs to be set for NeoVim
-" set nocompatible
+"----------------------------------------------
+" plugin management
+"
+" Download vim-plug from the URL below and follow the installation
+" instructions:
+" https://github.com/junegunn/vim-plug
+"----------------------------------------------
+call plug#begin('~/.vim/plugged')
 
-" System {{{
+" dependencies
+Plug 'godlygeek/tabular' " dependency of plasticboy/vim-markdown
 
-" copy and paste to system clipboard
-set clipboard=unnamedplus
+" general plugins
+Plug 'conradirwin/vim-bracketed-paste'
+Plug 'git@github.com:Raimondi/delimitMate.git'
+Plug 'git@github.com:bronson/vim-trailing-whitespace.git'
+Plug 'git@github.com:tomtom/tcomment_vim.git'
+Plug 'git@github.com:tpope/vim-fugitive.git'
+Plug 'git@github.com:chrisbra/Colorizer.git'
+Plug 'airblade/vim-gitgutter'
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+Plug 'junegunn/fzf.vim'
+Plug 'w0rp/ale' " linting
+Plug 'sebdah/vim-delve' " debugger
+Plug 'scrooloose/nerdtree'
+Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
+Plug 'tpope/vim-surround'  " quickly surround blocks of code (e.g., {}, (), <p></p>, etc.).
+Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+
+" language support
+Plug 'git@github.com:lervag/vimtex.git'
+Plug 'git@github.com:chrisbra/csv.vim.git'
+Plug 'plasticboy/vim-markdown'
+Plug 'git@github.com:jalvesaq/Nvim-R.git'
+Plug 'pangloss/vim-javascript'
+Plug 'fatih/vim-go', { 'do': ':GoInstallBinaries' }
+Plug 'nsf/gocode', { 'rtp': 'vim', 'do': '~/.vim/plugged/gocode/vim/symlink.sh' } " Go auto completion
+Plug 'zchee/deoplete-go', { 'do': 'make' } " Go auto completion
+Plug 'zchee/deoplete-jedi'                     " Go auto completion
+Plug 'tpope/vim-fireplace' " Clojure
+Plug 'venantius/vim-cljfmt'
+Plug 'vim-scripts/paredit.vim'
+
+" colorscheme
+Plug 'chriskempson/base16-vim'
+
+call plug#end()
+
+"----------------------------------------------
+" general settings
+"----------------------------------------------
+set clipboard=unnamedplus      " copy and paste to system clipboard
+set smarttab                   " indents instead of tabs at the beginning of a line
+set autowrite                  " write when switching buffers
+set encoding=utf-8
+set list                       " show trailing whitespace
+set listchars=tab:\|\ ,trail:▫
+set noswapfile                 " disable swap file usage
+set noerrorbells               " No bells!
+set vb t_vb=                   " no visual bells
+set belloff=all
+set title                      " let vim set the terminal title
+set nowrap                     " don't wrap lines, leave them on same line
+set number                     " show number ruler
+set relativenumber             " show relative numbers in the ruler
+set updatetime=100             " redraw the status bar often
+set expandtab                  " always uses spaces instead of tab characters
+set completeopt+=noselect
+set ttyfast                    " fix slow scrolling
+set lazyredraw                 " fix slow screen redrawing
+set colorcolumn=80
+set statusline=0
+set hidden
 
 let maplocalleader = ","
 let mapleader = ","
 
-" set no swap files
-set noswapfile
+" Allow vim to set a custom font or color for a word
+syntax enable
+syntax on
 
-" allow filetype to be on
-filetype plugin indent on
-
-" set backspace
-set backspace=2
-
-" size of a hard tabstop
-set tabstop=2
-
-" size of an indent
-set shiftwidth=2
-
-" a combination of spaces and tabs are used to simulate tab stops at a width
-" other than the (hard)tabstop
-set softtabstop=2
-
-" make tab insert indents instead of tabs at the beginning of a line
-set smarttab
-
-" always uses spaces instead of tab characters
-set expandtab
+" Remove trailing white spaces on save
+autocmd BufWritePre * :%s/\s\+$//e
 
 " map kj to escape key
 inoremap kj <Esc>
@@ -42,177 +89,62 @@ inoremap kj <Esc>
 autocmd BufRead,BufNewFile *.md setlocal spell
 autocmd BufRead,BufNewFile *.tex setlocal spell
 
-" taken from Gregory M. Kapfhammer's dotfiles (github.com/gkapfham/dotfiles)
+"----------------------------------------------
+" color settings
+"----------------------------------------------
+let base16colorspace=256  " Access colors present in 256 colorspace
+colorscheme base16-eighties
 
-" Source the vimrc file
-command! Reload :source $MYVIMRC
+" fix grey line number bar
+highlight LineNr term=bold cterm=NONE ctermfg=DarkGrey ctermbg=NONE gui=NONE guifg=DarkGrey guibg=NONE
 
-" }}}
+"----------------------------------------------
+" plugin settings
+"----------------------------------------------
+" Plugin: vim-git-gut
+" remove background from git gutter
+let g:gitgutter_override_sign_column_highlight = 0
 
-" Plug {{{
-
-" Vim plugin manager Vim-Plug
-call plug#begin('~/.vim/plugged')
-
-Plug 'conradirwin/vim-bracketed-paste'
-Plug 'git@github.com:jalvesaq/Nvim-R.git'
-Plug 'git@github.com:Raimondi/delimitMate.git'
-Plug 'git@github.com:lervag/vimtex.git'
-Plug 'git@github.com:chrisbra/csv.vim.git'
-Plug 'git@github.com:bronson/vim-trailing-whitespace.git'
-Plug 'git@github.com:tomtom/tcomment_vim.git'
-Plug 'git@github.com:tpope/vim-fugitive.git'
-Plug 'git@github.com:chrisbra/Colorizer.git'
-Plug 'scrooloose/nerdtree'
-Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
-Plug 'airblade/vim-gitgutter'
-Plug 'godlygeek/tabular'
-Plug 'plasticboy/vim-markdown'
-Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
-Plug 'junegunn/fzf.vim'
-Plug 'chriskempson/base16-vim'
-
-Plug 'fatih/vim-go', { 'do': ':GoInstallBinaries' }
-
-"" http://github.com/zchee/deoplete-go/issues/128
-if has('nvim')
-  Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-else
-  Plug 'Shougo/deoplete.nvim'
-  Plug 'roxma/nvim-yarp'
-  Plug 'roxma/vim-hug-neovim-rpc'
-endif
-
-Plug 'zchee/deoplete-go', { 'do': 'make' }
-
-Plug 'w0rp/ale'
-
-" delve support for debugging
-Plug 'sebdah/vim-delve'
-
-call plug#end()
-
-set completeopt+=noselect
-
-"" deoplete
-
-let g:deoplete#enable_at_startup = 1
-"" let g:deoplete#sources#go#gocode_binary = '~/go/bin/gocode'
-"" let g:deoplete#sources#go#sort_class = ['package', 'func', 'type', 'var', 'const']
-"" let g:deoplete#sources#go#source_importer = 1
-
-" map TAB, C-j to down in popup and C-k to up in popup
-inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
-inoremap <expr> <C-j> pumvisible() ? "\<C-n>" : "\<C-j>"
-inoremap <expr> <C-k> pumvisible() ? "\<C-p>" : "\<C-k>"
-
-" manually trigger deoplete with TAB
-call deoplete#custom#option('auto_complete', v:false)
-
-inoremap <silent><expr> <TAB>
-		\ pumvisible() ? "\<C-n>" :
-		\ <SID>check_back_space() ? "\<TAB>" :
-		\ deoplete#mappings#manual_complete()
-		function! s:check_back_space() abort "{{{
-		let col = col('.') - 1
-		return !col || getline('.')[col - 1]  =~ '\s'
-		endfunction"}}}
-
-
-" set sources
-let g:deoplete#sources = {}
-let g:deoplete#sources.python = ['LanguageClient']
-let g:deoplete#sources.python3 = ['LanguageClient']
-let g:deoplete#sources.vim = ['vim']
-
-"" vim-go
-
-" let g:go_metalinter_enabled = ['vet', 'golint']
-
-" automagically get dependencies
-let g:go_fmt_command = "goimports"
-
-" because the following wasnt working
-"let g:go_metalinter_autosave = 1
-" autocmd BufWritePost *.go :GoMetaLinter
-
-" display function declarations
-au FileType go nmap <leader>gt :GoDeclsDir<cr>
-
-" GoAlternate; open in splits
-au Filetype go nmap <leader>ga <Plug>(go-alternate-edit)
-au Filetype go nmap <leader>gah <Plug>(go-alternate-split)
-au Filetype go nmap <leader>gav <Plug>(go-alternate-vertical)
-
-" GoCoverage
-au FileType go nmap <leader>gct :GoCoverageToggle -short<cr>
-
-" show type information in status line
-let g:go_auto_type_info = 1
-
-"" ale
-
-" always keep sign gutter open to avoid jumpiness
-let g:ale_sign_column_always = 1
+" * ale *
+let g:ale_sign_column_always = 1 " always keep sign gutter open to avoid jumpiness
 
 " Error and warning signs.
-let g:ale_sign_error = '⤫'
-let g:ale_sign_warning = '⚠'
+let g:ale_sign_error = 'x'
+let g:ale_sign_warning = '!'
 
+" In ~/.vim/vimrc, or somewhere similar.
+let g:ale_fixers = {
+\   '*': ['remove_trailing_lines', 'trim_whitespace'],
+\   'javascript': ['eslint'],
+\}
 
-"" vim-markdown
+" https://github.com/w0rp/ale/blob/master/doc/ale-go.txt
+let g:ale_linters = {'go': ['golangci-lint', 'gofmt']}
+let g:ale_go_golangci_lint_executable = '$GOPATH/bin/golangci-lint'
 
-" disable the stupid folding
-let g:vim_markdown_folding_disabled = 1
+let g:ale_fix_on_save = 1 " fix files when you save
 
-" for displaying LaTeX math
-let g:vim_markdown_math = 1
+" * vim-markdown *
+let g:vim_markdown_folding_disabled = 1 " disable folding
+let g:vim_markdown_math = 1 " for displaying LaTeX math
 
-"" vimtex
-
+" * vimtex *
 " make compile nice
 autocmd FileType tex :nmap <Leader>ll \ll
-nnoremap <Leader>ss :LatexmkStop<CR>
 
-" taken from @gkafham's (https://github.com/gkapfham/dotfiles) .vimrc
-let g:vimtex_latexmk_options="-pdf -pdflatex='pdflatex -file-line-error -shell-escape -interaction=nonstopmode -synctex=1'"
-let g:vimtex_fold_enabled = 0
-let g:vimtex_quickfix_mode = 2
-let g:vimtex_quickfix_open_on_warning = 0
-let g:vimtex_toc_resize = 0
-let g:vimtex_toc_hide_help = 1
-let g:vimtex_indent_enabled = 1
-let g:vimtex_latexmk_enabled = 1
-let g:vimtex_latexmk_callback = 1
-let g:vimtex_complete_recursive_bib = 0
-let g:vimtex_view_method = 'mupdf'
-let g:vimtex_view_mupdf_options = '-r 288'
-
-"" vim-gitgutter
-
-" reduce udpate time to 250 ms
-set updatetime=250
-
-"" NERDTree
-
-" open NERDTree upon opening vim
-autocmd vimenter * NERDTree
-
-" start cursor out of NERDTree
-autocmd VimEnter * wincmd p
-
-" open a NERDTree automatically when vim starts up if no files were specified
-autocmd StdinReadPre * let s:std_in=1
+" * NERDTree *
+autocmd VimEnter * NERDTree " open NERDTree upon opening vim
+autocmd VimEnter * wincmd p " start cursor out of NERDTree
+autocmd StdinReadPre * let s:std_in=1 " open a NERDTree automatically when vim starts up if no files were specified
 autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
 
 " show current file NERDTree
 nnoremap <silent> <C-n> :NERDTreeFind<CR>
-inoremap <C-d> <Del>
 
 " toggle NERDTree with ,nt
 map <Leader>nt :NERDTreeToggle<CR>
 
-" don't display junk in NERDTree
+" ignore the following in NERDTree
 let NERDTreeIgnore = ['\.class$', '\.pyc$', '\.aux$', 'fdb_latexmk$', '\.fls$', '\.out$']
 
 " shutdown vim if only window is a NERDTree window
@@ -226,12 +158,9 @@ let g:NERDTreeDirArrowCollapsible = '▾'
 let NERDTreeShowHidden=1
 
 " Set encoding to UTF-8 to show glyphs - vim-devicons & vim-nerdtree-syntax-highlight
-set encoding=utf8
-let g:airline_powerline_fonts = 1
 let g:NERDTreeFileExtensionHighlightFullName = 1
 
-"" fzf
-
+" * fzf *
 let g:fzf_command_prefix = 'Fzf'
 
 " This is the default extra key bindings
@@ -295,49 +224,31 @@ nmap <C-p> :FZFMine<CR>
 nmap <C-f> :FzfAg<CR>
 nnoremap <silent> <Leader>ag :FzfAg <C-R><C-W><CR>
 
-" }}}
+" * vim-fireplace *
+" reference: https://blog.venanti.us/clojure-vim/
+" for reloading namespace
+au Filetype clojure nmap <C-c><C-k> :Require<cr>
+let g:clj_fmt_autosave = 1 " disable (=0) :Cljfmt automatically on save (I think it was why NeoVim froze)
 
-" Display {{{
+" * vim-go *
+let g:go_fmt_command = "goimports" " automagically get dependencies
+let g:syntastic_go_checkers = ['golangci-lint', 'govet']
 
-let base16colorspace=256  " Access colors present in 256 colorspace
-colorscheme base16-eighties
+" display function declarations
+au FileType go nmap <leader>gt :GoDeclsDir<cr>
 
-" line numbers
-set number
-set relativenumber
+" GoAlternate; open in splits
+au Filetype go nmap <leader>ga <Plug>(go-alternate-edit)
+au Filetype go nmap <leader>gah <Plug>(go-alternate-split)
+au Filetype go nmap <leader>gav <Plug>(go-alternate-vertical)
 
-" don't wrap lines, leave them on same line
-set nowrap
+" GoCoverage
+au FileType go nmap <leader>gct :GoCoverageToggle -short<cr>
+let g:go_auto_type_info = 0 " show type information in status line
 
-" redraw screen faster
-set nocursorcolumn
-set nocursorline
-set ttyfast
-
-" fix slow screen redrawing
-set lazyredraw
-
-" always show statusline
-set laststatus=2
-
-" matching parentheses
-set showmatch
-
-set colorcolumn=80
-
-" syntax highlighting
-syntax on
-
-" fix grey line number bar
-highlight LineNr term=bold cterm=NONE ctermfg=DarkGrey ctermbg=NONE gui=NONE guifg=DarkGrey guibg=NONE
-
-" remove background from git gutter
-let g:gitgutter_override_sign_column_highlight = 0
-
-" }}}
-
-" Navigation {{{
-
+"----------------------------------------------
+" navigation settings
+"----------------------------------------------
 " Autosave buffers before leaving them
 autocmd BufLeave * silent! :wa
 
@@ -347,23 +258,29 @@ nnoremap <C-K> <C-W><C-K>
 nnoremap <C-L> <C-W><C-L>
 nnoremap <C-H> <C-W><C-H>
 
-" }}}
+"----------------------------------------------
+" search settings
+"----------------------------------------------
+set incsearch                     " move to match as you type the search query
+set hlsearch                      " disable search result highlighting
 
-" Extra {{{
-
-" Execute clear whitespace on save
-map <Leader>st :call Preserve("%s/\\s\\+$//e")<CR>
-
-" remove trailing whitespace
-nnoremap <Leader>rtw :%s/\s\+$//e<CR>
+if has('nvim')
+    set inccommand=split          " enables interactive search and replace
+endif
 
 " clear search highlights
 no <silent><Leader>cs :nohls<CR>
 
-command! JSONPrettyPrint execute ":%!python -m json.tool"
-nmap <leader>jj :JSONPrettyPrint<cr>
+"----------------------------------------------
+" splits settings
+"----------------------------------------------
+" Create horizontal splits below the current window
+set splitbelow
+set splitright
 
-" }}}
+" Creating splits
+nnoremap <leader>v :vsplit<cr>
+nnoremap <leader>h :split<cr>
 
-""" just a hack for now to redraw screen to fix first line after resizing window
-" autocmd BufWritePre * execute ':redraw!'
+" Closing splits
+nnoremap <leader>q :close<cr>
