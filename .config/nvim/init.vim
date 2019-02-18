@@ -8,24 +8,28 @@
 call plug#begin('~/.vim/plugged')
 
 " dependencies
-Plug 'godlygeek/tabular' " dependency of plasticboy/vim-markdown
+Plug 'godlygeek/tabular'  " plasticboy/vim-markdown
+Plug 'tpope/vim-fugitive' " itchyny/lightline.vim
 
 " general plugins
 Plug 'conradirwin/vim-bracketed-paste'
 Plug 'git@github.com:Raimondi/delimitMate.git'
 Plug 'git@github.com:bronson/vim-trailing-whitespace.git'
 Plug 'git@github.com:tomtom/tcomment_vim.git'
-Plug 'git@github.com:tpope/vim-fugitive.git'
 Plug 'git@github.com:chrisbra/Colorizer.git'
 Plug 'airblade/vim-gitgutter'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
-Plug 'w0rp/ale' " linting
-Plug 'sebdah/vim-delve' " debugger
+Plug 'w0rp/ale'                " linting
+Plug 'sebdah/vim-delve'        " debugger
 Plug 'scrooloose/nerdtree'
 Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
-Plug 'tpope/vim-surround'  " quickly surround blocks of code (e.g., {}, (), <p></p>, etc.).
+Plug 'tpope/vim-surround'      " quickly surround blocks of code (e.g., {}, (), <p></p>, etc.).
 Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+Plug 'junegunn/vim-easy-align' " gaip=
+Plug 'junegunn/limelight.vim'  " focused highlighting
+Plug 'kshenoy/vim-signature'   " display marks in sidebar
+Plug 'itchyny/lightline.vim'   " light, configurable statusline
 
 " language support
 Plug 'git@github.com:lervag/vimtex.git'
@@ -35,14 +39,18 @@ Plug 'git@github.com:jalvesaq/Nvim-R.git'
 Plug 'pangloss/vim-javascript'
 Plug 'fatih/vim-go', { 'do': ':GoInstallBinaries' }
 Plug 'nsf/gocode', { 'rtp': 'vim', 'do': '~/.vim/plugged/gocode/vim/symlink.sh' } " Go auto completion
-Plug 'zchee/deoplete-go', { 'do': 'make' } " Go auto completion
-Plug 'zchee/deoplete-jedi'                     " Go auto completion
-Plug 'tpope/vim-fireplace' " Clojure
+Plug 'zchee/deoplete-go', { 'do': 'make' }                                        " Go auto completion
+Plug 'zchee/deoplete-jedi'                                                        " Go auto completion
+Plug 'tpope/vim-fireplace'                                                        " Clojure
 Plug 'venantius/vim-cljfmt'
 Plug 'vim-scripts/paredit.vim'
 
 " colorscheme
 Plug 'chriskempson/base16-vim'
+Plug 'daviesjamie/vim-base16-lightline' " lightline colorscheme
+
+" Always load special fonts last
+Plug 'ryanoasis/vim-devicons' " make sure your font supports it (e.g., use Source Code Pro)
 
 call plug#end()
 
@@ -53,8 +61,6 @@ set clipboard=unnamedplus      " copy and paste to system clipboard
 set smarttab                   " indents instead of tabs at the beginning of a line
 set autowrite                  " write when switching buffers
 set encoding=utf-8
-set list                       " show trailing whitespace
-set listchars=tab:\|\ ,trail:▫
 set noswapfile                 " disable swap file usage
 set noerrorbells               " No bells!
 set vb t_vb=                   " no visual bells
@@ -64,13 +70,31 @@ set nowrap                     " don't wrap lines, leave them on same line
 set number                     " show number ruler
 set relativenumber             " show relative numbers in the ruler
 set updatetime=100             " redraw the status bar often
-set expandtab                  " always uses spaces instead of tab characters
+set linebreak
+set showbreak=━━
+set breakindent
+set tabstop=2
+set shiftwidth=2
+set expandtab " insert spaces for tab
+set smarttab " tab intelligently on newline
+set shiftround
 set completeopt+=noselect
 set ttyfast                    " fix slow scrolling
 set lazyredraw                 " fix slow screen redrawing
 set colorcolumn=80
 set statusline=2
 set hidden
+
+" Display with faster timeouts in the TUI
+set timeoutlen=500
+set ttimeoutlen=10
+
+" Do not display the standard status line
+set noshowmode " replaced by itchyny/lightline
+
+" Display problematic whitespace
+set listchars=tab:➜\ ,trail:•,extends:#,precedes:#,nbsp:⌻
+set list
 
 let maplocalleader = ","
 let mapleader = ","
@@ -101,6 +125,40 @@ highlight LineNr term=bold cterm=NONE ctermfg=DarkGrey ctermbg=NONE gui=NONE gui
 "----------------------------------------------
 " plugin settings
 "----------------------------------------------
+" Plugin: itchyny/lightline.vim
+" Dependency: tpope/vim-fugitive (for branch info)
+let g:lightline = {
+      \ 'colorscheme': 'base16',
+      \ 'active': {
+      \   'left': [ [ 'mode', 'paste' ],
+      \             [ 'gitbranch', 'readonly', 'filename', 'modified' ] ]
+      \ },
+      \ 'component_function': {
+      \   'gitbranch': 'fugitive#head'
+      \ },
+      \ }
+
+" Plugin: junegunn/limelight
+" focused paragraph highlighting
+" Color name (:help cterm-colors) or ANSI code
+let g:limelight_conceal_ctermfg = 'gray'
+let g:limelight_conceal_ctermfg = 240
+
+" Default: 0.5
+let g:limelight_default_coefficient = 0.7
+
+" Display the current block of text/code in a highlighting limelight
+nmap <Space>f :Limelight!! <CR>
+
+" Number of preceding/following paragraphs to include (default: 0)
+let g:limelight_paragraph_span = 0
+
+" Plugin: junegunn/vim-easy-align
+" Start interactive EasyAlign in visual mode (e.g. vipga)
+xmap ga <Plug>(EasyAlign)
+" Start interactive EasyAlign for a motion/text object (e.g. gaip)
+nmap ga <Plug>(EasyAlign)
+
 " Plugin: airblade/vim-gitgutter
 " remove background from git gutter
 let g:gitgutter_override_sign_column_highlight = 0
