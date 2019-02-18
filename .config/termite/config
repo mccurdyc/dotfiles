@@ -1,5 +1,5 @@
 [options]
-  font = Office Code Pro Medium 18
+  font = Office Code Pro Medium 12
   resize_grip = false
   scroll_on_output = false
   scroll_on_keystroke = true
@@ -15,4 +15,4 @@
   icon_name = terminal
   cursor_blink = system
   cursor_shape = block
-  browser = firefox
+  browser = chromium
