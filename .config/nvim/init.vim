@@ -69,7 +69,7 @@ set completeopt+=noselect
 set ttyfast                    " fix slow scrolling
 set lazyredraw                 " fix slow screen redrawing
 set colorcolumn=80
-set statusline=0
+set statusline=2
 set hidden
 
 let maplocalleader = ","
@@ -101,16 +101,18 @@ highlight LineNr term=bold cterm=NONE ctermfg=DarkGrey ctermbg=NONE gui=NONE gui
 "----------------------------------------------
 " plugin settings
 "----------------------------------------------
-" Plugin: vim-git-gut
+" Plugin: airblade/vim-gitgutter
 " remove background from git gutter
 let g:gitgutter_override_sign_column_highlight = 0
 
-" * ale *
+" Plugin: w0rp/ale
 let g:ale_sign_column_always = 1 " always keep sign gutter open to avoid jumpiness
 
 " Error and warning signs.
-let g:ale_sign_error = 'x'
-let g:ale_sign_warning = '!'
+let g:ale_sign_error = '✗'
+let g:ale_sign_warning = '▸'
+highlight link ALEWarningSign String
+highlight link ALEErrorSign WarningMsg
 
 " In ~/.vim/vimrc, or somewhere similar.
 let g:ale_fixers = {
@@ -124,15 +126,15 @@ let g:ale_go_golangci_lint_executable = '$GOPATH/bin/golangci-lint'
 
 let g:ale_fix_on_save = 1 " fix files when you save
 
-" * vim-markdown *
+" Plugin: pasticboy/vim-markdown
 let g:vim_markdown_folding_disabled = 1 " disable folding
 let g:vim_markdown_math = 1 " for displaying LaTeX math
 
-" * vimtex *
+" Plugin: lervag/vimtex
 " make compile nice
 autocmd FileType tex :nmap <Leader>ll \ll
 
-" * NERDTree *
+" Plugin: scrooloose/nerdtree
 autocmd VimEnter * NERDTree " open NERDTree upon opening vim
 autocmd VimEnter * wincmd p " start cursor out of NERDTree
 autocmd StdinReadPre * let s:std_in=1 " open a NERDTree automatically when vim starts up if no files were specified
@@ -160,7 +162,7 @@ let NERDTreeShowHidden=1
 " Set encoding to UTF-8 to show glyphs - vim-devicons & vim-nerdtree-syntax-highlight
 let g:NERDTreeFileExtensionHighlightFullName = 1
 
-" * fzf *
+" Plugin: junegunn/fzf
 let g:fzf_command_prefix = 'Fzf'
 
 " This is the default extra key bindings
@@ -224,13 +226,13 @@ nmap <C-p> :FZFMine<CR>
 nmap <C-f> :FzfAg<CR>
 nnoremap <silent> <Leader>ag :FzfAg <C-R><C-W><CR>
 
-" * vim-fireplace *
+" Plugin: tpope/vim-fireplace
 " reference: https://blog.venanti.us/clojure-vim/
 " for reloading namespace
 au Filetype clojure nmap <C-c><C-k> :Require<cr>
 let g:clj_fmt_autosave = 1 " disable (=0) :Cljfmt automatically on save (I think it was why NeoVim froze)
 
-" * vim-go *
+" Plugin: fatih/vim-go
 let g:go_fmt_command = "goimports" " automagically get dependencies
 let g:syntastic_go_checkers = ['golangci-lint', 'govet']
 
