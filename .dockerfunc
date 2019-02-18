@@ -1038,16 +1038,6 @@ travis(){
 		--log-driver none \
 		${DOCKER_REPO_PREFIX}/travis "$@"
 }
-virsh(){
-	relies_on kvm
-
-	docker run -it --rm \
-		-v /etc/localtime:/etc/localtime:ro \
-		-v /run/libvirt:/var/run/libvirt \
-		--log-driver none \
-		--net container:kvm \
-		${DOCKER_REPO_PREFIX}/libvirt-client "$@"
-}
 virt_viewer(){
 	relies_on kvm
 
