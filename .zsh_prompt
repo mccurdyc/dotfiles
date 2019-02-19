@@ -10,9 +10,9 @@ PROMPT="%F{179}"                  ## primary coloring
 PROMPT+="%M "                     ## hostname for ssh
 PROMPT+="%3~ "                    ## trailing pwd dirs
 PROMPT+="%(1j.%jj .)"             ## jobs when present
-PROMPT+="%(?.%F{green}%% %F{white}.%F{red}%% %F{white})" ## colored exit codes
+PROMPT+="%(?.%F{green}➜ %F{white}.%F{red}➜ %F{white})" ## colored exit codes
 
 # righthand; reqs single quotes
 
 # multiline
-PROMPT2="> "
+PROMPT2="%F{darkgrey}➜"
