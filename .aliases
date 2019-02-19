@@ -12,7 +12,7 @@ alias tree3="tree -d -L 3"                    ## tree depth 3
 alias src="source $HOME/.zshrc"
 
 ## quick cd routes
-alias cdd="cd $HOME/dotfiles"
+alias cddot="cd $DOTFILES_DIR"
 
 ## grep
 alias grep="grep --color=auto --exclude=tags --exclude-dir=.git"
