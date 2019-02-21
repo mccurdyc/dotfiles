@@ -96,6 +96,9 @@ set noshowmode " replaced by itchyny/lightline
 set listchars=tab:➜\ ,trail:•,extends:#,precedes:#,nbsp:⌻
 set list
 
+" [gofmt](https://golang.org/cmd/gofmt) uses tabs, so disable the listing for Go
+au BufNewFile,BufRead,BufEnter *.go set nolist
+
 let maplocalleader = ","
 let mapleader = ","
 
