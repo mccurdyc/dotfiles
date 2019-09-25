@@ -13,10 +13,10 @@ Plug 'tpope/vim-fugitive' " itchyny/lightline.vim
 
 " general plugins
 Plug 'conradirwin/vim-bracketed-paste'
-Plug 'git@github.com:Raimondi/delimitMate.git'
-Plug 'git@github.com:bronson/vim-trailing-whitespace.git'
-Plug 'git@github.com:tomtom/tcomment_vim.git'
-Plug 'git@github.com:chrisbra/Colorizer.git'
+Plug 'Raimondi/delimitMate'
+Plug 'bronson/vim-trailing-whitespace'
+Plug 'tomtom/tcomment_vim'
+Plug 'chrisbra/Colorizer'
 Plug 'airblade/vim-gitgutter'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
@@ -28,12 +28,13 @@ Plug 'junegunn/vim-easy-align' " gaip=
 Plug 'junegunn/limelight.vim'  " focused highlighting
 Plug 'kshenoy/vim-signature'   " display marks in sidebar
 Plug 'itchyny/lightline.vim'   " light, configurable statusline
+Plug 'vim-scripts/paredit.vim'
 
 " language support
-Plug 'git@github.com:lervag/vimtex.git'
-Plug 'git@github.com:chrisbra/csv.vim.git'
+Plug 'lervag/vimtex'
+Plug 'chrisbra/csv.vim'
 Plug 'plasticboy/vim-markdown'
-Plug 'git@github.com:jalvesaq/Nvim-R.git'
+Plug 'jalvesaq/Nvim-R'
 Plug 'pangloss/vim-javascript'
 Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries', 'for': 'go' }
 Plug 'shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
@@ -42,8 +43,15 @@ Plug 'sebdah/vim-delve'        " debugger
 Plug 'tpope/vim-fireplace'                                                        " Clojure
 Plug 'venantius/vim-cljfmt'
 Plug 'vim-scripts/paredit.vim'
-" python
-" Plug 'ambv/black'                              " Python code formatting
+Plug 'fatih/vim-go', { 'do': ':GoInstallBinaries' }
+Plug 'nsf/gocode', { 'rtp': 'vim', 'do': '~/.vim/plugged/gocode/vim/symlink.sh' } " Go auto completion
+Plug 'zchee/deoplete-go', { 'do': 'make' }                                        " Go auto completion
+Plug 'zchee/deoplete-jedi'                                                        " Go auto completion
+Plug 'sebastianmarkow/deoplete-rust'
+Plug 'racer-rust/vim-racer'
+Plug 'tpope/vim-fireplace'                                                        " Clojure
+Plug 'venantius/vim-cljfmt'
+Plug 'rust-lang/rust.vim'
 
 " colorscheme
 Plug 'chriskempson/base16-vim'
@@ -134,9 +142,27 @@ highlight LineNr term=bold cterm=NONE ctermfg=DarkGrey ctermbg=NONE gui=NONE gui
 "----------------------------------------------
 " plugin settings
 "----------------------------------------------
+" Plugin: sebastianmarkow/deoplete-rust
 
-" Plugin: ambv/black
-" autocmd BufWritePre *.py execute ':Black'
+" required
+let g:deoplete#sources#rust#racer_binary='/home/mccurdyc/.cargo/bin/racer'
+let g:deoplete#sources#rust#rust_source_path='/home/mccurdyc/.rustup/toolchains/stable-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/src'
+
+" default
+nmap <buffer> gd <plug>DeopleteRustGoToDefinitionDefault
+nmap <buffer> K  <plug>DeopleteRustShowDocumentation
+
+" Plugin: racer-rust/vim-racer
+set hidden
+let g:racer_cmd = "/home/mccurdyc/.cargo/bin/racer"
+
+" show the complete function definition (e.g. its arguments and return type)
+let g:racer_experimental_completer = 1
+
+au FileType rust nmap gd <Plug>(rust-def)
+au FileType rust nmap gs <Plug>(rust-def-split)
+au FileType rust nmap gx <Plug>(rust-def-vertical)
+au FileType rust nmap <leader>gd <Plug>(rust-doc)
 
 " Plugin: itchyny/lightline.vim
 " Dependency: tpope/vim-fugitive (for branch info)
@@ -180,6 +206,13 @@ let g:gitgutter_override_sign_column_highlight = 0
 let g:ale_sign_column_always = 1 " always keep sign gutter open to avoid jumpiness
 let g:ale_completion_enabled = 1
 
+" moving between warnings and errors quickly.
+nmap <silent> <C-k> <Plug>(ale_previous_wrap)
+nmap <silent> <C-j> <Plug>(ale_next_wrap)
+
+" Show 5 lines of errors (default: 10)
+let g:ale_list_window_size = 5
+
 " Error and warning signs.
 let g:ale_sign_error = '✗'
 let g:ale_sign_warning = '▸'
@@ -195,12 +228,16 @@ let g:ale_fixers = {
 " https://github.com/w0rp/ale/blob/master/doc/ale-go.txt
 let g:ale_linters = {
 \ 'go': ['golangci-lint', 'gofmt'],
-\ 'javascript': ['eslint']
-\}
+\ 'javascript': ['eslint'],
+\ 'rust': ['rustc'],
+\ }
 
 let g:ale_go_golangci_lint_executable = '$GOPATH/bin/golangci-lint'
 
-let g:ale_fix_on_save = 1 " fix files when you save
+let g:ale_fix_on_save = 0 " fix files when you save
+" Enable completion where available.
+" This setting must be set before ALE is loaded.
+let g:ale_completion_enabled = 1
 
 " https://www.reddit.com/r/vim/comments/5iixed/how_to_navigate_autocomplete_popup_without_arrows/
 inoremap <expr> <Tab>   pumvisible() ? "\<C-n>" : "\<Tab>"
@@ -360,6 +397,12 @@ nnoremap <C-J> <C-W><C-J>
 nnoremap <C-K> <C-W><C-K>
 nnoremap <C-L> <C-W><C-L>
 nnoremap <C-H> <C-W><C-H>
+
+" navigating NeoVim terminal splits
+tnoremap <C-j> <C-\><C-n><C-j>
+tnoremap <C-k> <C-\><C-n><C-k>
+tnoremap <C-l> <C-\><C-n><C-l>
+tnoremap <C-h> <C-\><C-n><C-h>
 
 "----------------------------------------------
 " search settings
