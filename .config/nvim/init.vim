@@ -20,12 +20,10 @@ Plug 'git@github.com:chrisbra/Colorizer.git'
 Plug 'airblade/vim-gitgutter'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
-Plug 'w0rp/ale'                " linting
-Plug 'sebdah/vim-delve'        " debugger
+Plug 'dense-analysis/ale'      " linting
 Plug 'scrooloose/nerdtree'
 Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
 Plug 'tpope/vim-surround'      " quickly surround blocks of code (e.g., {}, (), <p></p>, etc.).
-Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 Plug 'junegunn/vim-easy-align' " gaip=
 Plug 'junegunn/limelight.vim'  " focused highlighting
 Plug 'kshenoy/vim-signature'   " display marks in sidebar
@@ -37,20 +35,22 @@ Plug 'git@github.com:chrisbra/csv.vim.git'
 Plug 'plasticboy/vim-markdown'
 Plug 'git@github.com:jalvesaq/Nvim-R.git'
 Plug 'pangloss/vim-javascript'
-Plug 'fatih/vim-go', { 'do': ':GoInstallBinaries' }
-Plug 'nsf/gocode', { 'rtp': 'vim', 'do': '~/.vim/plugged/gocode/vim/symlink.sh' } " Go auto completion
-Plug 'zchee/deoplete-go', { 'do': 'make' }                                        " Go auto completion
-Plug 'zchee/deoplete-jedi'                                                        " Go auto completion
+Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries', 'for': 'go' }
+Plug 'shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+Plug 'zchee/deoplete-go', { 'do': 'make' }
+Plug 'sebdah/vim-delve'        " debugger
 Plug 'tpope/vim-fireplace'                                                        " Clojure
 Plug 'venantius/vim-cljfmt'
 Plug 'vim-scripts/paredit.vim'
+" python
+" Plug 'ambv/black'                              " Python code formatting
 
 " colorscheme
 Plug 'chriskempson/base16-vim'
 Plug 'daviesjamie/vim-base16-lightline' " lightline colorscheme
 
 " Always load special fonts last
-Plug 'ryanoasis/vim-devicons' " make sure your font supports it (e.g., use Source Code Pro)
+" Plug 'ryanoasis/vim-devicons' " make sure your font supports it (e.g., use Source Code Pro)
 
 call plug#end()
 
@@ -60,6 +60,7 @@ call plug#end()
 set clipboard=unnamedplus      " copy and paste to system clipboard
 set smarttab                   " indents instead of tabs at the beginning of a line
 set autowrite                  " write when switching buffers
+set autoread
 set encoding=utf-8
 set noswapfile                 " disable swap file usage
 set noerrorbells               " No bells!
@@ -68,7 +69,6 @@ set belloff=all
 set title                      " let vim set the terminal title
 set nowrap                     " don't wrap lines, leave them on same line
 set number                     " show number ruler
-set relativenumber             " show relative numbers in the ruler
 set updatetime=100             " redraw the status bar often
 set linebreak
 set showbreak=━━
@@ -119,7 +119,12 @@ autocmd BufRead,BufNewFile *.tex setlocal spell
 "----------------------------------------------
 " color settings
 "----------------------------------------------
-set termguicolors
+if exists('+termguicolors')
+  let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
+  let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
+  set termguicolors
+endif
+
 let base16colorspace=256  " Access colors present in 256 colorspace
 colorscheme base16-eighties
 
@@ -129,6 +134,10 @@ highlight LineNr term=bold cterm=NONE ctermfg=DarkGrey ctermbg=NONE gui=NONE gui
 "----------------------------------------------
 " plugin settings
 "----------------------------------------------
+
+" Plugin: ambv/black
+" autocmd BufWritePre *.py execute ':Black'
+
 " Plugin: itchyny/lightline.vim
 " Dependency: tpope/vim-fugitive (for branch info)
 let g:lightline = {
@@ -167,8 +176,9 @@ nmap ga <Plug>(EasyAlign)
 " remove background from git gutter
 let g:gitgutter_override_sign_column_highlight = 0
 
-" Plugin: w0rp/ale
+" Plugin: dense-analysis/ale
 let g:ale_sign_column_always = 1 " always keep sign gutter open to avoid jumpiness
+let g:ale_completion_enabled = 1
 
 " Error and warning signs.
 let g:ale_sign_error = '✗'
@@ -179,14 +189,24 @@ highlight link ALEErrorSign WarningMsg
 " In ~/.vim/vimrc, or somewhere similar.
 let g:ale_fixers = {
 \   '*': ['remove_trailing_lines', 'trim_whitespace'],
-\   'javascript': ['eslint'],
+\   'javascript': ['eslint']
 \}
 
 " https://github.com/w0rp/ale/blob/master/doc/ale-go.txt
-let g:ale_linters = {'go': ['golangci-lint', 'gofmt']}
+let g:ale_linters = {
+\ 'go': ['golangci-lint', 'gofmt'],
+\ 'javascript': ['eslint']
+\}
+
 let g:ale_go_golangci_lint_executable = '$GOPATH/bin/golangci-lint'
 
 let g:ale_fix_on_save = 1 " fix files when you save
+
+" https://www.reddit.com/r/vim/comments/5iixed/how_to_navigate_autocomplete_popup_without_arrows/
+inoremap <expr> <Tab>   pumvisible() ? "\<C-n>" : "\<Tab>"
+inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+
+set omnifunc=ale#completion#OmniFunc
 
 " Plugin: pasticboy/vim-markdown
 let g:vim_markdown_folding_disabled = 1 " disable folding
@@ -297,6 +317,7 @@ let g:clj_fmt_autosave = 1 " disable (=0) :Cljfmt automatically on save (I think
 " Plugin: fatih/vim-go
 let g:go_fmt_command = "goimports" " automagically get dependencies
 let g:syntastic_go_checkers = ['golangci-lint', 'govet']
+let g:go_def_mode='gopls' " fixed C-] goes to definition
 
 " display function declarations
 au FileType go nmap <leader>gt :GoDeclsDir<cr>
@@ -309,6 +330,24 @@ au Filetype go nmap <leader>gav <Plug>(go-alternate-vertical)
 " GoCoverage
 au FileType go nmap <leader>gct :GoCoverageToggle -short<cr>
 let g:go_auto_type_info = 0 " show type information in status line
+
+" Plugin: shougo/deoplete.nvim
+set completeopt=longest,menuone " auto complete setting
+let g:deoplete#enable_at_startup = 1
+let g:deoplete#enable_smart_case = 1
+let g:deoplete#auto_complete_start_length = 1
+let g:deoplete#keyword_patterns = {}
+let g:deoplete#keyword_patterns['default'] = '\h\w*'
+let g:deoplete#omni#input_patterns = {}
+let g:deoplete#sources#go#sort_class = ['package', 'func', 'type', 'var', 'const']
+let g:deoplete#sources#go#align_class = 1
+
+imap <expr> <tab>   pumvisible() ? "\<c-n>" : "\<tab>"
+imap <expr> <s-tab> pumvisible() ? "\<c-p>" : "\<tab>"
+imap <expr> <cr>    pumvisible() ? deoplete#close_popup() : "\<cr>"
+
+" paste with 'p' multiple times
+xnoremap p pgvy
 
 "----------------------------------------------
 " navigation settings
