@@ -44,7 +44,7 @@ bindsym XF86MonBrightnessDown exec xbacklight -dec 5 # decrease screen brightnes
 
 bindsym Shift+Print           exec "scrot '%y.%m.%d.%T.png' -ub -e 'mv $f ~/Pictures/screenshots/'"
 bindsym Print                 exec "scrot '%y.%m.%d.%T.png' -e 'mv $f ~/Pictures/screenshots/'"
-bindsym --release Shift+Print exec scrot -s '%y.%m.%d.$T.png' -e 'mv $f ~/Pictures/screenshots/'
+bindsym --release Shift+Print exec "scrot -s '%y.%m.%d.%T-snippet.png' -e 'mv $f ~/Pictures/screenshots/'"
 
 # kill focused window
 bindsym $mod+Shift+q kill
@@ -128,7 +128,7 @@ bindsym $mod+Shift+BackSpace exec "i3lock -c 1d1f21 && sleep 0.15 && systemctl s
 
 # Some quickstart key combinations
 bindsym $mod+Return exec "alacritty --config-file=$HOME/dotfiles/.config/alacritty/alacritty.yml"
-bindsym $mod+backslash exec "brave"
+bindsym $mod+backslash exec "brave-beta"
 bindsym $mod+Tab exec "rofi -show run"
 bindsym $mod+Shift+Tab exec "rofi -show window"
 
