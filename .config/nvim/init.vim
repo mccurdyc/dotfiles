@@ -9,6 +9,7 @@ Plug 'airblade/vim-gitgutter'
 Plug 'w0rp/ale'                " linting
 Plug 'sebdah/vim-delve'        " debugger
 Plug 'kshenoy/vim-signature'   " display marks in sidebar
+Plug 'daviesjamie/vim-base16-lightline'
 Plug 'itchyny/lightline.vim'   " light, configurable statusline
 Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
 Plug 'neoclide/coc.nvim', {'tag': '*', 'branch': 'release'}
@@ -87,22 +88,6 @@ colorscheme base16-eighties
 
 " fix grey line number bar
 highlight LineNr term=bold cterm=NONE ctermfg=DarkGrey ctermbg=NONE gui=NONE guifg=DarkGrey guibg=NONE
-
-"----------------------------------------------
-" plugin settings
-"----------------------------------------------
-" Plugin: itchyny/lightline.vim
-" Dependency: tpope/vim-fugitive (for branch info)
-let g:lightline = {
-      \ 'colorscheme': 'base16',
-      \ 'active': {
-      \   'left': [ [ 'mode', 'paste' ],
-      \             [ 'gitbranch', 'readonly', 'filename', 'modified' ] ]
-      \ },
-      \ 'component_function': {
-      \   'gitbranch': 'fugitive#head'
-      \ },
-      \ }
 
 " Plugin: airblade/vim-gitgutter
 " remove background from git gutter
@@ -207,8 +192,9 @@ nnoremap <silent> <Leader>rg :FzfRg <C-R><C-W><CR>
 let g:fzf_history_dir = '~/.local/share/fzf-history'
 
 " Plugin: https://github.com/itchyny/lightline.vim
+" Dependency: tpope/vim-fugitive (for branch info)
 let g:lightline = {
-      \ 'colorscheme': 'wombat',
+      \ 'colorscheme': 'base16',
       \ 'active': {
       \   'left': [ [ 'mode', 'paste' ],
       \             [ 'gitbranch', 'readonly', 'filename', 'modified' ] ]

@@ -1,3 +1,4 @@
 .extra
 .gitconfig
 bin/
+.config/nvim/.netrwhist

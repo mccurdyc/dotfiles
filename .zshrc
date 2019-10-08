@@ -10,8 +10,8 @@ if [[ ! $DISPLAY && $XDG_VTNR -eq 1 ]]; then
   exec startx
 fi
 
-# Load .bashrc and other files...
-for file in ~/.{zsh_prompt,aliases,functions,path,gofunc,dockerfunc,gitfunc,exports}; do
+# Load files...
+for file in ~/.{zsh_prompt,aliases,fzf.zsh,functions,path,gitfunc,exports}; do
 	if [[ -r "$file" ]] && [[ -f "$file" ]]; then
 		# shellcheck source=/dev/null
 		source "$file"
@@ -47,9 +47,6 @@ setopt autocd     ## mainly so ../ works
 setopt nonomatch  ## prevent glob crashes
 # unsetopt CLOBBER  ## require >| to truncate
 REPORTTIME=2      ## stats if cmd takes >2sec
-
-# fzf
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
 # store prompt command
 PROMPT_COMMAND='echo -ne "\033]0;${USER}@${HOSTNAME}: ${PWD}\007"'

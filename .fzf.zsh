@@ -22,5 +22,16 @@ bindkey '^I' $fzf_default_completion
 # prefer to start in a tmux split pane
 export FZF_TMUX=1
 export FZF_CTRL_T_OPTS="--preview '(highlight -O ansi -l {} 2> /dev/null || cat {} || tree -C {}) 2> /dev/null | head -200'"
-
 export FZF_ALT_C_OPTS="--preview 'tree -C {} | head -200'"
+
+# fzf
+# open FZF in a tmux window
+export FZF_TMUX=1
+export FZF_DEFAULT_OPTS='--height 20% --border'
+
+# Setting ag as the default source for fzf
+# If you want the command to follow symbolic links, and don't want it to exclude hidden files, use the following command:
+export FZF_DEFAULT_COMMAND='fd --type f --hidden --follow --exclude .git'
+
+# To apply the command to CTRL-T as well
+export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
