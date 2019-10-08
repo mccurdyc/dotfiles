@@ -2,6 +2,7 @@ call plug#begin('~/.vim/plugged')
 
 Plug 'junegunn/fzf.vim'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+Plug 'voldikss/vim-floaterm' " floating terminal toggle
 Plug 'tpope/vim-fugitive'
 Plug 'tomtom/tcomment_vim'
 Plug 'airblade/vim-gitgutter'
@@ -151,6 +152,8 @@ let g:fzf_command_prefix = 'Fzf'
 
 au FileType fzf set nonu nornu
 
+" Floating window in NeoVim!
+" This requires NeoVim > 0.4.0
 function! FloatingFZF()
   let buf = nvim_create_buf(v:false, v:true)
   call setbufvar(buf, '&signcolumn', 'no')
@@ -171,21 +174,21 @@ function! FloatingFZF()
   call setwinvar(win, '&number', 0)
 endfunction
 
-" Load hidden files
+" Load just hidden files
 command! FZFHidden call fzf#run({
       \  'window': 'call FloatingFZF()',
-      \  'source':  'rg --hidden --ignore .git -l -g ""',
+      \  'source':  'rg --hidden -l -g "!.git',
       \  'sink':    'e',
       \  'options': '-m -x +s --no-bold --cycle'})
 
-" Load non-hidden files
-command! FZFMine call fzf#run({
+" Load all files
+command! FZFFiles call fzf#run({
       \  'window': 'call FloatingFZF()',
-      \  'source':  'rg --ignore .git -l -g ""',
+      \  'source':  'rg --hidden --files -l -g "!.git"',
       \  'sink':    'e',
       \  'options': '--no-bold --cycle'})
 
-" Load non-hidden files
+" Load files in Git
 command! FZFGit call fzf#run({
       \  'window': 'call FloatingFZF()',
       \  'sink':    'e',
@@ -195,11 +198,10 @@ let $FZF_DEFAULT_OPTS='--layout=reverse'
 let g:fzf_layout = { 'window': 'call FloatingFZF()' }
 
 " Define key combinations
-nmap <C-h> :FZFHidden <CR>
-nmap <C-p> :FZFMine <CR>
-nmap <C-g> :FZFGit <CR>
-nnoremap <silent> <Leader>ag :Ag <C-R><C-W><CR>
-nnoremap <silent> <Leader>rg :Rg <C-R><C-W><CR>
+nmap <C-f> :FzfRg<CR>
+nmap <C-p> :FZFFiles <CR>
+nnoremap <silent> <Leader>ag :FzfAg <C-R><C-W><CR>
+nnoremap <silent> <Leader>rg :FzfRg <C-R><C-W><CR>
 
 " Configure the FZF statusline in Neovim
 function! s:fzf_statusline()
@@ -216,12 +218,6 @@ autocmd! User FzfStatusLine call <SID>fzf_statusline()
 " previous-history instead of down and up. If you don't like the change,
 " explicitly bind the keys to down and up in your $FZF_DEFAULT_OPTS.
 let g:fzf_history_dir = '~/.local/share/fzf-history'
-
-" Define key combinations
-nmap <C-p> :FZFMine<CR>
-nmap <C-f> :FzfAg<CR>
-nnoremap <silent> <Leader>ag :FzfAg <C-R><C-W><CR>
-nnoremap <silent> <Leader>rg :FzfRg <C-R><C-W><CR>
 
 "=====================================================
 "===================== STATUSLINE ====================
@@ -359,3 +355,16 @@ endif
 
 " clear search highlights
 no <silent><Leader>cs :nohls<CR>
+
+" floating terminal toggle
+noremap  <C-Space> :FloatermToggle<CR>i
+noremap! <C-Space> <Esc>:FloatermToggle<CR>i
+tnoremap <C-Space> <C-\><C-n>:FloatermToggle<CR>
+
+let height = float2nr(&lines - (&lines * 2 / 10))
+let width = float2nr(&columns - (&columns * 2 / 7))
+
+let g:floaterm_height = height
+let g:floaterm_width = width
+let g:floaterm_winblend = 0
+let g:floaterm_position = 'center'
