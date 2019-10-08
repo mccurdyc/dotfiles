@@ -16,3 +16,5 @@ export PATH="/usr/local/go/bin:${GOPATH}/bin:${PATH}"
 export PATH="${HOME}/.cargo/bin:${PATH}"
 
 export PATH="${HOME}/.gem/ruby/2.5.0/bin:${PATH}"
+
+export PATH="${PATH}:/usr/local/opt/terraform@0.11/bin"
