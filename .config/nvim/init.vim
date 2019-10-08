@@ -1,65 +1,30 @@
-"----------------------------------------------
-" plugin management
-"
-" Download vim-plug from the URL below and follow the installation
-" instructions:
-" https://github.com/junegunn/vim-plug
-"----------------------------------------------
 call plug#begin('~/.vim/plugged')
 
-" dependencies
-Plug 'godlygeek/tabular'  " plasticboy/vim-markdown
-Plug 'tpope/vim-fugitive' " itchyny/lightline.vim
-
-" general plugins
-Plug 'conradirwin/vim-bracketed-paste'
-Plug 'Raimondi/delimitMate'
-Plug 'bronson/vim-trailing-whitespace'
-Plug 'tomtom/tcomment_vim'
-Plug 'chrisbra/Colorizer'
-Plug 'airblade/vim-gitgutter'
-Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+Plug 'tpope/vim-fugitive'
+Plug 'tomtom/tcomment_vim'
+Plug 'airblade/vim-gitgutter'
 Plug 'w0rp/ale'                " linting
 Plug 'sebdah/vim-delve'        " debugger
-Plug 'scrooloose/nerdtree'
-Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
-Plug 'tpope/vim-surround'      " quickly surround blocks of code (e.g., {}, (), <p></p>, etc.).
-Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-Plug 'junegunn/vim-easy-align' " gaip=
-Plug 'junegunn/limelight.vim'  " focused highlighting
-Plug 'kshenoy/vim-signature'   " display marks in sidebar
-Plug 'itchyny/lightline.vim'   " light, configurable statusline
-Plug 'vim-scripts/paredit.vim'
-
-" language support
-Plug 'lervag/vimtex'
-Plug 'chrisbra/csv.vim'
-Plug 'plasticboy/vim-markdown'
-Plug 'jalvesaq/Nvim-R'
-Plug 'pangloss/vim-javascript'
-Plug 'fatih/vim-go', { 'do': ':GoInstallBinaries' }
-Plug 'nsf/gocode', { 'rtp': 'vim', 'do': '~/.vim/plugged/gocode/vim/symlink.sh' } " Go auto completion
-Plug 'zchee/deoplete-go', { 'do': 'make' }                                        " Go auto completion
-Plug 'zchee/deoplete-jedi'                                                        " Go auto completion
-Plug 'sebastianmarkow/deoplete-rust'
-Plug 'racer-rust/vim-racer'
-Plug 'tpope/vim-fireplace'                                                        " Clojure
-Plug 'venantius/vim-cljfmt'
-Plug 'rust-lang/rust.vim'
+" Plug 'kshenoy/vim-signature'   " display marks in sidebar
+" Plug 'itchyny/lightline.vim'   " light, configurable statusline
+Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
 
 " colorscheme
 Plug 'chriskempson/base16-vim'
-Plug 'daviesjamie/vim-base16-lightline' " lightline colorscheme
-
-" Always load special fonts last
-Plug 'ryanoasis/vim-devicons' " make sure your font supports it (e.g., use Source Code Pro)
+" Plug 'daviesjamie/vim-base16-lightline' " lightline colorscheme
 
 call plug#end()
 
 "----------------------------------------------
 " general settings
 "----------------------------------------------
+" Display screen redraws faster
+set nocursorcolumn
+set nocursorline
+set ttyfast
+
 set clipboard=unnamedplus      " copy and paste to system clipboard
 set smarttab                   " indents instead of tabs at the beginning of a line
 set autowrite                  " write when switching buffers
@@ -71,7 +36,6 @@ set belloff=all
 set title                      " let vim set the terminal title
 set nowrap                     " don't wrap lines, leave them on same line
 set number                     " show number ruler
-set relativenumber             " show relative numbers in the ruler
 set updatetime=100             " redraw the status bar often
 set linebreak
 set showbreak=━━
@@ -109,9 +73,6 @@ let mapleader = ","
 syntax enable
 syntax on
 
-" Remove trailing white spaces on save
-autocmd BufWritePre * :%s/\s\+$//e
-
 " map kj to escape key
 inoremap kj <Esc>
 
@@ -132,28 +93,6 @@ highlight LineNr term=bold cterm=NONE ctermfg=DarkGrey ctermbg=NONE gui=NONE gui
 "----------------------------------------------
 " plugin settings
 "----------------------------------------------
-" Plugin: sebastianmarkow/deoplete-rust
-
-" required
-let g:deoplete#sources#rust#racer_binary='/home/mccurdyc/.cargo/bin/racer'
-let g:deoplete#sources#rust#rust_source_path='/home/mccurdyc/.rustup/toolchains/stable-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/src'
-
-" default
-nmap <buffer> gd <plug>DeopleteRustGoToDefinitionDefault
-nmap <buffer> K  <plug>DeopleteRustShowDocumentation
-
-" Plugin: racer-rust/vim-racer
-set hidden
-let g:racer_cmd = "/home/mccurdyc/.cargo/bin/racer"
-
-" show the complete function definition (e.g. its arguments and return type)
-let g:racer_experimental_completer = 1
-
-au FileType rust nmap gd <Plug>(rust-def)
-au FileType rust nmap gs <Plug>(rust-def-split)
-au FileType rust nmap gx <Plug>(rust-def-vertical)
-au FileType rust nmap <leader>gd <Plug>(rust-doc)
-
 " Plugin: itchyny/lightline.vim
 " Dependency: tpope/vim-fugitive (for branch info)
 let g:lightline = {
@@ -167,27 +106,6 @@ let g:lightline = {
       \ },
       \ }
 
-" Plugin: junegunn/limelight
-" focused paragraph highlighting
-" Color name (:help cterm-colors) or ANSI code
-let g:limelight_conceal_ctermfg = 'gray'
-let g:limelight_conceal_ctermfg = 240
-
-" Default: 0.5
-let g:limelight_default_coefficient = 0.7
-
-" Display the current block of text/code in a highlighting limelight
-nmap <Space>f :Limelight!! <CR>
-
-" Number of preceding/following paragraphs to include (default: 0)
-let g:limelight_paragraph_span = 0
-
-" Plugin: junegunn/vim-easy-align
-" Start interactive EasyAlign in visual mode (e.g. vipga)
-xmap ga <Plug>(EasyAlign)
-" Start interactive EasyAlign for a motion/text object (e.g. gaip)
-nmap ga <Plug>(EasyAlign)
-
 " Plugin: airblade/vim-gitgutter
 " remove background from git gutter
 let g:gitgutter_override_sign_column_highlight = 0
@@ -200,7 +118,7 @@ nmap <silent> <C-k> <Plug>(ale_previous_wrap)
 nmap <silent> <C-j> <Plug>(ale_next_wrap)
 
 " Show 5 lines of errors (default: 10)
-let g:ale_list_window_size = 5
+let g:ale_list_window_size = 10
 
 " Error and warning signs.
 let g:ale_sign_error = '✗'
@@ -208,88 +126,90 @@ let g:ale_sign_warning = '▸'
 highlight link ALEWarningSign String
 highlight link ALEErrorSign WarningMsg
 
-" In ~/.vim/vimrc, or somewhere similar.
 let g:ale_fixers = {
 \   '*': ['remove_trailing_lines', 'trim_whitespace'],
 \   'javascript': ['eslint'],
+\   'go': ['gofmt'],
+\   'terraform': ['fmt'],
 \}
 
-" https://github.com/w0rp/ale/blob/master/doc/ale-go.txt
 let g:ale_linters = {
-\ 'go': ['golangci-lint', 'gofmt'],
+\ 'go': ['gopls', 'golangci-lint', 'gofmt'],
 \ 'rust': ['rustc'],
+\ 'terraform': ['fmt', 'tflint'],
 \ }
 
 let g:ale_go_golangci_lint_executable = '$GOPATH/bin/golangci-lint'
+" let g:ale_terraform_terraform_executable = '/usr/bin/terraform'
+let g:ale_terraform_tflint_executable = '$GOPATH/bin/tflint'
 
-let g:ale_fix_on_save = 0 " fix files when you save
-" Enable completion where available.
-" This setting must be set before ALE is loaded.
-let g:ale_completion_enabled = 1
-
-" Plugin: pasticboy/vim-markdown
-let g:vim_markdown_folding_disabled = 1 " disable folding
-let g:vim_markdown_math = 1 " for displaying LaTeX math
-
-" Plugin: lervag/vimtex
-" make compile nice
-autocmd FileType tex :nmap <Leader>ll \ll
-
-" Plugin: scrooloose/nerdtree
-autocmd VimEnter * NERDTree " open NERDTree upon opening vim
-autocmd VimEnter * wincmd p " start cursor out of NERDTree
-autocmd StdinReadPre * let s:std_in=1 " open a NERDTree automatically when vim starts up if no files were specified
-autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
-
-" show current file NERDTree
-nnoremap <silent> <C-n> :NERDTreeFind<CR>
-
-" toggle NERDTree with ,nt
-map <Leader>nt :NERDTreeToggle<CR>
-
-" ignore the following in NERDTree
-let NERDTreeIgnore = ['\.class$', '\.pyc$', '\.aux$', 'fdb_latexmk$', '\.fls$', '\.out$']
-
-" shutdown vim if only window is a NERDTree window
-autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
-
-" change arrow appearance
-let g:NERDTreeDirArrowExpandable = '▸'
-let g:NERDTreeDirArrowCollapsible = '▾'
-
-" show hidden files
-let NERDTreeShowHidden=1
-
-" Set encoding to UTF-8 to show glyphs - vim-devicons & vim-nerdtree-syntax-highlight
-let g:NERDTreeFileExtensionHighlightFullName = 1
+let b:ale_fix_on_save = 1
+" let b:ale_completion_enabled = 1
 
 " Plugin: junegunn/fzf
 let g:fzf_command_prefix = 'Fzf'
 
-" This is the default extra key bindings
-let g:fzf_action = {
-  \ 'ctrl-t': 'tab split',
-  \ 'ctrl-x': 'split',
-  \ 'ctrl-v': 'vsplit' }
+au FileType fzf set nonu nornu
 
-" Default fzf layout
-" - down / up / left / right
-let g:fzf_layout = { 'down': '~20%' }
+function! FloatingFZF()
+  let buf = nvim_create_buf(v:false, v:true)
+  call setbufvar(buf, '&signcolumn', 'no')
 
-" Customize fzf colors to match your color scheme
-let g:fzf_colors =
-\ { 'fg':      ['fg', 'Normal'],
-  \ 'bg':      ['bg', 'Normal'],
-  \ 'hl':      ['fg', 'Comment'],
-  \ 'fg+':     ['fg', 'CursorLine', 'CursorColumn', 'Normal'],
-  \ 'bg+':     ['bg', 'CursorLine', 'CursorColumn'],
-  \ 'hl+':     ['fg', 'Statement'],
-  \ 'info':    ['fg', 'PreProc'],
-  \ 'prompt':  ['fg', 'Conditional'],
-  \ 'pointer': ['fg', 'Exception'],
-  \ 'marker':  ['fg', 'Keyword'],
-  \ 'spinner': ['fg', 'Label'],
-  \ 'header':  ['fg', 'Comment'] }
+  let height = &lines - 3
+  let width = float2nr(&columns - (&columns * 2 / 10))
+  let col = float2nr((&columns - width) / 2)
+
+  let opts = {
+        \ 'relative': 'editor',
+        \ 'row': 1,
+        \ 'col': col,
+        \ 'width': width,
+        \ 'height': height
+        \ }
+
+  let win = nvim_open_win(buf, v:true, opts)
+  call setwinvar(win, '&number', 0)
+endfunction
+
+" Load hidden files
+command! FZFHidden call fzf#run({
+      \  'window': 'call FloatingFZF()',
+      \  'source':  'rg --hidden --ignore .git -l -g ""',
+      \  'sink':    'e',
+      \  'options': '-m -x +s --no-bold --cycle'})
+
+" Load non-hidden files
+command! FZFMine call fzf#run({
+      \  'window': 'call FloatingFZF()',
+      \  'source':  'rg --ignore .git -l -g ""',
+      \  'sink':    'e',
+      \  'options': '--no-bold --cycle'})
+
+" Load non-hidden files
+command! FZFGit call fzf#run({
+      \  'window': 'call FloatingFZF()',
+      \  'sink':    'e',
+      \  'source':  'git ls-files'})
+
+let $FZF_DEFAULT_OPTS='--layout=reverse'
+let g:fzf_layout = { 'window': 'call FloatingFZF()' }
+
+" Define key combinations
+nmap <C-h> :FZFHidden <CR>
+nmap <C-p> :FZFMine <CR>
+nmap <C-g> :FZFGit <CR>
+nnoremap <silent> <Leader>ag :Ag <C-R><C-W><CR>
+nnoremap <silent> <Leader>rg :Rg <C-R><C-W><CR>
+
+" Configure the FZF statusline in Neovim
+function! s:fzf_statusline()
+  " Define colors for the statusline
+  setlocal statusline=%#fzf1#\ \%#fzf2#\ \FIND\ \ %#fzf3#
+endfunction
+
+" Display a customized statusline when invoking fzf
+" NOTE: this will not always trigger if in an augroup
+autocmd! User FzfStatusLine call <SID>fzf_statusline()
 
 " Enable per-command history.
 " CTRL-N and CTRL-P will be automatically bound to next-history and
@@ -297,58 +217,109 @@ let g:fzf_colors =
 " explicitly bind the keys to down and up in your $FZF_DEFAULT_OPTS.
 let g:fzf_history_dir = '~/.local/share/fzf-history'
 
-" Mapping selecting mappings
-nmap <leader><tab> <plug>(fzf-maps-n)
-xmap <leader><tab> <plug>(fzf-maps-x)
-omap <leader><tab> <plug>(fzf-maps-o)
-
-" Insert mode completion
-imap <c-x><c-k> <plug>(fzf-complete-word)
-imap <c-x><c-f> <plug>(fzf-complete-path)
-imap <c-x><c-j> <plug>(fzf-complete-file-ag)
-imap <c-x><c-l> <plug>(fzf-complete-line)
-
-" Load hidden files
-command! FZFHidden call fzf#run({
-\  'source':  'ag --hidden --ignore .git -l -g ""',
-\  'sink':    'e',
-\  'options': '-m -x +s --no-bold --cycle',
-\  'down':    '25%'})
-
-" Load non-hidden files
-command! FZFMine call fzf#run({
-\  'source':  'ag --ignore .git -l -g ""',
-\  'sink':    'e',
-\  'options': '-m -x +s --no-bold --cycle',
-\ 'down': '25%'})
-
 " Define key combinations
 nmap <C-p> :FZFMine<CR>
 nmap <C-f> :FzfAg<CR>
 nnoremap <silent> <Leader>ag :FzfAg <C-R><C-W><CR>
+nnoremap <silent> <Leader>rg :FzfRg <C-R><C-W><CR>
 
-" Plugin: tpope/vim-fireplace
-" reference: https://blog.venanti.us/clojure-vim/
-" for reloading namespace
-au Filetype clojure nmap <C-c><C-k> :Require<cr>
-let g:clj_fmt_autosave = 1 " disable (=0) :Cljfmt automatically on save (I think it was why NeoVim froze)
+"=====================================================
+"===================== STATUSLINE ====================
+let s:modes = {
+      \ 'n': 'NORMAL',
+      \ 'i': 'INSERT',
+      \ 'R': 'REPLACE',
+      \ 'v': 'VISUAL',
+      \ 'V': 'V-LINE',
+      \ "\<C-v>": 'V-BLOCK',
+      \ 'c': 'COMMAND',
+      \ 's': 'SELECT',
+      \ 'S': 'S-LINE',
+      \ "\<C-s>": 'S-BLOCK',
+      \ 't': 'TERMINAL'
+      \}
+
+let s:prev_mode = ""
+function! StatusLineMode()
+  let cur_mode = get(s:modes, mode(), '')
+
+  " do not update higlight if the mode is the same
+  if cur_mode == s:prev_mode
+    return cur_mode
+  endif
+
+  if cur_mode == "NORMAL"
+    exe 'hi! StatusLine ctermfg=236'
+    exe 'hi! myModeColor cterm=bold ctermbg=148 ctermfg=22'
+  elseif cur_mode == "INSERT"
+    exe 'hi! myModeColor cterm=bold ctermbg=23 ctermfg=231'
+  elseif cur_mode == "VISUAL" || cur_mode == "V-LINE" || cur_mode == "V_BLOCK"
+    exe 'hi! StatusLine ctermfg=236'
+    exe 'hi! myModeColor cterm=bold ctermbg=208 ctermfg=88'
+  endif
+
+  let s:prev_mode = cur_mode
+  return cur_mode
+endfunction
+
+function! StatusLineFiletype()
+  return winwidth(0) > 70 ? (strlen(&filetype) ? &filetype : 'no ft') : ''
+endfunction
+
+function! StatusLinePercent()
+  return (100 * line('.') / line('$')) . '%'
+endfunction
+
+function! StatusLineLeftInfo()
+ let branch = fugitive#head()
+ let filename = '' != expand('%:t') ? expand('%:t') : '[No Name]'
+ if branch !=# ''
+   return printf("%s | %s", branch, filename)
+ endif
+ return filename
+endfunction
+
+exe 'hi! myInfoColor ctermbg=240 ctermfg=252'
+
+" start building our statusline
+set statusline=
+
+" mode with custom colors
+set statusline+=%#myModeColor#
+set statusline+=%{StatusLineMode()}
+set statusline+=%*
+
+" left information bar (after mode)
+set statusline+=%#myInfoColor#
+set statusline+=\ %{StatusLineLeftInfo()}
+set statusline+=\ %*
+
+" go command status (requires vim-go)
+set statusline+=%#goStatuslineColor#
+set statusline+=%{go#statusline#Show()}
+set statusline+=%*
+
+" right section seperator
+set statusline+=%=
+
+" filetype, percentage, line number and column number
+set statusline+=%#myInfoColor#
+set statusline+=\ %{StatusLineFiletype()}\ %{StatusLinePercent()}\ %l:%v
+set statusline+=\ %*
 
 " Plugin: fatih/vim-go
 let g:go_fmt_command = "goimports" " automagically get dependencies
 let g:syntastic_go_checkers = ['golangci-lint', 'govet']
-let g:go_def_mode = "gopls" " faster jumpt to definition
 
-" display function declarations
-au FileType go nmap <leader>gt :GoDeclsDir<cr>
+let g:go_metalinter_autosave_enabled = ['vet', 'golint']
+let g:go_metalinter_enabled = ['vet', 'golint']
 
-" GoAlternate; open in splits
-au Filetype go nmap <leader>ga <Plug>(go-alternate-edit)
-au Filetype go nmap <leader>gah <Plug>(go-alternate-split)
-au Filetype go nmap <leader>gav <Plug>(go-alternate-vertical)
+let g:go_autodetect_gopath = 1
+let g:go_auto_type_info = 1 " show type information in status line
 
-" GoCoverage
-au FileType go nmap <leader>gct :GoCoverageToggle -short<cr>
-let g:go_auto_type_info = 0 " show type information in status line
+" Plugin: sebdah/vim-delve
+" open Delve with a horizontal split rather than a vertical split.
+let g:delve_new_command = "vnew"
 
 "----------------------------------------------
 " navigation settings
@@ -362,11 +333,19 @@ nnoremap <C-K> <C-W><C-K>
 nnoremap <C-L> <C-W><C-L>
 nnoremap <C-H> <C-W><C-H>
 
-" navigating NeoVim terminal splits
-tnoremap <C-j> <C-\><C-n><C-j>
-tnoremap <C-k> <C-\><C-n><C-k>
-tnoremap <C-l> <C-\><C-n><C-l>
-tnoremap <C-h> <C-\><C-n><C-h>
+" To use `ALT+{h,j,k,l}` to navigate windows from any mode:
+tnoremap <A-h> <C-\><C-N><C-w>h
+tnoremap <A-j> <C-\><C-N><C-w>j
+tnoremap <A-k> <C-\><C-N><C-w>k
+tnoremap <A-l> <C-\><C-N><C-w>l
+inoremap <A-h> <C-\><C-N><C-w>h
+inoremap <A-j> <C-\><C-N><C-w>j
+inoremap <A-k> <C-\><C-N><C-w>k
+inoremap <A-l> <C-\><C-N><C-w>l
+nnoremap <A-h> <C-w>h
+nnoremap <A-j> <C-w>j
+nnoremap <A-k> <C-w>k
+nnoremap <A-l> <C-w>l
 
 "----------------------------------------------
 " search settings
@@ -380,17 +359,3 @@ endif
 
 " clear search highlights
 no <silent><Leader>cs :nohls<CR>
-
-"----------------------------------------------
-" splits settings
-"----------------------------------------------
-" Create horizontal splits below the current window
-set splitbelow
-set splitright
-
-" Creating splits
-nnoremap <leader>v :vsplit<cr>
-nnoremap <leader>h :split<cr>
-
-" Closing splits
-nnoremap <leader>q :close<cr>
