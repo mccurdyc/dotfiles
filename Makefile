@@ -44,6 +44,9 @@ etc: ## Installs the etc directory files.
 	sudo systemctl daemon-reload
 	sudo ln -snf /run/systemd/resolve/stub-resolv.conf /etc/resolv.conf
 
+fonts:
+	brew tap homebrew/cask-fonts && brew cask install font-source-code-pro
+
 .PHONY: help
 help:
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'

@@ -15,7 +15,7 @@ export TMUX_CONF="$DOTFILES_DIR/.tmux.conf"
 export RUST_SRC_PATH="$(rustc --print sysroot)/lib/rustlib/src/rust/src"
 
 # Make vim the default editor
-export EDITOR=/usr/bin/nvim;
+export EDITOR=/usr/local/bin/nvim;
 export TERMINAL="alacritty";
 
 # Larger bash history (allow 32³ entries; default is 500)

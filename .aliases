@@ -1,5 +1,12 @@
 #!/bin/bash
 
+## run `tfsec terraform plan` and not need to do any secrets stuff, so long as you’re in a directory with a name equal to the applicable amazon profile
+alias tfsec='eval $(AWS_PROFILE=${PWD##*/} sops --decrypt --input-type env secrets.env | egrep -v "^#" | xargs)'
+
+## docker
+alias docker_force_clean_system="docker system prune --all --force"
+alias docker_force_clean_images="docker rmi --force $(docker images -a -q)"
+
 ## tree
 alias tree="tree --dirsfirst --noreport -ACF"
 alias treea="tree -a"                         ## tree all
@@ -40,6 +47,9 @@ alias mkdir="mkdir -pv"
 
 ## git
 alias gits="git status"
+
+# clean local and remote "dead" branches
+alias gitclean='git remote prune origin && git branch --merged | egrep -v "(^\*|master|dev)" | xargs git branch -d'
 
 ## resource usage
 alias jo="jobs -l"
