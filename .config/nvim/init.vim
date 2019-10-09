@@ -13,6 +13,7 @@ Plug 'daviesjamie/vim-base16-lightline'
 Plug 'itchyny/lightline.vim'   " light, configurable statusline
 Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
 Plug 'neoclide/coc.nvim', {'tag': '*', 'branch': 'release'}
+Plug 'mhinz/vim-startify' " startup screen
 
 " colorscheme
 Plug 'chriskempson/base16-vim'
@@ -354,3 +355,31 @@ nnoremap <A-h> <C-w>h
 nnoremap <A-j> <C-w>j
 nnoremap <A-k> <C-w>k
 nnoremap <A-l> <C-w>l
+
+" Plugin: https://github.com/mhinz/vim-startify
+let g:startify_bookmarks = [ {'c': '~/dotfiles/.config/nvim/init.vim'}, '~/.zshrc' ]
+
+function! s:list_commits()
+    let git = 'git -C $(pwd)'
+    let commits = systemlist(git .' status --oneline | head -n10')
+    let git = 'G'. git[1:]
+    return map(commits, '{"line": matchstr(v:val, ".*")}')
+  endfunction
+
+let g:startify_lists = [
+      \ { 'header': ['   MRU'],            'type': 'files' },
+      \ { 'header': ['   MRU '. getcwd()], 'type': 'dir' },
+      \ { 'header': ['   Sessions'],       'type': 'sessions' },
+      \ { 'header': ['   Commits'],        'type': function('s:list_commits') },
+      \ ]
+
+" http://patorjk.com/software/taag/#p=display&f=3D-ASCII&t=NeoVim
+let g:startify_custom_header = [
+ \'  ________   _______   ________  ___      ___ ___  _____ ______       ',
+ \' |\   ___  \|\  ___ \ |\   __  \|\  \    /  /|\  \|\   _ \  _   \     ',
+ \' \ \  \\ \  \ \   __/|\ \  \|\  \ \  \  /  / | \  \ \  \\\__\ \  \    ',
+ \'  \ \  \\ \  \ \  \_|/_\ \  \\\  \ \  \/  / / \ \  \ \  \\|__| \  \   ',
+ \'   \ \  \\ \  \ \  \_|\ \ \  \\\  \ \    / /   \ \  \ \  \    \ \  \  ',
+ \'    \ \__\\ \__\ \_______\ \_______\ \__/ /     \ \__\ \__\    \ \__\ ',
+ \'     \|__| \|__|\|_______|\|_______|\|__|/       \|__|\|__|     \|__| ',
+ \ ]
