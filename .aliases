@@ -26,10 +26,6 @@ alias grep="grep --color=auto --exclude=tags --exclude-dir=.git"
 alias fgrep="fgrep --color=auto"
 alias egrep="egrep --color=auto"
 
-## find
-alias fd="find . -type d -name"
-alias ff="find . -type f -name"
-
 ## tmux
 alias tl='tmux list-sessions'
 alias ta='tmux attach -t '
