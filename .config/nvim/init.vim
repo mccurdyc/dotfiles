@@ -9,7 +9,6 @@ Plug 'airblade/vim-gitgutter'
 Plug 'w0rp/ale'                " linting
 Plug 'sebdah/vim-delve'        " debugger
 Plug 'kshenoy/vim-signature'   " display marks in sidebar
-Plug 'daviesjamie/vim-base16-lightline'
 Plug 'itchyny/lightline.vim'   " light, configurable statusline
 Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
 Plug 'neoclide/coc.nvim', {'tag': '*', 'branch': 'release'}
@@ -68,6 +67,9 @@ au BufNewFile,BufRead,BufEnter *.go set nolist
 
 let maplocalleader = ","
 let mapleader = ","
+
+" clear search highlights
+no <silent><Leader>cs :nohls<CR>
 
 " Allow vim to set a custom font or color for a word
 syntax enable
@@ -174,7 +176,7 @@ endfunction
 " Load just hidden files
 command! FZFHidden call fzf#run({
       \  'window': 'call FloatingFZF()',
-      \  'source':  'rg --color always --hidden -l -g "!.git',
+      \  'source':  'rg --hidden -l -g "!.git',
       \  'sink':    'e',
       \  'options': '-m -x +s --no-bold --cycle'})
 
@@ -182,7 +184,7 @@ command! FZFHidden call fzf#run({
 command! FZFFiles call fzf#run({
       \  'window': 'call FloatingFZF()',
       \  'sink':    'e',
-      \  'source':  'rg --color always --hidden --files -l -g "!.git"'})
+      \  'source':  'rg --hidden --files -l -g "!.git"'})
 
 " Load files in Git
 command! FZFGit call fzf#run({
@@ -195,6 +197,9 @@ let $FZF_DEFAULT_OPTS='--layout=reverse'
 " Define key combinations
 nmap <C-f> :FzfRg<CR>
 nmap <C-p> :FZFFiles <CR>
+
+let g:fzf_layout = { 'window': 'call FloatingFZF()' } " otherwise built-in FZF commands wont float
+
 nnoremap <silent> <Leader>ag :FzfAg <C-R><C-W><CR>
 nnoremap <silent> <Leader>rg :FzfRg <C-R><C-W><CR>
 
