@@ -58,5 +58,5 @@ BASE16_SHELL="$HOME/.config/base16-shell/"
     [ -s "$BASE16_SHELL/profile_helper.sh" ] && \
         eval "$("$BASE16_SHELL/profile_helper.sh")"
 
-# This is neccessary for CTRL-R to work
+# This is neccessary for fzf key-bindings to work
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
