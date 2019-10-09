@@ -31,17 +31,3 @@ DBUS_SESSION_BUS_ADDRESS=unix:path=/var/run/user/$(id -u)/bus;
 export GDK_SCALE=2
 export GDK_DPI_SCALE=0.5
 export QT_DEVICE_PIXEL_RATIO=2
-
-# turn on go vendoring experiment
-export GO111MODULE=auto
-
-# fzf
-# open FZF in a tmux window
-export FZF_TMUX=1
-export FZF_DEFAULT_OPTS='--height 20% --border'
-
-# Setting ag as the default source for fzf
-export FZF_DEFAULT_COMMAND='ag -g ""'
-
-# To apply the command to CTRL-T as well
-export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
