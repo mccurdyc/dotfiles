@@ -133,6 +133,20 @@ let b:ale_fix_on_save = 1
 " Plugin: junegunn/fzf
 let g:fzf_command_prefix = 'Fzf'
 
+let g:fzf_colors =
+\ { 'fg':      ['fg', 'Normal'],
+  \ 'bg':      ['bg', 'Normal'],
+  \ 'hl':      ['fg', 'Comment'],
+  \ 'fg+':     ['fg', 'CursorLine', 'CursorColumn', 'Normal'],
+  \ 'bg+':     ['bg', 'CursorLine', 'CursorColumn'],
+  \ 'hl+':     ['fg', 'Statement'],
+  \ 'info':    ['fg', 'PreProc'],
+  \ 'prompt':  ['fg', 'Conditional'],
+  \ 'pointer': ['fg', 'Exception'],
+  \ 'marker':  ['fg', 'Keyword'],
+  \ 'spinner': ['fg', 'Label'],
+  \ 'header':  ['fg', 'Comment'] }
+
 au FileType fzf set nonu nornu
 
 " Floating window in NeoVim!
@@ -160,16 +174,15 @@ endfunction
 " Load just hidden files
 command! FZFHidden call fzf#run({
       \  'window': 'call FloatingFZF()',
-      \  'source':  'rg --hidden -l -g "!.git',
+      \  'source':  'rg --color always --hidden -l -g "!.git',
       \  'sink':    'e',
       \  'options': '-m -x +s --no-bold --cycle'})
 
 " Load all files
 command! FZFFiles call fzf#run({
       \  'window': 'call FloatingFZF()',
-      \  'source':  'rg --hidden --files -l -g "!.git"',
       \  'sink':    'e',
-      \  'options': '--no-bold --cycle'})
+      \  'source':  'rg --color always --hidden --files -l -g "!.git"'})
 
 " Load files in Git
 command! FZFGit call fzf#run({
@@ -178,7 +191,6 @@ command! FZFGit call fzf#run({
       \  'source':  'git ls-files'})
 
 let $FZF_DEFAULT_OPTS='--layout=reverse'
-let g:fzf_layout = { 'window': 'call FloatingFZF()' }
 
 " Define key combinations
 nmap <C-f> :FzfRg<CR>
@@ -195,7 +207,7 @@ let g:fzf_history_dir = '~/.local/share/fzf-history'
 " Plugin: https://github.com/itchyny/lightline.vim
 " Dependency: tpope/vim-fugitive (for branch info)
 let g:lightline = {
-      \ 'colorscheme': 'base16',
+      \ 'colorscheme': 'one',
       \ 'active': {
       \   'left': [ [ 'mode', 'paste' ],
       \             [ 'gitbranch', 'readonly', 'filename', 'modified' ] ]
@@ -357,21 +369,37 @@ nnoremap <A-k> <C-w>k
 nnoremap <A-l> <C-w>l
 
 " Plugin: https://github.com/mhinz/vim-startify
-let g:startify_bookmarks = [ {'c': '~/dotfiles/.config/nvim/init.vim'}, '~/.zshrc' ]
+let g:startify_bookmarks = [{'n': '~/dotfiles/.config/nvim/init.vim'}, {'z': '~/.zshrc'}]
+let g:startify_files_number = 3
 
 function! s:list_commits()
     let git = 'git -C $(pwd)'
-    let commits = systemlist(git .' status --oneline | head -n10')
+    let commits = systemlist(git .' log --oneline | head -n10')
     let git = 'G'. git[1:]
     return map(commits, '{"line": matchstr(v:val, ".*")}')
-  endfunction
+endfunction
+
+function! s:tree()
+    let tree = 'tree'
+    let out = systemlist(tree)
+    return map(out, '{"line": matchstr(v:val, ".*")}')
+endfunction
 
 let g:startify_lists = [
-      \ { 'header': ['   MRU'],            'type': 'files' },
       \ { 'header': ['   MRU '. getcwd()], 'type': 'dir' },
-      \ { 'header': ['   Sessions'],       'type': 'sessions' },
+      \ { 'header': ['   Tree'],           'type': function('s:tree') },
       \ { 'header': ['   Commits'],        'type': function('s:list_commits') },
+      \ { 'header': ['   Bookmarks'],      'type': 'bookmarks' },
       \ ]
+
+hi StartifyBracket ctermfg=240
+hi StartifyFile    ctermfg=147
+hi StartifyFooter  ctermfg=240
+hi StartifyHeader  ctermfg=114
+hi StartifyNumber  ctermfg=215
+hi StartifyPath    ctermfg=245
+hi StartifySlash   ctermfg=240
+hi StartifySpecial ctermfg=240
 
 " http://patorjk.com/software/taag/#p=display&f=3D-ASCII&t=NeoVim
 let g:startify_custom_header = [
