@@ -16,5 +16,9 @@
       "filetypes": ["sh"],
       "ignoredRootPaths": ["~"]
     }
-  }
+  },
+  "refactor.openCommand": "sp",
+  "diagnostic.displayByAle": true,
+  "diagnostic.maxWindowHeight": 10,
+  "codeLens.enable": true
 }

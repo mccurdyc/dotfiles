@@ -214,10 +214,12 @@ let g:lightline = {
       \ 'colorscheme': 'one',
       \ 'active': {
       \   'left': [ [ 'mode', 'paste' ],
-      \             [ 'gitbranch', 'readonly', 'filename', 'modified' ] ]
+      \             [ 'gitbranch'],
+	    \             [ 'cocstatus', 'readonly', 'filename', 'modified' ] ]
       \ },
       \ 'component_function': {
-      \   'gitbranch': 'fugitive#head'
+      \   'gitbranch': 'fugitive#head',
+      \   'cocstatus': 'coc#status'
       \ },
   \ }
 
@@ -281,13 +283,13 @@ set shortmess+=c
 set signcolumn=yes
 
 " setup multiple cursor support
+" https://github.com/neoclide/coc.nvim/wiki/Multiple-cursors-support
 hi CocCursorRange guibg=#b16286 guifg=#ebdbb2
 
 nmap <silent> <C-c> <Plug>(coc-cursors-position)
+nmap <silent> <C-r> <Plug>(coc-refactor)
 nmap <silent> <C-d> <Plug>(coc-cursors-word)
 xmap <silent> <C-d> <Plug>(coc-cursors-range)
-" use normal command like `<leader>xi(`
-nmap <leader>x  <Plug>(coc-cursors-operator)
 
 " Use tab for trigger completion with characters ahead and navigate.
 " Use command ':verbose imap <tab>' to make sure tab is not mapped by other plugin.
@@ -316,10 +318,10 @@ nmap <silent> [g <Plug>(coc-diagnostic-prev)
 nmap <silent> ]g <Plug>(coc-diagnostic-next)
 
 " Remap keys for gotos
-nmap <silent> gd <Plug>(coc-definition)
-nmap <silent> gy <Plug>(coc-type-definition)
-nmap <silent> gi <Plug>(coc-implementation)
-nmap <silent> gr <Plug>(coc-references)
+nmap <silent> jd <Plug>(coc-definition)
+nmap <silent> jt <Plug>(coc-type-definition)
+nmap <silent> ji <Plug>(coc-implementation)
+nmap <silent> jr <Plug>(coc-references)
 
 " Use K to show documentation in preview window
 nnoremap <silent> K :call <SID>show_documentation()<CR>
@@ -367,6 +369,10 @@ nnoremap <silent> <space>p  :<C-u>CocListResume<CR>
 "----------------------------------------------
 " Autosave buffers before leaving them
 autocmd BufLeave * silent! :wa
+
+" splitting
+set splitbelow " default horizontal split below instead of above
+set splitright " default vertical split right
 
 " navigating vim splits
 nnoremap <C-J> <C-W><C-J>
