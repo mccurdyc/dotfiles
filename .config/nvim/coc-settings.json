@@ -19,6 +19,7 @@
   },
   "refactor.openCommand": "sp",
   "diagnostic.displayByAle": true,
-  "diagnostic.maxWindowHeight": 10,
+  "diagnostic.maxWindowHeight": 15,
+  "suggest.maxPreviewWidth": 500,
   "codeLens.enable": true
 }
