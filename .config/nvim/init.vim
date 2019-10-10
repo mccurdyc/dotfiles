@@ -295,6 +295,9 @@ nmap <silent> <C-r> <Plug>(coc-refactor)
 nmap <silent> <C-d> <Plug>(coc-cursors-word)
 xmap <silent> <C-d> <Plug>(coc-cursors-range)
 
+" show signature help on param hover
+autocmd User CocJumpPlaceholder call CocActionAsync('showSignatureHelp')
+
 " Use tab for trigger completion with characters ahead and navigate.
 " Use command ':verbose imap <tab>' to make sure tab is not mapped by other plugin.
 inoremap <silent><expr> <TAB>
@@ -322,10 +325,10 @@ nmap <silent> [g <Plug>(coc-diagnostic-prev)
 nmap <silent> ]g <Plug>(coc-diagnostic-next)
 
 " Remap keys for gotos
-nmap <silent> jd <Plug>(coc-definition)
-nmap <silent> jt <Plug>(coc-type-definition)
-nmap <silent> ji <Plug>(coc-implementation)
-nmap <silent> jr <Plug>(coc-references)
+nmap <silent> gd <Plug>(coc-definition)
+nmap <silent> gt <Plug>(coc-type-definition)
+nmap <silent> gi <Plug>(coc-implementation)
+nmap <silent> gr <Plug>(coc-references)
 
 " Use K to show documentation in preview window
 nnoremap <silent> K :call <SID>show_documentation()<CR>
