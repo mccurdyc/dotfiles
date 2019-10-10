@@ -23,6 +23,10 @@ call plug#end()
 "----------------------------------------------
 " general settings
 "----------------------------------------------
+" https://mokagio.github.io/tech-journal/2015/02/12/vim-copy-and-paste-multiple-times.html
+" be able to paste more than once
+xnoremap p pgvy
+
 " Display screen redraws faster
 set nocursorcolumn
 set nocursorline
@@ -350,6 +354,12 @@ nnoremap <silent> <space>p  :<C-u>CocListResume<CR>
 "----------------------------------------------
 " navigation settings
 "----------------------------------------------
+" https://thoughtbot.com/blog/vim-splits-move-faster-and-more-naturally
+set splitbelow
+set splitright
+
+nnoremap <C-s> :sp <CR>
+
 " Autosave buffers before leaving them
 autocmd BufLeave * silent! :wa
 
@@ -374,6 +384,8 @@ nnoremap <A-k> <C-w>k
 nnoremap <A-l> <C-w>l
 
 " Plugin: https://github.com/mhinz/vim-startify
+let g:startify_change_to_dir = 0 " when set to true, messes up CTRL-P
+
 let g:startify_bookmarks = [{'n': '~/dotfiles/.config/nvim/init.vim'}, {'z': '~/.zshrc'}]
 let g:startify_files_number = 3
 
