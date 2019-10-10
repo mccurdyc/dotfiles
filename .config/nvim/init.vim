@@ -16,7 +16,6 @@ Plug 'mhinz/vim-startify' " startup screen
 
 " colorscheme
 Plug 'chriskempson/base16-vim'
-" Plug 'daviesjamie/vim-base16-lightline' " lightline colorscheme
 
 call plug#end()
 
@@ -92,7 +91,7 @@ colorscheme base16-eighties
 " fix grey line number bar
 highlight LineNr term=bold cterm=NONE ctermfg=DarkGrey ctermbg=NONE gui=NONE guifg=DarkGrey guibg=NONE
 
-" Plugin: airblade/vim-gitgutter
+" Plugin: https://github.com/airblade/vim-gitgutter
 " remove background from git gutter
 let g:gitgutter_override_sign_column_highlight = 0
 
@@ -229,7 +228,7 @@ endif
 " Do not display the standard status line
 set noshowmode
 
-" Plugin: fatih/vim-go
+" Plugin: https://github.com/fatih/vim-go
 let g:go_fmt_command = "goimports" " automagically get dependencies
 let g:syntastic_go_checkers = ['golangci-lint', 'govet']
 
@@ -237,9 +236,25 @@ let g:go_metalinter_autosave_enabled = ['vet', 'golint']
 let g:go_metalinter_enabled = ['vet', 'golint']
 
 let g:go_autodetect_gopath = 1
-let g:go_auto_type_info = 1 " show type information in status line
 
-" Plugin: sebdah/vim-delve
+" let lsp handle these
+let g:go_auto_type_info = 0 " show type information in status line
+let g:go_def_mapping_enabled = 0 " go-to-definition
+let g:go_code_completion_enabled = 0 " completion
+let g:go_doc_keywordprg_enabled = 0 " 'K' go doc buffer
+let g:go_echo_go_info = 0 " show identifier information in statusline
+
+let g:go_template_autocreate = 0 " disable the templated main.go
+
+let g:go_decls_mode = 'fzf'
+
+let g:go_fmt_options = {
+  \ 'gofmt': '-s',
+  \ }
+
+noremap <leader>br :GoDocBrowser <CR>
+
+" Plugin: https://github.com/sebdah/vim-delve
 " open Delve with a horizontal split rather than a vertical split.
 let g:delve_new_command = "vnew"
 
