@@ -16,7 +16,6 @@ Plug 'mhinz/vim-startify' " startup screen
 
 " colorscheme
 Plug 'chriskempson/base16-vim'
-" Plug 'daviesjamie/vim-base16-lightline' " lightline colorscheme
 
 call plug#end()
 
@@ -96,7 +95,7 @@ colorscheme base16-eighties
 " fix grey line number bar
 highlight LineNr term=bold cterm=NONE ctermfg=DarkGrey ctermbg=NONE gui=NONE guifg=DarkGrey guibg=NONE
 
-" Plugin: airblade/vim-gitgutter
+" Plugin: https://github.com/airblade/vim-gitgutter
 " remove background from git gutter
 let g:gitgutter_override_sign_column_highlight = 0
 
@@ -219,10 +218,12 @@ let g:lightline = {
       \ 'colorscheme': 'one',
       \ 'active': {
       \   'left': [ [ 'mode', 'paste' ],
-      \             [ 'gitbranch', 'readonly', 'filename', 'modified' ] ]
+      \             [ 'gitbranch'],
+	    \             [ 'cocstatus', 'readonly', 'filename', 'modified' ] ]
       \ },
       \ 'component_function': {
-      \   'gitbranch': 'fugitive#head'
+      \   'gitbranch': 'fugitive#head',
+      \   'cocstatus': 'coc#status'
       \ },
   \ }
 
@@ -233,7 +234,7 @@ endif
 " Do not display the standard status line
 set noshowmode
 
-" Plugin: fatih/vim-go
+" Plugin: https://github.com/fatih/vim-go
 let g:go_fmt_command = "goimports" " automagically get dependencies
 let g:syntastic_go_checkers = ['golangci-lint', 'govet']
 
@@ -241,9 +242,25 @@ let g:go_metalinter_autosave_enabled = ['vet', 'golint']
 let g:go_metalinter_enabled = ['vet', 'golint']
 
 let g:go_autodetect_gopath = 1
-let g:go_auto_type_info = 1 " show type information in status line
 
-" Plugin: sebdah/vim-delve
+" let lsp handle these
+let g:go_auto_type_info = 0 " show type information in status line
+let g:go_def_mapping_enabled = 0 " go-to-definition
+let g:go_code_completion_enabled = 0 " completion
+let g:go_doc_keywordprg_enabled = 0 " 'K' go doc buffer
+let g:go_echo_go_info = 0 " show identifier information in statusline
+
+let g:go_template_autocreate = 0 " disable the templated main.go
+
+let g:go_decls_mode = 'fzf'
+
+let g:go_fmt_options = {
+  \ 'gofmt': '-s',
+  \ }
+
+noremap <leader>br :GoDocBrowser <CR>
+
+" Plugin: https://github.com/sebdah/vim-delve
 " open Delve with a horizontal split rather than a vertical split.
 let g:delve_new_command = "vnew"
 
@@ -270,13 +287,13 @@ set shortmess+=c
 set signcolumn=yes
 
 " setup multiple cursor support
+" https://github.com/neoclide/coc.nvim/wiki/Multiple-cursors-support
 hi CocCursorRange guibg=#b16286 guifg=#ebdbb2
 
 nmap <silent> <C-c> <Plug>(coc-cursors-position)
+nmap <silent> <C-r> <Plug>(coc-refactor)
 nmap <silent> <C-d> <Plug>(coc-cursors-word)
 xmap <silent> <C-d> <Plug>(coc-cursors-range)
-" use normal command like `<leader>xi(`
-nmap <leader>x  <Plug>(coc-cursors-operator)
 
 " Use tab for trigger completion with characters ahead and navigate.
 " Use command ':verbose imap <tab>' to make sure tab is not mapped by other plugin.
@@ -305,10 +322,10 @@ nmap <silent> [g <Plug>(coc-diagnostic-prev)
 nmap <silent> ]g <Plug>(coc-diagnostic-next)
 
 " Remap keys for gotos
-nmap <silent> gd <Plug>(coc-definition)
-nmap <silent> gy <Plug>(coc-type-definition)
-nmap <silent> gi <Plug>(coc-implementation)
-nmap <silent> gr <Plug>(coc-references)
+nmap <silent> jd <Plug>(coc-definition)
+nmap <silent> jt <Plug>(coc-type-definition)
+nmap <silent> ji <Plug>(coc-implementation)
+nmap <silent> jr <Plug>(coc-references)
 
 " Use K to show documentation in preview window
 nnoremap <silent> K :call <SID>show_documentation()<CR>
@@ -362,6 +379,10 @@ nnoremap <C-s> :sp <CR>
 
 " Autosave buffers before leaving them
 autocmd BufLeave * silent! :wa
+
+" splitting
+set splitbelow " default horizontal split below instead of above
+set splitright " default vertical split right
 
 " navigating vim splits
 nnoremap <C-J> <C-W><C-J>
