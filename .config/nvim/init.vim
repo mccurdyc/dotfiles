@@ -249,6 +249,7 @@ let g:go_def_mapping_enabled = 0 " go-to-definition
 let g:go_code_completion_enabled = 0 " completion
 let g:go_doc_keywordprg_enabled = 0 " 'K' go doc buffer
 let g:go_echo_go_info = 0 " show identifier information in statusline
+let g:go_fmt_fail_silently = 1 " disable quickfix/locationlist windows for linter errors
 
 let g:go_template_autocreate = 0 " disable the templated main.go
 
