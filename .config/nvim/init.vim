@@ -13,6 +13,7 @@ Plug 'itchyny/lightline.vim'   " light, configurable statusline
 Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
 Plug 'neoclide/coc.nvim', {'tag': '*', 'branch': 'release'}
 Plug 'mhinz/vim-startify' " startup screen
+Plug 'jiangmiao/auto-pairs'
 
 " colorscheme
 Plug 'chriskempson/base16-vim'
@@ -234,6 +235,8 @@ endif
 " Do not display the standard status line
 set noshowmode
 
+" Pluin: https://github.com/jiangmiao/auto-pairs
+
 " Plugin: https://github.com/fatih/vim-go
 let g:go_fmt_command = "goimports" " automagically get dependencies
 let g:syntastic_go_checkers = ['golangci-lint', 'govet']
@@ -411,7 +414,7 @@ nnoremap <A-l> <C-w>l
 " Plugin: https://github.com/mhinz/vim-startify
 let g:startify_change_to_dir = 0 " when set to true, messes up CTRL-P
 
-let g:startify_bookmarks = [{'n': '~/dotfiles/.config/nvim/init.vim'}, {'z': '~/.zshrc'}]
+let g:startify_bookmarks = [{'n': '~/dotfiles/.config/nvim/init.vim'},{'t': '~/.tmux.conf'}, {'z': '~/.zshrc'}]
 let g:startify_files_number = 3
 
 function! s:list_commits()
