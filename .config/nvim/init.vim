@@ -82,6 +82,9 @@ syntax on
 " map kj to escape key
 inoremap kj <Esc>
 
+" temporarily zoom split
+nnoremap <silent> <C-w>w :ZoomWin<CR>
+
 " turn spell check on for markdown and tex files
 autocmd BufRead,BufNewFile *.md setlocal spell
 autocmd BufRead,BufNewFile *.tex setlocal spell
@@ -262,7 +265,8 @@ let g:go_fmt_options = {
   \ 'gofmt': '-s',
   \ }
 
-noremap <leader>br :GoDocBrowser <CR>
+au FileType go nmap <leader>gg <Plug>(go-doc)
+au FileType go nmap <leader>gv <Plug>(go-doc-vertical)
 
 " Plugin: https://github.com/sebdah/vim-delve
 " open Delve with a horizontal split rather than a vertical split.

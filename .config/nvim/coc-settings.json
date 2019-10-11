@@ -21,5 +21,11 @@
   "diagnostic.displayByAle": true,
   "diagnostic.maxWindowHeight": 100,
   "suggest.maxPreviewWidth": 1000,
-  "codeLens.enable": true
+  "suggest.labelMaxLength": 1000,
+  "suggest.detailMaxLength": 1000,
+  "codeLens.enable": true,
+  "coc.preferences.bracketEnterImprove": true,
+  "signature.maxWindowHeight": 15,
+  "signature.floatMaxWidth": 1000,
+  "signature.enable": true
 }
