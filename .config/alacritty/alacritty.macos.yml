@@ -4,7 +4,7 @@
 # environment variables. Some entries may override variables
 # set by alacritty it self.
 env:
-  TERM: xterm-256color
+  TERM: screen-256color
 
 window:
   # Window dimensions in character columns and lines
