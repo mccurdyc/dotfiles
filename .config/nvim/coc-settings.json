@@ -3,7 +3,12 @@
     "golang": {
       "command": "gopls",
       "rootPatterns": ["go.mod"],
-      "filetypes": ["go"]
+      "filetypes": ["go"],
+      "settings": {
+        "usePlaceholders": true,
+        "completeUnimported": true,
+        "hoverKind": "FullDocumentation"
+      },
     },
     "dockerfile": {
       "command": "docker-langserver",
@@ -27,5 +32,10 @@
   "coc.preferences.bracketEnterImprove": true,
   "signature.maxWindowHeight": 15,
   "signature.floatMaxWidth": 1000,
-  "signature.enable": true
+  "signature.enable": true,
+  "snippets.ultisnips.directories": [
+    "UltiSnips",
+    "gosnippets/UltiSnips",
+    "~/.config/nvim/coc/ultisnips/"
+  ]
 }
