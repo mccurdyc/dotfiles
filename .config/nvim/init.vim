@@ -14,6 +14,8 @@ Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
 Plug 'neoclide/coc.nvim', {'tag': '*', 'branch': 'release'}
 Plug 'mhinz/vim-startify' " startup screen
 Plug 'jiangmiao/auto-pairs'
+Plug 'Shougo/neosnippet'
+Plug 'Shougo/neosnippet-snippets' " Default snippets for many languages
 
 " colorscheme
 Plug 'chriskempson/base16-vim'
@@ -238,11 +240,42 @@ endif
 " Do not display the standard status line
 set noshowmode
 
+" Plugin: https://github.com/neoclide/coc-snippets
+" Use <C-l> for trigger snippet expand.
+imap <C-l> <Plug>(coc-snippets-expand)
+
+" Use <C-j> for select text for visual placeholder of snippet.
+vmap <C-j> <Plug>(coc-snippets-select)
+
+" Use <C-j> for jump to next placeholder, it's default of coc.nvim
+let g:coc_snippet_next = '<c-j>'
+
+" Use <C-k> for jump to previous placeholder, it's default of coc.nvim
+let g:coc_snippet_prev = '<c-k>'
+
+" Use <C-j> for both expand and jump (make expand higher priority.)
+imap <C-j> <Plug>(coc-snippets-expand-jump)
+
+" Make <tab> used for trigger completion, completion confirm, snippet expand and jump like VSCode.
+inoremap <silent><expr> <TAB>
+      \ pumvisible() ? coc#_select_confirm() :
+      \ coc#expandableOrJumpable() ? "\<C-r>=coc#rpc#request('doKeymap', ['snippets-expand-jump',''])\<CR>" :
+      \ <SID>check_back_space() ? "\<TAB>" :
+      \ coc#refresh()
+
+function! s:check_back_space() abort
+  let col = col('.') - 1
+  return !col || getline('.')[col - 1]  =~# '\s'
+endfunction
+
+let g:coc_snippet_next = '<tab>'
+
 " Pluin: https://github.com/jiangmiao/auto-pairs
 
 " Plugin: https://github.com/fatih/vim-go
 let g:go_fmt_command = "goimports" " automagically get dependencies
 let g:syntastic_go_checkers = ['golangci-lint', 'govet']
+let g:go_snippet_engine = "neosnippet"
 
 let g:go_metalinter_autosave_enabled = ['vet', 'golint']
 let g:go_metalinter_enabled = ['vet', 'golint']

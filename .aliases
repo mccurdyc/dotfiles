@@ -42,6 +42,9 @@ alias mv="mv -i"
 alias mkdir="mkdir -pv"
 
 ## git
+alias gita='git add'
+alias gitc='git commit'
+alias gitch='git checkout'
 alias gits="git status"
 
 # clean local and remote "dead" branches
