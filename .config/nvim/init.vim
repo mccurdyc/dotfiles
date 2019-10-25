@@ -273,6 +273,7 @@ let g:coc_snippet_next = '<tab>'
 " Pluin: https://github.com/jiangmiao/auto-pairs
 
 " Plugin: https://github.com/fatih/vim-go
+" https://github.com/fatih/vim-go/blob/master/doc/vim-go.txt
 let g:go_fmt_command = "goimports" " automagically get dependencies
 let g:syntastic_go_checkers = ['golangci-lint', 'govet']
 let g:go_snippet_engine = "neosnippet"
@@ -298,6 +299,18 @@ let g:go_fmt_options = {
   \ 'gofmt': '-s',
   \ }
 
+
+au FileType go nmap <leader>gta <Plug>(go-alternate-vertical)
+au FileType go nmap <leader>gtt <Plug>(go-test)
+au FileType go nmap <leader>gtf <Plug>(go-test-func)
+au FileType go nmap <leader>gtc <Plug>(go-coverage-toggle)
+au FileType go nmap <leader>gcb <Plug>(go-cover-browser)
+
+let g:go_term_enabled = 1
+let g:go_term_height = 20
+let g:go_term_width = 30
+let g:go_term_mode = "split"
+
 au FileType go nmap <leader>gg <Plug>(go-doc)
 au FileType go nmap <leader>gv <Plug>(go-doc-vertical)
 
@@ -307,8 +320,8 @@ let g:delve_new_command = "vnew"
 
 " Plugin: https://github.com/voldikss/vim-floaterm
 " floating terminal toggle
-noremap  <C-Space> :FloatermToggle<CR>i
-noremap! <C-Space> <Esc>:FloatermToggle<CR>i
+noremap  <C-Space> :FloatermToggle<CR>
+noremap! <C-Space> <Esc>:FloatermToggle<CR>
 tnoremap <C-Space> <C-\><C-n>:FloatermToggle<CR>
 
 let height = float2nr(&lines - (&lines * 2 / 10))
