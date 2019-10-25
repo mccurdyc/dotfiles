@@ -372,9 +372,9 @@ snippet tt "test table"
 		input ${2}
 	}{
 		{
-			${3},
-			${4},
-			${5},
+			name: ${3},
+			want: ${4},
+			input: ${5},
 		},
 	}
 	for _, tt := range tests {
