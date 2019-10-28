@@ -1,5 +1,9 @@
 #!/bin/bash
 
+gitup(){
+  git remote add upstream git@github.com:$1.git
+}
+
 gitd(){
   ## sidestep lag with git plumbing; was using a simple oneliner
   ## with `git status --porcelain` but found it laggy when working
