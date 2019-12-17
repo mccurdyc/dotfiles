@@ -16,6 +16,7 @@ Plug 'mhinz/vim-startify' " startup screen
 Plug 'jiangmiao/auto-pairs'
 Plug 'Shougo/neosnippet'
 Plug 'Shougo/neosnippet-snippets' " Default snippets for many languages
+Plug 'lervag/vimtex', {'for': 'tex'}
 
 " colorscheme
 Plug 'chriskempson/base16-vim'
@@ -332,6 +333,14 @@ let g:floaterm_width = width
 let g:floaterm_winblend = 0
 let g:floaterm_position = 'center'
 
+" Plugin: https://github.com/lervag/vimtexhttps://github.com/lervag/vimtex
+let g:vimtex_fold_enabled = 0
+let g:vimtex_quickfix_open_on_warning = 0
+let g:vimtex_index_show_help = 0
+let g:vimtex_view_method = 'mupdf'
+let g:vimtex_view_mupdf_options = '-r 250'
+let g:vimtex_compiler_progname = 'nvr'
+
 " Plugin: https://github.com/neoclide/coc.nvim
 " Better display for messages
 set cmdheight=2
@@ -339,6 +348,7 @@ set cmdheight=2
 set shortmess+=c
 " always show signcolumns
 set signcolumn=yes
+
 
 " setup multiple cursor support
 " https://github.com/neoclide/coc.nvim/wiki/Multiple-cursors-support
