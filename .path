@@ -1,13 +1,11 @@
 #!/bin/sh
+export PATH="/usr/bin/:/bin:/usr/sbin:/sbin:/usr/local/bin:"
 
 # go path
 export GOPATH="${HOME}/go"
 
 # go bin
 export GOBIN="${HOME}/go/bin"
-
-# update path
-export PATH=/usr/local/bin:${PATH}:/sbin
 
 # add go path
 export PATH="/usr/local/go/bin:${GOPATH}/bin:${PATH}"
