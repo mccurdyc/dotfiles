@@ -4,6 +4,7 @@ Plug 'junegunn/fzf.vim'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'voldikss/vim-floaterm' " floating terminal toggle
 Plug 'tpope/vim-fugitive'
+Plug 'tpope/vim-surround'
 Plug 'tomtom/tcomment_vim'
 Plug 'airblade/vim-gitgutter'
 Plug 'w0rp/ale'                " linting
@@ -13,7 +14,6 @@ Plug 'itchyny/lightline.vim'   " light, configurable statusline
 Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
 Plug 'neoclide/coc.nvim', {'tag': '*', 'branch': 'release'}
 Plug 'mhinz/vim-startify' " startup screen
-Plug 'jiangmiao/auto-pairs'
 Plug 'Shougo/neosnippet'
 Plug 'Shougo/neosnippet-snippets' " Default snippets for many languages
 Plug 'lervag/vimtex', {'for': 'tex'}
@@ -101,6 +101,10 @@ colorscheme base16-eighties
 
 " fix grey line number bar
 highlight LineNr term=bold cterm=NONE ctermfg=DarkGrey ctermbg=NONE gui=NONE guifg=DarkGrey guibg=NONE
+set nohlsearch
+
+" open urls correctly in Brave
+let g:netrw_browsex_viewer= "xdg-open"
 
 " Plugin: https://github.com/airblade/vim-gitgutter
 " remove background from git gutter
