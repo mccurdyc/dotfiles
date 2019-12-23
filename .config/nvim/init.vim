@@ -71,6 +71,7 @@ set list
 
 " [gofmt](https://golang.org/cmd/gofmt) uses tabs, so disable the listing for Go
 au BufNewFile,BufRead,BufEnter *.go set nolist
+au BufNewFile,BufRead,BufEnter *.go syntax off
 
 let maplocalleader = ","
 let mapleader = ","
@@ -125,11 +126,15 @@ let g:ale_sign_error = '✗'
 let g:ale_sign_warning = '▸'
 highlight link ALEWarningSign String
 highlight link ALEErrorSign WarningMsg
+highlight link ALEStyleError error
+highlight link ALEStyleWarning error
+highlight link ALEError error
+highlight link AleWarning error
 
 let g:ale_fixers = {
 \   '*': ['remove_trailing_lines', 'trim_whitespace'],
 \   'javascript': ['eslint'],
-\   'go': ['gofmt'],
+\   'go': ['gofmt -s'],
 \   'terraform': ['fmt'],
 \}
 
@@ -144,7 +149,6 @@ let g:ale_go_golangci_lint_executable = '$GOPATH/bin/golangci-lint'
 let g:ale_terraform_tflint_executable = '$GOPATH/bin/tflint'
 
 let b:ale_fix_on_save = 1
-" let b:ale_completion_enabled = 1
 
 " Plugin: junegunn/fzf
 let g:fzf_command_prefix = 'Fzf'
@@ -296,14 +300,13 @@ let g:go_doc_keywordprg_enabled = 0 " 'K' go doc buffer
 let g:go_echo_go_info = 0 " show identifier information in statusline
 let g:go_fmt_fail_silently = 1 " disable quickfix/locationlist windows for linter errors
 
+" https://github.com/neoclide/coc.nvim/issues/472#issuecomment-475848284
+" fixing editor highlighting
 let g:go_template_autocreate = 0 " disable the templated main.go
-
 let g:go_decls_mode = 'fzf'
-
 let g:go_fmt_options = {
   \ 'gofmt': '-s',
   \ }
-
 
 au FileType go nmap <leader>gta <Plug>(go-alternate-vertical)
 au FileType go nmap <leader>gtt <Plug>(go-test)
@@ -353,10 +356,12 @@ set shortmess+=c
 " always show signcolumns
 set signcolumn=yes
 
-
 " setup multiple cursor support
 " https://github.com/neoclide/coc.nvim/wiki/Multiple-cursors-support
 hi CocCursorRange guibg=#b16286 guifg=#ebdbb2
+hi CocUnderline gui=underline term=underline
+hi CocErrorHighlight ctermfg=red  guifg=#c4384b gui=undercurl term=undercurl
+hi CocWarningHighlight ctermfg=yellow guifg=#c4ab39 gui=undercurl term=undercurl
 
 nmap <silent> <C-c> <Plug>(coc-cursors-position)
 nmap <silent> <C-r> <Plug>(coc-refactor)
@@ -478,7 +483,7 @@ nnoremap <A-l> <C-w>l
 " Plugin: https://github.com/mhinz/vim-startify
 let g:startify_change_to_dir = 0 " when set to true, messes up CTRL-P
 
-let g:startify_bookmarks = [{'n': '~/dotfiles/.config/nvim/init.vim'},{'t': '~/.tmux.conf'}, {'z': '~/.zshrc'}]
+let g:startify_bookmarks = [{'c': '~/.config/nvim/coc-settings.json'}, {'n': '~/dotfiles/.config/nvim/init.vim'},{'t': '~/.tmux.conf'}, {'z': '~/.zshrc'}]
 let g:startify_files_number = 3
 
 function! s:list_commits()

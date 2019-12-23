@@ -8,7 +8,7 @@
         "usePlaceholders": true,
         "completeUnimported": true,
         "hoverKind": "FullDocumentation"
-      },
+      }
     },
     "dockerfile": {
       "command": "docker-langserver",
@@ -22,6 +22,7 @@
       "ignoredRootPaths": ["~"]
     }
   },
+  "coc.preferences.colorSupport": true,
   "refactor.openCommand": "sp",
   "diagnostic.displayByAle": true,
   "diagnostic.maxWindowHeight": 100,
