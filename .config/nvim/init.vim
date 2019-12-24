@@ -17,6 +17,10 @@ Plug 'mhinz/vim-startify' " startup screen
 Plug 'Shougo/neosnippet'
 Plug 'Shougo/neosnippet-snippets' " Default snippets for many languages
 Plug 'lervag/vimtex', {'for': 'tex'}
+Plug 'rhysd/git-messenger.vim'
+Plug 'christianrondeau/vim-base64'
+Plug 'junegunn/limelight.vim' " plugin to focus / greyout other blocks
+Plug 'junegunn/goyo.vim'
 
 " colorscheme
 Plug 'chriskempson/base16-vim'
@@ -106,6 +110,34 @@ set nohlsearch
 
 " open urls correctly in Brave
 let g:netrw_browsex_viewer= "xdg-open"
+
+" Plugin: https://github.com/junegunn/limelight.vim
+" plugin for focusing and greying-out background
+" Color name (:help cterm-colors) or ANSI code
+let g:limelight_conceal_ctermfg = 'gray'
+let g:limelight_conceal_ctermfg = 240
+
+" Color name (:help gui-colors) or RGB color
+let g:limelight_conceal_guifg = 'DarkGray'
+let g:limelight_conceal_guifg = '#777777'
+
+" Default: 0.5
+let g:limelight_default_coefficient = 0.5
+
+" Number of preceding/following paragraphs to include (default: 0)
+let g:limelight_paragraph_span = 0
+
+" Highlighting priority (default: 10)
+"   Set it to -1 not to overrule hlsearch
+let g:limelight_priority = -1
+
+autocmd! User GoyoEnter Limelight
+autocmd! User GoyoLeave Limelight!
+
+autocmd BufRead,BufNewFile * Limelight
+
+nmap <Leader>l <Plug>(Limelight)
+xmap <Leader>l <Plug>(Limelight)
 
 " Plugin: https://github.com/airblade/vim-gitgutter
 " remove background from git gutter
