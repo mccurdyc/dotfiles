@@ -31,7 +31,7 @@ alias tl='tmux list-sessions'
 alias ta='tmux attach -t '
 alias td='tmux detach'
 alias tu='unset TMUX'
-alias tn='tmux new'
+alias tn="tmux new-session \; send-keys 'nvim' C-m \; split-window -v -p 15 \; select-pane -t 1 \;"
 alias tk='tmux kill-session -t'
 
 ## rm
