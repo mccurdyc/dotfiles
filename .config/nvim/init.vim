@@ -42,7 +42,8 @@ set ttyfast
 
 set clipboard=unnamedplus      " copy and paste to system clipboard
 set smarttab                   " indents instead of tabs at the beginning of a line
-set autowrite                  " write when switching buffers
+set autoread
+au CursorHold * checktime
 set encoding=utf-8
 set noswapfile                 " disable swap file usage
 set noerrorbells               " No bells!
@@ -76,22 +77,22 @@ set list
 " [gofmt](https://golang.org/cmd/gofmt) uses tabs, so disable the listing for Go
 au BufNewFile,BufRead,BufEnter *.go set nolist
 
+
+" Allow vim to set a custom font or color for a word
+syntax enable
 syntax manual
+au Filetype * setlocal syntax=ON
+au Filetype go setlocal syntax=OFF
 autocmd Filetype * if getfsize(@%) > 1000000 | setlocal syntax=OFF | endif
 autocmd BufRead,BufNewFile,BufEnter * if &filetype == "magit"
                             \ | setlocal syntax=ON
                             \ | endif
-au BufNewFile,BufRead,BufEnter *.go | setlocal syntax=OFF
 
 let maplocalleader = ","
 let mapleader = ","
 
 " clear search highlights
 no <silent><Leader>cs :nohls<CR>
-
-" Allow vim to set a custom font or color for a word
-syntax enable
-syntax on
 
 " map kj to escape key
 inoremap kj <Esc>
@@ -140,9 +141,8 @@ let g:limelight_priority = -1
 autocmd! User GoyoEnter Limelight
 autocmd! User GoyoLeave Limelight!
 
-autocmd BufRead,BufNewFile,BufEnter * if &filetype == "go"
-                            \ | Limelight
-                            \ | endif
+autocmd Filetype * Limelight
+autocmd Filetype magit,startify Limelight! " force limelight off for magit and startify files
 
 nmap <Leader>l <Plug>(Limelight)
 xmap <Leader>l <Plug>(Limelight)
