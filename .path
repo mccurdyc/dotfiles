@@ -1,5 +1,5 @@
 #!/bin/sh
-export PATH="/usr/bin/:/bin:/usr/sbin:/sbin:/usr/local/bin:"
+export PATH="/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin:"
 
 # go path
 export GOPATH="${HOME}/go"
