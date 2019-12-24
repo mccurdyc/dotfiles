@@ -104,15 +104,6 @@ nnoremap <silent> <C-w>w :ZoomWin<CR>
 autocmd BufRead,BufNewFile *.md setlocal spell
 autocmd BufRead,BufNewFile *.tex setlocal spell
 
-"----------------------------------------------
-" color settings
-"----------------------------------------------
-set termguicolors
-let base16colorspace=256  " Access colors present in 256 colorspace
-colorscheme base16-eighties
-
-" fix grey line number bar
-highlight LineNr term=bold cterm=NONE ctermfg=DarkGrey ctermbg=NONE gui=NONE guifg=DarkGrey guibg=NONE
 set nohlsearch
 
 " open urls correctly in Brave
@@ -145,7 +136,10 @@ autocmd Filetype magit,startify Limelight! " force limelight off for magit and s
 
 " Plugin: https://github.com/airblade/vim-gitgutter
 " remove background from git gutter
-let g:gitgutter_override_sign_column_highlight = 0
+
+let g:gitgutter_sign_added = '+'
+let g:gitgutter_sign_modified = '~'
+let g:gitgutter_sign_removed = '-'
 
 " Plugin: w0rp/ale
 let g:ale_sign_column_always = 1 " always keep sign gutter open to avoid jumpiness
@@ -160,12 +154,6 @@ let g:ale_list_window_size = 10
 " Error and warning signs.
 let g:ale_sign_error = '✗'
 let g:ale_sign_warning = '▸'
-highlight link ALEWarningSign String
-highlight link ALEErrorSign WarningMsg
-highlight link ALEStyleError error
-highlight link ALEStyleWarning error
-highlight link ALEError error
-highlight link AleWarning error
 
 let g:ale_fixers = {
 \   '*': ['remove_trailing_lines', 'trim_whitespace'],
@@ -392,13 +380,6 @@ set shortmess+=c
 " always show signcolumns
 set signcolumn=yes
 
-" setup multiple cursor support
-" https://github.com/neoclide/coc.nvim/wiki/Multiple-cursors-support
-hi CocCursorRange guibg=#b16286 guifg=#ebdbb2
-hi CocUnderline gui=underline term=underline
-hi CocErrorHighlight ctermfg=red  guifg=#c4384b gui=undercurl term=undercurl
-hi CocWarningHighlight ctermfg=yellow guifg=#c4ab39 gui=undercurl term=undercurl
-
 nmap <silent> <C-c> <Plug>(coc-cursors-position)
 nmap <silent> <C-r> <Plug>(coc-refactor)
 nmap <silent> <C-d> <Plug>(coc-cursors-word)
@@ -542,15 +523,6 @@ let g:startify_lists = [
       \ { 'header': ['   Bookmarks'],      'type': 'bookmarks' },
       \ ]
 
-hi StartifyBracket ctermfg=240
-hi StartifyFile    ctermfg=147
-hi StartifyFooter  ctermfg=240
-hi StartifyHeader  ctermfg=114
-hi StartifyNumber  ctermfg=215
-hi StartifyPath    ctermfg=245
-hi StartifySlash   ctermfg=240
-hi StartifySpecial ctermfg=240
-
 " http://patorjk.com/software/taag/#p=display&f=3D-ASCII&t=NeoVim
 let g:startify_custom_header = [
  \'  ________   _______   ________  ___      ___ ___  _____ ______       ',
@@ -561,3 +533,32 @@ let g:startify_custom_header = [
  \'    \ \__\\ \__\ \_______\ \_______\ \__/ /     \ \__\ \__\    \ \__\ ',
  \'     \|__| \|__|\|_______|\|_______|\|__|/       \|__|\|__|     \|__| ',
  \ ]
+
+"----------------------------------------------
+" color settings
+"----------------------------------------------
+set termguicolors
+let base16colorspace=256  " Access colors present in 256 colorspace
+colorscheme base16-eighties
+
+" remove line column background
+highlight LineNr term=bold cterm=NONE ctermfg=NONE ctermbg=NONE gui=NONE guifg=#535353 guibg=NONE
+"
+highlight clear SignColumn
+highlight GitGutterAdd    gui=bold term=bold guibg=NONE
+highlight GitGutterChange gui=bold term=bold guifg=#ffcc66 guibg=NONE
+highlight GitGutterChangeDelete gui=bold term=bold guifg=#ffcc66 guibg=NONE
+highlight GitGutterDelete gui=bold term=bold guibg=NONE
+
+" https://github.com/neoclide/coc.nvim/wiki/Multiple-cursors-support
+hi CocCursorRange guibg=#6699cc guifg=#2d2d2d
+hi CocUnderline gui=underline term=underline
+hi CocErrorHighlight ctermfg=red  guifg=#f2777a gui=undercurl term=undercurl
+hi CocWarningHighlight ctermfg=yellow guifg=#ffcc66 gui=undercurl term=undercurl
+
+highlight link ALEWarningSign String
+highlight link ALEErrorSign WarningMsg
+highlight link ALEStyleError error
+highlight link ALEStyleWarning error
+highlight link ALEError error
+highlight link AleWarning error
