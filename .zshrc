@@ -21,6 +21,7 @@ unset file
 
 # Autostart tmux in new shell if not starting shell inside of tmux
 if [ "$TMUX" = "" ]; then
+  tmux
   tmux source-file $TMUX_CONF
 fi
 
