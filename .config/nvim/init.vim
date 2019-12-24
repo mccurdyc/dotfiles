@@ -141,7 +141,7 @@ let g:limelight_priority = -1
 autocmd! User GoyoEnter Limelight
 autocmd! User GoyoLeave Limelight!
 
-autocmd Filetype * Limelight
+autocmd Filetype go Limelight
 autocmd Filetype magit,startify Limelight! " force limelight off for magit and startify files
 
 nmap <Leader>l <Plug>(Limelight)
