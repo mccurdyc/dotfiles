@@ -31,6 +31,8 @@ dotfiles: ## Installs the dotfiles.
 	ln -snf $(CURDIR)/.fonts $(HOME)/.local/share/fonts;
 	mkdir -p $(HOME)/Pictures/screenshots;
 	ln -snf $(CURDIR)/detroit-street-art.jpg $(HOME)/Pictures/detroit-street-art.jpg;
+	# https://wiki.archlinux.org/index.php/XDG_MIME_Applications#mimeapps.list
+	ln -s ~/.config/mimeapps.list /usr/share/applications/mimeapps.list;
 
 .PHONY: etc
 etc: ## Installs the etc directory files.

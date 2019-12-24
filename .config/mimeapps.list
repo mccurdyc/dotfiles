@@ -1,0 +1,23 @@
+[Added Associations]
+[Removed Associations]
+application/html=firefox.desktop
+[Default Applications]
+application/pdf=mupdf.desktop
+text/html=brave-beta-bin.desktop
+x-scheme-handler/http=brave-beta-bin.desktop
+x-scheme-handler/https=brave-beta-bin.desktop
+x-scheme-handler/ftp=brave-beta-bin.desktop
+x-scheme-handler/chrome=brave-beta-bin.desktop
+application/x-extension-htm=brave-beta-bin.desktop
+application/x-extension-html=brave-beta-bin.desktop
+application/x-extension-shtml=brave-beta-bin.desktop
+application/xhtml+xml=brave-beta-bin.desktop
+application/x-extension-xhtml=brave-beta-bin.desktop
+application/x-extension-xht=brave-beta-bin.desktop
+x-scheme-handler/about=brave-beta-bin.desktop
+x-scheme-handler/unknown=brave-beta-bin.desktop
+x-scheme-handler/mailto=brave-beta-bin.desktop
+application/html=brave-beta-bin.desktop
+application/jpg=feh.desktop
+application/jpeg=feh.desktop
+application/png=feh.desktop
