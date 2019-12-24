@@ -73,10 +73,15 @@ set ttimeoutlen=10
 " Display problematic whitespace
 set listchars=tab:➜\ ,trail:•,extends:#,precedes:#,nbsp:⌻
 set list
-
 " [gofmt](https://golang.org/cmd/gofmt) uses tabs, so disable the listing for Go
 au BufNewFile,BufRead,BufEnter *.go set nolist
-au BufNewFile,BufRead,BufEnter *.go syntax off
+
+syntax manual
+autocmd Filetype * if getfsize(@%) > 1000000 | setlocal syntax=OFF | endif
+autocmd BufRead,BufNewFile,BufEnter * if &filetype == "magit"
+                            \ | setlocal syntax=ON
+                            \ | endif
+au BufNewFile,BufRead,BufEnter *.go | setlocal syntax=OFF
 
 let maplocalleader = ","
 let mapleader = ","
@@ -135,7 +140,7 @@ let g:limelight_priority = -1
 autocmd! User GoyoEnter Limelight
 autocmd! User GoyoLeave Limelight!
 
-autocmd BufRead,BufNewFile * if &filetype != "magit" && &filetype != "vim"
+autocmd BufRead,BufNewFile,BufEnter * if &filetype == "go"
                             \ | Limelight
                             \ | endif
 
