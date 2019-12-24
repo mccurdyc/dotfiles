@@ -12,6 +12,8 @@ Plug 'w0rp/ale'                " linting
 Plug 'sebdah/vim-delve'        " debugger
 Plug 'kshenoy/vim-signature'   " display marks in sidebar
 Plug 'itchyny/lightline.vim'   " light, configurable statusline
+Plug 'daviesjamie/vim-base16-lightline'
+Plug 'edkolev/tmuxline.vim'
 Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
 Plug 'neoclide/coc.nvim', {'tag': '*', 'branch': 'release'}
 Plug 'mhinz/vim-startify' " startup screen
@@ -251,10 +253,13 @@ nnoremap <silent> <Leader>rg :FzfRg <C-R><C-W><CR>
 " explicitly bind the keys to down and up in your $FZF_DEFAULT_OPTS.
 let g:fzf_history_dir = '~/.local/share/fzf-history'
 
+" Plugin: https://github.com/edkolev/tmuxline.vim
+let g:tmuxline_powerline_separators = 0
+
 " Plugin: https://github.com/itchyny/lightline.vim
 " Dependency: tpope/vim-fugitive (for branch info)
 let g:lightline = {
-      \ 'colorscheme': 'one',
+      \ 'colorscheme': 'base16',
       \ 'active': {
       \   'left': [ [ 'mode', 'paste' ],
       \             [ 'gitbranch'],
