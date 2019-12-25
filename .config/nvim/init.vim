@@ -26,7 +26,7 @@ Plug 'junegunn/limelight.vim' " plugin to focus / greyout other blocks
 Plug 'junegunn/goyo.vim'
 
 " colorscheme
-Plug 'chriskempson/base16-vim'
+Plug 'mccurdyc/base16-vim'
 
 call plug#end()
 
@@ -122,7 +122,7 @@ let g:limelight_conceal_guifg = 'DarkGray'
 let g:limelight_conceal_guifg = '#777777'
 
 " Default: 0.5
-let g:limelight_default_coefficient = 0.5
+let g:limelight_default_coefficient = 0.3
 
 " Number of preceding/following paragraphs to include (default: 0)
 let g:limelight_paragraph_span = 0
@@ -545,21 +545,6 @@ let g:startify_custom_header = [
 set termguicolors
 let base16colorspace=256  " Access colors present in 256 colorspace
 colorscheme base16-eighties
-
-" remove line column background
-highlight LineNr term=bold cterm=NONE ctermfg=NONE ctermbg=NONE gui=NONE guifg=#535353 guibg=NONE
-"
-highlight clear SignColumn
-highlight GitGutterAdd    gui=bold term=bold guibg=NONE
-highlight GitGutterChange gui=bold term=bold guifg=#ffcc66 guibg=NONE
-highlight GitGutterChangeDelete gui=bold term=bold guifg=#ffcc66 guibg=NONE
-highlight GitGutterDelete gui=bold term=bold guibg=NONE
-
-" https://github.com/neoclide/coc.nvim/wiki/Multiple-cursors-support
-hi CocCursorRange guibg=#6699cc guifg=#2d2d2d
-hi CocUnderline gui=underline term=underline
-hi CocErrorHighlight ctermfg=red  guifg=#f2777a gui=undercurl term=undercurl
-hi CocWarningHighlight ctermfg=yellow guifg=#ffcc66 gui=undercurl term=undercurl
 
 highlight link ALEWarningSign String
 highlight link ALEErrorSign WarningMsg
