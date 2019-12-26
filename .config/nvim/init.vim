@@ -83,11 +83,7 @@ au Filetype go set nolist
 syntax enable
 syntax manual
 au Filetype * setlocal syntax=ON
-au Filetype go setlocal syntax=OFF
 autocmd Filetype * if getfsize(@%) > 1000000 | setlocal syntax=OFF | endif
-autocmd BufRead,BufNewFile,BufEnter * if &filetype == "magit"
-                            \ | setlocal syntax=ON
-                            \ | endif
 
 let maplocalleader = ","
 let mapleader = ","
@@ -121,7 +117,7 @@ let g:limelight_conceal_guifg = 'DarkGray'
 let g:limelight_conceal_guifg = '#777777'
 
 " Default: 0.5
-let g:limelight_default_coefficient = 0.3
+let g:limelight_default_coefficient = 0.8
 
 " Number of preceding/following paragraphs to include (default: 0)
 let g:limelight_paragraph_span = 0
@@ -130,14 +126,11 @@ let g:limelight_paragraph_span = 0
 "   Set it to -1 not to overrule hlsearch
 let g:limelight_priority = -1
 
-autocmd! User GoyoEnter Limelight
-
-autocmd Filetype go Limelight
-autocmd Filetype magit,startify Limelight! " force limelight off for magit and startify files
+" Plugin: https://github.com/junegunn/goyo.vim
+let g:goyo_width = 120
 
 " Plugin: https://github.com/airblade/vim-gitgutter
 " remove background from git gutter
-
 let g:gitgutter_sign_added = '+'
 let g:gitgutter_sign_modified = '~'
 let g:gitgutter_sign_removed = '-'
@@ -270,10 +263,6 @@ let g:lightline = {
       \ },
   \ }
 
-if !has('gui_running')
-  set t_Co=256
-endif
-
 " Do not display the standard status line
 set noshowmode
 
@@ -326,7 +315,10 @@ let g:go_def_mapping_enabled = 0 " go-to-definition
 let g:go_code_completion_enabled = 0 " completion
 let g:go_doc_keywordprg_enabled = 0 " 'K' go doc buffer
 let g:go_echo_go_info = 0 " show identifier information in statusline
-let g:go_fmt_fail_silently = 1 " disable quickfix/locationlist windows for linter errors
+let g:go_fmt_fail_silently = 0 " disable quickfix/locationlist windows for linter errors
+let g:go_list_type = "quickfix"
+let g:go_test_show_name = 1
+let g:go_list_autoclose = 0
 
 " https://github.com/neoclide/coc.nvim/issues/472#issuecomment-475848284
 " fixing editor highlighting
@@ -336,15 +328,20 @@ let g:go_fmt_options = {
   \ 'gofmt': '-s',
   \ }
 
+" wrap long lines in quickfix - https://github.com/fatih/vim-go/issues/1271
+augroup quickfix
+    autocmd!
+    autocmd FileType qf setlocal wrap
+augroup END
+
 au FileType go nmap <leader>gta <Plug>(go-alternate-vertical)
 au FileType go nmap <leader>gtt <Plug>(go-test)
-au FileType go nnoremap <leader>gtf GoTestFunc!<cr>
+au FileType go nmap <leader>gtf :GoTestFunc!<cr>
 au FileType go nmap <leader>gtc <Plug>(go-coverage-toggle)
 au FileType go nmap <leader>gcb <Plug>(go-cover-browser)
 
 let g:go_term_enabled = 1
 let g:go_term_height = 20
-let g:go_term_width = 30
 let g:go_term_mode = "split"
 
 au FileType go nmap <leader>gg <Plug>(go-doc)
@@ -544,6 +541,7 @@ let g:startify_custom_header = [
 set termguicolors
 let base16colorspace=256  " Access colors present in 256 colorspace
 colorscheme base16-eighties
+autocmd FileType go colorscheme base16-eighties-minimal
 
 highlight link ALEWarningSign String
 highlight link ALEErrorSign WarningMsg
