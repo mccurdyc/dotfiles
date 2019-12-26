@@ -417,6 +417,7 @@ nmap <silent> ]g <Plug>(coc-diagnostic-next)
 
 " Remap keys for gotos
 nmap <silent> gd <Plug>(coc-definition)
+nnoremap dg :q!<CR>
 nmap <silent> gt <Plug>(coc-type-definition)
 nmap <silent> gi <Plug>(coc-implementation)
 nmap <silent> gr <Plug>(coc-references)
@@ -540,8 +541,8 @@ let g:startify_custom_header = [
 "----------------------------------------------
 set termguicolors
 let base16colorspace=256  " Access colors present in 256 colorspace
-colorscheme base16-eighties
-autocmd FileType go colorscheme base16-eighties-minimal
+colorscheme base16-eighties-minimal
+" autocmd FileType go colorscheme base16-eighties-minimal
 
 highlight link ALEWarningSign String
 highlight link ALEErrorSign WarningMsg
@@ -552,3 +553,14 @@ highlight link AleWarning error
 
 set rtp +=~/.vim " necessary to reload .vim dir with autoload functions
 nnoremap <leader>vimrc :call reloadvimrc#Run()<cr>
+
+" disable trackpad scrolling
+" disable arrow keys because this is what the scroll/trackpad uses
+noremap  <Up> <Nop>
+noremap! <Up> <Nop>
+noremap  <Down> <Nop>
+noremap! <Down> <Nop>
+noremap  <Left> <Nop>
+noremap! <Left> <Nop>
+noremap  <Right> <Nop>
+noremap! <Right> <Nop>
