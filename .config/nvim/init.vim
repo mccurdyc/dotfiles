@@ -77,8 +77,7 @@ set ttimeoutlen=10
 set listchars=tab:➜\ ,trail:•,extends:#,precedes:#,nbsp:⌻
 set list
 " [gofmt](https://golang.org/cmd/gofmt) uses tabs, so disable the listing for Go
-au BufNewFile,BufRead,BufEnter *.go set nolist
-
+au Filetype go set nolist
 
 " Allow vim to set a custom font or color for a word
 syntax enable
@@ -160,7 +159,7 @@ let g:ale_sign_warning = '▸'
 let g:ale_fixers = {
 \   '*': ['remove_trailing_lines', 'trim_whitespace'],
 \   'javascript': ['eslint'],
-\   'go': ['gofmt -s'],
+\   'go': ['gofmt'],
 \   'terraform': ['fmt'],
 \}
 
@@ -339,7 +338,7 @@ let g:go_fmt_options = {
 
 au FileType go nmap <leader>gta <Plug>(go-alternate-vertical)
 au FileType go nmap <leader>gtt <Plug>(go-test)
-au FileType go nmap <leader>gtf <Plug>(go-test-func)
+au FileType go nnoremap <leader>gtf GoTestFunc!<cr>
 au FileType go nmap <leader>gtc <Plug>(go-coverage-toggle)
 au FileType go nmap <leader>gcb <Plug>(go-cover-browser)
 
@@ -552,3 +551,6 @@ highlight link ALEStyleError error
 highlight link ALEStyleWarning error
 highlight link ALEError error
 highlight link AleWarning error
+
+set rtp +=~/.vim " necessary to reload .vim dir with autoload functions
+nnoremap <leader>vimrc :call reloadvimrc#Run()<cr>

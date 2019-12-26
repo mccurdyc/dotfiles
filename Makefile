@@ -12,7 +12,7 @@ bin: ## Installs the bin directory files.
 .PHONY: dotfiles
 dotfiles: ## Installs the dotfiles.
 	# add aliases for dotfiles
-	for file in $(shell find $(CURDIR) -name ".*" -not -name ".gitignore" -not -name ".travis.yml" -not -name ".git" -not -name ".*.swp" -not -name ".gnupg" -not -name ".config"); do \
+	for file in $(shell find $(CURDIR) -name ".*" -not -name ".gitignore" -not -name ".travis.yml" -not -name ".git" -not -name ".*.swp" -not -name ".gnupg" -not -name ".config" -not -name ".vim"); do \
 		f=$$(basename $$file); \
 		ln -sfn $$file $(HOME)/$$f; \
 	done; \
@@ -20,6 +20,11 @@ dotfiles: ## Installs the dotfiles.
 	for file in $(shell find $(CURDIR)/.config -type d -maxdepth 1); do \
 		f=$$(basename $$file); \
 		ln -sfn $$file $(HOME)/.config/$$f; \
+	done; \
+	# symlink all files in .vim to ~/.vim
+	for file in $(shell find $(CURDIR)/.vim -type d -mindepth 1 -maxdepth 1); do \
+		f=$$(basename $$file); \
+		ln -sfn $$file $(HOME)/.vim/$$f; \
 	done; \
 	chmod +x $(HOME)/.xinitrc;
 	# yes, we want xsessionrc symlinked to xinitrc
