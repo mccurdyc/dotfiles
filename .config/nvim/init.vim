@@ -106,6 +106,20 @@ set nohlsearch
 " open urls correctly in Brave
 let g:netrw_browsex_viewer= "xdg-open"
 
+" Plugin: https://github.com/rhysd/git-messenger.vim
+let g:git_messenger_include_diff = "current"
+let g:git_messenger_close_on_cursor_moved = v:false
+let g:git_messenger_always_into_popup = v:true
+let g:git_messenger_max_popup_height = 20
+let g:git_messenger_max_popup_width = 80
+
+function! GitMessengerPopup() abort
+    " For example, set go back/forward history to <C-o>/<C-i>
+    nmap <buffer><C-o> o
+    nmap <buffer><C-i> O
+endfunction
+autocmd FileType gitmessengerpopup call GitMessengerPopup()
+
 " Plugin: https://github.com/junegunn/limelight.vim
 " plugin for focusing and greying-out background
 " Color name (:help cterm-colors) or ANSI code
