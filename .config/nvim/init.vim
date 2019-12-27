@@ -346,6 +346,7 @@ let g:go_term_mode = "split"
 
 au FileType go nmap <leader>gg <Plug>(go-doc)
 au FileType go nmap <leader>gv <Plug>(go-doc-vertical)
+au FileType go nmap <leader>gdb <Plug>(go-doc-browser)
 
 " Plugin: https://github.com/sebdah/vim-delve
 " open Delve with a horizontal split rather than a vertical split.
