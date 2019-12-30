@@ -9,7 +9,7 @@ export TMUX_CONF="$DOTFILES_DIR/.tmux.conf"
 # Make vim the default editor
 export EDITOR=/usr/local/bin/nvim;
 export TERMINAL="alacritty";
-export BROWSER="/usr/bin/brave-beta"
+export BROWSER="brave-beta-bin"
 
 # Larger bash history (allow 32³ entries; default is 500)
 export HISTSIZE=50000000;

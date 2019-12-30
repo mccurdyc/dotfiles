@@ -4,6 +4,7 @@ Plug 'junegunn/fzf.vim'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'voldikss/vim-floaterm' " floating terminal toggle
 Plug 'tpope/vim-fugitive'
+Plug 'jreybert/vimagit' " additional git tools. cycle staged changes
 Plug 'tpope/vim-surround'
 Plug 'tomtom/tcomment_vim'
 Plug 'airblade/vim-gitgutter'
@@ -11,6 +12,8 @@ Plug 'w0rp/ale'                " linting
 Plug 'sebdah/vim-delve'        " debugger
 Plug 'kshenoy/vim-signature'   " display marks in sidebar
 Plug 'itchyny/lightline.vim'   " light, configurable statusline
+Plug 'daviesjamie/vim-base16-lightline'
+Plug 'edkolev/tmuxline.vim'
 Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
 Plug 'neoclide/coc.nvim', {'tag': '*', 'branch': 'release'}
 Plug 'mhinz/vim-startify' " startup screen
@@ -20,9 +23,13 @@ Plug 'lervag/vimtex', {'for': 'tex'}
 Plug 'hashivim/vim-terraform'
 Plug 'vim-syntastic/syntastic'
 Plug 'juliosueiras/vim-terraform-completion'
+Plug 'rhysd/git-messenger.vim'
+Plug 'christianrondeau/vim-base64'
+Plug 'junegunn/limelight.vim' " plugin to focus / greyout other blocks
+Plug 'junegunn/goyo.vim'
 
 " colorscheme
-Plug 'chriskempson/base16-vim'
+Plug 'mccurdyc/base16-vim'
 
 call plug#end()
 
@@ -40,7 +47,8 @@ set ttyfast
 
 set clipboard=unnamedplus      " copy and paste to system clipboard
 set smarttab                   " indents instead of tabs at the beginning of a line
-set autowrite                  " write when switching buffers
+set autoread
+au CursorHold * checktime
 set encoding=utf-8
 set noswapfile                 " disable swap file usage
 set noerrorbells               " No bells!
@@ -71,20 +79,20 @@ set ttimeoutlen=10
 " Display problematic whitespace
 set listchars=tab:➜\ ,trail:•,extends:#,precedes:#,nbsp:⌻
 set list
-
 " [gofmt](https://golang.org/cmd/gofmt) uses tabs, so disable the listing for Go
-au BufNewFile,BufRead,BufEnter *.go set nolist
-au BufNewFile,BufRead,BufEnter *.go syntax off
+au Filetype go set nolist
+
+" Allow vim to set a custom font or color for a word
+syntax enable
+syntax manual
+au Filetype * setlocal syntax=ON
+autocmd Filetype * if getfsize(@%) > 1000000 | setlocal syntax=OFF | endif
 
 let maplocalleader = ","
 let mapleader = ","
 
 " clear search highlights
 no <silent><Leader>cs :nohls<CR>
-
-" Allow vim to set a custom font or color for a word
-syntax enable
-syntax on
 
 " map kj to escape key
 inoremap kj <Esc>
@@ -96,23 +104,57 @@ nnoremap <silent> <C-w>w :ZoomWin<CR>
 autocmd BufRead,BufNewFile *.md setlocal spell
 autocmd BufRead,BufNewFile *.tex setlocal spell
 
-"----------------------------------------------
-" color settings
-"----------------------------------------------
-set termguicolors
-let base16colorspace=256  " Access colors present in 256 colorspace
-colorscheme base16-eighties
-
-" fix grey line number bar
-highlight LineNr term=bold cterm=NONE ctermfg=DarkGrey ctermbg=NONE gui=NONE guifg=DarkGrey guibg=NONE
 set nohlsearch
 
 " open urls correctly in Brave
 let g:netrw_browsex_viewer= "xdg-open"
 
+" Plugin:https://github.com/jreybert/vimagit
+" enable deletion of untracked files
+let g:magit_discard_untracked_do_delete = 1
+
+" Plugin: https://github.com/rhysd/git-messenger.vim
+let g:git_messenger_include_diff = "current"
+let g:git_messenger_close_on_cursor_moved = v:false
+let g:git_messenger_always_into_popup = v:true
+let g:git_messenger_max_popup_height = 20
+let g:git_messenger_max_popup_width = 80
+
+function! GitMessengerPopup() abort
+    " For example, set go back/forward history to <C-o>/<C-i>
+    nmap <buffer><C-o> o
+    nmap <buffer><C-i> O
+endfunction
+autocmd FileType gitmessengerpopup call GitMessengerPopup()
+
+" Plugin: https://github.com/junegunn/limelight.vim
+" plugin for focusing and greying-out background
+" Color name (:help cterm-colors) or ANSI code
+let g:limelight_conceal_ctermfg = 'gray'
+let g:limelight_conceal_ctermfg = 240
+
+" Color name (:help gui-colors) or RGB color
+let g:limelight_conceal_guifg = 'DarkGray'
+let g:limelight_conceal_guifg = '#777777'
+
+" Default: 0.5
+let g:limelight_default_coefficient = 0.8
+
+" Number of preceding/following paragraphs to include (default: 0)
+let g:limelight_paragraph_span = 0
+
+" Highlighting priority (default: 10)
+"   Set it to -1 not to overrule hlsearch
+let g:limelight_priority = -1
+
+" Plugin: https://github.com/junegunn/goyo.vim
+let g:goyo_width = 120
+
 " Plugin: https://github.com/airblade/vim-gitgutter
 " remove background from git gutter
-let g:gitgutter_override_sign_column_highlight = 0
+let g:gitgutter_sign_added = '+'
+let g:gitgutter_sign_modified = '~'
+let g:gitgutter_sign_removed = '-'
 
 " Plugin: w0rp/ale
 let g:ale_sign_column_always = 1 " always keep sign gutter open to avoid jumpiness
@@ -127,12 +169,6 @@ let g:ale_list_window_size = 10
 " Error and warning signs.
 let g:ale_sign_error = '✗'
 let g:ale_sign_warning = '▸'
-highlight link ALEWarningSign String
-highlight link ALEErrorSign WarningMsg
-highlight link ALEStyleError error
-highlight link ALEStyleWarning error
-highlight link ALEError error
-highlight link AleWarning error
 
 let g:ale_fixers = {
 \   '*': ['remove_trailing_lines', 'trim_whitespace'],
@@ -230,10 +266,13 @@ nnoremap <silent> <Leader>rg :FzfRg <C-R><C-W><CR>
 " explicitly bind the keys to down and up in your $FZF_DEFAULT_OPTS.
 let g:fzf_history_dir = '~/.local/share/fzf-history'
 
+" Plugin: https://github.com/edkolev/tmuxline.vim
+let g:tmuxline_powerline_separators = 0
+
 " Plugin: https://github.com/itchyny/lightline.vim
 " Dependency: tpope/vim-fugitive (for branch info)
 let g:lightline = {
-      \ 'colorscheme': 'one',
+      \ 'colorscheme': 'base16',
       \ 'active': {
       \   'left': [ [ 'mode', 'paste' ],
       \             [ 'gitbranch'],
@@ -244,10 +283,6 @@ let g:lightline = {
       \   'cocstatus': 'coc#status'
       \ },
   \ }
-
-if !has('gui_running')
-  set t_Co=256
-endif
 
 " Do not display the standard status line
 set noshowmode
@@ -301,7 +336,10 @@ let g:go_def_mapping_enabled = 0 " go-to-definition
 let g:go_code_completion_enabled = 0 " completion
 let g:go_doc_keywordprg_enabled = 0 " 'K' go doc buffer
 let g:go_echo_go_info = 0 " show identifier information in statusline
-let g:go_fmt_fail_silently = 1 " disable quickfix/locationlist windows for linter errors
+let g:go_fmt_fail_silently = 0 " disable quickfix/locationlist windows for linter errors
+let g:go_list_type = "quickfix"
+let g:go_test_show_name = 1
+let g:go_list_autoclose = 0
 
 " https://github.com/neoclide/coc.nvim/issues/472#issuecomment-475848284
 " fixing editor highlighting
@@ -311,19 +349,25 @@ let g:go_fmt_options = {
   \ 'gofmt': '-s',
   \ }
 
+" wrap long lines in quickfix - https://github.com/fatih/vim-go/issues/1271
+augroup quickfix
+    autocmd!
+    autocmd FileType qf setlocal wrap
+augroup END
+
 au FileType go nmap <leader>gta <Plug>(go-alternate-vertical)
 au FileType go nmap <leader>gtt <Plug>(go-test)
-au FileType go nmap <leader>gtf <Plug>(go-test-func)
+au FileType go nmap <leader>gtf :GoTestFunc!<cr>
 au FileType go nmap <leader>gtc <Plug>(go-coverage-toggle)
 au FileType go nmap <leader>gcb <Plug>(go-cover-browser)
 
 let g:go_term_enabled = 1
 let g:go_term_height = 20
-let g:go_term_width = 30
 let g:go_term_mode = "split"
 
 au FileType go nmap <leader>gg <Plug>(go-doc)
 au FileType go nmap <leader>gv <Plug>(go-doc-vertical)
+au FileType go nmap <leader>gdb <Plug>(go-doc-browser)
 
 " Plugin: https://github.com/sebdah/vim-delve
 " open Delve with a horizontal split rather than a vertical split.
@@ -358,13 +402,6 @@ set cmdheight=2
 set shortmess+=c
 " always show signcolumns
 set signcolumn=yes
-
-" setup multiple cursor support
-" https://github.com/neoclide/coc.nvim/wiki/Multiple-cursors-support
-hi CocCursorRange guibg=#b16286 guifg=#ebdbb2
-hi CocUnderline gui=underline term=underline
-hi CocErrorHighlight ctermfg=red  guifg=#c4384b gui=undercurl term=undercurl
-hi CocWarningHighlight ctermfg=yellow guifg=#c4ab39 gui=undercurl term=undercurl
 
 nmap <silent> <C-c> <Plug>(coc-cursors-position)
 nmap <silent> <C-r> <Plug>(coc-refactor)
@@ -402,6 +439,7 @@ nmap <silent> ]g <Plug>(coc-diagnostic-next)
 
 " Remap keys for gotos
 nmap <silent> gd <Plug>(coc-definition)
+nnoremap dg :q!<CR>
 nmap <silent> gt <Plug>(coc-type-definition)
 nmap <silent> gi <Plug>(coc-implementation)
 nmap <silent> gr <Plug>(coc-references)
@@ -509,15 +547,6 @@ let g:startify_lists = [
       \ { 'header': ['   Bookmarks'],      'type': 'bookmarks' },
       \ ]
 
-hi StartifyBracket ctermfg=240
-hi StartifyFile    ctermfg=147
-hi StartifyFooter  ctermfg=240
-hi StartifyHeader  ctermfg=114
-hi StartifyNumber  ctermfg=215
-hi StartifyPath    ctermfg=245
-hi StartifySlash   ctermfg=240
-hi StartifySpecial ctermfg=240
-
 " http://patorjk.com/software/taag/#p=display&f=3D-ASCII&t=NeoVim
 let g:startify_custom_header = [
  \'  ________   _______   ________  ___      ___ ___  _____ ______       ',
@@ -528,3 +557,32 @@ let g:startify_custom_header = [
  \'    \ \__\\ \__\ \_______\ \_______\ \__/ /     \ \__\ \__\    \ \__\ ',
  \'     \|__| \|__|\|_______|\|_______|\|__|/       \|__|\|__|     \|__| ',
  \ ]
+
+"----------------------------------------------
+" color settings
+"----------------------------------------------
+set termguicolors
+let base16colorspace=256  " Access colors present in 256 colorspace
+colorscheme base16-eighties-minimal
+" autocmd FileType go colorscheme base16-eighties-minimal
+
+highlight link ALEWarningSign String
+highlight link ALEErrorSign WarningMsg
+highlight link ALEStyleError error
+highlight link ALEStyleWarning error
+highlight link ALEError error
+highlight link AleWarning error
+
+set rtp +=~/.vim " necessary to reload .vim dir with autoload functions
+nnoremap <leader>vimrc :call reloadvimrc#Run()<cr>
+
+" disable trackpad scrolling
+" disable arrow keys because this is what the scroll/trackpad uses
+noremap  <Up> <Nop>
+noremap! <Up> <Nop>
+noremap  <Down> <Nop>
+noremap! <Down> <Nop>
+noremap  <Left> <Nop>
+noremap! <Left> <Nop>
+noremap  <Right> <Nop>
+noremap! <Right> <Nop>

@@ -32,6 +32,7 @@
   "yaml.hover": true,
   "yaml.completion": true,
   "coc.preferences.colorSupport": true,
+  "coc.preferences.jumpCommand": "split",
   "refactor.openCommand": "sp",
   "diagnostic.displayByAle": true,
   "diagnostic.maxWindowHeight": 100,

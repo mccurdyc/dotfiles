@@ -27,11 +27,11 @@ alias fgrep="fgrep --color=auto"
 alias egrep="egrep --color=auto"
 
 ## tmux
+## see ~/.functions
 alias tl='tmux list-sessions'
 alias ta='tmux attach -t '
 alias td='tmux detach'
 alias tu='unset TMUX'
-alias tn='tmux new'
 alias tk='tmux kill-session -t'
 
 ## rm
@@ -39,7 +39,7 @@ alias rm="rm -i"
 alias mv="mv -i"
 
 ## mkdir
-alias mkdir="mkdir -pv"
+## see ~/.functions
 
 ## git
 alias gita='git add'

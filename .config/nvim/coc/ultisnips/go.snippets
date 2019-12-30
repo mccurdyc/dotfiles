@@ -367,24 +367,32 @@ endsnippet
 # test table snippet
 snippet tt "test table"
 	type input struct {
-	$0
+	$1
+	}
+
+	type want struct {
+	$2
 	}
 
 	var tests = map[string]struct {
 		input input
-		want $1
+		want want
 	}{
-		"$2": {
+		"$3": {
 			input: input{
-				$3
+				$4
 			},
-			want: $4,
+			want: want{
+				$5
+			},
 		},
 	}
+
 	for name, tt := range tests {
-		tt := tt
+
 		t.Run(name, func(t *testing.T){
-			got := $5(tt.input)
+			got := $0(tt.input)
+
 			if got != tt.want{
 					t.Errorf("$0(%s): want %s, got %s", tt.input, tt.want, got)
 			}
@@ -411,8 +419,8 @@ errorCmp := func(x, y error) bool {
 	return x.Error() == y.Error()
 }
 
-if ok := errorCmp(gotErr, test.wantErr); !ok {
-	t.Errorf("$1(tt.input) = %v, wantErr %v", gotErr, tt.wantErr)
+if ok := errorCmp(gotErr, test.want.err); !ok {
+	t.Errorf("$1(tt.input) = %v, wantErr %v", gotErr, tt.want.err)
 }
 endsnippet
 

@@ -1,9 +1,21 @@
 #!/bin/bash
 
+tn() {
+  tmux new-session -s $1 \;
+  tmux send-keys 'nvim' C-m \;
+  tmux split-window -v -p 15 \;
+  tmux select-pane -t 1 \;
+}
+
 # Open new terminal in same directory as last terminal:
 cd() {
         builtin cd $@
         pwd > ~/.last_dir
+}
+
+mkdir() {
+  command mkdir -pv $1
+  cd $1
 }
 
 external_display() {
