@@ -17,6 +17,9 @@ Plug 'mhinz/vim-startify' " startup screen
 Plug 'Shougo/neosnippet'
 Plug 'Shougo/neosnippet-snippets' " Default snippets for many languages
 Plug 'lervag/vimtex', {'for': 'tex'}
+Plug 'hashivim/vim-terraform'
+Plug 'vim-syntastic/syntastic'
+Plug 'juliosueiras/vim-terraform-completion'
 
 " colorscheme
 Plug 'chriskempson/base16-vim'
@@ -134,14 +137,14 @@ highlight link AleWarning error
 let g:ale_fixers = {
 \   '*': ['remove_trailing_lines', 'trim_whitespace'],
 \   'javascript': ['eslint'],
-\   'go': ['gofmt -s'],
-\   'terraform': ['fmt'],
+\   'go': ['gofmt'],
+\   'terraform': ['terraform'],
 \}
 
 let g:ale_linters = {
 \ 'go': ['gopls', 'golangci-lint', 'gofmt'],
 \ 'rust': ['rustc'],
-\ 'terraform': ['fmt', 'tflint'],
+\ 'terraform': ['tflint'],
 \ }
 
 let g:ale_go_golangci_lint_executable = '$GOPATH/bin/golangci-lint'
