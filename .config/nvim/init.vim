@@ -106,6 +106,10 @@ set nohlsearch
 " open urls correctly in Brave
 let g:netrw_browsex_viewer= "xdg-open"
 
+" Plugin:https://github.com/jreybert/vimagit
+" enable deletion of untracked files
+let g:magit_discard_untracked_do_delete = 1
+
 " Plugin: https://github.com/rhysd/git-messenger.vim
 let g:git_messenger_include_diff = "current"
 let g:git_messenger_close_on_cursor_moved = v:false
