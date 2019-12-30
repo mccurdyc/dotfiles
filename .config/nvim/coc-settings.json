@@ -20,8 +20,17 @@
       "args": ["start"],
       "filetypes": ["sh"],
       "ignoredRootPaths": ["~"]
+    },
+    "terraform": {
+      "command": "terraform-lsp",
+      "filetypes": ["terraform"],
+      "initializationOptions": {}
     }
   },
+  "yaml.validate": true,
+  "yaml.format.enable": true,
+  "yaml.hover": true,
+  "yaml.completion": true,
   "coc.preferences.colorSupport": true,
   "refactor.openCommand": "sp",
   "diagnostic.displayByAle": true,
