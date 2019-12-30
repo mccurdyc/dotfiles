@@ -21,7 +21,6 @@ Plug 'Shougo/neosnippet'
 Plug 'Shougo/neosnippet-snippets' " Default snippets for many languages
 Plug 'lervag/vimtex', {'for': 'tex'}
 Plug 'hashivim/vim-terraform'
-Plug 'vim-syntastic/syntastic'
 Plug 'juliosueiras/vim-terraform-completion'
 Plug 'rhysd/git-messenger.vim'
 Plug 'christianrondeau/vim-base64'
@@ -322,7 +321,6 @@ let g:coc_snippet_next = '<tab>'
 " Plugin: https://github.com/fatih/vim-go
 " https://github.com/fatih/vim-go/blob/master/doc/vim-go.txt
 let g:go_fmt_command = "goimports" " automagically get dependencies
-let g:syntastic_go_checkers = ['golangci-lint', 'govet']
 let g:go_snippet_engine = "neosnippet"
 
 let g:go_metalinter_autosave_enabled = ['vet', 'golint']
