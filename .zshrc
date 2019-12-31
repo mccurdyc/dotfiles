@@ -61,5 +61,3 @@ BASE16_SHELL="$HOME/.config/base16-shell/"
 
 # This is neccessary for fzf key-bindings to work
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-
-[[ -s "/home/mccurdyc/.gvm/scripts/gvm" ]] && source "/home/mccurdyc/.gvm/scripts/gvm"
