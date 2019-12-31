@@ -20,6 +20,8 @@ Plug 'mhinz/vim-startify' " startup screen
 Plug 'Shougo/neosnippet'
 Plug 'Shougo/neosnippet-snippets' " Default snippets for many languages
 Plug 'lervag/vimtex', {'for': 'tex'}
+Plug 'hashivim/vim-terraform'
+Plug 'juliosueiras/vim-terraform-completion'
 Plug 'rhysd/git-messenger.vim'
 Plug 'christianrondeau/vim-base64'
 Plug 'junegunn/limelight.vim' " plugin to focus / greyout other blocks
@@ -171,13 +173,13 @@ let g:ale_fixers = {
 \   '*': ['remove_trailing_lines', 'trim_whitespace'],
 \   'javascript': ['eslint'],
 \   'go': ['gofmt'],
-\   'terraform': ['fmt'],
+\   'terraform': ['terraform'],
 \}
 
 let g:ale_linters = {
 \ 'go': ['gopls', 'golangci-lint', 'gofmt'],
 \ 'rust': ['rustc'],
-\ 'terraform': ['fmt', 'tflint'],
+\ 'terraform': ['tflint'],
 \ }
 
 let g:ale_go_golangci_lint_executable = '$GOPATH/bin/golangci-lint'
@@ -319,7 +321,6 @@ let g:coc_snippet_next = '<tab>'
 " Plugin: https://github.com/fatih/vim-go
 " https://github.com/fatih/vim-go/blob/master/doc/vim-go.txt
 let g:go_fmt_command = "goimports" " automagically get dependencies
-let g:syntastic_go_checkers = ['golangci-lint', 'govet']
 let g:go_snippet_engine = "neosnippet"
 
 let g:go_metalinter_autosave_enabled = ['vet', 'golint']
