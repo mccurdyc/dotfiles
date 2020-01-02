@@ -13,7 +13,7 @@ cd() {
         pwd > ~/.last_dir
 }
 
-mkdir() {
+mkcd() {
   command mkdir -pv $1
   cd $1
 }
