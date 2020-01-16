@@ -389,6 +389,7 @@ snippet tt "test table"
 	}
 
 	for name, tt := range tests {
+		tt := tt
 		t.Run(name, func(t *testing.T){
 			got := $0(tt.input)
 
