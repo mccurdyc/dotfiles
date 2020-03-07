@@ -1,15 +1,30 @@
 default: help
 
 .PHONY: run
-run: install-deps dotstar chmod symlink ## Runs the full setup.
+run: install-official-deps dotstar chmod symlink ## Runs the full setup.
 
-.PHONY: install-deps
-install-deps: ## Installs packages.
-	sudo pacman -S - < pkglist.txt
+.PHONY: install-aur-pkg-mgr
+install-aur-pkg-mgr: install-official-deps ## Installs the yay AUR package manager.
+	mkdir $(HOME)/tools
+	git clone https://aur.archlinux.org/yay.git $(HOME)/tools/yay
+	cd $(HOME)/tools/yay
+	makepkg -si
+
+.PHONY: install-official-deps
+install-official-deps: ## Installs official packages.
+	@#https://superuser.com/questions/1061612/how-do-you-make-a-list-file-for-pacman-to-install-from
+	sudo pacman -S - < official-pkglist.txt
+
+.PHONY: install-aur-deps
+install-aur-deps: ## Installs AUR packages.
+	@#https://superuser.com/questions/1061612/how-do-you-make-a-list-file-for-pacman-to-install-from
+	sudo pacman -S - < aur-pkglist.txt
 
 .PHONY: dump-deps
-dump-deps: ## Creates a dump of your currently-installed dependencies to be used by the `install-deps` target.
-	pacman -Qqen > pkglist.txt
+dump-deps: ## Creates a dump of your currently-installed dependencies.
+	@# https://superuser.com/questions/1061612/how-do-you-make-a-list-file-for-pacman-to-install-from
+	@pacman -Qqne > official-pkglist.txt
+	@pacman -Qqme > aur-pkglist.txt
 
 .PHONY: config-deps
 config-deps: ## Runs the necessary commands to configure the installed packages.
@@ -28,15 +43,15 @@ chmod: ## Makes necessary files executable.
 
 .PHONY: symlink
 symlink: ## Creates the necessary symlinks.
-	# yes, we want xsessionrc symlinked to xinitrc
-	# https://faq.i3wm.org/question/18/how-do-xsession-xinitrc-and-i3config-play-together.1.html
+	@# yes, we want xsessionrc symlinked to xinitrc
+	@# https://faq.i3wm.org/question/18/how-do-xsession-xinitrc-and-i3config-play-together.1.html
 	ln -snf $(CURDIR)/.Xresources $(HOME)/.Xdefaults;
 	ln -snf $(CURDIR)/.xinitrc $(HOME)/.xsessionrc;
 	ln -fn $(CURDIR)/gitignore $(HOME)/.gitignore;
 
 	mkdir -p $(HOME)/Pictures/screenshots;
 	ln -snf $(CURDIR)/detroit-street-art.jpg $(HOME)/Pictures/detroit-street-art.jpg;
-	# https://wiki.archlinux.org/index.php/XDG_MIME_Applications#mimeapps.list
+	@# https://wiki.archlinux.org/index.php/XDG_MIME_Applications#mimeapps.list
 	ln -s ~/.config/mimeapps.list /usr/share/applications/mimeapps.list;
 
 .PHONY: help

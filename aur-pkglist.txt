@@ -1,0 +1,4 @@
+brave-bin
+spotify
+yay
+zoom
