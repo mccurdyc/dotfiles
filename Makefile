@@ -1,13 +1,18 @@
 default: help
 
-.PHONY: run
-run: install-official-deps dotstar chmod symlink ## Runs the full setup.
+TOOLS_DIR=$(HOME)/tools
+
+.PHONY: run-minimal
+run-minimal: install-official-deps dotstar chmod symlink ## Runs the full necessary (not additional/optional) setup.
+
+.PHONY: run-full
+run-full: install-official-deps install-aur-pkg-mgr install-aur-deps dotstar chmod symlink config-deps ## Runs the full setup (i.e., necessary plus optional).
 
 .PHONY: install-aur-pkg-mgr
 install-aur-pkg-mgr: install-official-deps ## Installs the yay AUR package manager.
-	mkdir $(HOME)/tools
-	git clone https://aur.archlinux.org/yay.git $(HOME)/tools/yay
-	cd $(HOME)/tools/yay
+	mkdir $(TOOLS_DIR)
+	git clone https://aur.archlinux.org/yay.git $(TOOLS_DIR)/yay
+	cd $(TOOLS_DIR)/yay
 	makepkg -si
 
 .PHONY: install-official-deps

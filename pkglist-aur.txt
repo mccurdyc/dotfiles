@@ -1,4 +1,6 @@
 brave-bin
+hugo-git
+python-grip
 spotify
 yay
 zoom

@@ -1,12 +1,14 @@
 ## purpose; status bar configuration, righthand portion.
 # enabling
 order += "wireless _first_"
-order += "disk /"
+order += "disk /home"
 order += "volume master"
 order += "cpu_usage"
 order += "battery 0"
 order += "tztime date"
-order += "tztime us"
+order += "tztime et"
+order += "tztime pt"
+order += "tztime utc"
 
 # coloring
 general {
@@ -35,17 +37,27 @@ battery 0 {
 	integer_battery_capacity = true
 	last_full_capacity = true
 	}
-tztime us {
+tztime et {
 	format = "%time"
-	format_time = " %H:%M:%S%P"
+	format_time = " (ET) %H:%M:%S%P"
 	timezone = "US/Eastern"
+	}
+tztime pt {
+	format = "%time"
+	format_time = " (PT) %H:%M:%S%P"
+	timezone = "US/Pacific"
+	}
+tztime utc {
+	format = "%time"
+	format_time = " (UTC) %H:%M:%S%P"
+	timezone = "UTC"
 	}
 tztime date {
 	format = "%time"
 	format_time = " %m/%d"
 	}
-disk "/" {
-        format = " %avail / %total"
+disk "/home" {
+        format = "  (avail) %avail/ %total"
 	}
 wireless _first_ {
 	format_up = " %quality %essid %bitrate"
