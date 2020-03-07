@@ -6,6 +6,8 @@ automake
 base
 binutils
 bison
+bluez
+bluez-utils
 dhcpcd
 dialog
 fakeroot
@@ -41,6 +43,7 @@ openssh
 pacman
 patch
 pkgconf
+pulseaudio-bluetooth
 rofi
 sed
 sudo

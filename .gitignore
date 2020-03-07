@@ -4,3 +4,7 @@ bin/
 .config/nvim/.netrwhist
 .vim/plugged
 .config/BraveSoftware
+.config/dconf
+.config/spotify
+.config/pulse
+.config/htop
