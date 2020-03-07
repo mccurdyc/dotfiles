@@ -13,18 +13,18 @@ install-aur-pkg-mgr: install-official-deps ## Installs the yay AUR package manag
 .PHONY: install-official-deps
 install-official-deps: ## Installs official packages.
 	@#https://superuser.com/questions/1061612/how-do-you-make-a-list-file-for-pacman-to-install-from
-	sudo pacman -S - < official-pkglist.txt
+	sudo pacman -S - < pkglist-official.txt
 
 .PHONY: install-aur-deps
 install-aur-deps: ## Installs AUR packages.
 	@#https://superuser.com/questions/1061612/how-do-you-make-a-list-file-for-pacman-to-install-from
-	sudo pacman -S - < aur-pkglist.txt
+	sudo pacman -S - < pkglist-aur.txt
 
 .PHONY: dump-deps
 dump-deps: ## Creates a dump of your currently-installed dependencies.
 	@# https://superuser.com/questions/1061612/how-do-you-make-a-list-file-for-pacman-to-install-from
-	@pacman -Qqne > official-pkglist.txt
-	@pacman -Qqme > aur-pkglist.txt
+	@pacman -Qqne > pkglist-official.txt
+	@pacman -Qqme > pkglist-aur.txt
 
 .PHONY: config-deps
 config-deps: ## Runs the necessary commands to configure the installed packages.
