@@ -4,8 +4,10 @@
 alias tfsec='eval $(AWS_PROFILE=${PWD##*/} sops --decrypt --input-type env secrets.env | egrep -v "^#" | xargs)'
 
 ## docker
-alias docker_force_clean_system="docker system prune --all --force"
-alias docker_force_clean_images="docker rmi --force $(docker images -a -q)"
+if command -v "docker" > /dev/null 2>&1; then
+  alias docker_force_clean_system="docker system prune --all --force"
+  alias docker_force_clean_images="docker rmi --force $(docker images -a -q)"
+fi
 
 ## tree
 alias tree="tree --dirsfirst --noreport -ACF"
