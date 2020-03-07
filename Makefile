@@ -3,10 +3,10 @@ default: help
 TOOLS_DIR=$(HOME)/tools
 
 .PHONY: run-minimal
-run-minimal: install-official-deps dotstar chmod symlink ## Runs the full necessary (not additional/optional) setup.
+run-minimal: install-official-deps dotstar symlink ## Runs the full necessary (not additional/optional) setup.
 
 .PHONY: run-full
-run-full: install-official-deps install-aur-pkg-mgr install-aur-deps dotstar chmod symlink config-deps ## Runs the full setup (i.e., necessary plus optional).
+run-full: install-official-deps install-aur-pkg-mgr install-aur-deps dotstar symlink config-deps ## Runs the full setup (i.e., necessary plus optional).
 
 .PHONY: install-aur-pkg-mgr
 install-aur-pkg-mgr: install-official-deps ## Installs the yay AUR package manager.
@@ -48,7 +48,7 @@ chmod: ## Makes necessary files executable.
 	sudo chmod +x /etc/rc.local;
 
 .PHONY: symlink
-symlink: ## Creates the necessary symlinks.
+symlink: chmod ## Creates the necessary symlinks.
 	@# yes, we want xsessionrc symlinked to xinitrc
 	@# https://faq.i3wm.org/question/18/how-do-xsession-xinitrc-and-i3config-play-together.1.html
 	ln -snf $(CURDIR)/.Xresources $(HOME)/.Xdefaults;
