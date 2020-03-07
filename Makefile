@@ -18,6 +18,7 @@ chmod: ## Makes necessary files executable.
 symlink: ## Creates the necessary symlinks.
 	# yes, we want xsessionrc symlinked to xinitrc
 	# https://faq.i3wm.org/question/18/how-do-xsession-xinitrc-and-i3config-play-together.1.html
+	ln -snf $(CURDIR)/.Xresources $(HOME)/.Xdefaults;
 	ln -snf $(CURDIR)/.xinitrc $(HOME)/.xsessionrc;
 	ln -fn $(CURDIR)/gitignore $(HOME)/.gitignore;
 	

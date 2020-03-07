@@ -5,7 +5,7 @@
 ## Getting Started
 ```
 $ git clone --recursive https://github.com/mccurdyc/dotfiles.git
-$ git submodule update --init
+$ cd dotfiles && git submodule update --init
 $ make run
 ```
 
