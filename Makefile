@@ -1,9 +1,21 @@
 default: help
 
 .PHONY: run
-run: dotstar chmod symlink ## Runs the full setup.
+run: install-deps dotstar chmod symlink ## Runs the full setup.
 
-.PHONY: dotstar 
+.PHONY: install-deps
+install-deps: ## Installs packages.
+	sudo pacman -S - < pkglist.txt
+
+.PHONY: dump-deps
+dump-deps: ## Creates a dump of your currently-installed dependencies to be used by the `install-deps` target.
+	pacman -Qqen > pkglist.txt
+
+.PHONY: config-deps
+config-deps: ## Runs the necessary commands to configure the installed packages.
+	nvim +PlugInstall +qall > /dev/null
+
+.PHONY: dotstar
 dotstar: ## Symlinks the dotfiles to $(HOME)
 	for file in $(shell find $(CURDIR) -maxdepth 1 -name ".*" -not -name ".gitignore" -not -name ".git" -not -name ".*.swp"); do \
 		f=$$(basename $$file); \
@@ -21,7 +33,7 @@ symlink: ## Creates the necessary symlinks.
 	ln -snf $(CURDIR)/.Xresources $(HOME)/.Xdefaults;
 	ln -snf $(CURDIR)/.xinitrc $(HOME)/.xsessionrc;
 	ln -fn $(CURDIR)/gitignore $(HOME)/.gitignore;
-	
+
 	mkdir -p $(HOME)/Pictures/screenshots;
 	ln -snf $(CURDIR)/detroit-street-art.jpg $(HOME)/Pictures/detroit-street-art.jpg;
 	# https://wiki.archlinux.org/index.php/XDG_MIME_Applications#mimeapps.list
