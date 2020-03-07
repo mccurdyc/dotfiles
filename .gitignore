@@ -2,3 +2,5 @@
 .gitconfig
 bin/
 .config/nvim/.netrwhist
+.vim/plugged
+.config/BraveSoftware
