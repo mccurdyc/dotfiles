@@ -42,6 +42,7 @@ alias mv="mv -i"
 
 ## mkdir
 ## see ~/.functions
+alias mkdir="mkdir -p"
 
 ## git
 alias gita='git add'

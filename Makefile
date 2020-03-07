@@ -45,6 +45,7 @@ dotstar: ## Symlinks the dotfiles to $(HOME)
 .PHONY: chmod
 chmod: ## Makes necessary files executable.
 	chmod +x $(HOME)/.xinitrc;
+	sudo chmod +x /etc/rc.local;
 
 .PHONY: symlink
 symlink: ## Creates the necessary symlinks.
@@ -52,12 +53,18 @@ symlink: ## Creates the necessary symlinks.
 	@# https://faq.i3wm.org/question/18/how-do-xsession-xinitrc-and-i3config-play-together.1.html
 	ln -snf $(CURDIR)/.Xresources $(HOME)/.Xdefaults;
 	ln -snf $(CURDIR)/.xinitrc $(HOME)/.xsessionrc;
-	ln -fn $(CURDIR)/gitignore $(HOME)/.gitignore;
-
+	ln -sfn $(CURDIR)/gitignore $(HOME)/.gitignore;
+	sudo ln -sfn $(CURDIR)/etc/rc.local /etc/rc.local;
+	sudo ln -sfn $(CURDIR)/etc/systemd/system/rc-local.service /etc/systemd/system/rc-local.service;
 	mkdir -p $(HOME)/Pictures/screenshots;
 	ln -snf $(CURDIR)/detroit-street-art.jpg $(HOME)/Pictures/detroit-street-art.jpg;
 	@# https://wiki.archlinux.org/index.php/XDG_MIME_Applications#mimeapps.list
-	ln -s ~/.config/mimeapps.list /usr/share/applications/mimeapps.list;
+	sudo ln -s ~/.config/mimeapps.list /usr/share/applications/mimeapps.list;
+
+.PHONY: enable
+enable: ## Enables services to be run on startup.
+	sudo systemctl enable rc-local.service;
+	sudo systemctl start rc-local.service;
 
 .PHONY: help
 help: ## Prints this help menu.
