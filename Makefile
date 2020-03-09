@@ -63,8 +63,8 @@ symlink: chmod ## Creates the necessary symlinks.
 
 .PHONY: enable
 enable: ## Enables services to be run on startup.
-	sudo systemctl enable rc-local.service;
-	sudo systemctl start rc-local.service;
+	-@sudo systemctl enable rc-local.service;
+	-@sudo systemctl start rc-local.service;
 
 .PHONY: help
 help: ## Prints this help menu.
