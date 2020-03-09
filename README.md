@@ -1,6 +1,6 @@
 # dotfiles
 
-![sample of setup](./sample.png)
+![sample of setup](./imgs/sample.png)
 
 ## Getting Started
 ```

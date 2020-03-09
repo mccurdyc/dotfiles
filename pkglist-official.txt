@@ -1,6 +1,7 @@
 adobe-source-code-pro-fonts
 alacritty
 arc-solid-gtk-theme
+archey3
 autoconf
 automake
 base
@@ -46,6 +47,7 @@ pkgconf
 pulseaudio-bluetooth
 ripgrep
 rofi
+scrot
 sed
 sudo
 texinfo
