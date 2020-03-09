@@ -160,7 +160,7 @@ set $base0F #a16946
 
 # Basic bar configuration using the Base16 variables.
 bar {
-    font pango:Office Code Pro Medium, FontAwesome 12
+    font pango:Source Code Pro Semibold, FontAwesome 10
     status_command i3status
     mode dock
     modifier $mod
