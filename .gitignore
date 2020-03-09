@@ -10,3 +10,4 @@ bin/
 .config/htop
 .config/coc
 .config/configstore
+.config/zoomus.conf
