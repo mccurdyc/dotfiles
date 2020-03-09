@@ -33,7 +33,11 @@ dump-deps: ## Creates a dump of your currently-installed dependencies.
 
 .PHONY: config-deps
 config-deps: ## Runs the necessary commands to configure the installed packages.
-	nvim +PlugInstall +qall > /dev/null
+	nvim +PlugInstall +UpdateRemotePlugins +qall > /dev/null
+	@# https://github.com/tmux-plugins/tpm/issues/6
+	$(HOME)/.tmux/plugins/tpm/scripts/install_plugins.sh
+	tmux source $(HOME)/.tmux.conf
+	sudo npm i -g bash-language-server
 
 .PHONY: dotstar
 dotstar: ## Symlinks the dotfiles to $(HOME)

@@ -44,6 +44,7 @@ pacman
 patch
 pkgconf
 pulseaudio-bluetooth
+ripgrep
 rofi
 sed
 sudo

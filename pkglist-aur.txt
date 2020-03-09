@@ -2,5 +2,6 @@ brave-bin
 hugo-git
 python-grip
 spotify
+wpa_supplicant_gui
 yay
 zoom

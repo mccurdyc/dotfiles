@@ -8,3 +8,5 @@ bin/
 .config/spotify
 .config/pulse
 .config/htop
+.config/coc
+.config/configstore
