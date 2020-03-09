@@ -20,5 +20,5 @@ BACKLIGHT_FILE='/sys/class/backlight/intel_backlight/brightness'
 sudo chown mccurdyc $BACKLIGHT_FILE
 
 # also `sudo chown $USER $BACKLIGHT_FILE` won't work, coz $USER -> root on sytem startup
-chmod +wr $BACKLIGHT_FILE_PATH
+chmod +wr $BACKLIGHT_FILE
 exit 0

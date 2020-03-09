@@ -62,8 +62,6 @@ symlink: chmod ## Creates the necessary symlinks.
 	sudo ln -sfn $(CURDIR)/etc/systemd/system/rc-local.service /etc/systemd/system/rc-local.service;
 	mkdir -p $(HOME)/Pictures/screenshots;
 	ln -snf $(CURDIR)/detroit-street-art.jpg $(HOME)/Pictures/detroit-street-art.jpg;
-	@# https://wiki.archlinux.org/index.php/XDG_MIME_Applications#mimeapps.list
-	sudo ln -s ~/.config/mimeapps.list /usr/share/applications/mimeapps.list;
 
 .PHONY: enable
 enable: ## Enables services to be run on startup.

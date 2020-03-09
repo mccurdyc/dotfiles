@@ -11,3 +11,6 @@ bin/
 .config/coc
 .config/configstore
 .config/zoomus.conf
+.config/chromium/
+.config/Slack/
+.config/Unknown\ Organization/
