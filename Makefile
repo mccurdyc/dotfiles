@@ -40,7 +40,7 @@ config-deps: ## Runs the necessary commands to configure the installed packages.
 	sudo npm i -g bash-language-server
 
 .PHONY: dotstar
-dotstar: ## Symlinks the dotfiles to $(HOME)
+dotstar: ## Symlinks the dotfiles to $(HOME) (idempotent).
 	for file in $(shell find $(CURDIR) -maxdepth 1 -name ".*" -not -name ".gitignore" -not -name ".git" -not -name ".*.swp"); do \
 		f=$$(basename $$file); \
 		ln -sfn $$file $(HOME)/$$f; \

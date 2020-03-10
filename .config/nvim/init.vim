@@ -232,7 +232,7 @@ endfunction
 " Load just hidden files
 command! FZFHidden call fzf#run({
       \  'window': 'call FloatingFZF()',
-      \  'source':  'rg --hidden -l -g "!.git',
+      \  'source':  'rg --hidden --no-ignore -l -g "!.git"',
       \  'sink':    'e',
       \  'options': '-m -x +s --no-bold --cycle'})
 
@@ -240,7 +240,7 @@ command! FZFHidden call fzf#run({
 command! FZFFiles call fzf#run({
       \  'window': 'call FloatingFZF()',
       \  'sink':    'e',
-      \  'source':  'rg --hidden --files -l -g "!.git"'})
+      \  'source':  'rg --hidden --no-ignore --files -l -g "!.git"'})
 
 " Load files in Git
 command! FZFGit call fzf#run({

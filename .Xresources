@@ -78,7 +78,7 @@ rofi.hide-scrollbar: true
 *color21:      base06
 
 !-- Xft settings -- !
-Xft.dpi:        220
+Xft.dpi:        200
 Xft.rgba:       rgb
 Xft.autohint:   0
 Xft.lcdfilter:  lcddefault

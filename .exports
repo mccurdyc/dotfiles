@@ -1,15 +1,25 @@
 #!/bin/bash
 
+# https://wiki.archlinux.org/index.php/XDG_Base_Directory
+export XDG_DATA_HOME="$HOME/.local/share"
+export XDG_CONFIG_HOME="$HOME/.config"
+
+# hidpi for gtk apps
+# Keep in mind that this will only affect applications launched from your shell,
+# where this value is sourced.
+export QT_SCALE_FACTOR=2
+
 # Set config files for easy access
 export DOTFILES_DIR="$HOME/dotfiles"
-export CONFIG_NVIM="$DOTFILES_DIR/.config/nvim/init.vim"
-export CONFIG_TERM="$DOTFILES_DIR/.config/alacritty/alacritty.yml"
+export CONFIG_NVIM="$XDG_CONFIG_HOME/nvim/init.vim"
+export CONFIG_TERM="$XDG_CONFIG_HOME/alacritty/alacritty.yml"
 export TMUX_CONF="$DOTFILES_DIR/.tmux.conf"
+export FZF_DEFAULT_COMMAND='rg --hidden --no-ignore -l ""'
 
 # Make vim the default editor
 export EDITOR=/usr/local/bin/nvim;
 export TERMINAL="alacritty";
-export BROWSER="brave-beta-bin"
+export BROWSER="brave"
 
 # Larger bash history (allow 32³ entries; default is 500)
 export HISTSIZE=50000000;
@@ -25,10 +35,4 @@ export LC_ALL="en_US.UTF-8";
 # Don’t clear the screen after quitting a manual page
 export MANPAGER="less -X";
 
-export DBUS_SESSION_BUS_ADDRESS
-DBUS_SESSION_BUS_ADDRESS=unix:path=/var/run/user/$(id -u)/bus;
-
-# hidpi for gtk apps
-export GDK_SCALE=2
-export GDK_DPI_SCALE=0.5
-export QT_DEVICE_PIXEL_RATIO=2
+export DBUS_SESSION_BUS_ADDRESS=unix:path=/var/run/user/$(id -u)/bus;
