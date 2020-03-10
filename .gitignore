@@ -5,7 +5,8 @@ bin/
 .vim/plugged
 .config/BraveSoftware
 .config/dconf
-.config/spotify
+.config/spotify/*
+!.config/spotify/Users/mccurdycolton-user/prefs
 .config/pulse
 .config/htop
 .config/coc
