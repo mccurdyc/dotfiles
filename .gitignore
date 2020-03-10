@@ -16,3 +16,4 @@ bin/
 .config/Slack/
 .config/Unknown\ Organization/
 .local/share/nvim/shada/
+.local/share/recently-used.xbel
