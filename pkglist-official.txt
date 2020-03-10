@@ -9,10 +9,12 @@ binutils
 bison
 bluez
 bluez-utils
+chromium
 dhcpcd
 dialog
 fakeroot
 file
+filebeat
 findutils
 flex
 fzf
@@ -41,6 +43,7 @@ neovim
 netctl
 networkmanager
 openssh
+osquery
 pacman
 patch
 pkgconf
@@ -57,6 +60,7 @@ ttf-font-awesome
 vim
 vulkan-intel
 vulkan-mesa-layer
+wget
 which
 wireless_tools
 wpa_supplicant

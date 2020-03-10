@@ -1,6 +1,8 @@
 brave-bin
 hugo-git
+mimeo
 python-grip
+slack-desktop
 spotify
 wpa_supplicant_gui
 yay
