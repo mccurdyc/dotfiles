@@ -15,4 +15,3 @@ bin/
 .config/chromium/
 .config/Slack/
 .config/Unknown\ Organization/
-.local/share/nvim/shada/**
