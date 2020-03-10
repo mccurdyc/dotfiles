@@ -6,9 +6,9 @@ order += "volume master"
 order += "cpu_usage"
 order += "battery 0"
 order += "tztime date"
-order += "tztime et"
 order += "tztime pt"
 order += "tztime utc"
+order += "tztime et"
 
 # coloring
 general {
