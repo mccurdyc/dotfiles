@@ -49,7 +49,6 @@ dotstar: ## Symlinks the dotfiles to $(HOME) (idempotent).
 .PHONY: chmod
 chmod: ## Makes necessary files executable.
 	chmod +x $(HOME)/.xinitrc;
-	sudo chmod +x /etc/rc.local;
 
 .PHONY: symlink
 symlink: chmod ## Creates the necessary symlinks.
@@ -58,15 +57,8 @@ symlink: chmod ## Creates the necessary symlinks.
 	ln -snf $(CURDIR)/.Xresources $(HOME)/.Xdefaults;
 	ln -snf $(CURDIR)/.xinitrc $(HOME)/.xsessionrc;
 	ln -sfn $(CURDIR)/gitignore $(HOME)/.gitignore;
-	sudo ln -sfn $(CURDIR)/etc/rc.local /etc/rc.local;
-	sudo ln -sfn $(CURDIR)/etc/systemd/system/rc-local.service /etc/systemd/system/rc-local.service;
 	mkdir -p $(HOME)/Pictures/screenshots;
 	ln -snf $(CURDIR)/detroit-street-art.jpg $(HOME)/Pictures/detroit-street-art.jpg;
-
-.PHONY: enable
-enable: ## Enables services to be run on startup.
-	-@sudo systemctl enable rc-local.service;
-	-@sudo systemctl start rc-local.service;
 
 .PHONY: help
 help: ## Prints this help menu.

@@ -2,6 +2,8 @@
 .gitconfig
 bin/
 .config/nvim/.netrwhist
+.config/pavucontrol.ini
+.config/autostart
 .vim/plugged
 .config/BraveSoftware
 .config/dconf
@@ -10,11 +12,12 @@ bin/
 .config/pulse
 .config/htop
 .config/coc
+.config/keybase
 .config/configstore
 .config/zoomus.conf
 .config/chromium/
 .config/Slack/
 .config/Unknown\ Organization/
-.local/share/nvim/shada/
-.local/share/recently-used.xbel
-.local/share/zoom
+.local/share/*
+!.local/share/nvim/shada
+!.local/share/applications/
