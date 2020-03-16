@@ -533,7 +533,7 @@ function! s:list_commits()
 endfunction
 
 function! s:tree()
-    let tree = 'tree'
+    let tree = 'tree -d 3 -I "vendor" .'
     let out = systemlist(tree)
     return map(out, '{"line": matchstr(v:val, ".*")}')
 endfunction
