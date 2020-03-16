@@ -2,6 +2,14 @@ default: help
 
 TOOLS_DIR=$(HOME)/tools
 
+.PHONY: install-tools
+install-tools: ## Installs the necessary tools for setup.
+	pip install j2cli
+
+.PHONY: replace-templated-text
+replace-templated-text: install-tools ## Replaces templated text.
+	j2 -f json .gitconfig.j2 templated-config.json -o .gitconfig
+
 .PHONY: run-minimal
 run-minimal: install-official-deps dotstar symlink ## Runs the full necessary (not additional/optional) setup.
 
@@ -41,7 +49,7 @@ config-deps: ## Runs the necessary commands to configure the installed packages.
 	sudo npm i -g bash-language-server
 
 .PHONY: dotstar
-dotstar: ## Symlinks the dotfiles to $(HOME) (idempotent).
+dotstar: replace-templated-text ## Symlinks the dotfiles to $(HOME) (idempotent).
 	for file in $(shell find $(CURDIR) -maxdepth 1 -name ".*" -not -name ".gitignore" -not -name ".git" -not -name ".*.swp"); do \
 		f=$$(basename $$file); \
 		ln -sfn $$file $(HOME)/$$f; \

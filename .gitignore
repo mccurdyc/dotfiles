@@ -23,3 +23,5 @@ bin/
 .local/share/*
 !.local/share/nvim/shada
 !.local/share/applications/
+.gitconfig
+templated-config.json
