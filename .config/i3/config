@@ -42,6 +42,7 @@ bindsym XF86AudioRaiseVolume  exec "/usr/bin/pactl set-sink-volume @DEFAULT_SINK
 bindsym XF86MonBrightnessUp exec xbacklight -inc 5 # increase screen brightness
 bindsym XF86MonBrightnessDown exec xbacklight -dec 5 # decrease screen brightness
 
+# make sure that function lock is toggled.
 bindsym Shift+Print           exec "scrot '%y.%m.%d.%T.png' -ub -e 'mv $f ~/Pictures/screenshots/'"
 bindsym Print                 exec "scrot '%y.%m.%d.%T.png' -e 'mv $f ~/Pictures/screenshots/'"
 bindsym --release Shift+Print exec "scrot -s '%y.%m.%d.%T-snippet.png' -e 'mv $f ~/Pictures/screenshots/'"
