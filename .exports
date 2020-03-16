@@ -17,7 +17,7 @@ export TMUX_CONF="$DOTFILES_DIR/.tmux.conf"
 export FZF_DEFAULT_COMMAND='rg --hidden --no-ignore -l ""'
 
 # Make vim the default editor
-export EDITOR=/usr/local/bin/nvim;
+export EDITOR=/usr/bin/nvim;
 export TERMINAL="alacritty";
 export BROWSER="brave"
 
