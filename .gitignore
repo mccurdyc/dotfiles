@@ -17,6 +17,8 @@ bin/
 .config/zoomus.conf
 .config/chromium/
 .config/Slack/
+.config/dlv
+.config/gcloud
 .config/Unknown\ Organization/
 .local/share/*
 !.local/share/nvim/shada

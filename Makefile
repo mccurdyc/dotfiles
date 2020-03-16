@@ -34,6 +34,7 @@ dump-deps: ## Creates a dump of your currently-installed dependencies.
 .PHONY: config-deps
 config-deps: ## Runs the necessary commands to configure the installed packages.
 	nvim +PlugInstall +UpdateRemotePlugins +qall > /dev/null
+	nvim --headless -c "CocInstall coc-snippets"
 	@# https://github.com/tmux-plugins/tpm/issues/6
 	$(HOME)/.tmux/plugins/tpm/scripts/install_plugins.sh
 	tmux source $(HOME)/.tmux.conf
@@ -52,6 +53,7 @@ chmod: ## Makes necessary files executable.
 
 .PHONY: symlink
 symlink: chmod ## Creates the necessary symlinks.
+	sudo ln -snf $(CURDIR)/etc/bluetooth /etc/bluetooth
 	@# yes, we want xsessionrc symlinked to xinitrc
 	@# https://faq.i3wm.org/question/18/how-do-xsession-xinitrc-and-i3config-play-together.1.html
 	ln -snf $(CURDIR)/.Xresources $(HOME)/.Xdefaults;
