@@ -26,6 +26,7 @@ grep
 groff
 gzip
 htop
+hub
 i3-gaps
 i3blocks
 i3lock
@@ -51,11 +52,13 @@ patch
 pavucontrol
 pkgconf
 pulseaudio-bluetooth
+python-pip
 ripgrep
 rofi
 scrot
 sed
 sudo
+terraform
 texinfo
 tmux
 tree

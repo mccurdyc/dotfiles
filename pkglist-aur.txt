@@ -1,4 +1,5 @@
 brave-bin
+google-cloud-sdk
 hugo-git
 mimeo
 python-grip

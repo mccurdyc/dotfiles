@@ -9,6 +9,7 @@ install-tools: ## Installs the necessary tools for setup.
 .PHONY: replace-templated-text
 replace-templated-text: install-tools ## Replaces templated text.
 	j2 -f json .gitconfig.j2 templated-config.json -o .gitconfig
+	j2 -f json .config/zoomus.conf.j2 templated-config.json -o .config/zoomus.conf
 
 .PHONY: run-minimal
 run-minimal: install-official-deps dotstar symlink ## Runs the full necessary (not additional/optional) setup.
@@ -62,9 +63,10 @@ chmod: ## Makes necessary files executable.
 .PHONY: symlink
 symlink: chmod ## Creates the necessary symlinks.
 	sudo ln -snf $(CURDIR)/etc/bluetooth /etc/bluetooth
+	ln -snf $(CURDIR)/.config/mimeapps.list $(HOME)/.local/share/applications/mimeapps.list
+	ln -snf $(CURDIR)/.Xresources $(HOME)/.Xdefaults;
 	@# yes, we want xsessionrc symlinked to xinitrc
 	@# https://faq.i3wm.org/question/18/how-do-xsession-xinitrc-and-i3config-play-together.1.html
-	ln -snf $(CURDIR)/.Xresources $(HOME)/.Xdefaults;
 	ln -snf $(CURDIR)/.xinitrc $(HOME)/.xsessionrc;
 	ln -sfn $(CURDIR)/gitignore $(HOME)/.gitignore;
 	mkdir -p $(HOME)/Pictures/screenshots;

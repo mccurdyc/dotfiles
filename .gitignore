@@ -24,4 +24,5 @@ bin/
 !.local/share/nvim/shada
 !.local/share/applications/
 .gitconfig
+.local/share/applications/mimeapps.list
 templated-config.json
