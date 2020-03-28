@@ -39,8 +39,9 @@ function switchgo() {
 }
 
 external_display() {
-  intern=eDP1
-  extern=HDMI2
+  intern=$(xrandr | grep 'connected' | awk '{print $1;}' | head -n 1)
+  xrandr --output "$intern" --primary --auto
+  extern=$(xrandr | grep -v 'primary' | grep 'connect' | awk '{print $1;}' | head -n 1)
 
   if xrandr | grep "$extern disconnected"; then
     xrandr --output "$extern" --off --output "$intern" --auto
