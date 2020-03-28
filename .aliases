@@ -3,6 +3,9 @@
 ## run `tfsec terraform plan` and not need to do any secrets stuff, so long as you’re in a directory with a name equal to the applicable amazon profile
 alias tfsec='eval $(AWS_PROFILE=${PWD##*/} sops --decrypt --input-type env secrets.env | egrep -v "^#" | xargs)'
 
+## https://golang.org/doc/install#extra_versions
+alias go="go1.14.1"
+
 ## docker
 if command -v "docker" > /dev/null 2>&1; then
   alias docker_force_clean_system="docker system prune --all --force"
