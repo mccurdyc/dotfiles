@@ -26,3 +26,4 @@ bin/
 .gitconfig
 .local/share/applications/mimeapps.list
 templated-config.json
+.config/hub
