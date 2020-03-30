@@ -1,8 +1,11 @@
+bluez-hcitool
 brave-bin
-google-cloud-sdk
+chef-dk
+goreleaser
 hugo-git
 mimeo
 python-grip
+qmk
 slack-desktop
 spotify
 wpa_supplicant_gui
