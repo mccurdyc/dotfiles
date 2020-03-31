@@ -1,0 +1,23 @@
+" https://jonasjacek.github.io/colors/
+highlight clear
+
+highlight Win cterm=none ctermfg=07 ctermbg=00
+highlight Directory cterm=bold ctermfg=04 ctermbg=00
+highlight Link cterm=bold ctermfg=yellow ctermbg=00
+highlight BrokenLink cterm=reverse ctermfg=21 ctermbg=00
+
+highlight Socket cterm=bold ctermfg=125 ctermbg=00
+highlight Device cterm=bold ctermfg=21 ctermbg=00
+highlight Fifo cterm=bold ctermfg=13 ctermbg=00
+highlight Executable cterm=bold ctermfg=70 ctermbg=00
+
+highlight Selected cterm=bold ctermfg=125 ctermbg=235
+highlight CurrLine cterm=bold ctermfg=166 ctermbg=235
+
+highlight TopLine cterm=bold ctermfg=166 ctermbg=00
+highlight TopLineSel cterm=bold ctermfg=00 ctermbg=00
+highlight StatusLine cterm=bold ctermfg=00 ctermbg=235
+highlight WildMenu cterm=underline,reverse ctermfg=07 ctermbg=00
+highlight CmdLine cterm=none ctermfg=07 ctermbg=235
+highlight ErrorMsg cterm=none ctermfg=21 ctermbg=00
+highlight Border cterm=none ctermfg=07 ctermbg=00

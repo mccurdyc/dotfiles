@@ -1,0 +1,313 @@
+# You can edit this file by hand, but it's recommended not to do that.
+
+# Marks:
+'H
+	/home/mccurdyc/
+	..
+1585527498
+'b
+	/home/mccurdyc/bin/
+	..
+1585527498
+'h
+	/home/mccurdyc/
+	..
+1585527498
+'m
+	/home/mccurdyc/dotfiles
+	README.md
+1585653413
+'z
+	/home/mccurdyc/.config/vifm
+	..
+1585527498
+
+# Bookmarks:
+
+# TUI:
+al
+q1
+v2
+ov
+m-1
+l2
+r2
+
+# Left window history (oldest to newest):
+d/home/mccurdyc/dotfiles
+	zathurarc
+12
+d/home/mccurdyc/oss/go-tools
+	blog
+2
+d/home/mccurdyc/oss/go-tools/blog
+	atom
+1
+d/home/mccurdyc/oss/go-tools
+	blog
+2
+d/home/mccurdyc/Downloads
+	..
+0
+d/home/mccurdyc/oss
+	..
+0
+d/home/mccurdyc/sdk
+	..
+0
+d/home/mccurdyc/oss
+	..
+0
+d/home/mccurdyc/Downloads
+	..
+0
+d/home/mccurdyc/Pictures/screenshots
+	..
+0
+d/home/mccurdyc/Pictures
+	screenshots
+1
+d/home/mccurdyc/Pictures/screenshots
+	..
+0
+d/home/mccurdyc/Pictures
+	screenshots
+1
+d/home/mccurdyc/Pictures/screenshots
+	20.03.28.08:58:38.png
+11
+d/home/mccurdyc/dotfiles
+	imgs
+3
+d/home/mccurdyc/dotfiles/imgs
+	..
+0
+d/home/mccurdyc/dotfiles
+	imgs
+3
+d/home/mccurdyc/dotfiles/imgs
+	..
+0
+d/home/mccurdyc/dotfiles
+	..
+0
+d/home/mccurdyc
+	src
+8
+d/home/mccurdyc/src
+	personal
+3
+d/home/mccurdyc/src/personal
+	fastly-site
+1
+d/home/mccurdyc/src/personal/fastly-site
+	www
+2
+d/home/mccurdyc/src/personal/fastly-site/www
+	static
+4
+d/home/mccurdyc/src/personal/fastly-site/www/static
+	resume
+3
+d/home/mccurdyc/src/personal/fastly-site/www/static/resume
+	curriculum_vitae_mccurdy.pdf
+1
+d/home/mccurdyc/src/personal/fastly-site/www/static
+	resume
+3
+d/home/mccurdyc/src/personal/fastly-site/www
+	static
+4
+d/home/mccurdyc/src/personal/fastly-site
+	www
+2
+d/home/mccurdyc/src/personal
+	fastly-site
+1
+d/home/mccurdyc/src
+	personal
+3
+d/home/mccurdyc
+	Pictures
+3
+d/home/mccurdyc/Pictures
+	screenshots
+1
+d/home/mccurdyc/Pictures/screenshots
+	..
+0
+d/home/mccurdyc/Pictures
+	..
+0
+d/home/mccurdyc
+	go
+4
+d/home/mccurdyc/go
+	..
+0
+d/home/mccurdyc
+	go
+4
+d/home
+	mccurdyc
+2
+d/
+	home
+4
+d/home
+	mccurdyc
+2
+d/home/mccurdyc
+	Pictures
+3
+d/home/mccurdyc/Pictures
+	screenshots
+1
+d/home/mccurdyc/Pictures/screenshots
+	20.03.23.14:16:13-snippet.png
+9
+d/home/mccurdyc/Pictures
+	screenshots
+1
+d/home/mccurdyc/Pictures/screenshots
+	..
+0
+d/home/mccurdyc/Pictures
+	screenshots
+1
+d/home/mccurdyc
+	dotfiles
+4
+d/home/mccurdyc/dotfiles
+	..
+0
+d/home/mccurdyc
+	dotfiles
+4
+d/home/mccurdyc/dotfiles
+	..
+0
+d/home/mccurdyc
+	dotfiles
+6
+d/home/mccurdyc/dotfiles
+	colors
+7
+d/home/mccurdyc/dotfiles/colors
+	..
+0
+d/home/mccurdyc/dotfiles
+	colors
+7
+d/home/mccurdyc/dotfiles/colors
+	..
+0
+d/home/mccurdyc/dotfiles
+	..
+0
+d/home/mccurdyc
+	sdk
+4
+d/home
+	mccurdyc
+2
+d/home/mccurdyc
+	dotfiles
+9
+d/home/mccurdyc/dotfiles
+	imgs
+9
+d/home/mccurdyc/dotfiles/imgs
+	..
+0
+d/home/mccurdyc/dotfiles
+	.tmux
+5
+d/home/mccurdyc/dotfiles/.tmux
+	plugins
+1
+d/home/mccurdyc/dotfiles/.tmux/plugins
+	tpm
+1
+d/home/mccurdyc/dotfiles/.tmux/plugins/tpm
+	..
+0
+d/home/mccurdyc/dotfiles/.tmux/plugins
+	tpm
+1
+d/home/mccurdyc/dotfiles/.tmux/plugins/tpm
+	..
+0
+d/home/mccurdyc/dotfiles/.tmux/plugins
+	..
+0
+d/home/mccurdyc/dotfiles/.tmux
+	..
+0
+d/home/mccurdyc/dotfiles
+	..
+0
+d/home/mccurdyc
+	.gsutil
+8
+d/home/mccurdyc/.gsutil
+	..
+0
+d/home/mccurdyc
+	..
+0
+d
+
+# Right window history (oldest to newest):
+D/home/mccurdyc/oss/go-tools
+	..
+0
+D
+
+# Command line history (oldest to newest):
+:!echo %f | xclip
+:!echo %f | pbcopy
+:!echo %f | xclip -selection clipboard
+:!echo %c | xclip %i -selection clipboard<cr>
+:!echo %c | xclip -selection clipboard
+:!echo %c | xclip %i -selection clipboard
+::!echo %c:p | xclip %i -selection clipboard<cr>
+:!echo %c:p | xclip %i -selection clipboard<cr>
+:preview
+:feh
+:view
+:help
+:wq
+::q
+:q
+
+# Search history (oldest to newest):
+/~
+/scr
+/dot
+/le
+
+# Prompt history (oldest to newest):
+p.gitconfig.j2
+
+# Local filter history (oldest to newest):
+
+# Registers:
+""/home/mccurdyc/dotfiles/Makefile
+""/home/mccurdyc/dotfiles/README.md
+""/home/mccurdyc/dotfiles/dircolors
+
+# Directory stack (oldest to newest):
+
+# Trash content:
+
+# State:
+f
+i1
+[.0
+[F
+F
+I1
+].0
+]F
+s0
