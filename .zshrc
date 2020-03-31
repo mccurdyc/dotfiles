@@ -30,9 +30,9 @@ fi
 setopt clobber
 
 # Open new terminal in same directory as last terminal:
-if [ -f ~/.last_dir ]; then
-	cd "`cat ~/.last_dir`"
-fi
+# if [ -f ~/.last_dir ]; then
+# 	cd "`cat ~/.last_dir`"
+# fi
 
 # autocomplete
 setopt COMPLETE_ALIASES
