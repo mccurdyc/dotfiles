@@ -7,6 +7,12 @@ tn() {
   tmux select-pane -t 1 \;
 }
 
+cdld() {
+  if [ -f ~/.last_dir ]; then
+    cd "`cat ~/.last_dir`"
+  fi
+}
+
 # Open new terminal in same directory as last terminal:
 cd() {
         builtin cd $@
@@ -19,7 +25,7 @@ mkcd() {
 }
 
 # https://gist.github.com/fatih/11d752582c5bd508ffe18a2df57c6424
-function switchgo() {
+switchgo() {
   version=$1
   if [ -z $version ]; then
     echo "Usage: switchgo [version]"
@@ -46,7 +52,7 @@ external_display() {
   if xrandr | grep "$extern disconnected"; then
     xrandr --output "$extern" --off --output "$intern" --auto
   else
-    xrandr --output "$intern" --primary --auto --output "$extern" --above "$intern" --auto
+    xrandr --output "$intern" --primary --auto --output "$extern" --right-of "$intern" --auto
   fi
 }
 
