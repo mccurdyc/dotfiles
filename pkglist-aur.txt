@@ -1,11 +1,12 @@
+bluez-hciconfig
 bluez-hcitool
 brave-bin
 chef-dk
 goreleaser
 hugo-git
 mimeo
+polybar-git
 python-grip
-qmk
 slack-desktop
 spotify
 wpa_supplicant_gui

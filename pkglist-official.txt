@@ -10,6 +10,7 @@ base
 binutils
 bison
 bluez
+bluez-plugins
 bluez-utils
 chromium
 dhcpcd
@@ -40,6 +41,7 @@ intel-ucode
 iw
 jq
 keybase
+libcaca
 libtool
 linux
 linux-firmware
@@ -59,6 +61,7 @@ pkgconf
 poppler
 pulseaudio-bluetooth
 python-pip
+ranger
 ripgrep
 rofi
 scrot
@@ -74,6 +77,7 @@ vifm
 vim
 vulkan-intel
 vulkan-mesa-layer
+w3m
 wget
 which
 wireless_tools
