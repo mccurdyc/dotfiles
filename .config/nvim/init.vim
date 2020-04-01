@@ -2,6 +2,7 @@ call plug#begin('~/.vim/plugged')
 
 Plug 'junegunn/fzf.vim'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+Plug 'yuki-ycino/fzf-preview.vim'
 Plug 'voldikss/vim-floaterm' " floating terminal toggle
 Plug 'tpope/vim-fugitive'
 Plug 'jreybert/vimagit' " additional git tools. cycle staged changes
@@ -29,6 +30,9 @@ Plug 'junegunn/goyo.vim'
 
 " colorscheme
 Plug 'mccurdyc/base16-vim'
+
+" Always load the vim-devicons very last
+Plug 'ryanoasis/vim-devicons' " also requires 'pacman -S ttf-font-awesome, nerd-font-source-code-pro'
 
 call plug#end()
 
@@ -207,63 +211,124 @@ let g:fzf_colors =
 
 au FileType fzf set nonu nornu
 
-" Floating window in NeoVim!
-" This requires NeoVim > 0.4.0
-function! FloatingFZF()
-  let buf = nvim_create_buf(v:false, v:true)
-  call setbufvar(buf, '&signcolumn', 'no')
-
-  let height = &lines - 3
-  let width = float2nr(&columns - (&columns * 2 / 10))
-  let col = float2nr((&columns - width) / 2)
-
-  let opts = {
-        \ 'relative': 'editor',
-        \ 'row': 1,
-        \ 'col': col,
-        \ 'width': width,
-        \ 'height': height
-        \ }
-
-  let win = nvim_open_win(buf, v:true, opts)
-  call setwinvar(win, '&number', 0)
-endfunction
-
-" Load just hidden files
-command! FZFHidden call fzf#run({
-      \  'window': 'call FloatingFZF()',
-      \  'source':  'rg --hidden --no-ignore -l -g "!.git"',
-      \  'sink':    'e',
-      \  'options': '-m -x +s --no-bold --cycle'})
-
-" Load all files
-command! FZFFiles call fzf#run({
-      \  'window': 'call FloatingFZF()',
-      \  'sink':    'e',
-      \  'source':  'rg --hidden --no-ignore --files -l -g "!.git"'})
-
-" Load files in Git
-command! FZFGit call fzf#run({
-      \  'window': 'call FloatingFZF()',
-      \  'sink':    'e',
-      \  'source':  'git ls-files'})
-
 let $FZF_DEFAULT_OPTS='--layout=reverse'
-
-" Define key combinations
-nmap <C-f> :FzfRg<CR>
-nmap <C-p> :FZFFiles <CR>
-
-let g:fzf_layout = { 'window': 'call FloatingFZF()' } " otherwise built-in FZF commands wont float
-
-nnoremap <silent> <Leader>ag :FzfAg <C-R><C-W><CR>
-nnoremap <silent> <Leader>rg :FzfRg <C-R><C-W><CR>
 
 " Enable per-command history.
 " CTRL-N and CTRL-P will be automatically bound to next-history and
 " previous-history instead of down and up. If you don't like the change,
 " explicitly bind the keys to down and up in your $FZF_DEFAULT_OPTS.
 let g:fzf_history_dir = '~/.local/share/fzf-history'
+
+" Plugin: https://github.com/yuki-ycino/fzf-preview
+
+" Add fzf quit mapping
+let g:fzf_preview_quit_map = 1
+
+" Use floating window (for neovim)
+let g:fzf_preview_use_floating_window = 1
+
+" floating window size ratio
+let g:fzf_preview_floating_window_rate = 0.9
+let g:fzf_preview_floating_window_winblend = 5
+
+" Commands used for fzf preview.
+" The file name selected by fzf becomes {}
+" let g:fzf_preview_command = 'head -100 {-1}'                       " Not installed bat
+let g:fzf_preview_command = 'bat --color=always --style=grid {-1}' " Installed bat
+
+" g:fzf_binary_preview_command is executed if this command succeeds, and g:fzf_preview_command is executed if it fails
+let g:fzf_preview_if_binary_command = '[[ "$(file --mime {})" =~ binary ]]'
+
+" Commands used for binary file
+let g:fzf_binary_preview_command = 'echo "{} is a binary file"'
+
+" let g:fzf_preview_filelist_command = 'git ls-files --exclude-standard'               " Not Installed ripgrep
+let g:fzf_preview_filelist_command = 'rg --files --hidden --follow --no-messages -g \!"* *"' " Installed ripgrep
+" Commands used to get the file list from git reposiroty
+let g:fzf_preview_git_files_command = 'git ls-files --exclude-standard'
+
+" Commands used to get the file list from current directory
+let g:fzf_preview_directory_files_command = 'rg --files --hidden --follow --no-messages -g \!"* *"'
+
+" Commands used to get the git status file list
+let g:fzf_preview_git_status_command = "git status --short --untracked-files=all | awk '{if (substr($0,2,1) !~ / /) print $2}'"
+
+" Commands used for git status preview.
+let g:fzf_preview_git_status_preview_command =  "[[ $(git diff -- {-1}) != \"\" ]] && git diff --color=always -- {-1} || " .
+\ "[[ $(git diff --cached -- {-1}) != \"\" ]] && git diff --cached --color=always -- {-1} || " .
+\ g:fzf_preview_command
+
+" Commands used for project grep
+let g:fzf_preview_grep_cmd = 'rg --line-number --no-heading'
+
+" Commands used for preview of the grep result
+" let g:fzf_preview_grep_preview_cmd = expand('<sfile>:h:h') . '/bin/preview_fzf_grep'
+
+" file list coloring
+let g:fzf_preview_filelist_postprocess_command = 'xargs -d "\n" ls -U --color'      " Use dircolors
+
+" Use vim-devicons
+let g:fzf_preview_use_dev_icons = 1
+
+" devicons character width
+let g:fzf_preview_dev_icon_prefix_length = 2
+
+nnoremap <silent> [fzf-p]p     :<C-u>FzfPreviewFromResources project_mru git<CR>
+nnoremap <silent> [fzf-p]gs    :<C-u>FzfPreviewGitStatus<CR>
+nnoremap <silent> [fzf-p]b     :<C-u>FzfPreviewBuffers<CR>
+nnoremap <silent> [fzf-p]B     :<C-u>FzfPreviewAllBuffers<CR>
+nnoremap <silent> [fzf-p]o     :<C-u>FzfPreviewFromResources buffer project_mru<CR>
+nnoremap <silent> [fzf-p]<C-o> :<C-u>FzfPreviewJumps<CR>
+nnoremap <silent> [fzf-p]g;    :<C-u>FzfPreviewChanges<CR>
+nnoremap <silent> [fzf-p]/     :<C-u>FzfPreviewLines -add-fzf-arg=--no-sort -add-fzf-arg=--query="'"<CR>
+nnoremap <silent> [fzf-p]*     :<C-u>FzfPreviewLines -add-fzf-arg=--no-sort -add-fzf-arg=--query="'<C-r>=expand('<cword>')<CR>"<CR>
+nnoremap          [fzf-p]gr    :<C-u>FzfPreviewProjectGrep<Space>
+xnoremap          [fzf-p]gr    "sy:FzfPreviewProjectGrep<Space>-F<Space>"<C-r>=substitute(substitute(@s, '\n', '', 'g'), '/', '\\/', 'g')<CR>"
+nnoremap <silent> [fzf-p]t     :<C-u>FzfPreviewBufferTags<CR>
+nnoremap <silent> [fzf-p]q     :<C-u>FzfPreviewQuickFix<CR>
+nnoremap <silent> [fzf-p]l     :<C-u>FzfPreviewLocationList<CR>
+
+" nnoremap <silent> [fzf-p]gs :<C-u>FzfPreviewGitStatus -processors=g:fzf_preview_fugitive_processors<CR>
+
+" Define key combinations
+" YES the '.' is important. Because this function requires an argument.
+" Tested with `rg --line-number --no-heading . | rg 'func'`
+nmap <C-f> :FzfPreviewProjectGrep .<CR>
+nmap <C-p> :FzfPreviewProjectFiles <CR>
+nmap <C-g> :FzfPreviewGitStatus <CR>
+
+augroup fzf_preview
+  autocmd!
+  autocmd User fzf_preview#initialized call s:fzf_preview_settings()
+augroup END
+
+function! s:fugitive_add(paths) abort
+  for path in a:paths
+    execute 'silent G add ' . path
+  endfor
+  echomsg 'Git add ' . join(a:paths, ', ')
+endfunction
+
+function! s:fugitive_reset(paths) abort
+  for path in a:paths
+    execute 'silent G reset ' . path
+  endfor
+  echomsg 'Git reset ' . join(a:paths, ', ')
+endfunction
+
+function! s:fugitive_patch(paths) abort
+  for path in a:paths
+    execute 'silent tabedit ' . path . ' | silent Gdiff'
+  endfor
+  echomsg 'Git add --patch ' . join(a:paths, ', ')
+endfunction
+
+function! s:fzf_preview_settings() abort
+  let g:fzf_preview_fugitive_processors = fzf_preview#resource_processor#get_processors()
+  let g:fzf_preview_fugitive_processors['ctrl-a'] = function('s:fugitive_add')
+  let g:fzf_preview_fugitive_processors['ctrl-r'] = function('s:fugitive_reset')
+  let g:fzf_preview_fugitive_processors['ctrl-c'] = function('s:fugitive_patch')
+endfunction
 
 " Plugin: https://github.com/edkolev/tmuxline.vim
 let g:tmuxline_powerline_separators = 0
@@ -308,6 +373,9 @@ inoremap <silent><expr> <TAB>
       \ coc#expandableOrJumpable() ? "\<C-r>=coc#rpc#request('doKeymap', ['snippets-expand-jump',''])\<CR>" :
       \ <SID>check_back_space() ? "\<TAB>" :
       \ coc#refresh()
+
+inoremap <expr> <C-j> pumvisible() ? "\<C-n>" : "\<C-j>"
+inoremap <expr> <C-k> pumvisible() ? "\<C-p>" : "\<C-k>"
 
 function! s:check_back_space() abort
   let col = col('.') - 1
