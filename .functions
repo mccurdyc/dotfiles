@@ -1,8 +1,29 @@
 #!/bin/bash
 
+btconnect() {
+  bluetoothctl power on
+  bluetoothctl agent on
+
+  for dev in $(bluetoothctl devices | awk '{print $2}'); do
+    bluetoothctl connect $dev
+    if [[ $dev == "00:1F:20:A8:B0:B0" ]]; then
+      xmodmap ~/.Xmodmap
+      xbindkeys
+    fi
+  done
+}
+
+btpair() {
+  bluetoothctl power on
+  bluetoothctl agent on
+  bluetoothctl scan on
+  bluetoothctl pair 00:1F:20:A8:B0:B0
+  bluetoothctl pair C5:BB:18:D5:E9:25
+  bluetoothctl pair 04:52:C7:C2:95:56
+}
+
 tn() {
   tmux new-session -s $1 \;
-  tmux send-keys 'nvim' C-m \;
   tmux split-window -v -p 15 \;
   tmux select-pane -t 1 \;
 }
