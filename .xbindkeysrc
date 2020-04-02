@@ -37,43 +37,7 @@
 #keystate_capslock = enable
 #keystate_scrolllock= enable
 
-# Examples of commands:
-
-"xbindkeys_show"
-  control+shift + q
-
-# set directly keycode (here control + f with my keyboard)
-"xterm"
-  c:41 + m:0x4
-
-# specify a mouse button
-"xterm"
-  control + b:2
-
-#"xterm -geom 50x20+20+20"
-#   Shift+Mod2+alt + s
-#
-## set directly keycode (here control+alt+mod2 + f with my keyboard)
-#"xterm"
-#  alt + c:0x29 + m:4 + mod2
-#
-## Control+Shift+a  release event starts rxvt
-#"rxvt"
-#  release+control+shift + a
-#
-## Control + mouse button 2 release event starts rxvt
-#"rxvt"
-#  Control + b:2 + Release
-
 # Key Combos for Logitech keyboard {{{
-"scrot '%y.%m.%d.%T.png' -e 'mv $f ~/Pictures/screenshots/"
-    m:0x40 + c:180
-    Mod4 + XF86HomePage
-
-"scrot -s '%y.%m.%d.%T-snippet.png' -e 'mv $f ~/Pictures/screenshots/'"
-    m:0x40 + c:180
-    Mod4 + XF86HomePage + Release
-
 "xbacklight -inc 5"
     m:0x0 + c:127
     Pause
