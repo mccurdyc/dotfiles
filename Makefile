@@ -17,6 +17,10 @@ run-minimal: install-official-deps dotstar symlink ## Runs the full necessary (n
 .PHONY: run-full
 run-full: install-official-deps install-aur-pkg-mgr install-aur-deps dotstar symlink config-deps ## Runs the full setup (i.e., necessary plus optional).
 
+.PHONY: create-files
+create-files: ## Creates required files that don't need to be symlinked to dotfiles
+	touch $(HOME)/.zhistory
+
 .PHONY: install-aur-pkg-mgr
 install-aur-pkg-mgr: install-official-deps ## Installs the yay AUR package manager.
 	mkdir $(TOOLS_DIR)

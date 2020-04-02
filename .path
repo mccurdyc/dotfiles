@@ -9,3 +9,10 @@ export GOBIN="${HOME}/go/bin"
 
 # add go path
 export PATH="/usr/local/go/bin:${GOPATH}/bin:${PATH}"
+
+# go source path
+export GOEDGE_PATH="${OSS_DIR}/go"
+export GOEDGE_BIN="${GOEDGE_PATH}/bin"
+
+# add w3m w3mimgdisplay to path for displaying images in vifm / terminal.
+export PATH="/usr/lib/w3m/:${PATH}"

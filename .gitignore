@@ -27,3 +27,4 @@ bin/
 .local/share/applications/mimeapps.list
 templated-config.json
 .config/hub
+.config/vifm/vifminfo
