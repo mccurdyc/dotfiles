@@ -51,7 +51,7 @@ alias mkdir="mkdir -p"
 
 ## git
 alias gita='git add'
-alias gitc='git commit'
+alias gitc='nvim -c MagitOnly'
 alias gitch='git checkout'
 alias gits="git status"
 
