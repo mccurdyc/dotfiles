@@ -358,7 +358,7 @@ ${0}
 endsnippet
 
 # test function
-snippet test "func TestXYZ(t *testing.T) { ... }"
+snippet test "func TestFoo(t *testing.T) { ... }"
 func Test${1:Function}(t *testing.T) {
 	${0:${VISUAL}}
 }
@@ -366,38 +366,27 @@ endsnippet
 
 # test table snippet
 snippet tt "test table"
-	type input struct {
-	$1
-	}
-
-	type want struct {
-	$2
-	}
-
-	var tests = map[string]struct {
-		input input
-		want want
-	}{
-		"$3": {
-			input: input{
-				$4
-			},
-			want: want{
-				$5
-			},
-		},
-	}
-
-	for name, tt := range tests {
-		tt := tt
-		t.Run(name, func(t *testing.T){
+	for _, testcase := range []struct{
+		name string
+        foo  int
+        want int
+    }{
+        {
+            name: $1,
+            foo:  $2,
+            want: $3,
+        },
+        // ...
+    }{
+        t.Run(testcase.name, func(t *testing.T) {
 			got := $0(tt.input)
 
 			if got != tt.want{
 					t.Errorf("$0(%+v): \n\tgot: '%+v'\n\twant: '%+v'", tt.input, got, tt.want)
 			}
-		})
-	}
+        })
+    }
+}
 endsnippet
 
 # object diff in tests
