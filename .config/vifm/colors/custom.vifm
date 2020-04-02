@@ -3,8 +3,8 @@ highlight clear
 
 highlight Win cterm=none ctermfg=07 ctermbg=00
 highlight Directory cterm=bold ctermfg=04 ctermbg=00
-highlight Link cterm=bold ctermfg=yellow ctermbg=00
-highlight BrokenLink cterm=reverse ctermfg=21 ctermbg=00
+highlight Link cterm=none ctermfg=yellow ctermbg=00
+highlight BrokenLink cterm=bold ctermfg=160 ctermbg=00
 
 highlight Socket cterm=bold ctermfg=125 ctermbg=00
 highlight Device cterm=bold ctermfg=21 ctermbg=00
