@@ -213,23 +213,62 @@ au FileType fzf set nonu nornu
 
 let $FZF_DEFAULT_OPTS='--layout=reverse'
 
-" Enable per-command history.
-" CTRL-N and CTRL-P will be automatically bound to next-history and
-" previous-history instead of down and up. If you don't like the change,
-" explicitly bind the keys to down and up in your $FZF_DEFAULT_OPTS.
-let g:fzf_history_dir = '~/.local/share/fzf-history'
+" general
+" https://github.com/Blacksuan19/init.nvim/blob/master/init.vim
+let g:fzf_layout = { 'window': 'call CreateCenteredFloatingWindow()' }
 
-" Plugin: https://github.com/yuki-ycino/fzf-preview
+" use rg by default
+if executable('rg')
+  let $FZF_DEFAULT_COMMAND = 'rg --files --hidden --follow --glob "!.git/*"'
+  set grepprg=rg\ --vimgrep
+endif
 
-" Add fzf quit mapping
-let g:fzf_preview_quit_map = 1
+" files window with preview
+command! -bang -nargs=? -complete=dir Files
+        \ call fzf#vim#files(<q-args>, fzf#vim#with_preview(), <bang>0)
+
+" advanced grep(faster with preview)
+function! RipgrepFzf(query, fullscreen)
+    let command_fmt = 'rg --column --line-number --no-heading --color=always --smart-case %s || true'
+    let initial_command = printf(command_fmt, shellescape(a:query))
+    let reload_command = printf(command_fmt, '{q}')
+    let spec = {'options': ['--phony', '--query', a:query, '--bind', 'change:reload:'.reload_command]}
+    call fzf#vim#grep(initial_command, 1, fzf#vim#with_preview(spec), a:fullscreen)
+endfunction
+command! -nargs=* -bang Rg call RipgrepFzf(<q-args>, <bang>0)
+
+" floating fzf window with borders
+function! CreateCenteredFloatingWindow()
+    let width = min([&columns - 4, max([80, &columns - 20])])
+    let height = min([&lines - 4, max([20, &lines - 10])])
+    let top = ((&lines - height) / 2) - 1
+    let left = (&columns - width) / 2
+    let opts = {'relative': 'editor', 'row': top, 'col': left, 'width': width, 'height': height, 'style': 'minimal'}
+
+    let top = "╭" . repeat("─", width - 2) . "╮"
+    let mid = "│" . repeat(" ", width - 2) . "│"
+    let bot = "╰" . repeat("─", width - 2) . "╯"
+    let lines = [top] + repeat([mid], height - 2) + [bot]
+    let s:buf = nvim_create_buf(v:false, v:true)
+    call nvim_buf_set_lines(s:buf, 0, -1, v:true, lines)
+    call nvim_open_win(s:buf, v:true, opts)
+    set winhl=Normal:Floating
+    let opts.row += 1
+    let opts.height -= 2
+    let opts.col += 2
+    let opts.width -= 4
+    call nvim_open_win(nvim_create_buf(v:false, v:true), v:true, opts)
+    au BufWipeout <buffer> exe 'bw '.s:buf
+endfunction
 
 " Use floating window (for neovim)
 let g:fzf_preview_use_floating_window = 1
 
 " floating window size ratio
 let g:fzf_preview_floating_window_rate = 0.9
-let g:fzf_preview_floating_window_winblend = 5
+
+" floating window winblend value
+let g:fzf_preview_floating_window_winblend = 3
 
 " Commands used for fzf preview.
 " The file name selected by fzf becomes {}
@@ -242,8 +281,10 @@ let g:fzf_preview_if_binary_command = '[[ "$(file --mime {})" =~ binary ]]'
 " Commands used for binary file
 let g:fzf_binary_preview_command = 'echo "{} is a binary file"'
 
-" let g:fzf_preview_filelist_command = 'git ls-files --exclude-standard'               " Not Installed ripgrep
-let g:fzf_preview_filelist_command = 'rg --files --hidden --follow --no-messages -g \!"* *"' " Installed ripgrep
+" Commands used to get the file list from project
+let g:fzf_preview_filelist_command = 'git ls-files --exclude-standard'               " Not Installed ripgrep
+" let g:fzf_preview_filelist_command = 'rg --files --hidden --follow --no-messages -g \!"* *"' " Installed ripgrep
+
 " Commands used to get the file list from git reposiroty
 let g:fzf_preview_git_files_command = 'git ls-files --exclude-standard'
 
@@ -261,34 +302,31 @@ let g:fzf_preview_git_status_preview_command =  "[[ $(git diff -- {-1}) != \"\" 
 " Commands used for project grep
 let g:fzf_preview_grep_cmd = 'rg --line-number --no-heading'
 
-" Commands used for preview of the grep result
-" let g:fzf_preview_grep_preview_cmd = expand('<sfile>:h:h') . '/bin/preview_fzf_grep'
+" Commands used for current file lines
+" let g:fzf_preview_lines_command = 'cat'
+let g:fzf_preview_lines_command = 'bat --color=always --style=grid --theme=base16 --plain'
 
-" file list coloring
+" Commands used for preview of the grep result
+let g:fzf_preview_grep_preview_cmd = expand('<sfile>:h:h') . '/bin/preview_fzf_grep'
+
+" Keyboard shortcuts while fzf preview is active
+let g:fzf_preview_preview_key_bindings = 'ctrl-d:preview-page-down,ctrl-u:preview-page-up,?:toggle-preview'
+
+" Command to be executed after file list creation
+" let g:fzf_preview_filelist_postprocess_command = ''
 let g:fzf_preview_filelist_postprocess_command = 'xargs -d "\n" ls -U --color'      " Use dircolors
 
 " Use vim-devicons
-let g:fzf_preview_use_dev_icons = 1
+" ***THIS SEEMS TO BREAK OPENING A FILE!***
+" Looks nice, though :)
+" let g:fzf_preview_use_dev_icons = 1
+" let g:fzf_preview_dev_icon_prefix_length = 0
 
-" devicons character width
-let g:fzf_preview_dev_icon_prefix_length = 2
-
-nnoremap <silent> [fzf-p]p     :<C-u>FzfPreviewFromResources project_mru git<CR>
-nnoremap <silent> [fzf-p]gs    :<C-u>FzfPreviewGitStatus<CR>
-nnoremap <silent> [fzf-p]b     :<C-u>FzfPreviewBuffers<CR>
-nnoremap <silent> [fzf-p]B     :<C-u>FzfPreviewAllBuffers<CR>
-nnoremap <silent> [fzf-p]o     :<C-u>FzfPreviewFromResources buffer project_mru<CR>
-nnoremap <silent> [fzf-p]<C-o> :<C-u>FzfPreviewJumps<CR>
-nnoremap <silent> [fzf-p]g;    :<C-u>FzfPreviewChanges<CR>
-nnoremap <silent> [fzf-p]/     :<C-u>FzfPreviewLines -add-fzf-arg=--no-sort -add-fzf-arg=--query="'"<CR>
-nnoremap <silent> [fzf-p]*     :<C-u>FzfPreviewLines -add-fzf-arg=--no-sort -add-fzf-arg=--query="'<C-r>=expand('<cword>')<CR>"<CR>
-nnoremap          [fzf-p]gr    :<C-u>FzfPreviewProjectGrep<Space>
-xnoremap          [fzf-p]gr    "sy:FzfPreviewProjectGrep<Space>-F<Space>"<C-r>=substitute(substitute(@s, '\n', '', 'g'), '/', '\\/', 'g')<CR>"
-nnoremap <silent> [fzf-p]t     :<C-u>FzfPreviewBufferTags<CR>
-nnoremap <silent> [fzf-p]q     :<C-u>FzfPreviewQuickFix<CR>
-nnoremap <silent> [fzf-p]l     :<C-u>FzfPreviewLocationList<CR>
-
-" nnoremap <silent> [fzf-p]gs :<C-u>FzfPreviewGitStatus -processors=g:fzf_preview_fugitive_processors<CR>
+" Enable per-command history.
+" CTRL-N and CTRL-P will be automatically bound to next-history and
+" previous-history instead of down and up. If you don't like the change,
+" explicitly bind the keys to down and up in your $FZF_DEFAULT_OPTS.
+let g:fzf_history_dir = '~/.local/share/fzf-history'
 
 " Define key combinations
 " YES the '.' is important. Because this function requires an argument.
@@ -296,39 +334,6 @@ nnoremap <silent> [fzf-p]l     :<C-u>FzfPreviewLocationList<CR>
 nmap <C-f> :FzfPreviewProjectGrep .<CR>
 nmap <C-p> :FzfPreviewProjectFiles <CR>
 nmap <C-g> :FzfPreviewGitStatus <CR>
-
-augroup fzf_preview
-  autocmd!
-  autocmd User fzf_preview#initialized call s:fzf_preview_settings()
-augroup END
-
-function! s:fugitive_add(paths) abort
-  for path in a:paths
-    execute 'silent G add ' . path
-  endfor
-  echomsg 'Git add ' . join(a:paths, ', ')
-endfunction
-
-function! s:fugitive_reset(paths) abort
-  for path in a:paths
-    execute 'silent G reset ' . path
-  endfor
-  echomsg 'Git reset ' . join(a:paths, ', ')
-endfunction
-
-function! s:fugitive_patch(paths) abort
-  for path in a:paths
-    execute 'silent tabedit ' . path . ' | silent Gdiff'
-  endfor
-  echomsg 'Git add --patch ' . join(a:paths, ', ')
-endfunction
-
-function! s:fzf_preview_settings() abort
-  let g:fzf_preview_fugitive_processors = fzf_preview#resource_processor#get_processors()
-  let g:fzf_preview_fugitive_processors['ctrl-a'] = function('s:fugitive_add')
-  let g:fzf_preview_fugitive_processors['ctrl-r'] = function('s:fugitive_reset')
-  let g:fzf_preview_fugitive_processors['ctrl-c'] = function('s:fugitive_patch')
-endfunction
 
 " Plugin: https://github.com/edkolev/tmuxline.vim
 let g:tmuxline_powerline_separators = 0
