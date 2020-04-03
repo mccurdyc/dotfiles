@@ -27,6 +27,7 @@ Plug 'rhysd/git-messenger.vim'
 Plug 'christianrondeau/vim-base64'
 Plug 'junegunn/limelight.vim' " plugin to focus / greyout other blocks
 Plug 'junegunn/goyo.vim'
+Plug 'ludovicchabant/vim-gutentags'
 
 " colorscheme
 Plug 'mccurdyc/base16-vim'
@@ -282,8 +283,9 @@ let g:fzf_preview_if_binary_command = '[[ "$(file --mime {})" =~ binary ]]'
 let g:fzf_binary_preview_command = 'echo "{} is a binary file"'
 
 " Commands used to get the file list from project
-let g:fzf_preview_filelist_command = 'git ls-files --exclude-standard'               " Not Installed ripgrep
+" let g:fzf_preview_filelist_command = 'git ls-files --exclude-standard'               " Not Installed ripgrep
 " let g:fzf_preview_filelist_command = 'rg --files --hidden --follow --no-messages -g \!"* *"' " Installed ripgrep
+let g:fzf_preview_filelist_command = 'fd --type f --exclude vendor' " Installed fd
 
 " Commands used to get the file list from git reposiroty
 let g:fzf_preview_git_files_command = 'git ls-files --exclude-standard'
@@ -300,27 +302,26 @@ let g:fzf_preview_git_status_preview_command =  "[[ $(git diff -- {-1}) != \"\" 
 \ g:fzf_preview_command
 
 " Commands used for project grep
-let g:fzf_preview_grep_cmd = 'rg --line-number --no-heading'
+let g:fzf_preview_grep_cmd = 'rg --line-number --no-heading -g \!"vendor" -g \!"*.sum"'
 
 " Commands used for current file lines
 " let g:fzf_preview_lines_command = 'cat'
 let g:fzf_preview_lines_command = 'bat --color=always --style=grid --theme=base16 --plain'
 
 " Commands used for preview of the grep result
-let g:fzf_preview_grep_preview_cmd = expand('<sfile>:h:h') . '/bin/preview_fzf_grep'
+" let g:fzf_preview_grep_preview_cmd = expand('<sfile>:h:h') . '/bin/preview_fzf_grep'
 
 " Keyboard shortcuts while fzf preview is active
 let g:fzf_preview_preview_key_bindings = 'ctrl-d:preview-page-down,ctrl-u:preview-page-up,?:toggle-preview'
 
 " Command to be executed after file list creation
-" let g:fzf_preview_filelist_postprocess_command = ''
-let g:fzf_preview_filelist_postprocess_command = 'xargs -d "\n" ls -U --color'      " Use dircolors
+let g:fzf_preview_filelist_postprocess_command = ''
 
 " Use vim-devicons
 " ***THIS SEEMS TO BREAK OPENING A FILE!***
 " Looks nice, though :)
 " let g:fzf_preview_use_dev_icons = 1
-" let g:fzf_preview_dev_icon_prefix_length = 0
+" let g:fzf_preview_dev_icon_prefix_length = 2
 
 " Enable per-command history.
 " CTRL-N and CTRL-P will be automatically bound to next-history and
@@ -331,9 +332,9 @@ let g:fzf_history_dir = '~/.local/share/fzf-history'
 " Define key combinations
 " YES the '.' is important. Because this function requires an argument.
 " Tested with `rg --line-number --no-heading . | rg 'func'`
-nmap <C-f> :FzfPreviewProjectGrep .<CR>
+nmap <leader>f :FzfPreviewProjectGrep .<CR>
 nmap <C-p> :FzfPreviewProjectFiles <CR>
-nmap <C-g> :FzfPreviewGitStatus <CR>
+nmap <leader>gs :FzfPreviewGitStatus <CR>
 
 " Plugin: https://github.com/edkolev/tmuxline.vim
 let g:tmuxline_powerline_separators = 0
@@ -446,9 +447,9 @@ let g:delve_new_command = "vnew"
 
 " Plugin: https://github.com/voldikss/vim-floaterm
 " floating terminal toggle
-noremap  <C-Space> :FloatermToggle<CR>
-noremap! <C-Space> <Esc>:FloatermToggle<CR>
-tnoremap <C-Space> <C-\><C-n>:FloatermToggle<CR>
+nmap <leader>t :FloatermToggle<CR>
+noremap! <leader>t <Esc>:FloatermToggle<CR>
+tnoremap <leader>t <C-\><C-n>:FloatermToggle<CR>
 
 let height = float2nr(&lines - (&lines * 2 / 10))
 let width = float2nr(&columns - (&columns * 2 / 7))
@@ -474,10 +475,10 @@ set shortmess+=c
 " always show signcolumns
 set signcolumn=yes
 
-nmap <silent> <C-c> <Plug>(coc-cursors-position)
-nmap <silent> <C-r> <Plug>(coc-refactor)
-nmap <silent> <C-d> <Plug>(coc-cursors-word)
-xmap <silent> <C-d> <Plug>(coc-cursors-range)
+nmap <leader>rf <Plug>(coc-refactor)
+nmap <leader>cp <Plug>(coc-cursors-position)
+xmap <leader>cr <Plug>(coc-cursors-range)
+nmap <leader>cw <Plug>(coc-cursors-word)
 
 " show signature help on param hover
 autocmd User CocJumpPlaceholder call CocActionAsync('showSignatureHelp')

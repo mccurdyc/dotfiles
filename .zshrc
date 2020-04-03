@@ -77,3 +77,6 @@ if [ -f '/home/mccurdyc/oss/google-cloud-sdk/path.zsh.inc' ]; then . '/home/mccu
 if [ -f '/home/mccurdyc/oss/google-cloud-sdk/completion.zsh.inc' ]; then . '/home/mccurdyc/oss/google-cloud-sdk/completion.zsh.inc'; fi
 
 source <(kubectl completion zsh)
+
+# This has to be sourced late
+source $HOME/.zsh/plugins/Aloxaf/fzf-tab/fzf-tab.plugin.zsh

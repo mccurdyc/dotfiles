@@ -16,3 +16,8 @@ export GOEDGE_BIN="${GOEDGE_PATH}/bin"
 
 # add w3m w3mimgdisplay to path for displaying images in vifm / terminal.
 export PATH="/usr/lib/w3m/:${PATH}"
+
+# BPF (bcc) tools
+# https://nanxiao.me/en/install-bcc-on-archlinux/
+export MANPATH=/usr/share/bcc/man:$MANPATH
+export PATH=/usr/share/bcc/tools:$PATH
