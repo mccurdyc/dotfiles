@@ -76,6 +76,12 @@ external_display() {
   fi
 }
 
+triple_monitor() {
+    xrandr --output DP-1 --mode 2560x1440 --pos 0x0 --rotate right
+    xrandr --output DP-2 --mode 3840x2160 --pos 3000x0
+    xrandr --output eDP-1 --mode 3840x2160 --pos 10700x3400
+}
+
 ## smart extraction;
 extract() {
   if [ -f "$1" ]; then
