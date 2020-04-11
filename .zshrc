@@ -23,15 +23,21 @@ unset file
 # clobber is toggled off below
 setopt clobber
 
-# Open new terminal in same directory as last terminal:
-# if [ -f ~/.last_dir ]; then
-# 	cd "`cat ~/.last_dir`"
-# fi
+# Don't write duplicates to history.
+setopt HIST_IGNORE_ALL_DUPS
+setopt HIST_FIND_NO_DUPS
+setopt extendedglob
+# Don't wait to write to history.
+setopt inc_append_history
+setopt share_history
 
 # autocomplete
 setopt COMPLETE_ALIASES
 autoload -Uz compinit
 compinit
+
+# Configure the shell so that it uses kj for escape
+bindkey -M viins 'kj' vi-cmd-mode
 
 ## etcetera
 bindkey "^R" history-incremental-search-backward
