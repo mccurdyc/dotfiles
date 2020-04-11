@@ -1,0 +1,275 @@
+[colors]
+background = #2d2d2d
+background-alt = #747369
+foreground = #f2f0ec
+foreground-alt = #d3d0c8
+
+alternative = #ffcc66
+alert = #f2777a
+
+red = #f2777a
+orange = #ffa500
+green = #99cc99
+blue = #6699cc
+cyan = #66cccc
+yellow = #ffcc66
+purple = #cc99cc
+white = #ffffff
+
+[bar/main]
+monitor = ${env:MONITOR:eDP-1}
+width = 100%
+height = 3%
+radius = 0.0
+fixed-center = false
+bottom = true
+
+background = ${colors.background}
+foreground = ${colors.foreground}
+
+border-size = 3
+line-size = 2
+padding = 2
+module-margin = 1
+
+font-0 = "Source Code Pro:size=18;1"
+font-1 = FontAwesome5Free:style=Solid:size=20;4
+font-2 = FontAwesome5Free:style=Regular:size=20;4
+font-3 = FontAwesome5Brands:style=Regular:size=20;4
+
+modules-left = i3
+modules-center = xwindow
+modules-right = date time-pt time-utc time-et backlight pulseaudio wlan cpu memory battery
+
+[module/i3]
+type = internal/i3
+
+; Only show workspaces defined on the same output as the bar
+;
+; Useful if you want to show monitor specific workspaces
+; on different bars
+;
+; Default: false
+pin-workspaces = true
+
+; This will split the workspace name on ':'
+; Default: false
+strip-wsnumbers = true
+
+; Create click handler used to focus workspace
+; Default: true
+enable-click = false
+
+; Create scroll handlers used to cycle workspaces
+; Default: true
+enable-scroll = false
+
+; Available tags:
+;   <label-state> (default) - gets replaced with <label-(focused|unfocused|visible|urgent)>
+;   <label-mode> (default)
+format = <label-state> <label-mode>
+
+; Available tokens:
+;   %mode%
+; Default: %mode%
+label-mode = %mode%
+label-mode-padding = 1
+label-mode-background = #e60053
+
+label-focused = %index%
+label-focused-foreground = ${colors.foreground}
+label-focused-background = ${colors.background-alt}
+label-focused-underline = ${colors.alternative}
+label-focused-padding = 2
+
+; Available tokens:
+;   %name%
+;   %icon%
+;   %index%
+;   %output%
+; Default: %icon%  %name%
+label-unfocused = %index%
+label-unfocused-padding = 2
+
+; Available tokens:
+;   %name%
+;   %icon%
+;   %index%
+;   %output%
+; Default: %icon%  %name%
+label-visible = %index%
+label-visible-underline = #555555
+label-visible-padding = 2
+
+; Available tokens:
+;   %name%
+;   %icon%
+;   %index%
+;   %output%
+; Default: %icon%  %name%
+label-urgent = %index%
+label-urgent-foreground = ${colors.white}
+label-urgent-background = ${colors.alert}
+label-urgent-padding = 0
+
+; Separator in between workspaces
+label-separator = |
+label-separator-padding = 0
+label-separator-foreground = ${colors.alternative}
+
+[module/xwindow]
+type = internal/xwindow
+; label = %title:0:30:...%
+
+[module/pulseaudio]
+type = internal/pulseaudio
+
+; Sink to be used, if it exists (find using `pacmd list-sinks`, name field)
+; If not, uses default sink
+sink = alsa_output.pci-0000_12_00.3.analog-stereo
+
+; Use PA_VOLUME_UI_MAX (~153%) if true, or PA_VOLUME_NORM (100%) if false
+; Default: true
+use-ui-max = true
+
+; Available tags:
+;   <label-muted> (default)
+;   <ramp-volume>
+;   <bar-volume>
+format-muted = <label-muted>
+
+; Available tokens:
+;   %percentage% (default)
+;   %decibels% (unreleased)
+label-volume =  %percentage%%
+
+; Available tokens:
+;   %percentage% (default)
+;   %decibels% (unreleased)
+label-muted =  muted
+label-muted-foreground = ${colors.red}
+
+; Interval for volume increase/decrease (in percent points)
+; Default: 5
+interval = 5
+
+[module/backlight]
+type = internal/backlight
+
+; Use the following command to list available cards:
+; $ ls -1 /sys/class/backlight/
+card = intel_backlight
+
+format = <label>
+
+; Available tokens:
+;   %percentage% (default)
+label =  %percentage%%
+
+[module/cpu]
+type = internal/cpu
+interval = 2
+format-prefix = "CPU "
+format-prefix-foreground = ${colors.foreground-alt}
+format-underline = ${colors.orange}
+label = %percentage:2%%
+
+[module/memory]
+type = internal/memory
+interval = 2
+format-prefix = "RAM "
+format-prefix-foreground = ${colors.foreground-alt}
+format-underline = ${colors.alternative}
+label = %percentage_used:2%%
+
+[module/wlan]
+type = internal/network
+interface = wlp2s0
+
+; Default: %ifname% %local_ip%
+label-connected =  %essid% %downspeed:9%
+label-connected-foreground = ${colors.green}
+
+; Default: (none)
+label-disconnected =  offline
+label-disconnected-foreground = ${colors.red}
+
+[module/network]
+type = internal/network
+; Name of the network interface to display. You can get the names of the
+; interfaces on your machine with `ip link`
+; Wireless interfaces often start with `wl` and ethernet interface with `eno` or `eth`
+interface = wlp2s0
+
+; Seconds to sleep between updates
+; Default: 1
+interval = 3.0
+
+[module/date]
+type = internal/date
+interval = 30
+
+date = " %a %d"
+date-alt = %a %b %d
+
+format-prefix = ""
+format-prefix-foreground = ${colors.foreground-alt}
+format-underline = ${colors.background}
+
+label = %date%
+
+[module/time-et]
+type = custom/script
+exec = TZ=America/New_York date +" %H:%M ET"
+interval = 5
+
+[module/time-pt]
+type = custom/script
+exec = TZ=America/Los_Angeles date +" %H:%M PT"
+interval = 5
+
+[module/time-utc]
+type = custom/script
+exec = TZ=UTC date +" %H:%M UTC"
+interval = 5
+
+[module/battery]
+type = internal/battery
+
+; This is useful in case the battery never reports 100% charge
+full-at = 99
+
+; Use the following command to list batteries and adapters:
+; $ ls -1 /sys/class/power_supply/
+battery = BAT0
+adapter = AC
+
+; If an inotify event haven't been reported in this many
+; seconds, manually poll for new values.
+;
+; Needed as a fallback for systems that don't report events
+; on sysfs/procfs.
+;
+; Disable polling by setting the interval to 0.
+;
+; Default: 5
+poll-interval = 5
+
+; Available tokens:
+;   %percentage% (default) - is set to 100 if full-at is reached
+;   %percentage_raw%
+;   %time%
+;   %consumption% (shows current charge rate in watts)
+label-charging =  %percentage%%
+
+; Available tokens:
+;   %percentage% (default) - is set to 100 if full-at is reached
+;   %percentage_raw%
+;   %time%
+;   %consumption% (shows current discharge rate in watts)
+label-discharging =  %percentage%%
+
+[settings]
+screenchange-reload = true
+
+; vim:ft=dosini
