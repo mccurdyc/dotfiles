@@ -16,8 +16,8 @@ yellow = #ffcc66
 purple = #cc99cc
 white = #ffffff
 
-[bar/main]
-monitor = ${env:MONITOR:eDP-1}
+[bar/bottom]
+monitor = ${env:MONITOR:}
 width = 100%
 height = 3%
 radius = 0.0
