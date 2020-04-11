@@ -70,16 +70,22 @@ external_display() {
   extern=$(xrandr | grep -v 'primary' | grep 'connect' | awk '{print $1;}' | head -n 1)
 
   if xrandr | grep "$extern disconnected"; then
-    xrandr --output "$extern" --off --output "$intern" --auto
+    xrandr --output DP-2 --off --output DP-1 --output eDP-1 --auto
   else
     xrandr --output "$intern" --primary --auto --output "$extern" --right-of "$intern" --auto
   fi
 }
 
 triple_monitor() {
-    xrandr --output DP-1 --mode 2560x1440 --pos 0x0 --rotate right
-    xrandr --output DP-2 --mode 3840x2160 --pos 3000x0
-    xrandr --output eDP-1 --mode 3840x2160 --pos 10700x3400
+    # full-resolution
+    # xrandr --output DP-1 --mode 2560x1440 --pos 0x0 --rotate right
+    # xrandr --output DP-2 --mode 3840x2160 --pos 3000x0
+    # xrandr --output eDP-1 --mode 3840x2160 --pos 10700x3400
+
+    # scaling down resolution because the laptop can't handle full resolution.
+    xrandr --output DP-1 --mode 1920x1080 --pos 0x0 --rotate right
+    xrandr --output DP-2 --mode 2560x1440 --pos 2200x0
+    xrandr --output eDP-1 --mode 2880x1620 --pos 7500x2000
 }
 
 ## smart extraction;
