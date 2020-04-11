@@ -1,9 +1,7 @@
 ## purpose; status bar configuration, righthand portion.
 # enabling
 order += "wireless _first_"
-order += "disk /home"
 order += "volume master"
-order += "cpu_usage"
 order += "battery 0"
 order += "tztime date"
 order += "tztime pt"
@@ -60,6 +58,6 @@ disk "/home" {
         format = "  (avail) %avail/ %total"
 	}
 wireless _first_ {
-	format_up = " %quality %essid %bitrate"
+	format_up = " %essid %bitrate"
 	format_down = "offline"
 	}
