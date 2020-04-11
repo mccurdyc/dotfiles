@@ -19,7 +19,7 @@ run-full: install-official-deps install-aur-pkg-mgr install-aur-deps dotstar sym
 
 .PHONY: create-files
 create-files: ## Creates required files that don't need to be symlinked to dotfiles
-	touch $(HOME)/.zhistory
+	touch $(HOME)/.zsh_history
 
 .PHONY: install-aur-pkg-mgr
 install-aur-pkg-mgr: install-official-deps ## Installs the yay AUR package manager.
@@ -75,6 +75,7 @@ symlink: chmod ## Creates the necessary symlinks.
 	ln -sfn $(CURDIR)/gitignore $(HOME)/.gitignore;
 	mkdir -p $(HOME)/Pictures/screenshots;
 	ln -snf $(CURDIR)/detroit-street-art.jpg $(HOME)/Pictures/detroit-street-art.jpg;
+	ln -snf $(CURDIR)/CustomCSSforFx/custom $(CURDIR)/.mozilla/firefox/99ijjp0g.default-release/chrome
 
 .PHONY: help
 help: ## Prints this help menu.
