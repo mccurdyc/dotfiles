@@ -367,7 +367,7 @@ endsnippet
 # test table snippet
 snippet tt "test table"
 	for _, testcase := range []struct{
-		name string
+				name string
         foo  int
         want int
     }{
@@ -376,13 +376,12 @@ snippet tt "test table"
             foo:  $2,
             want: $3,
         },
-        // ...
     }{
         t.Run(testcase.name, func(t *testing.T) {
 			got := $0(tt.input)
 
-			if got != tt.want{
-					t.Errorf("$0(%+v): \n\tgot: '%+v'\n\twant: '%+v'", tt.input, got, tt.want)
+			if got != testcase.want{
+					t.Errorf("$0(%+v): \n\tgot: '%+v'\n\twant: '%+v'", testcase.input, got, testcase.want)
 			}
         })
     }
