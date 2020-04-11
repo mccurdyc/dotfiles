@@ -80,7 +80,7 @@ set hidden
 set timeoutlen=500
 set ttimeoutlen=10
 
-" Permanent undo
+" Permanent undo (even after closing vim)
 set undodir=~/.config/nvim/.undodir
 set undofile
 
@@ -113,6 +113,10 @@ autocmd BufRead,BufNewFile *.md setlocal spell
 autocmd BufRead,BufNewFile *.tex setlocal spell
 
 set nohlsearch
+
+let g:python3_host_prog = '/usr/bin/python'
+" disable python2
+let g:loaded_python_provider = 0
 
 " open urls correctly in Brave
 let g:netrw_browsex_viewer= "xdg-open"
@@ -306,7 +310,7 @@ let g:fzf_preview_git_status_preview_command =  "[[ $(git diff -- {-1}) != \"\" 
 \ g:fzf_preview_command
 
 " Commands used for project grep
-let g:fzf_preview_grep_cmd = 'rg --line-number --no-heading -g \!"vendor" -g \!"*.sum"'
+let g:fzf_preview_grep_cmd = 'rg --hidden --line-number --no-heading -g \!"vendor" -g \!"*.sum"'
 
 " Commands used for current file lines
 " let g:fzf_preview_lines_command = 'cat'
@@ -337,7 +341,7 @@ let g:fzf_history_dir = '~/.local/share/fzf-history'
 " YES the '.' is important. Because this function requires an argument.
 " Tested with `rg --line-number --no-heading . | rg 'func'`
 nmap <leader>f :FzfPreviewProjectGrep .<CR>
-nmap <C-p> :FzfPreviewProjectFiles <CR>
+nmap <C-p> :Files<CR>
 nmap <leader>gs :FzfPreviewGitStatus <CR>
 
 " Plugin: https://github.com/edkolev/tmuxline.vim
@@ -619,7 +623,6 @@ endfunction
 
 let g:startify_lists = [
       \ { 'header': ['   MRU '. getcwd()], 'type': 'dir' },
-      \ { 'header': ['   Tree'],           'type': function('s:tree') },
       \ { 'header': ['   Commits'],        'type': function('s:list_commits') },
       \ { 'header': ['   Bookmarks'],      'type': 'bookmarks' },
       \ ]
