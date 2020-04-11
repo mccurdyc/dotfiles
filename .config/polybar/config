@@ -2,7 +2,7 @@
 background = #2d2d2d
 background-alt = #747369
 foreground = #f2f0ec
-foreground-alt = #d3d0c8
+foreground-alt = #2d2d2d
 
 alternative = #ffcc66
 alert = #f2777a
@@ -17,17 +17,22 @@ purple = #cc99cc
 white = #ffffff
 
 [bar/bottom]
+; https://github.com/reedrw/dotfiles/blob/2797be2284bd54597d29777f9a8f82a6f40307b7/config/polybar/config
+; https://github.com/polybar/polybar/issues/763
 monitor = ${env:MONITOR:}
+dpi = 95
 width = 100%
 height = 3%
-radius = 0.0
+radius = 10.0
 fixed-center = false
 bottom = true
 
 background = ${colors.background}
 foreground = ${colors.foreground}
 
-border-size = 3
+; border-bottom-size = 8
+; border-bottom-color = ${colors.purple}
+
 line-size = 2
 padding = 2
 module-margin = 1
@@ -40,6 +45,11 @@ font-3 = FontAwesome5Brands:style=Regular:size=20;4
 modules-left = i3
 modules-center = xwindow
 modules-right = date time-pt time-utc time-et backlight pulseaudio wlan cpu memory battery
+
+; hide bar when in full-screen mode
+; https://github.com/polybar/polybar/wiki#i3-make-the-bar-appear-below-windows
+override-redirect = false
+wm-restack = i3
 
 [module/i3]
 type = internal/i3
@@ -69,57 +79,36 @@ enable-scroll = false
 ;   <label-mode> (default)
 format = <label-state> <label-mode>
 
-; Available tokens:
-;   %mode%
-; Default: %mode%
 label-mode = %mode%
 label-mode-padding = 1
 label-mode-background = #e60053
 
 label-focused = %index%
-label-focused-foreground = ${colors.foreground}
-label-focused-background = ${colors.background-alt}
+label-focused-foreground = ${colors.foreground-alt}
+label-focused-background = ${colors.alternative}
 label-focused-underline = ${colors.alternative}
 label-focused-padding = 2
 
-; Available tokens:
-;   %name%
-;   %icon%
-;   %index%
-;   %output%
-; Default: %icon%  %name%
 label-unfocused = %index%
 label-unfocused-padding = 2
 
-; Available tokens:
-;   %name%
-;   %icon%
-;   %index%
-;   %output%
-; Default: %icon%  %name%
 label-visible = %index%
 label-visible-underline = #555555
 label-visible-padding = 2
 
-; Available tokens:
-;   %name%
-;   %icon%
-;   %index%
-;   %output%
-; Default: %icon%  %name%
 label-urgent = %index%
-label-urgent-foreground = ${colors.white}
+label-urgent-foreground = ${colors.foreground}
 label-urgent-background = ${colors.alert}
 label-urgent-padding = 0
 
 ; Separator in between workspaces
-label-separator = |
+label-separator = ""
 label-separator-padding = 0
 label-separator-foreground = ${colors.alternative}
 
 [module/xwindow]
 type = internal/xwindow
-; label = %title:0:30:...%
+label = %title:0:30:...%
 
 [module/pulseaudio]
 type = internal/pulseaudio
@@ -153,6 +142,9 @@ label-muted-foreground = ${colors.red}
 ; Default: 5
 interval = 5
 
+; Right-click launches pavucontrol
+click-right = pavucontrol &
+
 [module/backlight]
 type = internal/backlight
 
@@ -170,15 +162,15 @@ label =  %percentage%%
 type = internal/cpu
 interval = 2
 format-prefix = "CPU "
-format-prefix-foreground = ${colors.foreground-alt}
-format-underline = ${colors.orange}
+format-prefix-foreground = ${colors.foreground}
+format-underline = ${colors.alternative}
 label = %percentage:2%%
 
 [module/memory]
 type = internal/memory
 interval = 2
 format-prefix = "RAM "
-format-prefix-foreground = ${colors.foreground-alt}
+format-prefix-foreground = ${colors.foreground}
 format-underline = ${colors.alternative}
 label = %percentage_used:2%%
 
@@ -187,7 +179,7 @@ type = internal/network
 interface = wlp2s0
 
 ; Default: %ifname% %local_ip%
-label-connected =  %essid% %downspeed:9%
+label-connected =  %essid%  %upspeed:4%  %downspeed:4%
 label-connected-foreground = ${colors.green}
 
 ; Default: (none)
@@ -220,8 +212,9 @@ label = %date%
 
 [module/time-et]
 type = custom/script
-exec = TZ=America/New_York date +" %H:%M ET"
-interval = 5
+exec = TZ=America/New_York date +" %H:%M:%S ET"
+interval = 1
+format-underline = ${colors.alternative}
 
 [module/time-pt]
 type = custom/script
@@ -268,6 +261,8 @@ label-charging =  %percentage%%
 ;   %time%
 ;   %consumption% (shows current discharge rate in watts)
 label-discharging =  %percentage%%
+
+label-full =  %percentage%%
 
 [settings]
 screenchange-reload = true
