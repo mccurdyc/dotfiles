@@ -64,28 +64,37 @@ switchgo() {
   echo "Switched to ${go_bin_path}"
 }
 
-external_display() {
-  intern=$(xrandr | grep 'connected' | awk '{print $1;}' | head -n 1)
-  xrandr --output "$intern" --primary --auto
-  extern=$(xrandr | grep -v 'primary' | grep 'connect' | awk '{print $1;}' | head -n 1)
+# WIP
+# external_display() {
+#   intern=$(xrandr | grep 'connected' | awk '{print $1;}' | head -n 1)
+#
+#   extern1=$(xrandr | grep -v 'primary' | grep 'DP-1' | awk '{print $1;}' | head -n 1)
+#   extern2=$(xrandr | grep -v 'primary' | grep 'DP-2' | awk '{print $1;}' | head -n 1)
+#
+#   if xrandr | grep "$extern1 disconnected"; then
+#     xrandr --output "$extern1" --off
+#   elsif xrandr | grep "$extern2 disconnected"; then
+#     xrandr --output "$extern2" --off
+#   else
+#     xrandr --output "$intern" --primary --auto --output "$extern" --right-of "$intern" --auto
+#   fi
+# }
 
-  if xrandr | grep "$extern disconnected"; then
-    xrandr --output DP-2 --off --output DP-1 --output eDP-1 --auto
-  else
-    xrandr --output "$intern" --primary --auto --output "$extern" --right-of "$intern" --auto
-  fi
+external_display_off() {
+  xrandr --output DP-2 --off --output DP-1 --off --output eDP-1 --auto
 }
 
-triple_monitor() {
-    # full-resolution
-    # xrandr --output DP-1 --mode 2560x1440 --pos 0x0 --rotate right
-    # xrandr --output DP-2 --mode 3840x2160 --pos 3000x0
-    # xrandr --output eDP-1 --mode 3840x2160 --pos 10700x3400
+triple_display() {
+  # full-resolution
+  # xrandr --output DP-1 --mode 2560x1440 --pos 0x0 --rotate right
+  # xrandr --output DP-2 --mode 3840x2160 --pos 3000x0
+  # xrandr --output eDP-1 --mode 3840x2160 --pos 10700x3400
 
-    # scaling down resolution because the laptop can't handle full resolution.
-    xrandr --output DP-1 --mode 1920x1080 --pos 0x0 --rotate right
-    xrandr --output DP-2 --mode 2560x1440 --pos 2200x0
-    xrandr --output eDP-1 --mode 2880x1620 --pos 7500x2000
+  # scaling down resolution because the laptop can't handle full resolution.
+  xrandr --dpi 256
+  xrandr --output DP-2 --mode 2560x1440 --scale 2x2 --pos 0x0 --rotate right # --scale 2x2 screws up polybar
+  xrandr --output DP-1 --mode 2560x1600 --scale 1x1 --pos 3000x0
+  xrandr --output eDP-1 --primary  --mode 2880x1620 --pos 5600x0
 }
 
 ## smart extraction;
@@ -109,27 +118,6 @@ extract() {
 
 ## compression;
 compress() { tar czvf "$1".tar.gz "$1" }
-
-# Simple calculator
-calc() {
-	local result=""
-	result="$(printf "scale=10;%s\\n" "$*" | bc --mathlib | tr -d '\\\n')"
-	#						└─ default (when `--mathlib` is used) is 20
-
-	if [[ "$result" == *.* ]]; then
-		# improve the output for decimal numbers
-		# add "0" for cases like ".5"
-		# add "0" for cases like "-.5"
-		# remove trailing zeros
-		printf "%s" "$result" |
-			sed -e 's/^\./0./'  \
-			-e 's/^-\./-0./' \
-			-e 's/0*$//;s/\.$//'
-	else
-		printf "%s" "$result"
-	fi
-	printf "\\n"
-}
 
 # Create a new directory and enter it
 mkd() {
