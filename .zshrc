@@ -11,7 +11,7 @@ if [[ ! $DISPLAY && $XDG_VTNR -eq 1 ]]; then
 fi
 
 # Load files...
-for file in ~/.{zsh_prompt,aliases,fzf.zsh,functions,path,gitfunc,exports}; do
+for file in ~/.{zsh_prompt,aliases,fzf.zsh,functions,path,gitfunc,exports,zsh/plugins/zsh-git-prompt/zshrc.sh}; do
 	if [[ -r "$file" ]] && [[ -f "$file" ]]; then
 		# shellcheck source=/dev/null
 		source "$file"
@@ -52,12 +52,6 @@ REPORTTIME=2      ## stats if cmd takes >2sec
 
 # store prompt command
 PROMPT_COMMAND='echo -ne "\033]0;${USER}@${HOSTNAME}: ${PWD}\007"'
-
-# Base16 Shell
-BASE16_SHELL="$HOME/.config/base16-shell/"
-[ -n "$PS1" ] && \
-    [ -s "$BASE16_SHELL/profile_helper.sh" ] && \
-        eval "$("$BASE16_SHELL/profile_helper.sh")"
 
 # https://docs.chef.io/workstation/workstation_setup/
 eval "$(chef shell-init zsh)"
