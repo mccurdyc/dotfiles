@@ -19,12 +19,6 @@ for file in ~/.{zsh_prompt,aliases,fzf.zsh,functions,path,gitfunc,exports}; do
 done
 unset file
 
-# Autostart tmux in new shell if not starting shell inside of tmux
-if [ "$TMUX" = "" ]; then
-  tmux
-  tmux source-file $TMUX_CONF
-fi
-
 # clobber "file exists" warning
 # clobber is toggled off below
 setopt clobber
