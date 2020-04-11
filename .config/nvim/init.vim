@@ -2,6 +2,7 @@ call plug#begin('~/.vim/plugged')
 
 Plug 'junegunn/fzf.vim'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+Plug 'airblade/vim-rooter'
 Plug 'yuki-ycino/fzf-preview.vim'
 Plug 'voldikss/vim-floaterm' " floating terminal toggle
 Plug 'tpope/vim-fugitive'
@@ -27,7 +28,6 @@ Plug 'rhysd/git-messenger.vim'
 Plug 'christianrondeau/vim-base64'
 Plug 'junegunn/limelight.vim' " plugin to focus / greyout other blocks
 Plug 'junegunn/goyo.vim'
-Plug 'ludovicchabant/vim-gutentags'
 
 " colorscheme
 Plug 'mccurdyc/base16-vim'
@@ -79,6 +79,10 @@ set hidden
 " Display with faster timeouts in the TUI
 set timeoutlen=500
 set ttimeoutlen=10
+
+" Permanent undo
+set undodir=~/.config/nvim/.undodir
+set undofile
 
 " Display problematic whitespace
 set listchars=tab:➜\ ,trail:•,extends:#,precedes:#,nbsp:⌻
@@ -380,9 +384,6 @@ inoremap <silent><expr> <TAB>
       \ <SID>check_back_space() ? "\<TAB>" :
       \ coc#refresh()
 
-inoremap <expr> <C-j> pumvisible() ? "\<C-n>" : "\<C-j>"
-inoremap <expr> <C-k> pumvisible() ? "\<C-p>" : "\<C-k>"
-
 function! s:check_back_space() abort
   let col = col('.') - 1
   return !col || getline('.')[col - 1]  =~# '\s'
@@ -426,6 +427,10 @@ augroup quickfix
     autocmd!
     autocmd FileType qf setlocal wrap
 augroup END
+
+" For Go, don't use ctags, use Vim Go's implementation.
+au FileType go nmap <C-]> <Plug>(go-def)
+au FileType go nmap <C-t> <Plug>(go-def-pop)
 
 au FileType go nmap <leader>gta <Plug>(go-alternate-vertical)
 au FileType go nmap <leader>gtt <Plug>(go-test)
@@ -648,13 +653,8 @@ highlight link AleWarning error
 set rtp +=~/.vim " necessary to reload .vim dir with autoload functions
 nnoremap <leader>vimrc :call reloadvimrc#Run()<cr>
 
-" disable trackpad scrolling
-" disable arrow keys because this is what the scroll/trackpad uses
-noremap  <Up> <Nop>
-noremap! <Up> <Nop>
-noremap  <Down> <Nop>
-noremap! <Down> <Nop>
-noremap  <Left> <Nop>
-noremap! <Left> <Nop>
-noremap  <Right> <Nop>
-noremap! <Right> <Nop>
+" replace visual selection globally, confirm.
+vnoremap <C-r> "hy:%s/<C-r>h//gc<left><left><left>
+
+"" Resources
+" * moving around in the vim cmdline - :h cmdline-editing
