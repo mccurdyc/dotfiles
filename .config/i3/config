@@ -44,14 +44,9 @@ bindsym XF86MonBrightnessUp exec xbacklight -inc 5 # increase screen brightness
 bindsym XF86MonBrightnessDown exec xbacklight -dec 5 # decrease screen brightness
 
 # make sure that function lock is toggled.
-# bindsym Shift+Print           exec "scrot '%y.%m.%d.%T.png' -ub -e 'mv $f ~/Pictures/screenshots/'"
-# bindsym Print                 exec "scrot '%y.%m.%d.%T.png' -e 'mv $f ~/Pictures/screenshots/'"
-# bindsym --release Shift+Print exec "scrot -s '%y.%m.%d.%T-snippet.png' -e 'mv $f ~/Pictures/screenshots/'"
-
-# For the Logitech macOS keyboard
-bindsym Shift+XF86Tools           exec "scrot '%y.%m.%d.%T.png' -ub -e 'mv $f ~/Pictures/screenshots/'"
-bindsym XF86Tools                 exec "scrot '%y.%m.%d.%T.png' -e 'mv $f ~/Pictures/screenshots/'"
-bindsym --release Shift+XF86Tools exec "scrot -s '%y.%m.%d.%T-snippet.png' -e 'mv $f ~/Pictures/screenshots/'"
+bindsym $mod+Shift+P           exec "scrot '%y.%m.%d.%T.png' -ub -e 'mv $f ~/Pictures/screenshots/'"
+bindsym $mod+P                 exec "scrot '%y.%m.%d.%T.png' -e 'mv $f ~/Pictures/screenshots/'"
+bindsym --release $mod+Shift+P exec "scrot -s '%y.%m.%d.%T-snippet.png' -e 'mv $f ~/Pictures/screenshots/'"
 
 # kill focused window
 bindsym $mod+Shift+q kill
@@ -166,31 +161,6 @@ set $base0D #7cafc2
 set $base0E #ba8baf
 set $base0F #a16946
 
-# Basic bar configuration using the Base16 variables.
-bar {
-    font pango:Source Code Pro Semibold, FontAwesome 10
-    mode dock
-    modifier $mod
-    position bottom
-    tray_output primary
-    strip_workspace_numbers yes
-    status_command i3status --config ~/.config/i3status/config
-    separator_symbol "|"
-
-    colors {
-        background $base01
-        separator  $base01
-        statusline $base04
-
-        # State             Border  BG      Text
-        focused_workspace   $base01 $base01 $base0A
-        active_workspace    $base01 $base01 $base02
-        inactive_workspace  $base01 $base01 $base03
-        urgent_workspace    $base08 $base08 $base0A
-        binding_mode        $base00 $base0A $base00
-    }
-}
-
 # Basic color configuration using the Base16 variables for windows and borders.
 # Property Name         Border  BG      Text    Indicator Child Border
 client.focused          $base0A $base01 $base05 $base0A $base0A
@@ -203,7 +173,7 @@ client.background       $base01
 # auto run commands
 # set background
 exec --no-startup-id feh --bg-fill ${HOME}/Pictures/detroit-street-art.jpg
-exec_always --no-startup-id $HOME/.config/polybar/launch.sh
+exec_always --no-startup-id ${HOME}/.config/polybar/launch.sh &
 
 # run the merge for good colors
 exec xrdb -merge $HOME/.Xresources
