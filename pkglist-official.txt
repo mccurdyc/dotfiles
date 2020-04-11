@@ -7,15 +7,20 @@ automake
 autorandr
 aws-cli
 base
+bat
+bc
 binutils
 bison
 bluez
 bluez-plugins
 bluez-utils
+bpf
 chromium
 dhcpcd
 dialog
+exa
 fakeroot
+fd
 feh
 file
 filebeat
@@ -45,6 +50,7 @@ libcaca
 libtool
 linux
 linux-firmware
+linux-headers
 lvm2
 m4
 make
@@ -71,6 +77,7 @@ terraform
 texinfo
 tmux
 tree
+ttf-dejavu
 ttf-font-awesome
 unzip
 vifm

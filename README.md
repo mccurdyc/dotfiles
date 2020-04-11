@@ -1,6 +1,6 @@
-# dotfiles
-
-![sample of setup](./imgs/sample.png)
+![dotfiles-logo](./imgs/dots-logo.png)
+![sample of setup](./imgs/sample-polybar.png)
+![sample of setup](./imgs/sample-vifm-preview.png)
 
 ## Getting Started
 ```
@@ -18,6 +18,12 @@ Please, whatever you do, do not just blindly copy and paste ANYONE's dotfiles, i
 + Window Manager: [i3](https://i3wm.org/)
 + Editor: [NeoVim](https://neovim.io/)
 + Operating System: [Arch Linux](https://www.archlinux.org/)
+
+## Known Issues
+
++ `triple_monitor` shell function: semi-works.
++ `btconnect` shell function: semi-works.
++ [`vifm`](https://vifm.info/): opens images in another window rather than embedded preview in Alacritty.
 
 ## Sources of Inspiration
 + [@delgrecoj's dotfiles](https://github.com/delgrecoj/nix)
