@@ -33,6 +33,9 @@ alias grep="grep --color=auto --exclude=tags --exclude-dir=.git"
 alias fgrep="fgrep --color=auto"
 alias egrep="egrep --color=auto"
 
+## ls
+alias ls="exa -a"
+
 ## tmux
 ## see ~/.functions
 alias tl='tmux list-sessions'

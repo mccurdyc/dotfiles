@@ -7,3 +7,6 @@
 [submodule ".zsh/plugins/Aloxaf/fzf-tab"]
 	path = .zsh/plugins/Aloxaf/fzf-tab
 	url = git@github.com:Aloxaf/fzf-tab
+[submodule "CustomCSSforFx"]
+	path = CustomCSSforFx
+	url = https://github.com/mccurdyc/CustomCSSforFx.git
