@@ -4,25 +4,6 @@
 ## reminder; this file can be reloaded via "xrdb -load ~/.Xresources".
 ## reminder; see "rofi -dump-xresources" for listing of all options.
 
-## rofi-settings;
-rofi.font: Source Code Pro Black 24
-rofi.lines: 5
-
-rofi.color-enabled: true
-rofi.color-window: #1d1f21, #1d1f21, #f0c674
-rofi.color-normal: #1d1f21, #c5c8c6, #1d1f21, #f0c674, #1d1f21
-rofi.color-active: #1d1f21, #f0c674, #1d1f21, #f0c674, #1d1f21
-rofi.color-urgent: #1d1f21, #cc6666, #1d1f21, #cc6666, #1d1f21
-rofi.location: 6
-rofi.yoffset: 0
-rofi.xoffset: 0
-rofi.width: 100
-rofi.fixed_num_lines: 1
-rofi.hmode: false
-
-rofi.separator-style: none
-rofi.hide-scrollbar: true
-
 ! Base16 Eighties (256)
 ! Scheme: Chris Kempson (http://chriskempson.com)
 #define base00 #2d2d2d
@@ -41,6 +22,27 @@ rofi.hide-scrollbar: true
 #define base0D #6699cc
 #define base0E #cc99cc
 #define base0F #d27b53
+
+## rofi-settings;
+rofi.font: Source Code Pro Black 18
+rofi.lines: 5
+
+rofi.color-enabled: true
+rofi.color-window: base00, base0A, base0A
+rofi.color-normal: base00, #747369, base00, base0A, base00
+rofi.color-active: base00, #ffcc66, base00, base0A, base00
+rofi.color-urgent: base00, #cc99cc, base00, base0E, base00
+rofi.location: 6
+rofi.yoffset: 0
+rofi.xoffset: 0
+rofi.width: 100
+rofi.fixed_num_lines: 1
+rofi.hmode: false
+! Border width
+rofi.bw: 8
+rofi.separator-style: none
+rofi.hide-scrollbar: true
+
 
 *foreground:   base05
 #ifdef background_opacity
