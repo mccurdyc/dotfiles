@@ -26,8 +26,8 @@ Plug 'hashivim/vim-terraform'
 Plug 'juliosueiras/vim-terraform-completion'
 Plug 'rhysd/git-messenger.vim'
 Plug 'christianrondeau/vim-base64'
-Plug 'junegunn/limelight.vim' " plugin to focus / greyout other blocks
-Plug 'junegunn/goyo.vim'
+" Plug 'junegunn/limelight.vim' " plugin to focus / greyout other blocks
+" Plug 'junegunn/goyo.vim'
 
 " colorscheme
 Plug 'mccurdyc/base16-vim'
