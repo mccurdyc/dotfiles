@@ -163,7 +163,7 @@ client.background       $base07
 
 # auto run commands
 # set background
-exec --no-startup-id feh --bg-fill ${HOME}/dotfiles/imgs/snow-mountain.jpg
+exec --no-startup-id feh --bg-fill ${HOME}/dotfiles/imgs/wallpapers/astronaut.jpg
 exec --no-startup-id ${HOME}/.config/polybar/launch.sh &
 
 # run the merge for good colors

@@ -1,6 +1,6 @@
 ![dotfiles-logo](./imgs/dots-logo.png)
-![sample of setup](./imgs/sample-polybar.png)
-![sample of setup](./imgs/sample-vifm-preview.png)
+![sample of setup](./imgs/samples/sample-polybar.png)
+![sample of setup](./imgs/samples/sample-vifm-preview.png)
 
 ## Getting Started
 ```

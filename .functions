@@ -23,7 +23,7 @@ btpair() {
 
 tn() {
   tmux new-session -s $1 \;
-  tmux split-window -v -p 15 \;
+  tmux split-window -v -p 5 \;
   tmux select-pane -t 1 \;
 }
 
@@ -93,8 +93,8 @@ triple_display() {
   # scaling down resolution because the laptop can't handle full resolution.
   xrandr --dpi 256
   xrandr --output DP-2 --mode 2560x1440 --scale 2x2 --pos 0x0 --rotate right # --scale 2x2 screws up polybar
-  xrandr --output DP-1 --mode 2560x1600 --scale 1x1 --pos 3000x0
-  xrandr --output eDP-1 --primary  --mode 2880x1620 --pos 5600x0
+  xrandr --output DP-1 --mode 2560x1600 --scale 1x1 --pos 3000x1000
+  xrandr --output eDP-1 --primary  --mode 2880x1620 --pos 5600x1000
 }
 
 ## smart extraction;
@@ -114,6 +114,10 @@ extract() {
       *) echo "{extraction-failed}" ;;
     esac
   else echo "{invalid-file}"; fi
+}
+
+wallpaper() {
+  feh --bg-fill $1
 }
 
 ## compression;
