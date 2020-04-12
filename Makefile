@@ -74,7 +74,6 @@ symlink: chmod ## Creates the necessary symlinks.
 	ln -snf $(CURDIR)/.xinitrc $(HOME)/.xsessionrc;
 	ln -sfn $(CURDIR)/gitignore $(HOME)/.gitignore;
 	mkdir -p $(HOME)/Pictures/screenshots;
-	ln -snf $(CURDIR)/detroit-street-art.jpg $(HOME)/Pictures/detroit-street-art.jpg;
 	ln -snf $(CURDIR)/CustomCSSforFx/custom $(CURDIR)/.mozilla/firefox/99ijjp0g.default-release/chrome
 
 .PHONY: help
