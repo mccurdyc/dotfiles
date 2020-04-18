@@ -59,11 +59,6 @@ eval "$(chef shell-init zsh)"
 # This is neccessary for fzf key-bindings to work
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
-if [ -z "$SSH_AUTH_SOCK" ] ; then
-    eval `ssh-agent`
-    ssh-add
-fi
-
 # The next line updates PATH for the Google Cloud SDK.
 if [ -f '/home/mccurdyc/oss/google-cloud-sdk/path.zsh.inc' ]; then . '/home/mccurdyc/oss/google-cloud-sdk/path.zsh.inc'; fi
 

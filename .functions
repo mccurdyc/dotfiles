@@ -12,19 +12,10 @@ btconnect() {
   xbindkeys
 }
 
-btpair() {
-  bluetoothctl power on
-  bluetoothctl agent on
-  bluetoothctl scan on
-  bluetoothctl pair 00:1F:20:A8:B0:B0
-  bluetoothctl pair C5:BB:18:D5:E9:25
-  bluetoothctl pair 04:52:C7:C2:95:56
-}
-
 tn() {
-  tmux new-session -s $1 \;
-  tmux split-window -v -p 5 \;
-  tmux select-pane -t 1 \;
+  tmux new-session -s $1 \; \
+  split-window -v -p 15 \; \
+  select-pane -t 1
 }
 
 cdld() {
@@ -42,6 +33,17 @@ cd() {
 mkcd() {
   command mkdir -pv $1
   cd $1
+}
+
+# Make a temporary directory and enter it
+tmpd() {
+	local dir
+	if [ $# -eq 0 ]; then
+		dir=$(mktemp -d)
+	else
+		dir=$(mktemp -d -t "${1}.XXXXXXXXXX")
+	fi
+	cd "$dir" || exit
 }
 
 # https://gist.github.com/fatih/11d752582c5bd508ffe18a2df57c6424
@@ -64,37 +66,19 @@ switchgo() {
   echo "Switched to ${go_bin_path}"
 }
 
-# WIP
-# external_display() {
-#   intern=$(xrandr | grep 'connected' | awk '{print $1;}' | head -n 1)
-#
-#   extern1=$(xrandr | grep -v 'primary' | grep 'DP-1' | awk '{print $1;}' | head -n 1)
-#   extern2=$(xrandr | grep -v 'primary' | grep 'DP-2' | awk '{print $1;}' | head -n 1)
-#
-#   if xrandr | grep "$extern1 disconnected"; then
-#     xrandr --output "$extern1" --off
-#   elsif xrandr | grep "$extern2 disconnected"; then
-#     xrandr --output "$extern2" --off
-#   else
-#     xrandr --output "$intern" --primary --auto --output "$extern" --right-of "$intern" --auto
-#   fi
-# }
-
 external_display_off() {
   xrandr --output DP-2 --off --output DP-1 --off --output eDP-1 --auto
 }
 
 triple_display() {
-  # full-resolution
-  # xrandr --output DP-1 --mode 2560x1440 --pos 0x0 --rotate right
-  # xrandr --output DP-2 --mode 3840x2160 --pos 3000x0
-  # xrandr --output eDP-1 --mode 3840x2160 --pos 10700x3400
-
   # scaling down resolution because the laptop can't handle full resolution.
-  xrandr --dpi 256
-  xrandr --output DP-2 --mode 2560x1440 --scale 2x2 --pos 0x0 --rotate right # --scale 2x2 screws up polybar
-  xrandr --output DP-1 --mode 2560x1600 --scale 1x1 --pos 3000x1000
-  xrandr --output eDP-1 --primary  --mode 2880x1620 --pos 5600x1000
+  xrandr --output eDP-1 --primary --mode 2880x1620 --pos 0x1000
+  xrandr --output DP-2 --mode 3840x2160 --scale 1x1 --pos 2900x1000 --rotate right
+  xrandr --output DP-1 --mode 2560x1440 --scale 2x2 --pos 5100x0 --rotate left
+
+  # these have to be loaded after resizing
+  wallpaper ${HOME}/dotfiles/imgs/wallpapers/astronaut.jpg
+  ${HOME}/dotfiles/.config/polybar/launch.sh
 }
 
 ## smart extraction;
@@ -118,26 +102,6 @@ extract() {
 
 wallpaper() {
   feh --bg-fill $1
-}
-
-## compression;
-compress() { tar czvf "$1".tar.gz "$1" }
-
-# Create a new directory and enter it
-mkd() {
-	mkdir -p "$@"
-	cd "$@" || exit
-}
-
-# Make a temporary directory and enter it
-tmpd() {
-	local dir
-	if [ $# -eq 0 ]; then
-		dir=$(mktemp -d)
-	else
-		dir=$(mktemp -d -t "${1}.XXXXXXXXXX")
-	fi
-	cd "$dir" || exit
 }
 
 # Create a .tar.gz archive, using `zopfli`, `pigz` or `gzip` for compression
@@ -190,37 +154,6 @@ if hash git &>/dev/null ; then
 	}
 fi
 
-# Create a data URL from a file
-dataurl() {
-	local mimeType
-	mimeType=$(file -b --mime-type "$1")
-	if [[ $mimeType == text/* ]]; then
-		mimeType="${mimeType};charset=utf-8"
-	fi
-	echo "data:${mimeType};base64,$(openssl base64 -in "$1" | tr -d '\n')"
-}
-
-# Create a git.io short URL
-gitio() {
-	if [ -z "${1}" ] || [ -z "${2}" ]; then
-		echo "Usage: \`gitio slug url\`"
-		return 1
-	fi
-	curl -i https://git.io/ -F "url=${2}" -F "code=${1}"
-}
-
-# Compare original and gzipped file size
-gz() {
-	local origsize
-	origsize=$(wc -c < "$1")
-	local gzipsize
-	gzipsize=$(gzip -c "$1" | wc -c)
-	local ratio
-	ratio=$(echo "$gzipsize * 100 / $origsize" | bc -l)
-	printf "orig: %d bytes\\n" "$origsize"
-	printf "gzip: %d bytes (%2.2f%%)\\n" "$gzipsize" "$ratio"
-}
-
 # Syntax-highlight JSON strings or files
 # Usage: `json '{"foo":42}'` or `echo '{"foo":42}' | json`
 json() {
@@ -228,56 +161,6 @@ json() {
 		python -mjson.tool <<< "$*" | pygmentize -l javascript
 	else # pipe
 		python -mjson.tool | pygmentize -l javascript
-	fi
-}
-
-# Run `dig` and display the most useful info
-digga() {
-	dig +nocmd "$1" any +multiline +noall +answer
-}
-
-# Query Wikipedia via console over DNS
-mwiki() {
-	dig +short txt "$*".wp.dg.cx
-}
-
-# UTF-8-encode a string of Unicode symbols
-escape() {
-	local args
-	mapfile -t args < <(printf "%s" "$*" | xxd -p -c1 -u)
-	printf "\\\\x%s" "${args[@]}"
-	# print a newline unless we’re piping the output to another program
-	if [ -t 1 ]; then
-		echo ""; # newline
-	fi
-}
-
-# Decode \x{ABCD}-style Unicode escape sequences
-unidecode() {
-	perl -e "binmode(STDOUT, ':utf8'); print \"$*\""
-	# print a newline unless we’re piping the output to another program
-	if [ -t 1 ]; then
-		echo ""; # newline
-	fi
-}
-
-# `v` with no arguments opens the current directory in Vim, otherwise opens the
-# given location
-v() {
-	if [ $# -eq 0 ]; then
-		vim .
-	else
-		vim "$@"
-	fi
-}
-
-# `o` with no arguments opens the current directory, otherwise opens the given
-# location
-o() {
-	if [ $# -eq 0 ]; then
-		xdg-open .	> /dev/null 2>&1
-	else
-		xdg-open "$@" > /dev/null 2>&1
 	fi
 }
 
@@ -338,7 +221,7 @@ repo() {
 
 	echo "Calling $(type open) for $url"
 
-	open "$url" &> /dev/null || (echo "Using $(type open) to open URL failed." && exit 1);
+	xdg-open "$url" &> /dev/null || (echo "Using $(type open) to open URL failed." && exit 1);
 }
 
 # Get colors in manual pages
@@ -352,42 +235,4 @@ man() {
 		LESS_TERMCAP_ue="$(printf '\e[0m')" \
 		LESS_TERMCAP_us="$(printf '\e[1;32m')" \
 		man "$@"
-}
-
-# Use feh to nicely view images
-openimage() {
-	local types='*.jpg *.JPG *.png *.PNG *.gif *.GIF *.jpeg *.JPEG'
-
-	cd "$(dirname "$1")" || exit
-	local file
-	file=$(basename "$1")
-
-	feh -q "$types" --auto-zoom \
-		--sort filename --borderless \
-		--scale-down --draw-filename \
-		--image-bg black \
-		--start-at "$file"
-}
-
-# get the name of a x window
-xname(){
-	local window_id=$1
-
-	if [[ -z $window_id ]]; then
-		echo "Please specifiy a window id, you find this with 'xwininfo'"
-
-		return 1
-	fi
-
-	local match_string='".*"'
-	local match_qstring='"[^"\\]*(\\.[^"\\]*)*"' # NOTE: Adds 1 backreference
-
-	# get the name
-	xprop -id "$window_id" | \
-		sed -nr \
-		-e "s/^WM_CLASS\\(STRING\\) = ($match_qstring), ($match_qstring)$/instance=\\1\\nclass=\\3/p" \
-		-e "s/^WM_WINDOW_ROLE\\(STRING\\) = ($match_qstring)$/window_role=\\1/p" \
-		-e "/^WM_NAME\\(STRING\\) = ($match_string)$/{s//title=\\1/; h}" \
-		-e "/^_NET_WM_NAME\\(UTF8_STRING\\) = ($match_qstring)$/{s//title=\\1/; h}" \
-		-e "\${g; p}"
 }

@@ -1,27 +1,27 @@
 [Added Associations]
 [Removed Associations]
-application/html=firefox.desktop
+application/html=brave.desktop
 [Default Applications]
 application/pdf=mupdf.desktop
-text/html=firefox.desktop
-x-scheme-handler/http=firefox.desktop
-x-scheme-handler/https=firefox.desktop
-x-scheme-handler/ftp=firefox.desktop
-x-scheme-handler/chrome=firefox.desktop
-application/x-extension-htm=firefox.desktop
-application/x-extension-html=firefox.desktop
-application/x-extension-shtml=firefox.desktop
-application/xhtml+xml=firefox.desktop
-application/x-extension-xhtml=firefox.desktop
-application/x-extension-xht=firefox.desktop
-x-scheme-handler/about=firefox.desktop
-x-scheme-handler/unknown=firefox.desktop
-x-scheme-handler/mailto=firefox.desktop
-application/html=firefox.desktop
+text/html=brave.desktop
+x-scheme-handler/http=brave.desktop
+x-scheme-handler/https=brave.desktop
+x-scheme-handler/ftp=brave.desktop
+x-scheme-handler/chrome=brave.desktop
+application/x-extension-htm=brave.desktop
+application/x-extension-html=brave.desktop
+application/x-extension-shtml=brave.desktop
+application/xhtml+xml=brave.desktop
+application/x-extension-xhtml=brave.desktop
+application/x-extension-xht=brave.desktop
+x-scheme-handler/about=brave.desktop
+x-scheme-handler/unknown=brave.desktop
+x-scheme-handler/mailto=brave.desktop
+application/html=brave.desktop
 application/jpg=feh.desktop
 application/jpeg=feh.desktop
 application/png=feh.desktop
-x-scheme-handler/webcal=firefox.desktop
+x-scheme-handler/webcal=brave.desktop
 x-scheme-handler/zoommtg=Zoom.desktop
 x-scheme-handler/zoomus=Zoom.desktop
 x-scheme-handler/tel=Zoom.desktop

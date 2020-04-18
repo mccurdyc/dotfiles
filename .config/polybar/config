@@ -44,12 +44,11 @@ font-3 = FontAwesome5Brands:style=Regular:size=20;4
 
 modules-left = i3
 modules-center = xwindow
-modules-right = date time-pt time-utc time-et backlight pulseaudio wlan cpu memory battery
+modules-right = date time-et time-utc time-pt backlight pulseaudio wlan cpu memory battery
 
 ; hide bar when in full-screen mode
 ; https://github.com/polybar/polybar/wiki#i3-make-the-bar-appear-below-windows
 override-redirect = false
-wm-restack = i3
 
 [module/i3]
 type = internal/i3
@@ -179,7 +178,7 @@ type = internal/network
 interface = wlp2s0
 
 ; Default: %ifname% %local_ip%
-label-connected =  %essid%  %upspeed:4%  %downspeed:4%
+label-connected =  %essid%  %upspeed:3%  %downspeed:3%
 label-connected-foreground = ${colors.green}
 
 ; Default: (none)
