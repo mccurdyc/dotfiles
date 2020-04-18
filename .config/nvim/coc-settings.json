@@ -10,6 +10,11 @@
         "hoverKind": "FullDocumentation"
       }
     },
+    "rust": {
+      "command": "rust-analyzer",
+      "filetypes": ["rust"],
+      "rootPatterns": ["Cargo.toml"]
+    },
     "dockerfile": {
       "command": "docker-langserver",
       "filetypes": ["dockerfile"],
@@ -33,6 +38,7 @@
   "yaml.completion": true,
   "coc.preferences.colorSupport": true,
   "coc.preferences.jumpCommand": "split",
+  "coc.preferences.formatOnSaveFiletypes": "rust",
   "refactor.openCommand": "sp",
   "diagnostic.displayByAle": true,
   "diagnostic.maxWindowHeight": 100,

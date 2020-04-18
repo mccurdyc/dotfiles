@@ -17,6 +17,7 @@ Plug 'itchyny/lightline.vim'   " light, configurable statusline
 Plug 'daviesjamie/vim-base16-lightline'
 Plug 'edkolev/tmuxline.vim'
 Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
+Plug 'rust-lang/rust.vim'
 Plug 'neoclide/coc.nvim', {'tag': '*', 'branch': 'release'}
 Plug 'mhinz/vim-startify' " startup screen
 Plug 'Shougo/neosnippet'
@@ -104,6 +105,8 @@ no <silent><Leader>cs :nohls<CR>
 
 " map kj to escape key
 inoremap kj <Esc>
+vnoremap kj <Esc>
+cnoremap kj <Esc>
 
 " temporarily zoom split
 nnoremap <silent> <C-w>w :ZoomWin<CR>
@@ -452,7 +455,7 @@ au FileType go nmap <leader>gdb <Plug>(go-doc-browser)
 
 " Plugin: https://github.com/sebdah/vim-delve
 " open Delve with a horizontal split rather than a vertical split.
-let g:delve_new_command = "vnew"
+let g:delve_new_command = "new"
 
 " Plugin: https://github.com/voldikss/vim-floaterm
 " floating terminal toggle
