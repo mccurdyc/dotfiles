@@ -1,7 +1,6 @@
 adobe-source-code-pro-fonts
 alacritty
 arc-solid-gtk-theme
-archey3
 autoconf
 automake
 autorandr
@@ -9,6 +8,7 @@ aws-cli
 base
 bat
 bc
+bind-tools
 binutils
 bison
 bluez
@@ -25,6 +25,7 @@ feh
 file
 filebeat
 findutils
+firefox
 flex
 fzf
 gawk
@@ -55,6 +56,7 @@ lvm2
 m4
 make
 nano
+neofetch
 neovim
 netctl
 networkmanager

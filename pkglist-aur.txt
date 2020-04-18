@@ -6,13 +6,17 @@ bpftrace
 brave-bin
 chef-dk
 debtap
+downgrade
 goreleaser
 hugo-git
+librespot-git
 mimeo
 nerd-fonts-source-code-pro
 polybar-git
 python-bcc
 python-grip
+qmk
+rust-analyzer-bin
 slack-desktop
 spotify
 universal-ctags-git
