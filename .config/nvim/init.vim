@@ -331,8 +331,8 @@ let g:fzf_preview_filelist_postprocess_command = ''
 " Use vim-devicons
 " ***THIS SEEMS TO BREAK OPENING A FILE!***
 " Looks nice, though :)
-" let g:fzf_preview_use_dev_icons = 1
-" let g:fzf_preview_dev_icon_prefix_length = 2
+let g:fzf_preview_use_dev_icons = 1
+let g:fzf_preview_dev_icon_prefix_length = 5
 
 " Enable per-command history.
 " CTRL-N and CTRL-P will be automatically bound to next-history and
@@ -344,7 +344,7 @@ let g:fzf_history_dir = '~/.local/share/fzf-history'
 " YES the '.' is important. Because this function requires an argument.
 " Tested with `rg --line-number --no-heading . | rg 'func'`
 nmap <leader>f :FzfPreviewProjectGrep .<CR>
-nmap <C-p> :Files<CR>
+nmap <C-p> :FzfPreviewDirectoryFiles<CR>
 nmap <leader>gs :FzfPreviewGitStatus <CR>
 
 " Plugin: https://github.com/edkolev/tmuxline.vim
