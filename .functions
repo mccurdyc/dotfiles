@@ -1,5 +1,11 @@
 #!/bin/bash
 
+plugupdate() {
+  eval `ssh-agent`
+  ssh-add
+  nvim +PlugUpdate +qall
+}
+
 btconnect() {
   bluetoothctl power on
   bluetoothctl agent on
@@ -72,7 +78,7 @@ external_display_off() {
 
 triple_display() {
   # scaling down resolution because the laptop can't handle full resolution.
-  xrandr --output eDP-1 --primary --mode 2880x1620 --pos 0x1000
+  xrandr --output eDP-1 --primary --mode 2880x1620 --pos 0x3000
   xrandr --output DP-2 --mode 3840x2160 --scale 1x1 --pos 2900x1000 --rotate right
   xrandr --output DP-1 --mode 2560x1440 --scale 2x2 --pos 5100x0 --rotate left
 
