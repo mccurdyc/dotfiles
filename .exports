@@ -11,22 +11,29 @@ export QT_SCALE_FACTOR=2
 
 # Set config files for easy access
 export DOTFILES_DIR="$HOME/dotfiles"
+export OSS_DIR="$HOME/oss"
 export CONFIG_NVIM="$XDG_CONFIG_HOME/nvim/init.vim"
 export CONFIG_TERM="$XDG_CONFIG_HOME/alacritty/alacritty.yml"
 export TMUX_CONF="$DOTFILES_DIR/.tmux.conf"
-export FZF_DEFAULT_COMMAND='rg --hidden --no-ignore -l ""'
+
+export FZF_DEFAULT_COMMAND='fd --type f --hidden --exclude vendor'
+export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
+export FZF_ALT_C_OPTS="--preview 'tree -C {} | head -200'"
+
+
+export HISTFILE=$HOME/.zsh_history
+export HISTSIZE=1000000;
+export SAVEHIST=$HISTSIZE
+export HISTFILESIZE=$HISTSIZE;
+
+# Make some commands not show up in history
+# $ man 1 zshparam
+export HISTORY_IGNORE="(cd|rm|vim|nvim|less|tail) *"
 
 # Make vim the default editor
 export EDITOR=/usr/bin/nvim;
 export TERMINAL="alacritty";
 export BROWSER="brave"
-
-# Larger bash history (allow 32³ entries; default is 500)
-export HISTSIZE=50000000;
-export HISTFILESIZE=$HISTSIZE;
-export HISTCONTROL=ignoredups;
-# Make some commands not show up in history
-export HISTIGNORE=" *:ls:cd:cd -:pwd:exit:date:* --help:* -h:pony:pony add *:pony update *:pony save *:pony ls:pony ls *";
 
 # Prefer US English and use UTF-8
 export LANG="en_US.UTF-8";
