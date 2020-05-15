@@ -28,7 +28,8 @@ Plug 'juliosueiras/vim-terraform-completion'
 Plug 'rhysd/git-messenger.vim'
 Plug 'christianrondeau/vim-base64'
 " Plug 'junegunn/limelight.vim' " plugin to focus / greyout other blocks
-" Plug 'junegunn/goyo.vim'
+Plug 'junegunn/goyo.vim'
+Plug 'vim-scripts/CmdlineComplete'
 
 " colorscheme
 Plug 'mccurdyc/base16-vim'
@@ -87,9 +88,13 @@ set undofile
 
 " Display problematic whitespace
 set listchars=tab:➜\ ,trail:•,extends:#,precedes:#,nbsp:⌻
-set list
+" set list
 " [gofmt](https://golang.org/cmd/gofmt) uses tabs, so disable the listing for Go
-au Filetype go set nolist
+" au Filetype go set nolist
+
+" https://vim.fandom.com/wiki/Set_working_directory_to_the_current_file
+" set working directory to the current file
+autocmd BufEnter * silent! lcd %:p:h
 
 " Allow vim to set a custom font or color for a word
 syntax enable
@@ -103,10 +108,12 @@ let mapleader = ","
 " clear search highlights
 no <silent><Leader>cs :nohls<CR>
 
-" map kj to escape key
+" map kj to escape key only in insert mode.
+" I had it also in command and visual but caused delays and unexpected escape
+" calls.
 inoremap kj <Esc>
-vnoremap kj <Esc>
-cnoremap kj <Esc>
+" vnoremap kj <Esc>
+" cnoremap kj <Esc>
 
 " temporarily zoom split
 nnoremap <silent> <C-w>w :ZoomWin<CR>
@@ -116,6 +123,10 @@ autocmd BufRead,BufNewFile *.md setlocal spell
 autocmd BufRead,BufNewFile *.tex setlocal spell
 
 set nohlsearch
+
+" Plugin: https://github.com/vim-scripts/CmdlineComplete
+" Tab completion in command line.
+cmap <TAB> <Plug>CmdlineCompleteForward
 
 let g:python3_host_prog = '/usr/bin/python'
 " disable python2
@@ -231,7 +242,7 @@ let g:fzf_layout = { 'window': 'call CreateCenteredFloatingWindow()' }
 
 " use rg by default
 if executable('rg')
-  let $FZF_DEFAULT_COMMAND = 'rg --files --hidden --follow --glob "!.git/*"'
+  let $FZF_DEFAULT_COMMAND = 'rg --files --no-ignore --hidden --follow --glob "!.git/*"'
   set grepprg=rg\ --vimgrep
 endif
 
@@ -241,7 +252,7 @@ command! -bang -nargs=? -complete=dir Files
 
 " advanced grep(faster with preview)
 function! RipgrepFzf(query, fullscreen)
-    let command_fmt = 'rg --column --line-number --no-heading --color=always --smart-case %s || true'
+    let command_fmt = 'rg --column --no-ignore --line-number --no-heading --color=always --smart-case %s || true'
     let initial_command = printf(command_fmt, shellescape(a:query))
     let reload_command = printf(command_fmt, '{q}')
     let spec = {'options': ['--phony', '--query', a:query, '--bind', 'change:reload:'.reload_command]}
@@ -296,13 +307,13 @@ let g:fzf_binary_preview_command = 'echo "{} is a binary file"'
 " Commands used to get the file list from project
 " let g:fzf_preview_filelist_command = 'git ls-files --exclude-standard'               " Not Installed ripgrep
 " let g:fzf_preview_filelist_command = 'rg --files --hidden --follow --no-messages -g \!"* *"' " Installed ripgrep
-let g:fzf_preview_filelist_command = 'fd --type f --exclude vendor' " Installed fd
+let g:fzf_preview_filelist_command = 'fd --type f --exclude vendor --exlude .git' " Installed fd
 
 " Commands used to get the file list from git reposiroty
 let g:fzf_preview_git_files_command = 'git ls-files --exclude-standard'
 
 " Commands used to get the file list from current directory
-let g:fzf_preview_directory_files_command = 'rg --files --hidden --follow --no-messages -g \!"* *"'
+let g:fzf_preview_directory_files_command = 'rg --files --hidden --no-ignore --follow --no-messages -g \!"* *"  -g \!".git" -g \!"vendor"'
 
 " Commands used to get the git status file list
 let g:fzf_preview_git_status_command = "git status --short --untracked-files=all | awk '{if (substr($0,2,1) !~ / /) print $2}'"
@@ -313,7 +324,7 @@ let g:fzf_preview_git_status_preview_command =  "[[ $(git diff -- {-1}) != \"\" 
 \ g:fzf_preview_command
 
 " Commands used for project grep
-let g:fzf_preview_grep_cmd = 'rg --hidden --line-number --no-heading -g \!"vendor" -g \!"*.sum"'
+let g:fzf_preview_grep_cmd = 'rg --hidden --line-number --no-heading -g \!".git" -g \!"vendor" -g !"*.sum"'
 
 " Commands used for current file lines
 " let g:fzf_preview_lines_command = 'cat'
@@ -343,7 +354,7 @@ let g:fzf_history_dir = '~/.local/share/fzf-history'
 " Define key combinations
 " YES the '.' is important. Because this function requires an argument.
 " Tested with `rg --line-number --no-heading . | rg 'func'`
-nmap <leader>f :FzfPreviewProjectGrep .<CR>
+nmap <leader>f :Rg<CR>
 nmap <C-p> :FzfPreviewDirectoryFiles<CR>
 nmap <leader>gs :FzfPreviewGitStatus <CR>
 
@@ -357,7 +368,7 @@ let g:lightline = {
       \ 'active': {
       \   'left': [ [ 'mode', 'paste' ],
       \             [ 'gitbranch'],
-	    \             [ 'cocstatus', 'readonly', 'filename', 'modified' ] ]
+      \             [ 'cocstatus', 'readonly', 'filename', 'modified' ] ]
       \ },
       \ 'component_function': {
       \   'gitbranch': 'fugitive#head',
@@ -444,6 +455,8 @@ au FileType go nmap <leader>gtt <Plug>(go-test)
 au FileType go nmap <leader>gtf :GoTestFunc!<cr>
 au FileType go nmap <leader>gtc <Plug>(go-coverage-toggle)
 au FileType go nmap <leader>gcb <Plug>(go-cover-browser)
+" List functions in current file.
+au FileType go nmap <leader>lf :g/^func /#<CR>
 
 let g:go_term_enabled = 1
 let g:go_term_height = 20
@@ -489,6 +502,7 @@ set signcolumn=yes
 
 nmap <leader>rf <Plug>(coc-refactor)
 nmap <leader>cp <Plug>(coc-cursors-position)
+" Multi-cursor
 xmap <leader>cr <Plug>(coc-cursors-range)
 nmap <leader>cw <Plug>(coc-cursors-word)
 
