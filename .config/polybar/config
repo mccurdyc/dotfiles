@@ -20,9 +20,9 @@ white = #ffffff
 ; https://github.com/reedrw/dotfiles/blob/2797be2284bd54597d29777f9a8f82a6f40307b7/config/polybar/config
 ; https://github.com/polybar/polybar/issues/763
 monitor = ${env:MONITOR:}
-dpi = 95
+dpi = 120
 width = 100%
-height = 3%
+height = 40
 radius = 0.0
 fixed-center = false
 bottom = true
@@ -33,18 +33,50 @@ foreground = ${colors.foreground}
 border-size = 7
 border-color = ${colors.background-alt}
 
-line-size = 2
+line-size = 3
 padding = 2
 module-margin = 1
 
-font-0 = "Source Code Pro:size=18;1"
-font-1 = FontAwesome5Free:style=Solid:size=20;4
-font-2 = FontAwesome5Free:style=Regular:size=20;4
-font-3 = FontAwesome5Brands:style=Regular:size=20;4
+font-0 = "Source Code Pro:size=10;0"
+font-1 = FontAwesome5Free:style=Solid:size=10;0
+font-2 = FontAwesome5Free:style=Regular:size=10;0
+font-3 = FontAwesome5Brands:style=Regular:size=10;0
 
 modules-left = i3
 modules-center = xwindow
-modules-right = date time-et time-utc time-pt backlight pulseaudio wlan cpu memory battery
+modules-right = date time-et time-utc
+
+override-redirect = false
+
+[bar/top]
+; https://github.com/reedrw/dotfiles/blob/2797be2284bd54597d29777f9a8f82a6f40307b7/config/polybar/config
+; https://github.com/polybar/polybar/issues/763
+monitor = ${env:MONITOR:}
+dpi = 120
+width = 100%
+height = 40
+radius = 0.0
+fixed-center = false
+bottom = false
+
+background = ${colors.background}
+foreground = ${colors.foreground}
+
+border-size = 7
+border-color = ${colors.background-alt}
+
+line-size = 3
+padding = 2
+module-margin = 1
+
+font-0 = "Source Code Pro:size=10;0"
+font-1 = FontAwesome5Free:style=Solid:size=10;0
+font-2 = FontAwesome5Free:style=Regular:size=10;0
+font-3 = FontAwesome5Brands:style=Regular:size=10;0
+
+modules-left =
+modules-center =
+modules-right = backlight pulseaudio network cpu memory battery
 
 ; hide bar when in full-screen mode
 ; https://github.com/polybar/polybar/wiki#i3-make-the-bar-appear-below-windows
@@ -107,7 +139,7 @@ label-separator-foreground = ${colors.alternative}
 
 [module/xwindow]
 type = internal/xwindow
-label = %title:0:30:...%
+label = %title:0:40:...%
 
 [module/pulseaudio]
 type = internal/pulseaudio
@@ -173,35 +205,57 @@ format-prefix-foreground = ${colors.foreground}
 format-underline = ${colors.alternative}
 label = %percentage_used:2%%
 
-[module/wlan]
+; If you use both a wired and a wireless network, just add 2 module definitions. For example
+[module/wired-network]
+type = internal/network
+interface = eth0
+
+[module/wireless-network]
 type = internal/network
 interface = wlp2s0
 
+; Normal Module
+[module/network]
+type = internal/network
+interface = wlp2s0
+
+; Seconds to sleep between updates
+; Default: 1
+interval = 1.0
+
+; Accumulate values from all interfaces
+; when querying for up/downspeed rate
+; Default: false
+accumulate-stats = true
+
+; Consider an `UNKNOWN` interface state as up.
+; Some devices have an unknown state, even when they're running
+; Default: false
+unknown-as-up = true
+
+; Available tokens:
+;   %ifname%    [wireless+wired]
+;   %local_ip%  [wireless+wired]
+;   %local_ip6% [wireless+wired]
+;   %essid%     [wireless]
+;   %signal%    [wireless]
+;   %upspeed%   [wireless+wired]
+;   %downspeed% [wireless+wired]
+;   %linkspeed% [wired]
 ; Default: %ifname% %local_ip%
-label-connected =  %essid%  %upspeed:3%  %downspeed:3%
+label-connected =  %ifname% %local_ip% %essid%  %upspeed:3%  %downspeed:3%
 label-connected-foreground = ${colors.green}
 
 ; Default: (none)
 label-disconnected =  offline
 label-disconnected-foreground = ${colors.red}
 
-[module/network]
-type = internal/network
-; Name of the network interface to display. You can get the names of the
-; interfaces on your machine with `ip link`
-; Wireless interfaces often start with `wl` and ethernet interface with `eno` or `eth`
-interface = wlp2s0
-
-; Seconds to sleep between updates
-; Default: 1
-interval = 3.0
-
 [module/date]
 type = internal/date
 interval = 30
 
-date = " %a %d"
-date-alt = %a %b %d
+date =  %A, %d %b
+date-alt = %a %d
 
 format-prefix = ""
 format-prefix-foreground = ${colors.foreground-alt}
