@@ -56,7 +56,7 @@ dpi = 120
 width = 100%
 height = 40
 radius = 0.0
-fixed-center = false
+fixed-center = true
 bottom = false
 
 background = ${colors.background}
@@ -75,8 +75,8 @@ font-2 = FontAwesome5Free:style=Regular:size=10;0
 font-3 = FontAwesome5Brands:style=Regular:size=10;0
 
 modules-left =
-modules-center =
-modules-right = backlight pulseaudio network cpu memory battery
+modules-center = backlight pulseaudio network-wireless network-wired cpu memory battery
+modules-right =
 
 ; hide bar when in full-screen mode
 ; https://github.com/polybar/polybar/wiki#i3-make-the-bar-appear-below-windows
@@ -206,16 +206,43 @@ format-underline = ${colors.alternative}
 label = %percentage_used:2%%
 
 ; If you use both a wired and a wireless network, just add 2 module definitions. For example
-[module/wired-network]
+[module/network-wired]
 type = internal/network
-interface = eth0
+interface = ens8u2u4
 
-[module/wireless-network]
-type = internal/network
-interface = wlp2s0
+; Seconds to sleep between updates
+; Default: 1
+interval = 1.0
+
+; Accumulate values from all interfaces
+; when querying for up/downspeed rate
+; Default: false
+accumulate-stats = true
+
+; Consider an `UNKNOWN` interface state as up.
+; Some devices have an unknown state, even when they're running
+; Default: false
+unknown-as-up = true
+
+; Available tokens:
+;   %ifname%    [wireless+wired]
+;   %local_ip%  [wireless+wired]
+;   %local_ip6% [wireless+wired]
+;   %essid%     [wireless]
+;   %signal%    [wireless]
+;   %upspeed%   [wireless+wired]
+;   %downspeed% [wireless+wired]
+;   %linkspeed% [wired]
+; Default: %ifname% %local_ip%
+label-connected =  %ifname% %local_ip%  %upspeed:3%  %downspeed:3% %linkspeed%
+label-connected-foreground = ${colors.green}
+
+; Default: (none)
+label-disconnected =  
+label-disconnected-foreground = ${colors.red}
 
 ; Normal Module
-[module/network]
+[module/network-wireless]
 type = internal/network
 interface = wlp2s0
 
@@ -247,7 +274,7 @@ label-connected =  %ifname% %local_ip% %essid%  %upspeed:3%  %downspeed
 label-connected-foreground = ${colors.green}
 
 ; Default: (none)
-label-disconnected =  offline
+label-disconnected =  
 label-disconnected-foreground = ${colors.red}
 
 [module/date]
