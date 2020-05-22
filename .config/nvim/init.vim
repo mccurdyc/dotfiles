@@ -16,7 +16,7 @@ Plug 'kshenoy/vim-signature'   " display marks in sidebar
 Plug 'itchyny/lightline.vim'   " light, configurable statusline
 Plug 'daviesjamie/vim-base16-lightline'
 Plug 'edkolev/tmuxline.vim'
-Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
+Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries', 'for': 'go' }
 Plug 'rust-lang/rust.vim'
 Plug 'neoclide/coc.nvim', {'tag': '*', 'branch': 'release'}
 Plug 'mhinz/vim-startify' " startup screen
@@ -26,10 +26,9 @@ Plug 'lervag/vimtex', {'for': 'tex'}
 Plug 'hashivim/vim-terraform'
 Plug 'juliosueiras/vim-terraform-completion'
 Plug 'rhysd/git-messenger.vim'
-Plug 'christianrondeau/vim-base64'
 " Plug 'junegunn/limelight.vim' " plugin to focus / greyout other blocks
-Plug 'junegunn/goyo.vim'
-Plug 'vim-scripts/CmdlineComplete'
+" Plug 'junegunn/goyo.vim'
+Plug 'vim-scripts/colorizer' " highlight hex colors
 
 " colorscheme
 Plug 'mccurdyc/base16-vim'
@@ -115,18 +114,11 @@ inoremap kj <Esc>
 " vnoremap kj <Esc>
 " cnoremap kj <Esc>
 
-" temporarily zoom split
-nnoremap <silent> <C-w>w :ZoomWin<CR>
-
 " turn spell check on for markdown and tex files
 autocmd BufRead,BufNewFile *.md setlocal spell
 autocmd BufRead,BufNewFile *.tex setlocal spell
 
 set nohlsearch
-
-" Plugin: https://github.com/vim-scripts/CmdlineComplete
-" Tab completion in command line.
-cmap <TAB> <Plug>CmdlineCompleteForward
 
 let g:python3_host_prog = '/usr/bin/python'
 " disable python2
