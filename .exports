@@ -4,10 +4,12 @@
 export XDG_DATA_HOME="$HOME/.local/share"
 export XDG_CONFIG_HOME="$HOME/.config"
 
-# hidpi for gtk apps
-# Keep in mind that this will only affect applications launched from your shell,
-# where this value is sourced.
-export QT_SCALE_FACTOR=2
+export SRC_DIR="$HOME/src/github.com"
+
+export ZOEKT_DATA_DIR="$HOME/.zoekt"
+export ZOEKT_INDEX_DIR="$ZOEKT_DATA_DIR/index"
+
+export DLV_SERVER_HOST="127.0.0.1:6073"
 
 # Set config files for easy access
 export DOTFILES_DIR="$HOME/dotfiles"
