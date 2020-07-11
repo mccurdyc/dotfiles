@@ -1,9 +1,17 @@
 #!/bin/bash
 
+tree-rs() {
+  tree -f -I "bin|release|target" $@
+}
+
 plugupdate() {
   eval `ssh-agent`
   ssh-add
   nvim +PlugUpdate +qall
+}
+
+dudir() {
+  sudo du -cha --max-depth=1 ${1} | sort -hr
 }
 
 btconnect() {
@@ -52,6 +60,54 @@ tmpd() {
 	cd "$dir" || exit
 }
 
+dlvts() {
+  dlv test $1 --headless --accept-multiclient -l $DLV_SERVER_HOST -- "${@:2}"
+}
+
+fstrg() {
+  rg $@ $SRC_DIR -g '!vendor' -g '!.git'
+}
+
+zkt() {
+    zoekt -index_dir=$ZOEKT_INDEX_DIR -r "$@ -vendor" | rg $1
+}
+
+zktws() {
+    zoekt-webserver -index=$ZOEKT_INDEX_DIR
+}
+
+zktidx() {
+    zoekt-indexserver -mirror_config $XDG_CONFIG_HOME/zoekt/config.json -data_dir=$ZOEKT_DATA_DIR -git_index_flags='-require_ctags=true'
+}
+
+tmpzkt() {
+  (
+    tmpd
+    dir="$(pwd)"
+    echo "$dir"
+    zoekt-git-clone --dest $dir "https://github.com/$1.git"
+    zoekt-git-index -branches master -prefix origin/ "$dir/github.com/$1.git"
+    zoekt-webserver -index $dir -listen :6071 &
+    xdg-open "http://localhost:6071/"
+  )
+}
+
+# Make a temporary directory and enter it
+tmpclone() {
+  if (( $# != 2 )); then
+    echo "Usage: tmpclone <repository> <remote:branch>"
+    return
+  fi
+
+  tmpd
+  repo="${1}"
+  remote="$(echo ${2} | awk -F ":" '{ print $1}')"
+  branch="$(echo ${2} | awk -F ":" '{ print $2}')"
+
+  git clone git@github.com:$remote/$repo .
+  git checkout $branch
+}
+
 # https://gist.github.com/fatih/11d752582c5bd508ffe18a2df57c6424
 switchgo() {
   version=$1
@@ -72,19 +128,34 @@ switchgo() {
   echo "Switched to ${go_bin_path}"
 }
 
+display_extras() {
+  # these have to be loaded after resizing
+  wallpaper ${HOME}/dotfiles/imgs/wallpapers/astronaut.jpg
+  ${HOME}/dotfiles/.config/polybar/launch.sh
+}
+
 external_display_off() {
-  xrandr --output DP-2-2 --off --output DP-1 --off --output eDP-1 --auto
+  xrandr --output DP-2-2 --off --output DP-1 --off --output eDP-1 --mode 3840x2160 --scale 1x1
+
+  display_extras
+}
+
+dual_display() {
+  # scaling down resolution because the laptop can't handle full resolution.
+  xrandr --output eDP-1 --off
+  xrandr --output DP-2-2 --mode 2560x1440 --scale 1.5x1.5 --dpi 98 --pos 2600x0 --rotate right
+  xrandr --output DP-1 --mode 2560x1440 --scale 1.3x1.3 --dpi 98 --pos 5000x0 --rotate left
+
+  display_extras
 }
 
 triple_display() {
   # scaling down resolution because the laptop can't handle full resolution.
-  xrandr --output eDP-1 --primary --mode 2880x1620 --pos 0x3000
-  xrandr --output DP-2-2 --mode 2560x1440 --scale 1.5x1.5 --pos 2900x1000 --rotate right
-  xrandr --output DP-1 --mode 2560x1440 --scale 1.25x1.25 --pos 5100x500 --rotate left
+  xrandr --output eDP-1 --primary --mode 2560x1440 --scale 1x1 --pos 0x3000
+  xrandr --output DP-2-2 --mode 2560x1440 --scale 1.5x1.5 --dpi 98 --pos 2600x0 --rotate right
+  xrandr --output DP-1 --mode 2560x1440 --scale 1.3x1.3 --dpi 98 --pos 5000x0 --rotate left
 
-  # these have to be loaded after resizing
-  wallpaper ${HOME}/dotfiles/imgs/wallpapers/astronaut.jpg
-  ${HOME}/dotfiles/.config/polybar/launch.sh
+  display_extras
 }
 
 ## smart extraction;
@@ -152,13 +223,6 @@ fs() {
 		du $arg -- .[^.]* *
 	fi
 }
-
-# Use Git’s colored diff when available
-if hash git &>/dev/null ; then
-	diff() {
-		git diff --no-index --color-words "$@"
-	}
-fi
 
 # Syntax-highlight JSON strings or files
 # Usage: `json '{"foo":42}'` or `echo '{"foo":42}' | json`
@@ -241,4 +305,9 @@ man() {
 		LESS_TERMCAP_ue="$(printf '\e[0m')" \
 		LESS_TERMCAP_us="$(printf '\e[1;32m')" \
 		man "$@"
+}
+
+# fst-wrap 'tf' 'service-version deactivate' 'latest'
+fst-wrap() {
+  /home/mccurdyc/src/github.com/mccurdyc/fastly-scripts/fst-wrap/fst-wrap.sh $@
 }
