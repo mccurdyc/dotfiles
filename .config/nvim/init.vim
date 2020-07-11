@@ -1,9 +1,8 @@
 call plug#begin('~/.vim/plugged')
 
 Plug 'junegunn/fzf.vim'
-Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': { -> fzf#install() } }
 Plug 'airblade/vim-rooter'
-Plug 'yuki-ycino/fzf-preview.vim'
 Plug 'voldikss/vim-floaterm' " floating terminal toggle
 Plug 'tpope/vim-fugitive'
 Plug 'jreybert/vimagit' " additional git tools. cycle staged changes
@@ -26,6 +25,7 @@ Plug 'lervag/vimtex', {'for': 'tex'}
 Plug 'hashivim/vim-terraform'
 Plug 'juliosueiras/vim-terraform-completion'
 Plug 'rhysd/git-messenger.vim'
+Plug 'ludovicchabant/vim-gutentags'
 " Plug 'junegunn/limelight.vim' " plugin to focus / greyout other blocks
 " Plug 'junegunn/goyo.vim'
 Plug 'vim-scripts/colorizer' " highlight hex colors
@@ -87,9 +87,9 @@ set undofile
 
 " Display problematic whitespace
 set listchars=tab:➜\ ,trail:•,extends:#,precedes:#,nbsp:⌻
-" set list
+set list
 " [gofmt](https://golang.org/cmd/gofmt) uses tabs, so disable the listing for Go
-" au Filetype go set nolist
+au Filetype go set nolist
 
 " https://vim.fandom.com/wiki/Set_working_directory_to_the_current_file
 " set working directory to the current file
@@ -175,6 +175,10 @@ let g:gitgutter_sign_modified = '~'
 let g:gitgutter_sign_removed = '-'
 
 " Plugin: w0rp/ale
+let g:ale_set_loclist = 0
+let g:ale_set_quickfix = 1
+let g:ale_open_list = 1
+
 let g:ale_sign_column_always = 1 " always keep sign gutter open to avoid jumpiness
 
 " moving between warnings and errors quickly.
@@ -207,8 +211,14 @@ let g:ale_terraform_tflint_executable = '$GOPATH/bin/tflint'
 
 let b:ale_fix_on_save = 1
 
-" Plugin: junegunn/fzf
+" Plugin: https://github.com/junegunn/fzf.vim
 let g:fzf_command_prefix = 'Fzf'
+
+" https://github.com/Blacksuan19/init.nvim/blob/master/init.vim
+let g:fzf_layout = { 'window': 'call CreateCenteredFloatingWindow()' }
+
+" Always enable preview window on the right with 50% width
+let g:fzf_preview_window = 'right:50%'
 
 let g:fzf_colors =
 \ { 'fg':      ['fg', 'Normal'],
@@ -228,21 +238,19 @@ au FileType fzf set nonu nornu
 
 let $FZF_DEFAULT_OPTS='--layout=reverse'
 
-" general
-" https://github.com/Blacksuan19/init.nvim/blob/master/init.vim
-let g:fzf_layout = { 'window': 'call CreateCenteredFloatingWindow()' }
-
 " use rg by default
 if executable('rg')
   let $FZF_DEFAULT_COMMAND = 'rg --files --no-ignore --hidden --follow --glob "!.git/*"'
   set grepprg=rg\ --vimgrep
 endif
 
-" files window with preview
+" A nicer FzfFiles preview
+" docs - https://github.com/junegunn/fzf.vim#example-customizing-files-command
 command! -bang -nargs=? -complete=dir Files
-        \ call fzf#vim#files(<q-args>, fzf#vim#with_preview(), <bang>0)
+    \ call fzf#vim#files(<q-args>, fzf#vim#with_preview(), <bang>0)
 
 " advanced grep(faster with preview)
+" docs - https://github.com/junegunn/fzf.vim#example-advanced-ripgrep-integration
 function! RipgrepFzf(query, fullscreen)
     let command_fmt = 'rg --column --no-ignore --line-number --no-heading --color=always --smart-case %s || true'
     let initial_command = printf(command_fmt, shellescape(a:query))
@@ -276,79 +284,26 @@ function! CreateCenteredFloatingWindow()
     au BufWipeout <buffer> exe 'bw '.s:buf
 endfunction
 
-" Use floating window (for neovim)
-let g:fzf_preview_use_floating_window = 1
-
-" floating window size ratio
-let g:fzf_preview_floating_window_rate = 0.9
-
-" floating window winblend value
-let g:fzf_preview_floating_window_winblend = 3
-
-" Commands used for fzf preview.
-" The file name selected by fzf becomes {}
-" let g:fzf_preview_command = 'head -100 {-1}'                       " Not installed bat
-let g:fzf_preview_command = 'bat --color=always --style=grid {-1}' " Installed bat
-
-" g:fzf_binary_preview_command is executed if this command succeeds, and g:fzf_preview_command is executed if it fails
-let g:fzf_preview_if_binary_command = '[[ "$(file --mime {})" =~ binary ]]'
-
-" Commands used for binary file
-let g:fzf_binary_preview_command = 'echo "{} is a binary file"'
-
-" Commands used to get the file list from project
-" let g:fzf_preview_filelist_command = 'git ls-files --exclude-standard'               " Not Installed ripgrep
-" let g:fzf_preview_filelist_command = 'rg --files --hidden --follow --no-messages -g \!"* *"' " Installed ripgrep
-let g:fzf_preview_filelist_command = 'fd --type f --exclude vendor --exlude .git' " Installed fd
-
-" Commands used to get the file list from git reposiroty
-let g:fzf_preview_git_files_command = 'git ls-files --exclude-standard'
-
-" Commands used to get the file list from current directory
-let g:fzf_preview_directory_files_command = 'rg --files --hidden --no-ignore --follow --no-messages -g \!"* *"  -g \!".git" -g \!"vendor"'
-
-" Commands used to get the git status file list
-let g:fzf_preview_git_status_command = "git status --short --untracked-files=all | awk '{if (substr($0,2,1) !~ / /) print $2}'"
-
-" Commands used for git status preview.
-let g:fzf_preview_git_status_preview_command =  "[[ $(git diff -- {-1}) != \"\" ]] && git diff --color=always -- {-1} || " .
-\ "[[ $(git diff --cached -- {-1}) != \"\" ]] && git diff --cached --color=always -- {-1} || " .
-\ g:fzf_preview_command
-
-" Commands used for project grep
-let g:fzf_preview_grep_cmd = 'rg --hidden --line-number --no-heading -g \!".git" -g \!"vendor" -g !"*.sum"'
-
-" Commands used for current file lines
-" let g:fzf_preview_lines_command = 'cat'
-let g:fzf_preview_lines_command = 'bat --color=always --style=grid --theme=base16 --plain'
-
-" Commands used for preview of the grep result
-" let g:fzf_preview_grep_preview_cmd = expand('<sfile>:h:h') . '/bin/preview_fzf_grep'
-
-" Keyboard shortcuts while fzf preview is active
-let g:fzf_preview_preview_key_bindings = 'ctrl-d:preview-page-down,ctrl-u:preview-page-up,?:toggle-preview'
-
-" Command to be executed after file list creation
-let g:fzf_preview_filelist_postprocess_command = ''
-
-" Use vim-devicons
-" ***THIS SEEMS TO BREAK OPENING A FILE!***
-" Looks nice, though :)
-let g:fzf_preview_use_dev_icons = 1
-let g:fzf_preview_dev_icon_prefix_length = 5
-
 " Enable per-command history.
 " CTRL-N and CTRL-P will be automatically bound to next-history and
 " previous-history instead of down and up. If you don't like the change,
 " explicitly bind the keys to down and up in your $FZF_DEFAULT_OPTS.
 let g:fzf_history_dir = '~/.local/share/fzf-history'
 
+" docs - https://github.com/junegunn/fzf.vim#command-local-options
+" [Buffers] Jump to the existing window if possible
+let g:fzf_buffers_jump = 1
+
+" [[B]Commits] Customize the options used by 'git log':
+let g:fzf_commits_log_options = '--graph --color=always --format="%C(auto)%h%d %s %C(black)%C(bold)%cr"'
+
+" [Tags] Command to generate tags file
+let g:fzf_tags_command = 'ctags -R'
+
 " Define key combinations
-" YES the '.' is important. Because this function requires an argument.
-" Tested with `rg --line-number --no-heading . | rg 'func'`
 nmap <leader>f :Rg<CR>
-nmap <C-p> :FzfPreviewDirectoryFiles<CR>
-nmap <leader>gs :FzfPreviewGitStatus <CR>
+nmap <C-p> :FzfGFiles<CR>
+nmap <leader>gs :FzfGFiles?<CR>
 
 " Plugin: https://github.com/edkolev/tmuxline.vim
 let g:tmuxline_powerline_separators = 0
@@ -432,17 +387,21 @@ let g:go_fmt_options = {
   \ 'gofmt': '-s',
   \ }
 
-" wrap long lines in quickfix - https://github.com/fatih/vim-go/issues/1271
 augroup quickfix
     autocmd!
+    " wrap long lines in quickfix - https://github.com/fatih/vim-go/issues/1271
     autocmd FileType qf setlocal wrap
 augroup END
+
+" Navigate quickfix list with ease
+nnoremap <silent> [q :cprevious<CR>
+nnoremap <silent> ]q :cnext<CR>
 
 " For Go, don't use ctags, use Vim Go's implementation.
 au FileType go nmap <C-]> <Plug>(go-def)
 au FileType go nmap <C-t> <Plug>(go-def-pop)
 
-au FileType go nmap <leader>gta <Plug>(go-alternate-vertical)
+au FileType go nmap <leader>gta <Plug>(go-alternate-split)
 au FileType go nmap <leader>gtt <Plug>(go-test)
 au FileType go nmap <leader>gtf :GoTestFunc!<cr>
 au FileType go nmap <leader>gtc <Plug>(go-coverage-toggle)
@@ -461,12 +420,20 @@ au FileType go nmap <leader>gdb <Plug>(go-doc-browser)
 " Plugin: https://github.com/sebdah/vim-delve
 " open Delve with a horizontal split rather than a vertical split.
 let g:delve_new_command = "new"
+nmap <leader>dc :DlvConnect $DLV_SERVER_HOST<CR>
+nmap <leader>ca :DlvClearAll <CR>
+nmap <leader>dt :DlvToggleBreakpoint <CR>
 
 " Plugin: https://github.com/voldikss/vim-floaterm
 " floating terminal toggle
-nmap <leader>t :FloatermToggle<CR>
-noremap! <leader>t <Esc>:FloatermToggle<CR>
-tnoremap <leader>t <C-\><C-n>:FloatermToggle<CR>
+nmap <leader>tt :FloatermToggle<CR>
+noremap! <leader>tt <Esc>:FloatermToggle<CR>
+tnoremap <leader>tt <C-\><C-n>:FloatermToggle<CR>
+
+command! Ranger FloatermNew! ranger
+command! Vifm FloatermNew! vifm
+command! FZF FloatermNew! fzf
+command! -nargs=1 Zkt FloatermNew! zkt <f-args>
 
 let height = float2nr(&lines - (&lines * 2 / 10))
 let width = float2nr(&columns - (&columns * 2 / 7))
