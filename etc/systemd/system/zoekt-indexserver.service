@@ -1,0 +1,13 @@
+[Unit]
+Description=zoekt index-server
+After=network-online.target
+
+[Service]
+Type=simple
+User=mccurdyc
+Group=users
+ExecStart=/home/mccurdyc/go/bin/zoekt-indexserver -mirror_config /home/mccurdyc/.config/zoekt/config.json -data_dir=/home/mccurdyc/.zoekt -git_index_flags='-require_ctags=true'
+Restart=on-failure
+
+[Install]
+WantedBy=default.target
