@@ -3,6 +3,8 @@
 ## run `tfsec terraform plan` and not need to do any secrets stuff, so long as you’re in a directory with a name equal to the applicable amazon profile
 alias tfsec='eval $(AWS_PROFILE=${PWD##*/} sops --decrypt --input-type env secrets.env | egrep -v "^#" | xargs)'
 
+alias gpg='gpg2'
+
 ## https://golang.org/doc/install#extra_versions
 alias go="go1.14.1"
 
@@ -19,8 +21,6 @@ alias treed="tree -d"                         ## tree dirs
 alias tree1="tree -d -L 1"                    ## tree depth 1
 alias tree2="tree -d -L 2"                    ## tree depth 2
 alias tree3="tree -d -L 3"                    ## tree depth 3
-
-alias zoom="QT_SCALE_FACTOR=2 zoom"
 
 # source zsh config
 alias src="source $HOME/.zshrc"
