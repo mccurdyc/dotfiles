@@ -1,25 +1,11 @@
 .extra
 .gitconfig
 bin/
-.config/nvim/.netrwhist
-.config/pavucontrol.ini
-.config/autostart
+.config/**
+nvim/.netrwhist
 .vim/plugged
-.config/BraveSoftware
-.config/dconf
-.config/spotify/*
+.vim/sessions
 !.config/spotify/Users/mccurdycolton-user/prefs
-.config/pulse
-.config/htop
-.config/coc
-.config/keybase
-.config/configstore
-.config/zoomus.conf
-.config/chromium/
-.config/Slack/
-.config/dlv
-.config/gcloud
-.config/Unknown\ Organization/
 .local/share/*
 !.local/share/nvim/shada
 !.local/share/applications/
@@ -28,5 +14,4 @@ bin/
 .gitconfig
 .local/share/applications/mimeapps.list
 templated-config.json
-.config/hub
-.config/vifm/vifminfo
+.mozilla
