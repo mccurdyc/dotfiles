@@ -11,7 +11,7 @@ if [[ ! $DISPLAY && $XDG_VTNR -eq 1 ]]; then
 fi
 
 # Load files...
-for file in ~/.{zsh_prompt,aliases,fzf.zsh,functions,path,gitfunc,exports}; do
+for file in ~/.{zsh_prompt,aliases,fzf.zsh,functions,path,gitfunc,exports,exports_work}; do
 	if [[ -r "$file" ]] && [[ -f "$file" ]]; then
 		# shellcheck source=/dev/null
 		source "$file"

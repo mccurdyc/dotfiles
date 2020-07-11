@@ -15,3 +15,4 @@ nvim/.netrwhist
 .local/share/applications/mimeapps.list
 templated-config.json
 .mozilla
+.exports_work
