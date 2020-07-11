@@ -25,7 +25,7 @@ Plug 'lervag/vimtex', {'for': 'tex'}
 Plug 'hashivim/vim-terraform'
 Plug 'juliosueiras/vim-terraform-completion'
 Plug 'rhysd/git-messenger.vim'
-Plug 'ludovicchabant/vim-gutentags'
+" Plug 'ludovicchabant/vim-gutentags' " broke: https://github.com/ludovicchabant/vim-gutentags/issues/283
 " Plug 'junegunn/limelight.vim' " plugin to focus / greyout other blocks
 " Plug 'junegunn/goyo.vim'
 Plug 'vim-scripts/colorizer' " highlight hex colors
