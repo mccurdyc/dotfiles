@@ -24,3 +24,4 @@ export PATH="/usr/lib/w3m/:${PATH}"
 # https://nanxiao.me/en/install-bcc-on-archlinux/
 export MANPATH=/usr/share/bcc/man:$MANPATH
 export PATH=/usr/share/bcc/tools:$PATH
+export PATH=$PATH:/home/mccurdyc/.local/bin
