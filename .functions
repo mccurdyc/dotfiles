@@ -69,7 +69,7 @@ fstrg() {
 }
 
 zkt() {
-    zoekt -index_dir=$ZOEKT_INDEX_DIR -r "$@ -vendor" | rg $1
+    zoekt "$@ -vendor"
 }
 
 zktws() {

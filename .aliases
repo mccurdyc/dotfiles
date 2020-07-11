@@ -5,6 +5,8 @@ alias tfsec='eval $(AWS_PROFILE=${PWD##*/} sops --decrypt --input-type env secre
 
 alias gpg='gpg2'
 
+alias zoekt="zoekt -index_dir=$ZOEKT_INDEX_DIR -r"
+
 ## https://golang.org/doc/install#extra_versions
 alias go="go1.14.1"
 

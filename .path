@@ -25,3 +25,4 @@ export PATH="/usr/lib/w3m/:${PATH}"
 export MANPATH=/usr/share/bcc/man:$MANPATH
 export PATH=/usr/share/bcc/tools:$PATH
 export PATH=$PATH:/home/mccurdyc/.local/bin
+export PATH=$PATH:/home/mccurdyc/.vim/plugged/vim-floaterm/bin
