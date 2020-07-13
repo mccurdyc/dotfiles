@@ -16,4 +16,7 @@ function! floaterm#wrapper#zkt#(cmd) abort
 
   " the exit force floaterm to close after fzf
   return [cmd . ' | fzf && exit', {}, v:true]
+  " The following doesn't work because zoekt doesn't output the line number.
+  " It is like a tag line number or index or something.
+  " zoekt "hello r:fst_app_timespiral" | fzf | awk -F ":" '{ system("nvim +" $2 "~/src/" $1) }'
 endfunction
