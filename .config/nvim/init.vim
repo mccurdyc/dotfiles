@@ -2,6 +2,7 @@ call plug#begin('~/.vim/plugged')
 
 Plug 'junegunn/fzf.vim'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': { -> fzf#install() } }
+Plug 'terryma/vim-multiple-cursors'
 Plug 'airblade/vim-rooter'
 Plug 'voldikss/vim-floaterm' " floating terminal toggle
 Plug 'tpope/vim-fugitive'
@@ -302,7 +303,7 @@ let g:fzf_tags_command = 'ctags -R'
 
 " Define key combinations
 nmap <leader>f :Rg<CR>
-nmap <C-p> :FzfGFiles<CR>
+nmap <C-p> :FzfFiles<CR>
 nmap <leader>gs :FzfGFiles?<CR>
 
 " Plugin: https://github.com/edkolev/tmuxline.vim
