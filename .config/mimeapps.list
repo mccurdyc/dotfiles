@@ -28,3 +28,5 @@ x-scheme-handler/tel=Zoom.desktop
 x-scheme-handler/callto=Zoom.desktop
 x-scheme-handler/zoomphonecall=Zoom.desktop
 application/x-zoom=Zoom.desktop
+inode/directory=nemo.desktop
+application/x-gnome-saved-search=nemo.desktop
