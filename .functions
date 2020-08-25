@@ -170,8 +170,7 @@ display_extras() {
 }
 
 external_display_off() {
-  xrandr --output DP-2-2 --off --output DP-1 --off --output eDP-1 --mode 3840x2160 --scale 1x1
-
+  xrandr --output DP-2-2 --off --output DP-1 --off --output eDP-1 --mode 3840x2160 --scale 0.75x0.75
   display_extras
 }
 
@@ -179,7 +178,7 @@ dual_display() {
   # scaling down resolution because the laptop can't handle full resolution.
   xrandr --output eDP-1 --off
   xrandr --output DP-2-2 --mode 2560x1440 --scale 1.5x1.5 --dpi 98 --pos 2600x0 --rotate right
-  xrandr --output DP-1 --mode 2560x1440 --scale 1.3x1.3 --dpi 98 --pos 5000x0 --rotate left
+  xrandr --output DP-1 --mode 2560x1440 --scale 1.3x1.3 --dpi 98 --pos 4200x0 --rotate left
 
   display_extras
 }
