@@ -67,6 +67,7 @@ chmod: ## Makes necessary files executable.
 .PHONY: symlink
 symlink: chmod ## Creates the necessary symlinks.
 	sudo ln -snf $(CURDIR)/etc/bluetooth /etc/bluetooth
+	sudo ln -snf $(CURDIR)/etc/pacman.conf /etc/pacman.conf
 	ln -snf $(CURDIR)/.config/mimeapps.list $(HOME)/.local/share/applications/mimeapps.list
 	ln -snf $(CURDIR)/.Xresources $(HOME)/.Xdefaults;
 	@# yes, we want xsessionrc symlinked to xinitrc
