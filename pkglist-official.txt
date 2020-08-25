@@ -9,7 +9,7 @@ aws-cli
 base
 bat
 bc
-bind-tools
+bind
 binutils
 bison
 bluez
@@ -21,6 +21,7 @@ cmake
 dhcpcd
 dialog
 docker
+docker-compose
 exa
 fakeroot
 fd
@@ -67,13 +68,16 @@ lvm2
 m4
 make
 mkcert
+mtr
 mupdf
 nano
+nemo
 neofetch
 neovim
 netctl
 netperf
 networkmanager
+nginx
 opam
 openssh
 osquery
@@ -82,9 +86,11 @@ patch
 pavucontrol
 pkgconf
 poppler
+postgresql
 pulseaudio-bluetooth
 python-pip
 ranger
+redis
 rhash
 ripgrep
 rofi
@@ -100,6 +106,7 @@ texlive-formatsextra
 texlive-latexextra
 the_silver_searcher
 tmux
+traceroute
 tree
 ttf-dejavu
 ttf-font-awesome
@@ -111,6 +118,7 @@ vulkan-mesa-layers
 w3m
 wget
 which
+whois
 wireless_tools
 wpa_supplicant
 xbindkeys
@@ -176,5 +184,6 @@ xorg-xwd
 xorg-xwininfo
 xorg-xwud
 xterm
+yarn
 zip
 zsh

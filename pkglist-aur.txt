@@ -1,4 +1,5 @@
 asciinema-git
+asdf-vm
 autojump-git
 bcc-tools
 bluez-hciconfig
@@ -8,9 +9,11 @@ brave-bin
 chef-dk
 debtap
 downgrade
+github-cli-git
 hugo-git
 librespot-git
 mimeo
+mmv
 nerd-fonts-source-code-pro
 paman
 polybar-git
@@ -21,9 +24,10 @@ scli-git
 signal-cli
 slack-desktop
 spotify
-tfenv
+tailscale
 universal-ctags-git
 wpa_supplicant_gui
 xorg-grandr
 yay
+zeal-git
 zoom
