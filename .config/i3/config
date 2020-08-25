@@ -44,9 +44,9 @@ bindsym XF86MonBrightnessUp exec xbacklight -inc 5 # increase screen brightness
 bindsym XF86MonBrightnessDown exec xbacklight -dec 5 # decrease screen brightness
 
 # make sure that function lock is toggled.
-bindsym $mod+Shift+P           exec "scrot '%y.%m.%d.%T.png' -ub -e 'mv $f ~/Pictures/screenshots/'"
-bindsym $mod+P                 exec "scrot '%y.%m.%d.%T.png' -e 'mv $f ~/Pictures/screenshots/'"
-bindsym --release $mod+Shift+P exec "scrot -s '%y.%m.%d.%T-snippet.png' -e 'mv $f ~/Pictures/screenshots/'"
+bindsym $mod+Shift+P           exec "scrot '%y.%m.%d-%H.%M.%S.png' -ub -e 'mv $f ~/Pictures/screenshots/'"
+bindsym $mod+P                 exec "scrot '%y.%m.%d-%H.%M.%S.png' -e 'mv $f ~/Pictures/screenshots/'"
+bindsym --release $mod+Shift+P exec "scrot -s '%y.%m.%d-%H.%M.%S-snippet.png' -e 'mv $f ~/Pictures/screenshots/'"
 
 # kill focused window
 bindsym $mod+Shift+q kill
