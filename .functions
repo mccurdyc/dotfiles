@@ -90,6 +90,18 @@ zkt() {
     zoekt "$@ -vendor"
 }
 
+# install the src-expose tool - https://docs.sourcegraph.com/@v3.18.0/admin/external_service/non-git#serving-repositories
+srcgrphws() {
+  docker run \
+    --rm \
+    --publish 7080:7080 \
+    --publish 127.0.0.1:3370:3370 \
+    --volume ~/.sourcegraph/config:/etc/sourcegraph \
+    --volume ~/.sourcegraph/data:/var/opt/sourcegraph \
+    sourcegraph/server:3.18.0 &
+  src-expose serve $SRC_DIR/mccurdyc &
+}
+
 zktws() {
     zoekt-webserver -index=$ZOEKT_INDEX_DIR
 }
