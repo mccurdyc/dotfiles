@@ -79,9 +79,9 @@ chef_block_prompt_string() {
 
 # lefthand
 PROMPT="%F{white}"                ## primary coloring
-PROMPT+="%M"                  ## username@hostname for ssh
-PROMPT+=":%3~ "                  ## trailing pwd dirs
-PROMPT+=' $(chef_block_prompt_string) '
+PROMPT+="%M:"                  ## username@hostname for ssh
+PROMPT+="%3~ "                  ## trailing pwd dirs
+# PROMPT+=' $(chef_block_prompt_string) '
 PROMPT+='$(git_prompt_string)'   ## make git branch bold and yellow (%B starts, %b stops)
 PROMPT+="%(1j.%jj .)"             ## jobs when present
 PROMPT+=" %(?.%F{green}%% %F{white}.%F{red}%% %F{white})" ## colored exit codes
