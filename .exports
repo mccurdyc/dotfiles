@@ -8,8 +8,18 @@ export SRC_DIR="$HOME/src/github.com"
 
 export ZOEKT_DATA_DIR="$HOME/.zoekt"
 export ZOEKT_INDEX_DIR="$ZOEKT_DATA_DIR/index"
+export ZOEKT_REPOS_DIR="$ZOEKT_DATA_DIR/repos"
+
+# doesn't work needs to include port.
+# need to follow steps here - https://github.com/sourcegraph/sourcegraph/blob/main/doc/dev/local_development.md#step-5-configure-https-reverse-proxy
+# export SRC_ENDPOINT="http://127.0.0.1"
 
 export DLV_SERVER_HOST="127.0.0.1:6073"
+
+# https://asdf-vm.com/#/core-configuration?id=environment-variables
+export ASDF_CONFIG_FILE="$HOME/.asdfrc"
+export ASDF_DEFAULT_TOOL_VERSIONS_FILENAME="$HOME/.tool-versions"
+export ASDF_DATA_DIR="$HOME/.asdf"
 
 # Set config files for easy access
 export DOTFILES_DIR="$HOME/dotfiles"
@@ -18,7 +28,7 @@ export CONFIG_NVIM="$XDG_CONFIG_HOME/nvim/init.vim"
 export CONFIG_TERM="$XDG_CONFIG_HOME/alacritty/alacritty.yml"
 export TMUX_CONF="$DOTFILES_DIR/.tmux.conf"
 
-export FZF_DEFAULT_COMMAND='fd --type f --hidden --exclude vendor'
+export FZF_DEFAULT_COMMAND='fd --type f --hidden --exclude vendor --exclude .git'
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 export FZF_ALT_C_OPTS="--preview 'tree -C {} | head -200'"
 
@@ -45,3 +55,11 @@ export LC_ALL="en_US.UTF-8";
 export MANPAGER="less -X";
 
 export DBUS_SESSION_BUS_ADDRESS=unix:path=/var/run/user/$(id -u)/bus;
+
+export PGPORT=5432
+export PGHOST=localhost
+export PGUSER=sourcegraph
+export PGPASSWORD=sourcegraph
+export PGDATABASE=sourcegraph
+export PGSSLMODE=disable
+export PGDATA_DIR=$HOME/.postgres/data
