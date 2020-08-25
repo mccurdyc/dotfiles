@@ -1,4 +1,8 @@
-## purpose; zsh shell config; well integrated with vim and tmux.
+if [[ "$ZPROF" = true ]]; then
+  zmodload zsh/zprof
+fi
+
+# purpose; zsh shell config; well integrated with vim and tmux.
 ## warning; zsh aliases require double quotes; bash aliases do not.
 
 #!/bin/bash
@@ -53,7 +57,8 @@ REPORTTIME=2      ## stats if cmd takes >2sec
 PROMPT_COMMAND='echo -ne "\033]0;${USER}@${HOSTNAME}: ${PWD}\007"'
 
 # https://docs.chef.io/workstation/workstation_setup/
-eval "$(chef shell-init zsh)"
+# THIS IS SLOW!!!!!!
+# eval "$(chef shell-init zsh)"
 
 # This is neccessary for fzf key-bindings to work
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
@@ -70,3 +75,10 @@ source <(kubectl completion zsh)
 source $HOME/.zsh/plugins/Aloxaf/fzf-tab/fzf-tab.plugin.zsh
 
 eval "$(hub alias -s)"
+
+# asdf
+source /opt/asdf-vm/asdf.sh
+
+if [[ "$ZPROF" = true ]]; then
+  zprof
+fi
