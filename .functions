@@ -107,7 +107,12 @@ zktws() {
 }
 
 zktidx() {
-    zoekt-indexserver -mirror_config $XDG_CONFIG_HOME/zoekt/config.json -data_dir=$ZOEKT_DATA_DIR -git_index_flags='-require_ctags=true'
+    zoekt-indexserver -cpu_fraction=0.9 -index_timeout="3h0m0s" -mirror_config $XDG_CONFIG_HOME/zoekt/config.json -data_dir=$ZOEKT_DATA_DIR -git_index_flags='-require_ctags=true'
+}
+
+zktrepo() {
+  zoekt-mirror-github -dest ~/.zoekt/repos -token ~/.github/credentials -user ${1} -name ${2}
+  zoekt-git-index -index $ZOEKT_INDEX_DIR -branches master -prefix origin/ $ZOEKT_REPOS_DIR/github.com/${1}/${2}.git
 }
 
 tmpzkt() {
