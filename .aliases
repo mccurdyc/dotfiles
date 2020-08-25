@@ -7,14 +7,10 @@ alias gpg='gpg2'
 
 alias zoekt="zoekt -index_dir=$ZOEKT_INDEX_DIR -r"
 
+alias zoom="QT_SCALE_FACTOR=1 zoom"
+
 ## https://golang.org/doc/install#extra_versions
 alias go="go1.14.1"
-
-## docker
-if command -v "docker" > /dev/null 2>&1; then
-  alias docker_force_clean_system="docker system prune --all --force"
-  alias docker_force_clean_images="docker rmi --force $(docker images -a -q)"
-fi
 
 ## tree
 alias tree="tree --dirsfirst --noreport -ACF"
