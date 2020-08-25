@@ -5,7 +5,6 @@ bin/
 nvim/.netrwhist
 .vim/plugged
 .vim/sessions
-!.config/spotify/Users/mccurdycolton-user/prefs
 .local/share/*
 !.local/share/nvim/shada
 !.local/share/applications/
@@ -16,3 +15,4 @@ nvim/.netrwhist
 templated-config.json
 .mozilla
 .exports_work
+.aliases_work
