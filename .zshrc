@@ -15,7 +15,7 @@ if [[ ! $DISPLAY && $XDG_VTNR -eq 1 ]]; then
 fi
 
 # Load files...
-for file in ~/.{zsh_prompt,aliases,fzf.zsh,functions,path,gitfunc,exports,exports_work}; do
+for file in ~/.{zsh_prompt,aliases,aliases_work,fzf.zsh,functions,path,gitfunc,exports,exports_work}; do
 	if [[ -r "$file" ]] && [[ -f "$file" ]]; then
 		# shellcheck source=/dev/null
 		source "$file"
@@ -69,12 +69,12 @@ if [ -f '/home/mccurdyc/oss/google-cloud-sdk/path.zsh.inc' ]; then . '/home/mccu
 # The next line enables shell command completion for gcloud.
 if [ -f '/home/mccurdyc/oss/google-cloud-sdk/completion.zsh.inc' ]; then . '/home/mccurdyc/oss/google-cloud-sdk/completion.zsh.inc'; fi
 
-source <(kubectl completion zsh)
-
 # This has to be sourced late
 source $HOME/.zsh/plugins/Aloxaf/fzf-tab/fzf-tab.plugin.zsh
 
 eval "$(hub alias -s)"
+
+eval "$(fastly --completion-script-zsh)"
 
 # asdf
 source /opt/asdf-vm/asdf.sh
