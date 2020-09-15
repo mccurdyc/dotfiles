@@ -5,10 +5,14 @@ alias tfsec='eval $(AWS_PROFILE=${PWD##*/} sops --decrypt --input-type env secre
 
 alias gpg='gpg2'
 
+alias diff='diff -u'
+
 alias zoekt="zoekt -index_dir=$ZOEKT_INDEX_DIR -r"
 
-## https://golang.org/doc/install#extra_versions
-alias go="go1.14.1"
+## https://golang.org/doc/manage-install
+## $ go get golang.org/dl/goX.Y.Z
+## $ goX.Y.Z download
+alias go="go1.15.1"
 
 ## tree
 alias tree="tree --dirsfirst --noreport -ACF"
