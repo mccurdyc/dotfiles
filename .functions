@@ -78,6 +78,10 @@ tmpd() {
 	cd "$dir" || exit
 }
 
+dlvs() {
+  dlv debug $1 --headless --accept-multiclient -l $DLV_SERVER_HOST -- "${@:2}"
+}
+
 dlvts() {
   dlv test $1 --headless --accept-multiclient -l $DLV_SERVER_HOST -- "${@:2}"
 }
