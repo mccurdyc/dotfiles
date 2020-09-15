@@ -10,7 +10,7 @@ Plug 'jreybert/vimagit' " additional git tools. cycle staged changes
 Plug 'tpope/vim-surround'
 Plug 'tomtom/tcomment_vim'
 Plug 'airblade/vim-gitgutter'
-Plug 'w0rp/ale'                " linting
+Plug 'dense-analysis/ale'      " linting and general interation with language servers
 Plug 'sebdah/vim-delve'        " debugger
 Plug 'kshenoy/vim-signature'   " display marks in sidebar
 Plug 'itchyny/lightline.vim'   " light, configurable statusline
@@ -18,14 +18,15 @@ Plug 'daviesjamie/vim-base16-lightline'
 Plug 'edkolev/tmuxline.vim'
 Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries', 'for': 'go' }
 Plug 'rust-lang/rust.vim'
-Plug 'neoclide/coc.nvim', {'tag': '*', 'branch': 'release'}
+Plug 'neovim/nvim-lspconfig' " required nvim 0.5 HEAD
 Plug 'mhinz/vim-startify' " startup screen
-Plug 'Shougo/neosnippet'
-Plug 'Shougo/neosnippet-snippets' " Default snippets for many languages
 Plug 'lervag/vimtex', {'for': 'tex'}
 Plug 'hashivim/vim-terraform'
 Plug 'juliosueiras/vim-terraform-completion'
 Plug 'rhysd/git-messenger.vim'
+" Plug 'neoclide/coc.nvim', {'tag': '*', 'branch': 'release'}
+Plug 'Shougo/neosnippet'
+Plug 'Shougo/neosnippet-snippets' " Default snippets for many languages
 " Plug 'ludovicchabant/vim-gutentags' " broke: https://github.com/ludovicchabant/vim-gutentags/issues/283
 " Plug 'junegunn/limelight.vim' " plugin to focus / greyout other blocks
 " Plug 'junegunn/goyo.vim'
@@ -34,18 +35,11 @@ Plug 'vim-scripts/colorizer' " highlight hex colors
 " colorscheme
 Plug 'mccurdyc/base16-vim'
 
-" Always load the vim-devicons very last
-Plug 'ryanoasis/vim-devicons' " also requires 'pacman -S ttf-font-awesome, nerd-font-source-code-pro'
-
 call plug#end()
 
 "----------------------------------------------
 " general settings
 "----------------------------------------------
-" https://mokagio.github.io/tech-journal/2015/02/12/vim-copy-and-paste-multiple-times.html
-" be able to paste more than once
-xnoremap p pgvy
-
 " Display screen redraws faster
 set nocursorcolumn
 set nocursorline
@@ -89,7 +83,7 @@ set undofile
 " Display problematic whitespace
 set listchars=tab:➜\ ,trail:•,extends:#,precedes:#,nbsp:⌻
 set list
-" [gofmt](https://golang.org/cmd/gofmt) uses tabs, so disable the listing for Go
+" Go uses tabs, so disable the highlighting for Go
 au Filetype go set nolist
 
 " https://vim.fandom.com/wiki/Set_working_directory_to_the_current_file
@@ -102,8 +96,48 @@ syntax manual
 au Filetype * setlocal syntax=ON
 autocmd Filetype * if getfsize(@%) > 1000000 | setlocal syntax=OFF | endif
 
+set rtp +=~/.vim " necessary to reload .vim dir with autoload functions
+nnoremap <leader>vimrc :call reloadvimrc#Run()<cr>
+
+" General Keybindings
 let maplocalleader = ","
 let mapleader = ","
+
+" Navigation
+" https://thoughtbot.com/blog/vim-splits-move-faster-and-more-naturally
+set splitbelow " default horizontal split below instead of above
+set splitright " default vertical split right
+
+nnoremap <C-s> :sp <CR>
+" Autosave buffers before leaving them
+autocmd BufLeave * silent! :wa
+
+" navigating vim splits
+nnoremap <C-J> <C-W><C-J>
+nnoremap <C-K> <C-W><C-K>
+nnoremap <C-L> <C-W><C-L>
+nnoremap <C-H> <C-W><C-H>
+
+" To use `ALT+{h,j,k,l}` to navigate windows from any mode:
+tnoremap <A-h> <C-\><C-N><C-w>h
+tnoremap <A-j> <C-\><C-N><C-w>j
+tnoremap <A-k> <C-\><C-N><C-w>k
+tnoremap <A-l> <C-\><C-N><C-w>l
+inoremap <A-h> <C-\><C-N><C-w>h
+inoremap <A-j> <C-\><C-N><C-w>j
+inoremap <A-k> <C-\><C-N><C-w>k
+inoremap <A-l> <C-\><C-N><C-w>l
+nnoremap <A-h> <C-w>h
+nnoremap <A-j> <C-w>j
+nnoremap <A-k> <C-w>k
+nnoremap <A-l> <C-w>l
+
+" replace visual selection globally, confirm.
+vnoremap <C-r> "hy:%s/<C-r>h//gc<left><left><left>
+
+" https://mokagio.github.io/tech-journal/2015/02/12/vim-copy-and-paste-multiple-times.html
+" be able to paste more than once
+xnoremap p pgvy
 
 " clear search highlights
 no <silent><Leader>cs :nohls<CR>
@@ -112,8 +146,7 @@ no <silent><Leader>cs :nohls<CR>
 " I had it also in command and visual but caused delays and unexpected escape
 " calls.
 inoremap kj <Esc>
-" vnoremap kj <Esc>
-" cnoremap kj <Esc>
+nnoremap dg :q!<CR>
 
 " turn spell check on for markdown and tex files
 autocmd BufRead,BufNewFile *.md setlocal spell
@@ -174,43 +207,6 @@ let g:goyo_width = 120
 let g:gitgutter_sign_added = '+'
 let g:gitgutter_sign_modified = '~'
 let g:gitgutter_sign_removed = '-'
-
-" Plugin: w0rp/ale
-let g:ale_set_loclist = 0
-let g:ale_set_quickfix = 1
-let g:ale_open_list = 1
-
-let g:ale_sign_column_always = 1 " always keep sign gutter open to avoid jumpiness
-
-" moving between warnings and errors quickly.
-nmap <silent> <C-k> <Plug>(ale_previous_wrap)
-nmap <silent> <C-j> <Plug>(ale_next_wrap)
-
-" Show 5 lines of errors (default: 10)
-let g:ale_list_window_size = 10
-
-" Error and warning signs.
-let g:ale_sign_error = '✗'
-let g:ale_sign_warning = '▸'
-
-let g:ale_fixers = {
-\   '*': ['remove_trailing_lines', 'trim_whitespace'],
-\   'javascript': ['eslint'],
-\   'go': ['gofmt'],
-\   'terraform': ['terraform'],
-\}
-
-let g:ale_linters = {
-\ 'go': ['gopls', 'golangci-lint', 'gofmt'],
-\ 'rust': ['rustc'],
-\ 'terraform': ['tflint'],
-\ }
-
-let g:ale_go_golangci_lint_executable = '$GOPATH/bin/golangci-lint'
-" let g:ale_terraform_terraform_executable = '/usr/bin/terraform'
-let g:ale_terraform_tflint_executable = '$GOPATH/bin/tflint'
-
-let b:ale_fix_on_save = 1
 
 " Plugin: https://github.com/junegunn/fzf.vim
 let g:fzf_command_prefix = 'Fzf'
@@ -329,35 +325,33 @@ set noshowmode
 
 " Plugin: https://github.com/neoclide/coc-snippets
 " Use <C-l> for trigger snippet expand.
-imap <C-l> <Plug>(coc-snippets-expand)
-
-" Use <C-j> for select text for visual placeholder of snippet.
-vmap <C-j> <Plug>(coc-snippets-select)
-
-" Use <C-j> for jump to next placeholder, it's default of coc.nvim
-let g:coc_snippet_next = '<c-j>'
-
-" Use <C-k> for jump to previous placeholder, it's default of coc.nvim
-let g:coc_snippet_prev = '<c-k>'
-
-" Use <C-j> for both expand and jump (make expand higher priority.)
-imap <C-j> <Plug>(coc-snippets-expand-jump)
-
-" Make <tab> used for trigger completion, completion confirm, snippet expand and jump like VSCode.
-inoremap <silent><expr> <TAB>
-      \ pumvisible() ? coc#_select_confirm() :
-      \ coc#expandableOrJumpable() ? "\<C-r>=coc#rpc#request('doKeymap', ['snippets-expand-jump',''])\<CR>" :
-      \ <SID>check_back_space() ? "\<TAB>" :
-      \ coc#refresh()
-
-function! s:check_back_space() abort
-  let col = col('.') - 1
-  return !col || getline('.')[col - 1]  =~# '\s'
-endfunction
-
-let g:coc_snippet_next = '<tab>'
-
-" Pluin: https://github.com/jiangmiao/auto-pairs
+" imap <C-l> <Plug>(coc-snippets-expand)
+"
+" " Use <C-j> for select text for visual placeholder of snippet.
+" vmap <C-j> <Plug>(coc-snippets-select)
+"
+" " Use <C-j> for jump to next placeholder, it's default of coc.nvim
+" let g:coc_snippet_next = '<c-j>'
+"
+" " Use <C-k> for jump to previous placeholder, it's default of coc.nvim
+" let g:coc_snippet_prev = '<c-k>'
+"
+" " Use <C-j> for both expand and jump (make expand higher priority.)
+" imap <C-j> <Plug>(coc-snippets-expand-jump)
+"
+" " Make <tab> used for trigger completion, completion confirm, snippet expand and jump like VSCode.
+" inoremap <silent><expr> <TAB>
+"       \ pumvisible() ? coc#_select_confirm() :
+"       \ coc#expandableOrJumpable() ? "\<C-r>=coc#rpc#request('doKeymap', ['snippets-expand-jump',''])\<CR>" :
+"       \ <SID>check_back_space() ? "\<TAB>" :
+"       \ coc#refresh()
+"
+" function! s:check_back_space() abort
+"   let col = col('.') - 1
+"   return !col || getline('.')[col - 1]  =~# '\s'
+" endfunction
+"
+" let g:coc_snippet_next = '<tab>'
 
 " Plugin: https://github.com/fatih/vim-go
 " https://github.com/fatih/vim-go/blob/master/doc/vim-go.txt
@@ -454,132 +448,87 @@ let g:vimtex_view_method = 'mupdf'
 let g:vimtex_view_mupdf_options = '-r 250'
 let g:vimtex_compiler_progname = 'nvr'
 
-" Plugin: https://github.com/neoclide/coc.nvim
-" Better display for messages
-set cmdheight=2
-" don't give |ins-completion-menu| messages.
-set shortmess+=c
-" always show signcolumns
-set signcolumn=yes
+" Plugin: https://github.com/neovim/nvim-lspconfig
+" Resource(s)
+" * https://teukka.tech/luanvim.html
+lua << EOF
+local nvim_lsp = require 'nvim_lsp'
 
-nmap <leader>rf <Plug>(coc-refactor)
-nmap <leader>cp <Plug>(coc-cursors-position)
-" Multi-cursor
-xmap <leader>cr <Plug>(coc-cursors-range)
-nmap <leader>cw <Plug>(coc-cursors-word)
+nvim_lsp.gopls.setup({
+  root_dir = nvim_lsp.util.root_pattern('.git');
+})
+nvim_lsp.rls.setup({})
+nvim_lsp.rust_analyzer.setup({})
+nvim_lsp.terraformls.setup({})
+nvim_lsp.pyls.setup({})
+nvim_lsp.bashls.setup({})
 
-" show signature help on param hover
-autocmd User CocJumpPlaceholder call CocActionAsync('showSignatureHelp')
+nvim_lsp.yamlls.setup({})
+nvim_lsp.jsonls.setup({})
+EOF
 
-" Use tab for trigger completion with characters ahead and navigate.
-" Use command ':verbose imap <tab>' to make sure tab is not mapped by other plugin.
-inoremap <silent><expr> <TAB>
-      \ pumvisible() ? "\<C-n>" :
-      \ <SID>check_back_space() ? "\<TAB>" :
-      \ coc#refresh()
-inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
+" Plugin: https://github.com/dense-analysis/ale
+" Resource(s)
+" * https://www.vimfromscratch.com/articles/vim-and-language-server-protocol/
+" Colors handled by colorscheme
+highlight link ALEWarningSign String
+highlight link ALEErrorSign WarningMsg
+highlight link ALEStyleError error
+highlight link ALEStyleWarning error
+highlight link ALEError error
+highlight link AleWarning error
 
-function! s:check_back_space() abort
-  let col = col('.') - 1
-  return !col || getline('.')[col - 1]  =~# '\s'
-endfunction
+set omnifunc=ale#completion#OmniFunc
+let g:ale_completion_enabled = 1
+let g:ale_completion_autoimport = 1
 
-" Use <c-space> to trigger completion.
-inoremap <silent><expr> <c-space> coc#refresh()
+" Use quickfix instead of loclist
+" https://github.com/dense-analysis/ale#5xiii-how-can-i-use-the-quickfix-list-instead-of-the-loclist
+let g:ale_set_loclist = 0
+let g:ale_set_quickfix = 1
 
-" Use <cr> to confirm completion, `<C-g>u` means break undo chain at current position.
-" Coc only does snippet and additional edit on confirm.
-inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
-" Or use `complete_info` if your vim support it, like:
-" inoremap <expr> <cr> complete_info()["selected"] != "-1" ? "\<C-y>" : "\<C-g>u\<CR>"
+nmap K :ALEHover<CR>
+nmap gr :ALEFindReferences<CR>
+nmap gd :ALEGoToDefinition<CR>
 
-" Use `[g` and `]g` to navigate diagnostics
-nmap <silent> [g <Plug>(coc-diagnostic-prev)
-nmap <silent> ]g <Plug>(coc-diagnostic-next)
+set signcolumn=yes " always show signcolumns
+let g:ale_sign_column_always = 1 " always keep sign gutter open to avoid jumpiness
 
-" Remap keys for gotos
-nmap <silent> gd <Plug>(coc-definition)
-nnoremap dg :q!<CR>
-nmap <silent> gt <Plug>(coc-type-definition)
-nmap <silent> gi <Plug>(coc-implementation)
-nmap <silent> gr <Plug>(coc-references)
+" moving between warnings and errors quickly.
+nmap <silent> <C-k> <Plug>(ale_previous_wrap)
+nmap <silent> <C-j> <Plug>(ale_next_wrap)
 
-" Use K to show documentation in preview window
-nnoremap <silent> K :call <SID>show_documentation()<CR>
+" Show 5 lines of errors (default: 10)
+let g:ale_list_window_size = 10
 
-function! s:show_documentation()
-  if (index(['vim','help'], &filetype) >= 0)
-    execute 'h '.expand('<cword>')
-  else
-    call CocAction('doHover')
-  endif
-endfunction
+" Error and warning signs.
+let g:ale_sign_error = '✗'
+let g:ale_sign_warning = '▸'
 
-" Highlight symbol under cursor on CursorHold
-autocmd CursorHold * silent call CocActionAsync('highlight')
+" Only lint on save
+" https://github.com/dense-analysis/ale#5xii-how-can-i-run-linters-only-when-i-save-files
+let g:ale_lint_on_text_changed = 'never'
+let g:ale_lint_on_insert_leave = 0
+" if you don't want linters to run on opening a file
+let g:ale_lint_on_enter = 1
+let g:ale_open_list = 1
+let g:ale_keep_list_window_open = 1
+" Set this. Airline will handle the rest.
+let g:airline#extensions#ale#enabled = 1
 
-" Remap for rename current word
-nmap <leader>rn <Plug>(coc-rename)
+let g:ale_fixers = {
+\   '*': ['remove_trailing_lines', 'trim_whitespace'],
+\   'go': ['gofmt'],
+\   'terraform': ['terraform fmt'],
+\}
 
-" Fix autofix problem of current line
-nmap <leader>qf  <Plug>(coc-fix-current)
+let g:ale_linters = {
+\ 'go': ['gopls', 'gofmt'],
+\ 'rust': ['rustc'],
+\ 'terraform': ['tflint'],
+\ }
 
-" Add status line support, for integration with other plugin, checkout `:h coc-status`
-set statusline^=%{coc#status()}%{get(b:,'coc_current_function','')}
-
-" Using CocList
-" Show all diagnostics
-nnoremap <silent> <space>a  :<C-u>CocList diagnostics<cr>
-" Manage extensions
-nnoremap <silent> <space>e  :<C-u>CocList extensions<cr>
-" Show commands
-nnoremap <silent> <space>c  :<C-u>CocList commands<cr>
-" Find symbol of current document
-nnoremap <silent> <space>o  :<C-u>CocList outline<cr>
-" Search workspace symbols
-nnoremap <silent> <space>s  :<C-u>CocList -I symbols<cr>
-" Do default action for next item.
-nnoremap <silent> <space>j  :<C-u>CocNext<CR>
-" Do default action for previous item.
-nnoremap <silent> <space>k  :<C-u>CocPrev<CR>
-" Resume latest coc list
-nnoremap <silent> <space>p  :<C-u>CocListResume<CR>
-
-"----------------------------------------------
-" navigation settings
-"----------------------------------------------
-" https://thoughtbot.com/blog/vim-splits-move-faster-and-more-naturally
-set splitbelow
-set splitright
-
-nnoremap <C-s> :sp <CR>
-
-" Autosave buffers before leaving them
-autocmd BufLeave * silent! :wa
-
-" splitting
-set splitbelow " default horizontal split below instead of above
-set splitright " default vertical split right
-
-" navigating vim splits
-nnoremap <C-J> <C-W><C-J>
-nnoremap <C-K> <C-W><C-K>
-nnoremap <C-L> <C-W><C-L>
-nnoremap <C-H> <C-W><C-H>
-
-" To use `ALT+{h,j,k,l}` to navigate windows from any mode:
-tnoremap <A-h> <C-\><C-N><C-w>h
-tnoremap <A-j> <C-\><C-N><C-w>j
-tnoremap <A-k> <C-\><C-N><C-w>k
-tnoremap <A-l> <C-\><C-N><C-w>l
-inoremap <A-h> <C-\><C-N><C-w>h
-inoremap <A-j> <C-\><C-N><C-w>j
-inoremap <A-k> <C-\><C-N><C-w>k
-inoremap <A-l> <C-\><C-N><C-w>l
-nnoremap <A-h> <C-w>h
-nnoremap <A-j> <C-w>j
-nnoremap <A-k> <C-w>k
-nnoremap <A-l> <C-w>l
+let b:ale_fix_on_save = 1
 
 " Plugin: https://github.com/mhinz/vim-startify
 let g:startify_change_to_dir = 0 " when set to true, messes up CTRL-P
@@ -625,18 +574,89 @@ let base16colorspace=256  " Access colors present in 256 colorspace
 colorscheme base16-eighties-minimal
 " autocmd FileType go colorscheme base16-eighties-minimal
 
-highlight link ALEWarningSign String
-highlight link ALEErrorSign WarningMsg
-highlight link ALEStyleError error
-highlight link ALEStyleWarning error
-highlight link ALEError error
-highlight link AleWarning error
+" DEAD
+" Plugin: https://github.com/neoclide/coc.nvim
+" set cmdheight=2 " Better display for messages
+" set shortmess+=c " don't give |ins-completion-menu| messages.
 
-set rtp +=~/.vim " necessary to reload .vim dir with autoload functions
-nnoremap <leader>vimrc :call reloadvimrc#Run()<cr>
-
-" replace visual selection globally, confirm.
-vnoremap <C-r> "hy:%s/<C-r>h//gc<left><left><left>
-
-"" Resources
-" * moving around in the vim cmdline - :h cmdline-editing
+" nmap <leader>rf <Plug>(coc-refactor)
+" nmap <leader>cp <Plug>(coc-cursors-position)
+" " Multi-cursor
+" xmap <leader>cr <Plug>(coc-cursors-range)
+" nmap <leader>cw <Plug>(coc-cursors-word)
+"
+" " show signature help on param hover
+" autocmd User CocJumpPlaceholder call CocActionAsync('showSignatureHelp')
+"
+" " Use tab for trigger completion with characters ahead and navigate.
+" " Use command ':verbose imap <tab>' to make sure tab is not mapped by other plugin.
+" inoremap <silent><expr> <TAB>
+"       \ pumvisible() ? "\<C-n>" :
+"       \ <SID>check_back_space() ? "\<TAB>" :
+"       \ coc#refresh()
+" inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
+"
+" function! s:check_back_space() abort
+"   let col = col('.') - 1
+"   return !col || getline('.')[col - 1]  =~# '\s'
+" endfunction
+"
+" " Use <c-space> to trigger completion.
+" inoremap <silent><expr> <c-space> coc#refresh()
+"
+" " Use <cr> to confirm completion, `<C-g>u` means break undo chain at current position.
+" " Coc only does snippet and additional edit on confirm.
+" inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
+" " Or use `complete_info` if your vim support it, like:
+" " inoremap <expr> <cr> complete_info()["selected"] != "-1" ? "\<C-y>" : "\<C-g>u\<CR>"
+"
+" " Use `[g` and `]g` to navigate diagnostics
+" nmap <silent> [g <Plug>(coc-diagnostic-prev)
+" nmap <silent> ]g <Plug>(coc-diagnostic-next)
+"
+" " Remap keys for gotos
+" nmap <silent> gd <Plug>(coc-definition)
+" nmap <silent> gt <Plug>(coc-type-definition)
+" nmap <silent> gi <Plug>(coc-implementation)
+" nmap <silent> gr <Plug>(coc-references)
+"
+" " Use K to show documentation in preview window
+" nnoremap <silent> K :call <SID>show_documentation()<CR>
+"
+" function! s:show_documentation()
+"   if (index(['vim','help'], &filetype) >= 0)
+"     execute 'h '.expand('<cword>')
+"   else
+"     call CocAction('doHover')
+"   endif
+" endfunction
+"
+" " Highlight symbol under cursor on CursorHold
+" autocmd CursorHold * silent call CocActionAsync('highlight')
+"
+" " Remap for rename current word
+" nmap <leader>rn <Plug>(coc-rename)
+"
+" " Fix autofix problem of current line
+" nmap <leader>qf  <Plug>(coc-fix-current)
+"
+" " Add status line support, for integration with other plugin, checkout `:h coc-status`
+" set statusline^=%{coc#status()}%{get(b:,'coc_current_function','')}
+"
+" " Using CocList
+" " Show all diagnostics
+" nnoremap <silent> <space>a  :<C-u>CocList diagnostics<cr>
+" " Manage extensions
+" nnoremap <silent> <space>e  :<C-u>CocList extensions<cr>
+" " Show commands
+" nnoremap <silent> <space>c  :<C-u>CocList commands<cr>
+" " Find symbol of current document
+" nnoremap <silent> <space>o  :<C-u>CocList outline<cr>
+" " Search workspace symbols
+" nnoremap <silent> <space>s  :<C-u>CocList -I symbols<cr>
+" " Do default action for next item.
+" nnoremap <silent> <space>j  :<C-u>CocNext<CR>
+" " Do default action for previous item.
+" nnoremap <silent> <space>k  :<C-u>CocPrev<CR>
+" " Resume latest coc list
+" nnoremap <silent> <space>p  :<C-u>CocListResume<CR>
