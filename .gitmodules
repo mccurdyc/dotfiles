@@ -10,3 +10,6 @@
 [submodule ".zsh/plugins/zsh-git-prompt"]
 	path = .zsh/plugins/zsh-git-prompt
 	url = git@github.com:mccurdyc/zsh-git-prompt.git
+[submodule "colors/base16-vim"]
+	path = colors/base16-vim
+	url = git@github.com:mccurdyc/base16-vim.git

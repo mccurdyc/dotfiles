@@ -98,20 +98,14 @@ au Filetype * setlocal syntax=ON
 autocmd Filetype * if getfsize(@%) > 1000000 | setlocal syntax=OFF | endif
 
 set rtp +=~/.vim " necessary to reload .vim dir with autoload functions
-nnoremap <leader>vimrc :call reloadvimrc#Run()<cr>
+nnoremap <leader>vrc :call reloadvimrc#Run()<cr>
 
-" augroup quickfix
-"     autocmd!
-"     " wrap long lines in quickfix - https://github.com/fatih/vim-go/issues/1271
-"     autocmd FileType qf setlocal wrap
-" augroup END
-
-" Autoclose quickfix/location list when leaving a file
-" https://stackoverflow.com/questions/7476126/how-to-automatically-close-the-quick-fix-window-when-leaving-a-file
-" au FileType qf call CloseIfBufferIsEmpty()
-" function! CloseIfBufferIsEmpty()
-"   if getline(1) == '' |q|endif
-" endfunction
+" quickfix styling
+aug QuickFix
+  au FileType qf setlocal nonumber colorcolumn=
+  " wrap long lines in quickfix - https://github.com/fatih/vim-go/issues/1271
+  autocmd FileType qf setlocal wrap
+aug END
 
 aug ListClose
   au!
@@ -139,7 +133,7 @@ endfunction
 let maplocalleader = ","
 let mapleader = ","
 
-" Navigate quickfix list with ease
+" Quickfix keybindings
 nnoremap <silent> [q :cprevious<CR>
 nnoremap <silent> ]q :cnext<CR>
 
@@ -475,6 +469,7 @@ let g:vimtex_compiler_progname = 'nvr'
 " Plugin: https://github.com/neovim/nvim-lspconfig
 " Resource(s)
 " * https://teukka.tech/luanvim.html
+" These display errors from the LS to the right of the line.
 lua << EOF
 local nvim_lsp = require 'nvim_lsp'
 
@@ -509,7 +504,7 @@ set shortmess+=c
 
 let g:completion_enable_snippet = 'UltiSnips'
 let g:completion_enable_auto_hover = 0 " don't print hover details because it doesn't look good.
-let g:completion_sorting = "length"
+let g:completion_sorting = "none"
 let g:completion_matching_strategy_list = ['exact', 'substring', 'fuzzy', 'all']
 let g:completion_matching_ignore_case = 1
 
@@ -552,7 +547,7 @@ let g:ale_set_quickfix = 1
 set signcolumn=yes " always show signcolumns
 let g:ale_sign_column_always = 1 " always keep sign gutter open to avoid jumpiness
 
-" Show 5 lines of errors (default: 10)
+" Show X lines of errors (default: 10)
 let g:ale_list_window_size = 10
 
 " Error and warning signs.
@@ -561,12 +556,13 @@ let g:ale_sign_warning = '▸'
 
 " Only lint on save
 " https://github.com/dense-analysis/ale#5xii-how-can-i-run-linters-only-when-i-save-files
-let g:ale_lint_on_text_changed = 'never'
+let g:ale_lint_on_text_changed = 0
 let g:ale_lint_on_insert_leave = 0
+let g:ale_lint_on_save = 1
 " if you don't want linters to run on opening a file
 let g:ale_lint_on_enter = 0
-let g:ale_open_list = 1
-let g:ale_keep_list_window_open = 0
+let g:ale_open_list = 1 " open list at bottom with errors
+let g:ale_keep_list_window_open = 0 " close list windows when there aren't errors
 " Set this. Airline will handle the rest.
 let g:airline#extensions#ale#enabled = 1
 
