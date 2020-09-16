@@ -99,9 +99,48 @@ autocmd Filetype * if getfsize(@%) > 1000000 | setlocal syntax=OFF | endif
 set rtp +=~/.vim " necessary to reload .vim dir with autoload functions
 nnoremap <leader>vimrc :call reloadvimrc#Run()<cr>
 
+" augroup quickfix
+"     autocmd!
+"     " wrap long lines in quickfix - https://github.com/fatih/vim-go/issues/1271
+"     autocmd FileType qf setlocal wrap
+" augroup END
+
+" Autoclose quickfix/location list when leaving a file
+" https://stackoverflow.com/questions/7476126/how-to-automatically-close-the-quick-fix-window-when-leaving-a-file
+" au FileType qf call CloseIfBufferIsEmpty()
+" function! CloseIfBufferIsEmpty()
+"   if getline(1) == '' |q|endif
+" endfunction
+
+aug ListClose
+  au!
+  au WinEnter * if winnr('$') == 1 && &buftype == "quickfix"|q|endif
+  au WinEnter * if winnr('$') == 1 && (&buftype == "quickfix" || &buftype == "locationlist") | lclose | endif
+aug END
+
+au FileType qf call AdjustWindowHeight(3, 10)
+function! AdjustWindowHeight(minheight, maxheight)
+    let l = 1
+    let n_lines = 0
+    let w_width = winwidth(0)
+    while l <= line('$')
+        " number to float for division
+        let l_len = strlen(getline(l)) + 0.0
+        let line_width = l_len/w_width
+        let n_lines += float2nr(ceil(line_width))
+        let l += 1
+    endw
+    exe max([min([n_lines, a:maxheight]), a:minheight]) . "wincmd _"
+endfunction
+" https://gist.github.com/juanpabloaj/5845848
+
 " General Keybindings
 let maplocalleader = ","
 let mapleader = ","
+
+" Navigate quickfix list with ease
+nnoremap <silent> [q :cprevious<CR>
+nnoremap <silent> ]q :cnext<CR>
 
 " Navigation
 " https://thoughtbot.com/blog/vim-splits-move-faster-and-more-naturally
