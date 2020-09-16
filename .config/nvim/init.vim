@@ -2,6 +2,9 @@ call plug#begin('~/.vim/plugged')
 
 Plug 'junegunn/fzf.vim'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': { -> fzf#install() } }
+Plug 'neovim/nvim-lspconfig' " required nvim 0.5 HEAD
+Plug 'dense-analysis/ale'      " linting and general interation with language servers
+Plug 'nvim-lua/completion-nvim'
 Plug 'terryma/vim-multiple-cursors'
 Plug 'airblade/vim-rooter'
 Plug 'voldikss/vim-floaterm' " floating terminal toggle
@@ -10,7 +13,6 @@ Plug 'jreybert/vimagit' " additional git tools. cycle staged changes
 Plug 'tpope/vim-surround'
 Plug 'tomtom/tcomment_vim'
 Plug 'airblade/vim-gitgutter'
-Plug 'dense-analysis/ale'      " linting and general interation with language servers
 Plug 'sebdah/vim-delve'        " debugger
 Plug 'kshenoy/vim-signature'   " display marks in sidebar
 Plug 'itchyny/lightline.vim'   " light, configurable statusline
@@ -18,11 +20,11 @@ Plug 'daviesjamie/vim-base16-lightline'
 Plug 'edkolev/tmuxline.vim'
 Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries', 'for': 'go' }
 Plug 'rust-lang/rust.vim'
-Plug 'neovim/nvim-lspconfig' " required nvim 0.5 HEAD
 Plug 'mhinz/vim-startify' " startup screen
 Plug 'lervag/vimtex', {'for': 'tex'}
-Plug 'hashivim/vim-terraform'
-Plug 'juliosueiras/vim-terraform-completion'
+Plug 'hashivim/vim-terraform' " terraform syntax highlighting
+" Plug 'vim-syntastic/syntastic'
+" Plug 'juliosueiras/vim-terraform-completion'
 Plug 'rhysd/git-messenger.vim'
 " Plug 'neoclide/coc.nvim', {'tag': '*', 'branch': 'release'}
 Plug 'Shougo/neosnippet'
@@ -66,7 +68,6 @@ set shiftwidth=2
 set expandtab " insert spaces for tab
 set smarttab " tab intelligently on newline
 set shiftround
-set completeopt+=noselect
 set ttyfast                    " fix slow scrolling
 set lazyredraw                 " fix slow screen redrawing
 set colorcolumn=80
@@ -150,12 +151,6 @@ set splitright " default vertical split right
 nnoremap <C-s> :sp <CR>
 " Autosave buffers before leaving them
 autocmd BufLeave * silent! :wa
-
-" navigating vim splits
-nnoremap <C-J> <C-W><C-J>
-nnoremap <C-K> <C-W><C-K>
-nnoremap <C-L> <C-W><C-L>
-nnoremap <C-H> <C-W><C-H>
 
 " To use `ALT+{h,j,k,l}` to navigate windows from any mode:
 tnoremap <A-h> <C-\><C-N><C-w>h
@@ -421,16 +416,6 @@ let g:go_fmt_options = {
   \ 'gofmt': '-s',
   \ }
 
-augroup quickfix
-    autocmd!
-    " wrap long lines in quickfix - https://github.com/fatih/vim-go/issues/1271
-    autocmd FileType qf setlocal wrap
-augroup END
-
-" Navigate quickfix list with ease
-nnoremap <silent> [q :cprevious<CR>
-nnoremap <silent> ]q :cnext<CR>
-
 " For Go, don't use ctags, use Vim Go's implementation.
 au FileType go nmap <C-]> <Plug>(go-def)
 au FileType go nmap <C-t> <Plug>(go-def-pop)
@@ -496,9 +481,11 @@ local nvim_lsp = require 'nvim_lsp'
 nvim_lsp.gopls.setup({
   root_dir = nvim_lsp.util.root_pattern('.git');
 })
+nvim_lsp.terraformls.setup({
+  filetypes = { "terraform", "tf" }
+})
 nvim_lsp.rls.setup({})
 nvim_lsp.rust_analyzer.setup({})
-nvim_lsp.terraformls.setup({})
 nvim_lsp.pyls.setup({})
 nvim_lsp.bashls.setup({})
 
@@ -506,9 +493,40 @@ nvim_lsp.yamlls.setup({})
 nvim_lsp.jsonls.setup({})
 EOF
 
+" Plugin: https://github.com/nvim-lua/completion-nvim
+autocmd BufEnter * lua require'completion'.on_attach()
+
+" Use <Tab> and <S-Tab> to navigate through popup menu
+inoremap <expr> <Tab>   pumvisible() ? "\<C-n>" : "\<Tab>"
+inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+
+" http://vimdoc.sourceforge.net/htmldoc/options.html#'complete'
+" https://vimhelp.org/insert.txt.html#ins-completion
+set completeopt=menuone,noinsert,noselect
+
+" Avoid showing message extra message when using completion
+set shortmess+=c
+
+let g:completion_enable_snippet = 'UltiSnips'
+let g:completion_enable_auto_hover = 0 " don't print hover details because it doesn't look good.
+let g:completion_sorting = "length"
+let g:completion_matching_strategy_list = ['exact', 'substring', 'fuzzy', 'all']
+let g:completion_matching_ignore_case = 1
+
 " Plugin: https://github.com/dense-analysis/ale
 " Resource(s)
+" * https://github.com/dense-analysis/ale/blob/master/doc/ale.txt
 " * https://www.vimfromscratch.com/articles/vim-and-language-server-protocol/
+
+" Keybindings
+nmap K :ALEHover<CR>
+nmap gr :ALEFindReferences<CR>
+nmap gd :ALEGoToDefinition<CR>
+
+" moving between warnings and errors quickly.
+nmap <silent> <C-k> <Plug>(ale_previous_wrap)
+nmap <silent> <C-j> <Plug>(ale_next_wrap)
+
 " Colors handled by colorscheme
 highlight link ALEWarningSign String
 highlight link ALEErrorSign WarningMsg
@@ -516,6 +534,11 @@ highlight link ALEStyleError error
 highlight link ALEStyleWarning error
 highlight link ALEError error
 highlight link AleWarning error
+
+let g:ale_echo_msg_format = '%code: %%s'
+let g:ale_echo_msg_error_str = 'ERR'
+let g:ale_echo_msg_info_str = 'INFO'
+let g:ale_echo_msg_warning_str = 'WARN'
 
 set omnifunc=ale#completion#OmniFunc
 let g:ale_completion_enabled = 1
@@ -526,16 +549,8 @@ let g:ale_completion_autoimport = 1
 let g:ale_set_loclist = 0
 let g:ale_set_quickfix = 1
 
-nmap K :ALEHover<CR>
-nmap gr :ALEFindReferences<CR>
-nmap gd :ALEGoToDefinition<CR>
-
 set signcolumn=yes " always show signcolumns
 let g:ale_sign_column_always = 1 " always keep sign gutter open to avoid jumpiness
-
-" moving between warnings and errors quickly.
-nmap <silent> <C-k> <Plug>(ale_previous_wrap)
-nmap <silent> <C-j> <Plug>(ale_next_wrap)
 
 " Show 5 lines of errors (default: 10)
 let g:ale_list_window_size = 10
@@ -549,22 +564,20 @@ let g:ale_sign_warning = '▸'
 let g:ale_lint_on_text_changed = 'never'
 let g:ale_lint_on_insert_leave = 0
 " if you don't want linters to run on opening a file
-let g:ale_lint_on_enter = 1
+let g:ale_lint_on_enter = 0
 let g:ale_open_list = 1
-let g:ale_keep_list_window_open = 1
+let g:ale_keep_list_window_open = 0
 " Set this. Airline will handle the rest.
 let g:airline#extensions#ale#enabled = 1
 
 let g:ale_fixers = {
 \   '*': ['remove_trailing_lines', 'trim_whitespace'],
 \   'go': ['gofmt'],
-\   'terraform': ['terraform fmt'],
 \}
 
 let g:ale_linters = {
 \ 'go': ['gopls', 'gofmt'],
 \ 'rust': ['rustc'],
-\ 'terraform': ['tflint'],
 \ }
 
 let b:ale_fix_on_save = 1
@@ -689,13 +702,9 @@ colorscheme base16-eighties-minimal
 " nnoremap <silent> <space>e  :<C-u>CocList extensions<cr>
 " " Show commands
 " nnoremap <silent> <space>c  :<C-u>CocList commands<cr>
-" " Find symbol of current document
-" nnoremap <silent> <space>o  :<C-u>CocList outline<cr>
-" " Search workspace symbols
-" nnoremap <silent> <space>s  :<C-u>CocList -I symbols<cr>
-" " Do default action for next item.
-" nnoremap <silent> <space>j  :<C-u>CocNext<CR>
-" " Do default action for previous item.
-" nnoremap <silent> <space>k  :<C-u>CocPrev<CR>
+" nnoremap <silent> <space>o  :<C-u>CocList outline<cr> " Find symbol of current document
+" nnoremap <silent> <space>s  :<C-u>CocList -I symbols<cr> " Search workspace symbols
+" nnoremap <silent> <space>j  :<C-u>CocNext<CR> " Do default action for next item.
+" nnoremap <silent> <space>k  :<C-u>CocPrev<CR> " Do default action for previous item.
 " " Resume latest coc list
 " nnoremap <silent> <space>p  :<C-u>CocListResume<CR>
