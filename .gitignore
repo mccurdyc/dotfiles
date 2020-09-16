@@ -16,3 +16,5 @@ templated-config.json
 .mozilla
 .exports_work
 .aliases_work
+.tmux/plugins/
+.tmux/resurrect/
