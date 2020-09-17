@@ -134,6 +134,7 @@ let maplocalleader = ","
 let mapleader = ","
 
 " Quickfix keybindings
+" Also see ALE ale_next, ale_previous
 nnoremap <silent> [q :cprevious<CR>
 nnoremap <silent> ]q :cnext<CR>
 
@@ -514,6 +515,10 @@ let g:completion_matching_ignore_case = 1
 " * https://www.vimfromscratch.com/articles/vim-and-language-server-protocol/
 
 " Keybindings
+" Navigate to the next linting warning/error
+nmap <silent> <C-k> <Plug>(ale_previous)
+nmap <silent> <C-j> <Plug>(ale_next)
+
 nmap K :ALEHover<CR>
 nmap gr :ALEFindReferences<CR>
 nmap gd :ALEGoToDefinition<CR>
