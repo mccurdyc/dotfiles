@@ -492,14 +492,6 @@ let g:completion_matching_ignore_case = 1
 nmap <silent> <C-k> <Plug>(ale_previous)
 nmap <silent> <C-j> <Plug>(ale_next)
 
-nmap K :ALEHover<CR>
-nmap gr :ALEFindReferences<CR>
-nmap gd :ALEGoToDefinition<CR>
-
-" moving between warnings and errors quickly.
-nmap <silent> <C-k> <Plug>(ale_previous_wrap)
-nmap <silent> <C-j> <Plug>(ale_next_wrap)
-
 " Colors handled by colorscheme
 highlight link ALEWarningSign String
 highlight link ALEErrorSign WarningMsg
@@ -508,13 +500,13 @@ highlight link ALEStyleWarning error
 highlight link ALEError error
 highlight link AleWarning error
 
-let g:ale_echo_msg_format = '%code: %%s'
+let g:ale_echo_msg_format = '[%linter%] [%severity%] %s'
 let g:ale_echo_msg_error_str = 'ERR'
 let g:ale_echo_msg_info_str = 'INFO'
 let g:ale_echo_msg_warning_str = 'WARN'
 
 set omnifunc=ale#completion#OmniFunc
-let g:ale_completion_enabled = 1
+let g:ale_completion_enabled = 0 " let lspconfig do this
 let g:ale_completion_autoimport = 1
 
 " Use quickfix instead of loclist
