@@ -87,18 +87,11 @@ set list
 " Go uses tabs, so disable the highlighting for Go
 au Filetype go set nolist
 
-" https://vim.fandom.com/wiki/Set_working_directory_to_the_current_file
-" set working directory to the current file
-autocmd BufEnter * silent! lcd %:p:h
-
 " Allow vim to set a custom font or color for a word
 syntax enable
 syntax manual
 au Filetype * setlocal syntax=ON
 autocmd Filetype * if getfsize(@%) > 1000000 | setlocal syntax=OFF | endif
-
-set rtp +=~/.vim " necessary to reload .vim dir with autoload functions
-nnoremap <leader>vrc :call reloadvimrc#Run()<cr>
 
 " quickfix styling
 aug QuickFix
