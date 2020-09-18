@@ -393,10 +393,6 @@ let g:go_fmt_options = {
   \ 'gofmt': '-s',
   \ }
 
-" For Go, don't use ctags, use Vim Go's implementation.
-au FileType go nmap <C-]> <Plug>(go-def)
-au FileType go nmap <C-t> <Plug>(go-def-pop)
-
 au FileType go nmap <leader>gta <Plug>(go-alternate-split)
 au FileType go nmap <leader>gtt <Plug>(go-test)
 au FileType go nmap <leader>gtf :GoTestFunc!<cr>
@@ -562,60 +558,35 @@ let g:ale_sign_warning = '▸'
 let g:ale_lint_on_text_changed = 0
 let g:ale_lint_on_insert_leave = 0
 let g:ale_lint_on_save = 1
+let g:ale_fix_on_save = 1
 " if you don't want linters to run on opening a file
 let g:ale_lint_on_enter = 0
 let g:ale_open_list = 1 " open list at bottom with errors
 let g:ale_keep_list_window_open = 0 " close list windows when there aren't errors
-" Set this. Airline will handle the rest.
-let g:airline#extensions#ale#enabled = 1
 
+" ALE supported tools - https://github.com/dense-analysis/ale/blob/master/supported-tools.md
 let g:ale_fixers = {
-\   '*': ['remove_trailing_lines', 'trim_whitespace'],
-\   'go': ['gofmt'],
+\ '*': ['remove_trailing_lines', 'trim_whitespace'],
+\ 'go': ['gofmt', 'goimports'],
+\ 'rust': ['rustfmt'],
 \}
 
 let g:ale_linters = {
 \ 'go': ['gopls', 'gofmt'],
-\ 'rust': ['rustc'],
+\ 'rust': ['rls', 'rustfmt', 'rustc', 'rust-analyzer'],
 \ }
 
-let b:ale_fix_on_save = 1
+" Plugin: https://github.com/hashivim/vim-terraform
+let g:terraform_fmt_on_save=1
 
-" Plugin: https://github.com/mhinz/vim-startify
-let g:startify_change_to_dir = 0 " when set to true, messes up CTRL-P
+" Plugin: https://github.com/sirver/UltiSnips
+" Trigger configuration. You need to change this to something else than <tab> if you use https://github.com/Valloric/YouCompleteMe.
+let g:UltiSnipsExpandTrigger="<CR>"
+let g:UltiSnipsJumpForwardTrigger="<C-j>"
+let g:UltiSnipsJumpBackwardTrigger="<C-k>"
 
-let g:startify_bookmarks = [{'c': '~/.config/nvim/coc-settings.json'}, {'n': '~/dotfiles/.config/nvim/init.vim'},{'t': '~/.tmux.conf'}, {'z': '~/.zshrc'}]
-let g:startify_files_number = 3
-
-function! s:list_commits()
-    let git = 'git -C $(pwd)'
-    let commits = systemlist(git .' log --oneline | head -n10')
-    let git = 'G'. git[1:]
-    return map(commits, '{"line": matchstr(v:val, ".*")}')
-endfunction
-
-function! s:tree()
-    let tree = 'tree -d 3 -I "vendor" .'
-    let out = systemlist(tree)
-    return map(out, '{"line": matchstr(v:val, ".*")}')
-endfunction
-
-let g:startify_lists = [
-      \ { 'header': ['   MRU '. getcwd()], 'type': 'dir' },
-      \ { 'header': ['   Commits'],        'type': function('s:list_commits') },
-      \ { 'header': ['   Bookmarks'],      'type': 'bookmarks' },
-      \ ]
-
-" http://patorjk.com/software/taag/#p=display&f=3D-ASCII&t=NeoVim
-let g:startify_custom_header = [
- \'  ________   _______   ________  ___      ___ ___  _____ ______       ',
- \' |\   ___  \|\  ___ \ |\   __  \|\  \    /  /|\  \|\   _ \  _   \     ',
- \' \ \  \\ \  \ \   __/|\ \  \|\  \ \  \  /  / | \  \ \  \\\__\ \  \    ',
- \'  \ \  \\ \  \ \  \_|/_\ \  \\\  \ \  \/  / / \ \  \ \  \\|__| \  \   ',
- \'   \ \  \\ \  \ \  \_|\ \ \  \\\  \ \    / /   \ \  \ \  \    \ \  \  ',
- \'    \ \__\\ \__\ \_______\ \_______\ \__/ /     \ \__\ \__\    \ \__\ ',
- \'     \|__| \|__|\|_______|\|_______|\|__|/       \|__|\|__|     \|__| ',
- \ ]
+" If you want :UltiSnipsEdit to split your window.
+let g:UltiSnipsEditSplit="vertical"
 
 "----------------------------------------------
 " color settings
