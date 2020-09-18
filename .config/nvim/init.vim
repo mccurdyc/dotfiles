@@ -1,46 +1,46 @@
 call plug#begin('~/.vim/plugged')
 
-Plug 'junegunn/fzf.vim'
-Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': { -> fzf#install() } }
+" Language Server Plugins
 Plug 'neovim/nvim-lspconfig' " required nvim 0.5 HEAD
-Plug 'dense-analysis/ale'      " linting and general interation with language servers
 Plug 'nvim-lua/completion-nvim'
-Plug 'terryma/vim-multiple-cursors'
-Plug 'airblade/vim-rooter'
-Plug 'voldikss/vim-floaterm' " floating terminal toggle
+" Plug 'neoclide/coc.nvim', {'tag': '*', 'branch': 'release'}
+
+" Git Plugins
 Plug 'tpope/vim-fugitive'
 Plug 'jreybert/vimagit' " additional git tools. cycle staged changes
 Plug 'tpope/vim-surround'
-Plug 'tomtom/tcomment_vim'
+Plug 'rhysd/git-messenger.vim'
 Plug 'airblade/vim-gitgutter'
-Plug 'sebdah/vim-delve'        " debugger
-Plug 'kshenoy/vim-signature'   " display marks in sidebar
-Plug 'itchyny/lightline.vim'   " light, configurable statusline
-Plug 'daviesjamie/vim-base16-lightline'
-Plug 'edkolev/tmuxline.vim'
+
+" Language Plugins
 Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries', 'for': 'go' }
-Plug 'rust-lang/rust.vim'
-Plug 'mhinz/vim-startify' " startup screen
+Plug 'sebdah/vim-delve', { 'for': 'go' }        " debugger
+Plug 'rust-lang/rust.vim', {'for': 'rs' }
 Plug 'lervag/vimtex', {'for': 'tex'}
 Plug 'hashivim/vim-terraform' " terraform syntax highlighting
-" Plug 'vim-syntastic/syntastic'
-" Plug 'juliosueiras/vim-terraform-completion'
-Plug 'rhysd/git-messenger.vim'
-" Plug 'neoclide/coc.nvim', {'tag': '*', 'branch': 'release'}
-Plug 'Shougo/neosnippet'
-Plug 'Shougo/neosnippet-snippets' " Default snippets for many languages
-" Plug 'ludovicchabant/vim-gutentags' " broke: https://github.com/ludovicchabant/vim-gutentags/issues/283
-" Plug 'junegunn/limelight.vim' " plugin to focus / greyout other blocks
-" Plug 'junegunn/goyo.vim'
-Plug 'vim-scripts/colorizer' " highlight hex colors
 
-" colorscheme
+" Styling / UI Plugins
+Plug 'itchyny/lightline.vim'   " light, configurable statusline
+Plug 'edkolev/tmuxline.vim'
+Plug 'vim-scripts/colorizer' " highlight hex colors
+Plug 'kshenoy/vim-signature' " display marks in sidebar
+
+" Colorscheme Plugins
+Plug 'daviesjamie/vim-base16-lightline'
 Plug 'mccurdyc/base16-vim'
+
+" General Plugins
+Plug 'junegunn/fzf.vim'
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': { -> fzf#install() } }
+Plug 'dense-analysis/ale' " linting and general interation with language servers
+Plug 'SirVer/ultisnips' " snippets
+Plug 'airblade/vim-rooter' " root of project
+Plug 'tomtom/tcomment_vim' " easy block commenting
 
 call plug#end()
 
 "----------------------------------------------
-" general settings
+" General Settings
 "----------------------------------------------
 " Display screen redraws faster
 set nocursorcolumn
