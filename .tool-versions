@@ -2,3 +2,4 @@ terraform 0.12.28
 ruby 2.7.1
 bundler 1.16.1
 vault 1.4.3
+tflint 0.18.0
