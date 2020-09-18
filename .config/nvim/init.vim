@@ -416,27 +416,6 @@ nmap <leader>dc :DlvConnect $DLV_SERVER_HOST<CR>
 nmap <leader>ca :DlvClearAll <CR>
 nmap <leader>dt :DlvToggleBreakpoint <CR>
 
-" Plugin: https://github.com/voldikss/vim-floaterm
-" floating terminal toggle
-nmap <leader>tt :FloatermToggle<CR>
-noremap! <leader>tt <Esc>:FloatermToggle<CR>
-tnoremap <leader>tt <C-\><C-n>:FloatermToggle<CR>
-
-let g:floaterm_autoclose = 2 " always close after job
-let g:floaterm_wintype = 'floating'
-let g:floaterm_height = 0.9
-let g:floaterm_width = 0.9
-let g:floaterm_winblend = 0
-let g:floaterm_position = 'center'
-let g:floaterm_open_command = 'split'
-
-command! Ranger FloatermNew! ranger
-command! Vifm FloatermNew! vifm
-command! FZF FloatermNew! fzf
-command! -nargs=1 Zkt FloatermNew! zkt <f-args>
-
-let g:floaterm_borderchars = ['─', '│', '─', '│', '╭', '╮', '╯', '╰']
-
 " Plugin: https://github.com/lervag/vimtexhttps://github.com/lervag/vimtex
 let g:vimtex_fold_enabled = 0
 let g:vimtex_quickfix_open_on_warning = 0
