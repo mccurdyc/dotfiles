@@ -2,6 +2,7 @@
 .gitconfig
 bin/
 .config/**
+!.config/nvim/ultisnips
 nvim/.netrwhist
 .vim/plugged
 .vim/sessions
