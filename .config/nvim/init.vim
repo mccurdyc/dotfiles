@@ -3,7 +3,6 @@ call plug#begin('~/.vim/plugged')
 " Language Server Plugins
 Plug 'neovim/nvim-lspconfig' " required nvim 0.5 HEAD
 Plug 'nvim-lua/completion-nvim'
-" Plug 'neoclide/coc.nvim', {'tag': '*', 'branch': 'release'}
 
 " Git Plugins
 Plug 'tpope/vim-fugitive'
@@ -22,7 +21,6 @@ Plug 'hashivim/vim-terraform' " terraform syntax highlighting
 Plug 'itchyny/lightline.vim'   " light, configurable statusline
 Plug 'edkolev/tmuxline.vim'
 Plug 'vim-scripts/colorizer' " highlight hex colors
-Plug 'kshenoy/vim-signature' " display marks in sidebar
 
 " Colorscheme Plugins
 Plug 'daviesjamie/vim-base16-lightline'
