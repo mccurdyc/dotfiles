@@ -283,6 +283,11 @@ let g:fzf_commits_log_options = '--graph --color=always --format="%C(auto)%h%d %
 let g:fzf_tags_command = 'ctags -R'
 
 " Define key combinations
+nmap <leader>l :FzfSnippets<CR>
+nmap <leader>m :FzfMarks<CR>
+nmap <leader>w :FzfWindows<CR>
+nmap <leader>c :FzfCommits<CR>
+nmap <leader>bc :FzfBCommits<CR>
 nmap <leader>f :FzfRg<CR>
 nmap <C-p> :FzfFiles<CR>
 nmap <leader>gs :FzfGFiles?<CR>
@@ -439,7 +444,10 @@ set completeopt=menuone,noinsert,noselect
 " Avoid showing message extra message when using completion
 set shortmess+=c
 
-let g:completion_enable_snippet = 'UltiSnips'
+if &filetype == 'go'
+  let g:completion_enable_snippet = 'UltiSnips'
+endif
+
 let g:completion_enable_auto_hover = 0 " don't print hover details because it doesn't look good.
 let g:completion_sorting = "none"
 let g:completion_matching_strategy_list = ['exact', 'substring', 'fuzzy', 'all']
