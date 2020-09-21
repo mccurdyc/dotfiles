@@ -283,7 +283,7 @@ let g:fzf_commits_log_options = '--graph --color=always --format="%C(auto)%h%d %
 let g:fzf_tags_command = 'ctags -R'
 
 " Define key combinations
-nmap <leader>l :FzfSnippets<CR>
+nmap <space>ls :FzfSnippets<CR>
 nmap <leader>m :FzfMarks<CR>
 nmap <leader>w :FzfWindows<CR>
 nmap <leader>c :FzfCommits<CR>
@@ -341,6 +341,9 @@ endfunction
 " gofmt on save handles arbitrary flags passed to gofmt, unlike lspconfig.
 let g:go_fmt_autosave = 1
 let g:go_autodetect_gopath = 1
+
+" Disable vim-go snippets
+let g:go_snippet_engine = ""
 
 " let lspconfig handle these
 let g:go_auto_type_info = 0 " show type information in status line
@@ -431,7 +434,7 @@ nvim_lsp.jsonls.setup({})
 EOF
 
 " Plugin: https://github.com/nvim-lua/completion-nvim
-autocmd BufEnter * lua require'completion'.on_attach()
+autocmd BufEnter *.go lua require'completion'.on_attach()
 
 " Use <Tab> and <S-Tab> to navigate through popup menu
 inoremap <expr> <Tab>   pumvisible() ? "\<C-n>" : "\<Tab>"
@@ -444,10 +447,15 @@ set completeopt=menuone,noinsert,noselect
 " Avoid showing message extra message when using completion
 set shortmess+=c
 
-if &filetype == 'go'
-  let g:completion_enable_snippet = 'UltiSnips'
-endif
+" Remove snippets b/c it uses the wrong snippets use FzfSnippets instead.
+" \    {'complete_items': ['snippet', 'lsp']},
+let g:completion_chain_complete_list = {
+\'default' : [
+\    {'complete_items': ['lsp']},
+\]
+\}
 
+let g:completion_enable_snippet = 'UltiSnips'
 let g:completion_enable_auto_hover = 0 " don't print hover details because it doesn't look good.
 let g:completion_sorting = "none"
 let g:completion_matching_strategy_list = ['exact', 'substring', 'fuzzy', 'all']
@@ -522,13 +530,17 @@ let g:ale_linters = {
 let g:terraform_fmt_on_save=1
 
 " Plugin: https://github.com/sirver/UltiSnips
-" Trigger configuration. You need to change this to something else than <tab> if you use https://github.com/Valloric/YouCompleteMe.
-let g:UltiSnipsExpandTrigger="<CR>"
+" Reference: https://github.com/SirVer/ultisnips/blob/master/doc/UltiSnips.txt
+
+let g:UltiSnipsExpandTrigger="<C-Enter>"
 let g:UltiSnipsJumpForwardTrigger="<C-j>"
 let g:UltiSnipsJumpBackwardTrigger="<C-k>"
 
+" Snippets path
+let g:UltiSnipsSnippetDirectories=[$HOME.'/.config/nvim/UltiSnips']
+
 " If you want :UltiSnipsEdit to split your window.
-let g:UltiSnipsEditSplit="vertical"
+let g:UltiSnipsEditSplit="horizontal"
 
 "----------------------------------------------
 " color settings
