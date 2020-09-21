@@ -9,7 +9,6 @@ Plug 'nvim-lua/completion-nvim'
 Plug 'tpope/vim-fugitive'
 Plug 'jreybert/vimagit' " additional git tools. cycle staged changes
 Plug 'tpope/vim-surround'
-Plug 'rhysd/git-messenger.vim'
 Plug 'airblade/vim-gitgutter'
 
 " Language Plugins
@@ -186,43 +185,6 @@ let g:netrw_browsex_viewer= "xdg-open"
 " Plugin:https://github.com/jreybert/vimagit
 " enable deletion of untracked files
 let g:magit_discard_untracked_do_delete = 1
-
-" Plugin: https://github.com/rhysd/git-messenger.vim
-let g:git_messenger_include_diff = "current"
-let g:git_messenger_close_on_cursor_moved = v:false
-let g:git_messenger_always_into_popup = v:true
-let g:git_messenger_max_popup_height = 20
-let g:git_messenger_max_popup_width = 80
-
-function! GitMessengerPopup() abort
-    " For example, set go back/forward history to <C-o>/<C-i>
-    nmap <buffer><C-o> o
-    nmap <buffer><C-i> O
-endfunction
-autocmd FileType gitmessengerpopup call GitMessengerPopup()
-
-" Plugin: https://github.com/junegunn/limelight.vim
-" plugin for focusing and greying-out background
-" Color name (:help cterm-colors) or ANSI code
-let g:limelight_conceal_ctermfg = 'gray'
-let g:limelight_conceal_ctermfg = 240
-
-" Color name (:help gui-colors) or RGB color
-let g:limelight_conceal_guifg = 'DarkGray'
-let g:limelight_conceal_guifg = '#777777'
-
-" Default: 0.5
-let g:limelight_default_coefficient = 0.8
-
-" Number of preceding/following paragraphs to include (default: 0)
-let g:limelight_paragraph_span = 0
-
-" Highlighting priority (default: 10)
-"   Set it to -1 not to overrule hlsearch
-let g:limelight_priority = -1
-
-" Plugin: https://github.com/junegunn/goyo.vim
-let g:goyo_width = 120
 
 " Plugin: https://github.com/airblade/vim-gitgutter
 " remove background from git gutter
