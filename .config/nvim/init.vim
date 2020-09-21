@@ -196,10 +196,13 @@ let g:gitgutter_sign_removed = '-'
 let g:fzf_command_prefix = 'Fzf'
 
 " https://github.com/Blacksuan19/init.nvim/blob/master/init.vim
-let g:fzf_layout = { 'window': 'call CreateCenteredFloatingWindow()' }
+" let g:fzf_layout = { 'window': 'call CreateCenteredFloatingWindow()' }
 
 " Always enable preview window on the right with 50% width
-let g:fzf_preview_window = 'right:50%'
+let g:fzf_preview_window = ''
+
+" Open Fzf in window below.
+let g:fzf_layout = { 'down': '~20%' }
 
 let g:fzf_colors =
 \ { 'fg':      ['fg', 'Normal'],
@@ -217,7 +220,7 @@ let g:fzf_colors =
 
 au FileType fzf set nonu nornu
 
-let $FZF_DEFAULT_OPTS='--layout=reverse'
+let $FZF_DEFAULT_OPTS='-m --height 20% --layout=reverse'
 
 " use rg by default
 if executable('rg')
@@ -227,19 +230,19 @@ endif
 
 " A nicer FzfFiles preview
 " docs - https://github.com/junegunn/fzf.vim#example-customizing-files-command
-command! -bang -nargs=? -complete=dir Files
-    \ call fzf#vim#files(<q-args>, fzf#vim#with_preview(), <bang>0)
+" command! -bang -nargs=? -complete=dir Files
+"     \ call fzf#vim#files(<q-args>, fzf#vim#with_preview(), <bang>0)
 
 " advanced grep(faster with preview)
 " docs - https://github.com/junegunn/fzf.vim#example-advanced-ripgrep-integration
-function! RipgrepFzf(query, fullscreen)
-    let command_fmt = 'rg --column --no-ignore --line-number --no-heading --color=always --smart-case %s || true'
-    let initial_command = printf(command_fmt, shellescape(a:query))
-    let reload_command = printf(command_fmt, '{q}')
-    let spec = {'options': ['--phony', '--query', a:query, '--bind', 'change:reload:'.reload_command]}
-    call fzf#vim#grep(initial_command, 1, fzf#vim#with_preview(spec), a:fullscreen)
-endfunction
-command! -nargs=* -bang Rg call RipgrepFzf(<q-args>, <bang>0)
+" function! RipgrepFzf(query, fullscreen)
+"     let command_fmt = 'rg --column --no-ignore --line-number --no-heading --color=always --smart-case %s || true'
+"     let initial_command = printf(command_fmt, shellescape(a:query))
+"     let reload_command = printf(command_fmt, '{q}')
+"     let spec = {'options': ['--phony', '--query', a:query, '--bind', 'change:reload:'.reload_command]}
+"     call fzf#vim#grep(initial_command, 1, fzf#vim#with_preview(spec), a:fullscreen)
+" endfunction
+" command! -nargs=* -bang Rg call RipgrepFzf(<q-args>, <bang>0)
 
 " floating fzf window with borders
 function! CreateCenteredFloatingWindow()
@@ -282,7 +285,7 @@ let g:fzf_commits_log_options = '--graph --color=always --format="%C(auto)%h%d %
 let g:fzf_tags_command = 'ctags -R'
 
 " Define key combinations
-nmap <leader>f :Rg<CR>
+nmap <leader>f :FzfRg<CR>
 nmap <C-p> :FzfFiles<CR>
 nmap <leader>gs :FzfGFiles?<CR>
 
