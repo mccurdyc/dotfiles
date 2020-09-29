@@ -37,14 +37,14 @@ line-size = 3
 padding = 2
 module-margin = 1
 
-font-0 = "Source Code Pro:size=10;0"
+font-0 = "Iosevka Term:size=10;0"
 font-1 = FontAwesome5Free:style=Solid:size=10;0
 font-2 = FontAwesome5Free:style=Regular:size=10;0
 font-3 = FontAwesome5Brands:style=Regular:size=10;0
 
 modules-left = i3
 modules-center = xwindow
-modules-right = date time-et time-utc
+modules-right = date time-et time-pt time-utc
 
 override-redirect = false
 
@@ -281,7 +281,7 @@ label-disconnected-foreground = ${colors.red}
 type = internal/date
 interval = 30
 
-date =  %A, %d %b
+date =  %A, %d %b
 date-alt = %a %d
 
 format-prefix = ""
@@ -292,18 +292,18 @@ label = %date%
 
 [module/time-et]
 type = custom/script
-exec = TZ=America/New_York date +" %H:%M:%S ET"
+exec = TZ=America/New_York date +" %H:%M:%S ET"
 interval = 1
 format-underline = ${colors.alternative}
 
 [module/time-pt]
 type = custom/script
-exec = TZ=America/Los_Angeles date +" %H:%M PT"
+exec = TZ=America/Los_Angeles date +" %H:%M PT"
 interval = 5
 
 [module/time-utc]
 type = custom/script
-exec = TZ=UTC date +" %H:%M UTC"
+exec = TZ=UTC date +" %H:%M UTC"
 interval = 5
 
 [module/battery]

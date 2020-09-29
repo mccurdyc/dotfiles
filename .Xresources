@@ -24,7 +24,7 @@
 #define base0F #d27b53
 
 ## rofi-settings;
-rofi.font: Source Code Pro Black 18
+rofi.font: Iosevka Term 30
 rofi.lines: 5
 
 rofi.color-enabled: true
@@ -32,7 +32,7 @@ rofi.color-window: base00, base0A, base0A
 rofi.color-normal: base00, #747369, base00, base0A, base00
 rofi.color-active: base00, #ffcc66, base00, base0A, base00
 rofi.color-urgent: base00, #cc99cc, base00, base0E, base00
-rofi.location: 6
+rofi.location: 5
 rofi.yoffset: 0
 rofi.xoffset: 0
 rofi.width: 100
@@ -87,3 +87,31 @@ Xft.lcdfilter:  lcddefault
 Xft.hintstyle:  hintfull
 Xft.hinting:    1
 Xft.antialias:  1
+
+!! URxvt Appearance
+URxvt.font: xft:Iosevka Term:style=Regular:size=11
+URxvt.boldFont: xft:Iosevka Term:style=Bold:size=11
+URxvt.italicFont: xft:Iosevka Term:style=Italic:size=11
+URxvt.boldItalicFont: xft:Iosevka Term:style=Bold Italic:size=11
+URxvt.letterSpace: 0
+URxvt.lineSpace: 0
+URxvt.geometry: 92x24
+URxvt.internalBorder: 24
+URxvt.cursorBlink: true
+URxvt.cursorUnderline: false
+URxvt.saveline: 2048
+URxvt.scrollBar: false
+URxvt.scrollBar_right: false
+URxvt.urgentOnBell: true
+URxvt.depth: 24
+URxvt.iso14755: false
+
+URxvt.keysym.Shift-Control-V: eval:paste_clipboard
+URxvt.keysym.Shift-Control-C: eval:selection_to_clipboard
+
+URxvt.perl-ext-common: font-size
+
+URxvt.keysym.Control-equal:     font-size:increase
+URxvt.keysym.Control-minus:   font-size:decrease
+URxvt.keysym.Control-slash:  font-size:show
+URxvt.font-size.step: 1

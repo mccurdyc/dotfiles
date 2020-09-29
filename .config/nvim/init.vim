@@ -33,6 +33,7 @@ Plug 'dense-analysis/ale' " linting and general interation with language servers
 Plug 'SirVer/ultisnips' " snippets
 Plug 'airblade/vim-rooter' " root of project
 Plug 'tomtom/tcomment_vim' " easy block commenting
+Plug 'ruanyl/vim-gh-line' " open in GitHub
 
 call plug#end()
 
@@ -542,10 +543,17 @@ let g:UltiSnipsSnippetDirectories=[$HOME.'/.config/nvim/UltiSnips']
 " If you want :UltiSnipsEdit to split your window.
 let g:UltiSnipsEditSplit="horizontal"
 
+" Plugin: https://github.com/ruanyl/vim-gh-line
+let g:gh_line_map_default = 0
+let g:gh_line_blame_map_default = 0
+let g:gh_line_map = '<leader>gh'
+let g:gh_line_blame_map = '<leader>gb'
+let g:gh_open_command = 'xdg-open '
+
 "----------------------------------------------
 " color settings
 "----------------------------------------------
-set termguicolors
+" set termguicolors
 let base16colorspace=256  " Access colors present in 256 colorspace
 colorscheme base16-eighties-minimal
 " autocmd FileType go colorscheme base16-eighties-minimal

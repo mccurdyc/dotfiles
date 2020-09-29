@@ -34,6 +34,7 @@ flex
 fzf
 gawk
 gcc
+gdb
 gettext
 git
 go
@@ -73,11 +74,10 @@ mupdf
 nano
 nemo
 neofetch
-neovim
 netctl
 netperf
 networkmanager
-nginx
+ntp
 opam
 openssh
 osquery
@@ -86,7 +86,6 @@ patch
 pavucontrol
 pkgconf
 poppler
-postgresql
 pulseaudio-bluetooth
 python-pip
 ranger
@@ -94,16 +93,13 @@ redis
 rhash
 ripgrep
 rofi
+rsync
 scrot
 sed
 signal-desktop
 sudo
+tcpdump
 texinfo
-texlive-bibtexextra
-texlive-core
-texlive-fontsextra
-texlive-formatsextra
-texlive-latexextra
 the_silver_searcher
 tmux
 traceroute
