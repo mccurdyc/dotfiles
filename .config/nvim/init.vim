@@ -3,6 +3,7 @@ call plug#begin('~/.vim/plugged')
 " Language Server Plugins
 Plug 'neovim/nvim-lspconfig' " required nvim 0.5 HEAD
 Plug 'nvim-lua/completion-nvim'
+Plug 'nvim-lua/diagnostic-nvim'
 
 " Git Plugins
 Plug 'tpope/vim-fugitive'
@@ -421,8 +422,14 @@ nnoremap <silent> gd    <cmd>lua vim.lsp.buf.declaration()<CR>
 lua << EOF
 local nvim_lsp = require('nvim_lsp')
 
+-- https://www.reddit.com/r/neovim/comments/gtta9p/neovim_lsp_how_to_disable_diagnostics/fseat8a?utm_source=share&utm_medium=web2x&context=3
+-- Disable Diagnostcs globally.
+-- This disables the in-line diagnostics.
+vim.lsp.callbacks["textDocument/publishDiagnostics"] = function() end
+
 nvim_lsp.gopls.setup({
   root_dir = nvim_lsp.util.root_pattern('go.mod');
+-- on_attach=require'diagnostic'.on_attach
 })
 nvim_lsp.terraformls.setup({
   filetypes = { "terraform", "tf" },
@@ -434,6 +441,21 @@ nvim_lsp.bashls.setup({})
 nvim_lsp.yamlls.setup({})
 nvim_lsp.jsonls.setup({})
 EOF
+
+" Plugin: https://github.com/nvim-lua/diagnostic-nvim
+let g:diagnostic_enable_virtual_text = 0 " disable in-line diagnostics
+let g:diagnostic_virtual_text_prefix = '■'
+let g:diagnostic_trimmed_virtual_text = '30'
+let g:space_before_virtual_text = 10
+let g:diagnostic_show_sign = 1
+let g:diagnostic_enable_underline = 0
+let g:diagnostic_auto_popup_while_jump = 0
+let g:diagnostic_insert_delay = 1
+
+call sign_define("LspDiagnosticsErrorSign", {"text" : "✗", "texthl" : "LspDiagnosticsError"})
+call sign_define("LspDiagnosticsWarningSign", {"text" : "▸", "texthl" : "LspDiagnosticsWarning"})
+call sign_define("LspDiagnosticsInformationSign", {"text" : "I", "texthl" : "LspDiagnosticsInformation"})
+call sign_define("LspDiagnosticsHintSign", {"text" : "H", "texthl" : "LspDiagnosticsHint"})
 
 " Plugin: https://github.com/nvim-lua/completion-nvim
 autocmd BufEnter *.go lua require'completion'.on_attach()
