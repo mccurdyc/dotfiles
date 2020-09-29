@@ -9,7 +9,7 @@ autoload -U colors && colors
 # https://gist.github.com/joshdick/4415470
 # Modify the colors and symbols in these variables as desired.
 GIT_PROMPT_SYMBOL="%{$fg[blue]%}±"
-GIT_PROMPT_BRANCH_SYMBOL="%{$fg[blue]%}"
+GIT_PROMPT_BRANCH_SYMBOL="%{$fg[blue]%}"
 GIT_PROMPT_NO_REPO_SYMBOL="%B%{$fg[yellow]%}(no repo)%b"
 GIT_PROMPT_PREFIX="%{$fg[white]%}[%{$reset_color%}"
 GIT_PROMPT_SUFFIX="%{$fg[white]%}]%{$reset_color%}"
@@ -67,7 +67,7 @@ parse_git_state() {
 git_prompt_string() {
   local git_where="$(parse_git_branch)"
   if [[ -n $git_where ]]; then
-    echo "$GIT_PROMPT_SYMBOL$(parse_git_state)$GIT_PROMPT_PREFIX $GIT_PROMPT_BRANCH_SYMBOL %{%B$fg[yellow]%}${git_where#(refs/heads/|tags/)}%b $GIT_PROMPT_SUFFIX"
+    echo "$GIT_PROMPT_SYMBOL$(parse_git_state) $GIT_PROMPT_PREFIX %{%B$fg[yellow]%}${git_where#(refs/heads/|tags/)}%b $GIT_PROMPT_SUFFIX"
   else
     echo "$GIT_PROMPT_PREFIX$GIT_PROMPT_NO_REPO_SYMBOL$GIT_PROMPT_SUFFIX"
   fi
@@ -77,14 +77,24 @@ chef_block_prompt_string() {
   echo $(readlink ~/.chef/knife.rb  | cut -d '/' -f 5 | cut -d '-' -f 2 | sed 's|.rb||')
 }
 
+# Common-used variable for new line separator
+newline() {
+NEWLINE='
+'
+  echo -n "$NEWLINE"
+  printf '╚══ $ '
+}
+
 # lefthand
-PROMPT="%F{white}"                ## primary coloring
+# https://www.liveinternet.ru/users/5110814/post347144493
+PROMPT="╔ [ %F{white}"                ## primary coloring
 PROMPT+="%M:"                  ## username@hostname for ssh
-PROMPT+="%3~ "                  ## trailing pwd dirs
-# PROMPT+=' $(chef_block_prompt_string) '
+PROMPT+="%3~ ] "                  ## trailing pwd dirs
+# PROMPT+='chef $(chef_block_prompt_string) '
 PROMPT+='$(git_prompt_string)'   ## make git branch bold and yellow (%B starts, %b stops)
 PROMPT+="%(1j.%jj .)"             ## jobs when present
-PROMPT+=" %(?.%F{green}%% %F{white}.%F{red}%% %F{white})" ## colored exit codes
+PROMPT+='%(?.%F{green} \$? %F{white}.%F{red} \$? %F{white})'
+PROMPT+='$(newline)'
 
 # multiline
-PROMPT2="%F{white}➜  "
+PROMPT2="%F{white}╚══ > "
