@@ -30,7 +30,8 @@ Plug 'mccurdyc/base16-vim'
 Plug 'junegunn/fzf.vim'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': { -> fzf#install() } }
 Plug 'dense-analysis/ale' " linting and general interation with language servers
-Plug 'SirVer/ultisnips' " snippets
+Plug 'SirVer/ultisnips' " snippets engine
+Plug 'honza/vim-snippets' "snippets
 Plug 'airblade/vim-rooter' " root of project
 Plug 'tomtom/tcomment_vim' " easy block commenting
 Plug 'ruanyl/vim-gh-line' " open in GitHub
@@ -284,7 +285,7 @@ let g:fzf_commits_log_options = '--graph --color=always --format="%C(auto)%h%d %
 let g:fzf_tags_command = 'ctags -R'
 
 " Define key combinations
-nmap <space>ls :FzfSnippets<CR>
+nmap <leader>ls :FzfSnippets<CR>
 nmap <leader>m :FzfMarks<CR>
 nmap <leader>w :FzfWindows<CR>
 nmap <leader>c :FzfCommits<CR>
@@ -437,9 +438,7 @@ EOF
 " Plugin: https://github.com/nvim-lua/completion-nvim
 autocmd BufEnter *.go lua require'completion'.on_attach()
 
-" Use <Tab> and <S-Tab> to navigate through popup menu
-inoremap <expr> <Tab>   pumvisible() ? "\<C-n>" : "\<Tab>"
-inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+let g:completion_enable_auto_popup = 1
 
 " http://vimdoc.sourceforge.net/htmldoc/options.html#'complete'
 " https://vimhelp.org/insert.txt.html#ins-completion
@@ -448,11 +447,22 @@ set completeopt=menuone,noinsert,noselect
 " Avoid showing message extra message when using completion
 set shortmess+=c
 
+let g:completion_confirm_key = ""
+imap <expr> <cr>  pumvisible() ? complete_info()["selected"] != "-1" ?
+\ "\<Plug>(completion_confirm_completion)"  :
+\ "\<c-e>\<CR>" : "\<CR>"
+
+let g:completion_enable_auto_signature = 1
+let g:completion_enable_auto_paren = 0
+
+" Use <Tab> and <S-Tab> to navigate through popup menu
+inoremap <expr> <TAB> pumvisible() ? "\<C-n>" : "\<Tab>"
+inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+
 " Remove snippets b/c it uses the wrong snippets use FzfSnippets instead.
-" \    {'complete_items': ['snippet', 'lsp']},
 let g:completion_chain_complete_list = {
 \'default' : [
-\    {'complete_items': ['lsp']},
+\    {'complete_items': ['lsp', 'snippet']},
 \]
 \}
 
@@ -534,6 +544,7 @@ let g:terraform_fmt_on_save=1
 
 " Plugin: https://github.com/sirver/UltiSnips
 " Reference: https://github.com/SirVer/ultisnips/blob/master/doc/UltiSnips.txt
+let g:UltiSnipsExpandTrigger=""
 let g:UltiSnipsJumpForwardTrigger="<C-j>"
 let g:UltiSnipsJumpBackwardTrigger="<C-k>"
 
