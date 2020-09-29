@@ -3,6 +3,8 @@
 ## run `tfsec terraform plan` and not need to do any secrets stuff, so long as you’re in a directory with a name equal to the applicable amazon profile
 alias tfsec='eval $(AWS_PROFILE=${PWD##*/} sops --decrypt --input-type env secrets.env | egrep -v "^#" | xargs)'
 
+alias srvhttp='python3 -m http.server'
+
 alias gpg='gpg2'
 
 alias diff='diff -u'
