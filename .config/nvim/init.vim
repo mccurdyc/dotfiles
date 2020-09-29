@@ -471,6 +471,8 @@ let g:completion_matching_ignore_case = 1
 " Navigate to the next linting warning/error
 nmap <silent> <C-k> <Plug>(ale_previous)
 nmap <silent> <C-j> <Plug>(ale_next)
+nmap <leader>rn :ALERename<CR>
+nmap <leader>ss :ALESymbolSearch
 
 " Colors handled by colorscheme
 highlight link ALEWarningSign String
@@ -532,8 +534,6 @@ let g:terraform_fmt_on_save=1
 
 " Plugin: https://github.com/sirver/UltiSnips
 " Reference: https://github.com/SirVer/ultisnips/blob/master/doc/UltiSnips.txt
-
-let g:UltiSnipsExpandTrigger="<C-Enter>"
 let g:UltiSnipsJumpForwardTrigger="<C-j>"
 let g:UltiSnipsJumpBackwardTrigger="<C-k>"
 
