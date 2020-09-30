@@ -566,9 +566,11 @@ let g:terraform_fmt_on_save=1
 
 " Plugin: https://github.com/sirver/UltiSnips
 " Reference: https://github.com/SirVer/ultisnips/blob/master/doc/UltiSnips.txt
-let g:UltiSnipsExpandTrigger="<CR>"
 let g:UltiSnipsJumpForwardTrigger="<C-j>"
 let g:UltiSnipsJumpBackwardTrigger="<C-k>"
+
+" Don't set this to <CR> or you won't be able to hit ENTER in Vim.
+let g:UltiSnipsExpandTrigger="<TAB>"
 
 " Snippets path
 " let g:UltiSnipsSnippetDirectories=[$HOME.'/.vim/nvim/UltiSnips']
