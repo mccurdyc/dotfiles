@@ -89,10 +89,10 @@ Xft.hinting:    1
 Xft.antialias:  1
 
 !! URxvt Appearance
-URxvt.font: xft:Iosevka Term:style=Regular:size=11
-URxvt.boldFont: xft:Iosevka Term:style=Bold:size=11
-URxvt.italicFont: xft:Iosevka Term:style=Italic:size=11
-URxvt.boldItalicFont: xft:Iosevka Term:style=Bold Italic:size=11
+URxvt.font: xft:Iosevka Term:style=Regular:size=10
+URxvt.boldFont: xft:Iosevka Term:style=Bold:size=10
+URxvt.italicFont: xft:Iosevka Term:style=Italic:size=10
+URxvt.boldItalicFont: xft:Iosevka Term:style=Bold Italic:size=10
 URxvt.letterSpace: 0
 URxvt.lineSpace: 0
 URxvt.geometry: 92x24
@@ -104,13 +104,26 @@ URxvt.scrollBar: false
 URxvt.scrollBar_right: false
 URxvt.urgentOnBell: true
 URxvt.depth: 24
-URxvt.iso14755: false
 
+## yay -S urxvt-perls-git
+URxvt.perl-ext-common: default,font-size,clipboard,url-select
+
+URxvt.copyCommand: xclip -i -selection clipboard
+URxvt.pasteCommand: xclip -o -selection clipboard
+
+## clipboard
 URxvt.keysym.Shift-Control-V: eval:paste_clipboard
 URxvt.keysym.Shift-Control-C: eval:selection_to_clipboard
+URxvt.iso14755: false
+URxvt.iso14755_52: false
 
-URxvt.perl-ext-common: font-size
+## url-select
+URxvt.keysym.M-u: perl:url-select:select_next
+URxvt.urlLauncher: firefox
+URxvt.underlineURLs: true
+URxvt.urlButton: 1
 
+## font-size
 URxvt.keysym.Control-equal:     font-size:increase
 URxvt.keysym.Control-minus:   font-size:decrease
 URxvt.keysym.Control-slash:  font-size:show

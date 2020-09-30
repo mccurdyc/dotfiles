@@ -82,7 +82,7 @@ newline() {
 NEWLINE='
 '
   echo -n "$NEWLINE"
-  printf '╚══ $ '
+  printf '╚ %%%% '
 }
 
 # lefthand
@@ -97,4 +97,4 @@ PROMPT+='%(?.%F{green} \$? %F{white}.%F{red} \$? %F{white})'
 PROMPT+='$(newline)'
 
 # multiline
-PROMPT2="%F{white}╚══ > "
+PROMPT2="%F{white}"
