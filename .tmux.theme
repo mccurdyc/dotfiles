@@ -29,24 +29,24 @@ set-option -g status-style "fg=#a09f93,bg=#393939"
 set-window-option -g window-status-style "fg=#a09f93,bg=default"
 
 # active window title colors
-set-window-option -g window-status-current-style "fg=#ffcc66,bg=default"
+set-window-option -g window-status-current-style "fg=#f99157,bg=default"
 
 # pane border
-set-option -g pane-border-style "fg=#ffcc66"
+set-option -g pane-border-style "fg=#f99157"
 set-option -g pane-active-border-style "fg=#393939"
 
 # message text
 set-option -g message-style "fg=#d3d0c8,bg=#393939"
 
 # pane number display
-set-option -g display-panes-active-colour "#99cc99"
+set-option -g display-panes-active-colour "#f99157"
 set-option -g display-panes-colour "#393939"
 
 # clock
-set-window-option -g clock-mode-colour "#ffcc66"
+set-window-option -g clock-mode-colour "#f99157"
 
 # copy mode highlight
-set-window-option -g mode-style "fg=#2d2d2d,bg=#ffcc66"
+set-window-option -g mode-style "fg=#2d2d2d,bg=#f99157"
 
 # bell
 set-window-option -g window-status-bell-style "fg=#393939,bg=#f2777a"

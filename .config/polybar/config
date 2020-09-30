@@ -4,11 +4,11 @@ background-alt = #393939
 foreground = #f2f0ec
 foreground-alt = #2d2d2d
 
-alternative = #ffcc66
+alternative = #f99157
 alert = #f2777a
 
 red = #f2777a
-orange = #ffa500
+orange = #f99157
 green = #99cc99
 blue = #6699cc
 cyan = #66cccc
