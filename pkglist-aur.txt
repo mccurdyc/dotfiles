@@ -36,7 +36,6 @@ terraform-ls-bin
 ttf-iosevka
 ttf-iosevka-term
 universal-ctags-git
-urxvt-clipboard
 urxvt-font-size-git
 wpa_supplicant_gui
 xorg-grandr

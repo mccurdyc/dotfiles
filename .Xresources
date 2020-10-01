@@ -105,8 +105,9 @@ URxvt.scrollBar_right: false
 URxvt.urgentOnBell: true
 URxvt.depth: 24
 
-## yay -S urxvt-perls-git
-URxvt.perl-ext-common: default,font-size,clipboard,url-select
+## https://wiki.archlinux.org/index.php/rxvt-unicode
+## pacman -S urxvt-perls
+URxvt.perl-ext-common: default,font-size,clipboard,matcher,url-select
 
 URxvt.copyCommand: xclip -i -selection clipboard
 URxvt.pasteCommand: xclip -o -selection clipboard
@@ -117,11 +118,16 @@ URxvt.keysym.Shift-Control-C: eval:selection_to_clipboard
 URxvt.iso14755: false
 URxvt.iso14755_52: false
 
-## url-select
-URxvt.keysym.M-u: perl:url-select:select_next
-URxvt.urlLauncher: firefox
-URxvt.underlineURLs: true
-URxvt.urlButton: 1
+## Clickable URLs
+## https://wiki.archlinux.org/index.php/rxvt-unicode#Clickable_URLs
+URxvt.url-launcher: /usr/bin/xdg-open
+URxvt.matcher.button: 1
+URxvt.keysym.C-z: perl:matcher:list
+URxvt.matcher.rend.0: Uline Bold fg4
+
+## Yank clickable URLs (no mouse)
+URxvt.keysym.Control-u: perl:url-select:select_next
+URxvt.url-select.underline: true
 
 ## font-size
 URxvt.keysym.Control-equal:     font-size:increase
