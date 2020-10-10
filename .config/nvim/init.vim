@@ -89,6 +89,7 @@ au Filetype go set nolist
 
 " Allow vim to set a custom font or color for a word
 syntax enable
+filetype plugin indent on
 syntax manual
 au Filetype * setlocal syntax=ON
 autocmd Filetype * if getfsize(@%) > 1000000 | setlocal syntax=OFF | endif
@@ -199,7 +200,6 @@ let g:fzf_command_prefix = 'Fzf'
 " https://github.com/Blacksuan19/init.nvim/blob/master/init.vim
 " let g:fzf_layout = { 'window': 'call CreateCenteredFloatingWindow()' }
 
-" Always enable preview window on the right with 50% width
 let g:fzf_preview_window = ''
 
 " Open Fzf in window below.
@@ -221,7 +221,7 @@ let g:fzf_colors =
 
 au FileType fzf set nonu nornu
 
-let $FZF_DEFAULT_OPTS='-m --height 20% --layout=reverse'
+let $FZF_DEFAULT_OPTS='-m --layout=reverse'
 
 " use rg by default
 if executable('rg')
@@ -236,14 +236,14 @@ endif
 
 " advanced grep(faster with preview)
 " docs - https://github.com/junegunn/fzf.vim#example-advanced-ripgrep-integration
-" function! RipgrepFzf(query, fullscreen)
-"     let command_fmt = 'rg --column --no-ignore --line-number --no-heading --color=always --smart-case %s || true'
-"     let initial_command = printf(command_fmt, shellescape(a:query))
-"     let reload_command = printf(command_fmt, '{q}')
-"     let spec = {'options': ['--phony', '--query', a:query, '--bind', 'change:reload:'.reload_command]}
-"     call fzf#vim#grep(initial_command, 1, fzf#vim#with_preview(spec), a:fullscreen)
-" endfunction
-" command! -nargs=* -bang Rg call RipgrepFzf(<q-args>, <bang>0)
+function! RipgrepFzf(query, fullscreen)
+    let command_fmt = 'rg --column --no-ignore --line-number --no-heading --color=always --smart-case %s || true'
+    let initial_command = printf(command_fmt, shellescape(a:query))
+    let reload_command = printf(command_fmt, '{q}')
+    let spec = {'options': ['--phony', '--query', a:query, '--bind', 'change:reload:'.reload_command]}
+    call fzf#vim#grep(initial_command, 1, fzf#vim#with_preview(spec), a:fullscreen)
+endfunction
+command! -nargs=* -bang Rg call RipgrepFzf(<q-args>, <bang>0)
 
 " floating fzf window with borders
 function! CreateCenteredFloatingWindow()
@@ -427,16 +427,17 @@ local nvim_lsp = require('nvim_lsp')
 -- This disables the in-line diagnostics.
 vim.lsp.callbacks["textDocument/publishDiagnostics"] = function() end
 
+local on_attach = function(client)
+    require'completion'.on_attach(client)
+end
+
 nvim_lsp.gopls.setup({
   root_dir = nvim_lsp.util.root_pattern('go.mod');
--- on_attach=require'diagnostic'.on_attach
 })
 nvim_lsp.terraformls.setup({
   filetypes = { "terraform", "tf" },
 })
-nvim_lsp.rls.setup({})
-nvim_lsp.rust_analyzer.setup({})
-nvim_lsp.pyls.setup({})
+nvim_lsp.rust_analyzer.setup({ on_attach=on_attach })
 nvim_lsp.bashls.setup({})
 nvim_lsp.yamlls.setup({})
 nvim_lsp.jsonls.setup({})
@@ -458,7 +459,7 @@ call sign_define("LspDiagnosticsInformationSign", {"text" : "I", "texthl" : "Lsp
 call sign_define("LspDiagnosticsHintSign", {"text" : "H", "texthl" : "LspDiagnosticsHint"})
 
 " Plugin: https://github.com/nvim-lua/completion-nvim
-autocmd BufEnter *.go lua require'completion'.on_attach()
+" autocmd BufEnter * if &ft != "md" | lua require'completion'.on_attach()
 
 let g:completion_enable_auto_popup = 1
 
@@ -477,22 +478,32 @@ imap <expr> <cr>  pumvisible() ? complete_info()["selected"] != "-1" ?
 let g:completion_enable_auto_signature = 1
 let g:completion_enable_auto_paren = 0
 
-" Use <Tab> and <S-Tab> to navigate through popup menu
-inoremap <expr> <TAB> pumvisible() ? "\<C-n>" : "\<Tab>"
-inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+" Trigger completion with <Tab>
+inoremap <silent><expr> <TAB>
+  \ pumvisible() ? "\<C-n>" :
+  \ <SID>check_back_space() ? "\<TAB>" :
+  \ completion#trigger_completion()
+
+function! s:check_back_space() abort
+    let col = col('.') - 1
+    return !col || getline('.')[col - 1]  =~ '\s'
+endfunction
 
 " Remove snippets b/c it uses the wrong snippets use FzfSnippets instead.
 let g:completion_chain_complete_list = {
-\'default' : [
-\    {'complete_items': ['lsp', 'snippet']},
+\ 'default': [
+\   {'complete_items': ['lsp', 'snippet', 'path']},
+\   {'mode': '<c-p>'},
+\   {'mode': '<c-n>'}
 \]
 \}
 
 let g:completion_enable_snippet = 'UltiSnips'
 let g:completion_enable_auto_hover = 0 " don't print hover details because it doesn't look good.
-let g:completion_sorting = "none"
 let g:completion_matching_strategy_list = ['exact', 'substring', 'fuzzy', 'all']
 let g:completion_matching_ignore_case = 1
+let g:completion_enable_auto_signature = 1
+let g:completion_enable_auto_paren = 1
 
 " Plugin: https://github.com/dense-analysis/ale
 " Resource(s)
@@ -557,9 +568,11 @@ let g:ale_fixers = {
 \}
 
 let g:ale_linters = {
-\ 'go': ['gopls', 'gofmt'],
-\ 'rust': ['rls', 'rustfmt', 'rustc', 'rust-analyzer'],
+\ 'go': ['gopls'],
+\ 'rust': ['rustc', 'analyzer', 'cargo'],
 \ }
+
+let g:ale_rust_cargo_check_all_targets = 1
 
 " Plugin: https://github.com/hashivim/vim-terraform
 let g:terraform_fmt_on_save=1
@@ -570,7 +583,7 @@ let g:UltiSnipsJumpForwardTrigger="<C-j>"
 let g:UltiSnipsJumpBackwardTrigger="<C-k>"
 
 " Don't set this to <CR> or you won't be able to hit ENTER in Vim.
-let g:UltiSnipsExpandTrigger="<TAB>"
+let g:UltiSnipsExpandTrigger="<C-l>"
 
 " Snippets path
 " let g:UltiSnipsSnippetDirectories=[$HOME.'/.vim/nvim/UltiSnips']
