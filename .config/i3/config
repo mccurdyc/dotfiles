@@ -121,7 +121,7 @@ bindsym $mod+Shift+BackSpace exec "i3lock -c 2d2d2d && sleep 0.15 && systemctl s
 # Some quickstart key combinations
 bindsym $mod+Return exec "urxvt"
 # bindsym $mod+Return exec "alacritty --config-file=$HOME/dotfiles/.config/alacritty/alacritty.yml"
-bindsym $mod+backslash exec "brave"
+bindsym $mod+backslash exec "firefox"
 bindsym $mod+Shift+backslash exec "slack"
 bindsym $mod+Tab exec "rofi -show drun"
 bindsym $mod+Shift+Tab exec "rofi -show window"
