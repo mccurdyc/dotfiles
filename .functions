@@ -390,3 +390,24 @@ colorgrid() {
         printf '\r\n'
     done
 }
+
+function gcloud-docker() {
+  local key="${1}"
+  local credpath=/root/credentials.json
+  local entrypoint=$(mktemp)
+  local entrypointpath=/root/entrypoint.sh
+  cat <<-'EOF' > ${entrypoint}
+#!/bin/bash
+set -o errexit
+set -o xtrace
+gcloud auth activate-service-account --key-file=/root/credentials.json
+exec "$@"
+EOF
+  chmod 711 ${entrypoint}
+  docker run -it \
+    --rm \
+    --mount type=bind,source=${key},target=${credpath},readonly \
+    --mount type=bind,source=${entrypoint},target=${entrypointpath},readonly \
+    --entrypoint ${entrypointpath} \
+    google/cloud-sdk /bin/bash
+}
