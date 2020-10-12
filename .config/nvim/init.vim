@@ -24,7 +24,7 @@ Plug 'edkolev/tmuxline.vim'
 Plug 'vim-scripts/colorizer' " highlight hex colors
 
 " Colorscheme Plugins
-Plug 'daviesjamie/vim-base16-lightline'
+Plug 'mccurdyc/vim-base16-lightline'
 Plug 'mccurdyc/base16-vim'
 
 " General Plugins
@@ -313,6 +313,11 @@ let g:lightline = {
   \             [ 'alestatus'],
   \             [ 'lspstatus'] ]
   \ },
+  \ 'inactive': {
+  \   'left': [ [ 'filename' ] ],
+  \   'right': [ [ 'lineinfo' ],
+  \            [ 'percent' ] ]
+  \},
   \ 'component_function': {
   \   'gitbranch': 'fugitive#head',
   \   'filename': 'LightlineFilename',
@@ -561,21 +566,27 @@ let g:ale_open_list = 1 " open list at bottom with errors
 let g:ale_keep_list_window_open = 0 " close list windows when there aren't errors
 
 " ALE supported tools - https://github.com/dense-analysis/ale/blob/master/supported-tools.md
+" :ALEInfo
+let g:ale_linters = {
+\ 'go': ['gopls', 'gofmt'],
+\ 'rust': ['rustc', 'analyzer', 'cargo'],
+\ 'terraform': ['terraform', 'terraform_lsp', 'tflint'],
+\ }
+
 let g:ale_fixers = {
 \ '*': ['remove_trailing_lines', 'trim_whitespace'],
 \ 'go': ['gofmt', 'goimports'],
 \ 'rust': ['rustfmt'],
+\ 'terraform': ['terraform'],
 \}
-
-let g:ale_linters = {
-\ 'go': ['gopls'],
-\ 'rust': ['rustc', 'analyzer', 'cargo'],
-\ }
 
 let g:ale_rust_cargo_check_all_targets = 1
 
-" Plugin: https://github.com/hashivim/vim-terraform
-let g:terraform_fmt_on_save=1
+let g:ale_terraform_langserver_executable = 'terraform-lsp'
+let g:ale_terraform_langserver_options = ''
+let g:ale_terraform_terraform_executable = 'terraform'
+let g:ale_terraform_tflint_executable = 'tflint'
+let g:ale_terraform_tflint_options = ''
 
 " Plugin: https://github.com/sirver/UltiSnips
 " Reference: https://github.com/SirVer/ultisnips/blob/master/doc/UltiSnips.txt
