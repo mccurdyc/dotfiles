@@ -9,7 +9,6 @@ autoload -U colors && colors
 # https://gist.github.com/joshdick/4415470
 # Modify the colors and symbols in these variables as desired.
 
-DATE_PROMPT="%{$fg[white]%}$(date +"%H:%M:%S")%{$reset_color%}"
 GIT_PROMPT_SYMBOL="%{$fg[blue]%}±"
 GIT_PROMPT_BRANCH_SYMBOL="%{$fg[blue]%}"
 GIT_PROMPT_NO_REPO_SYMBOL="%B%{$fg[yellow]%}(no repo)%b"
@@ -89,7 +88,7 @@ NEWLINE='
 
 # lefthand
 # https://www.liveinternet.ru/users/5110814/post347144493
-PROMPT='╔ [ $DATE_PROMPT ] '
+PROMPT='╔ [ %{$fg[white]%}$(date +"%H:%M:%S")%{$reset_color%} ] '
 PROMPT+="%F{white}"  ## primary coloring
 # PROMPT+="[ %n@%m ] " ## username@hostname
 # PROMPT+='[ chef_org:$(chef_block_prompt_string) ] '
