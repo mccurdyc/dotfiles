@@ -440,7 +440,8 @@ nvim_lsp.gopls.setup({
   root_dir = nvim_lsp.util.root_pattern('go.mod');
 })
 nvim_lsp.terraformls.setup({
-  filetypes = { "terraform", "tf" },
+  cmd = { "terraform-lsp" },
+  filetypes = { "terraform" },
 })
 nvim_lsp.rust_analyzer.setup({ on_attach=on_attach })
 nvim_lsp.bashls.setup({})
