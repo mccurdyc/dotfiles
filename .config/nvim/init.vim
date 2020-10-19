@@ -443,7 +443,9 @@ nvim_lsp.terraformls.setup({
   cmd = { "terraform-lsp" },
   filetypes = { "terraform" },
 })
-nvim_lsp.rust_analyzer.setup({ on_attach=on_attach })
+nvim_lsp.rust_analyzer.setup({
+  on_attach=on_attach
+})
 nvim_lsp.bashls.setup({})
 nvim_lsp.yamlls.setup({})
 nvim_lsp.jsonls.setup({})
@@ -482,7 +484,7 @@ imap <expr> <cr>  pumvisible() ? complete_info()["selected"] != "-1" ?
 \ "\<c-e>\<CR>" : "\<CR>"
 
 let g:completion_enable_auto_signature = 1
-let g:completion_enable_auto_paren = 0
+let g:completion_enable_auto_paren = 1
 
 " Trigger completion with <Tab>
 inoremap <silent><expr> <TAB>
@@ -569,8 +571,8 @@ let g:ale_keep_list_window_open = 0 " close list windows when there aren't error
 " ALE supported tools - https://github.com/dense-analysis/ale/blob/master/supported-tools.md
 " :ALEInfo
 let g:ale_linters = {
-\ 'go': ['gopls', 'gofmt'],
-\ 'rust': ['rustc', 'analyzer', 'cargo'],
+\ 'go': ['gopls'],
+\ 'rust': ['rustc', 'analyzer'],
 \ 'terraform': ['terraform', 'terraform_lsp', 'tflint'],
 \ }
 
