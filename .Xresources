@@ -120,17 +120,15 @@ URxvt.iso14755_52: false
 
 ## Clickable URLs
 ## https://wiki.archlinux.org/index.php/rxvt-unicode#Clickable_URLs
-URxvt.url-launcher: /usr/bin/xdg-open
-URxvt.matcher.button: 1
 URxvt.keysym.C-z: perl:matcher:list
 URxvt.matcher.rend.0: Uline Bold fg4
 
-## Yank clickable URLs (no mouse)
-URxvt.keysym.Control-u: perl:url-select:select_next
+URxvt.url-select.launcher: /usr/bin/xdg-open
 URxvt.url-select.underline: true
+URxvt.keysym.Control-u: perl:url-select:select_next
 
 ## font-size
-URxvt.keysym.Control-equal:     font-size:increase
-URxvt.keysym.Control-minus:   font-size:decrease
-URxvt.keysym.Control-slash:  font-size:show
+URxvt.keysym.Control-equal: font-size:increase
+URxvt.keysym.Control-minus: font-size:decrease
+URxvt.keysym.Control-slash: font-size:show
 URxvt.font-size.step: 1
