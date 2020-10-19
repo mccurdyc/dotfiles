@@ -82,7 +82,7 @@ set undodir=~/.config/nvim/.undodir
 set undofile
 
 " Display problematic whitespace
-set listchars=tab:➜\ ,trail:•,extends:#,precedes:#,nbsp:⌻
+set listchars=tab:⇨\ ,trail:•,extends:#,precedes:#,nbsp:⌻
 set list
 " Go uses tabs, so disable the highlighting for Go
 au Filetype go set nolist
@@ -347,7 +347,7 @@ endfunction
 " https://github.com/fatih/vim-go/blob/master/doc/vim-go.txt
 " No gofmt on save. We use ALE.
 " gofmt on save handles arbitrary flags passed to gofmt, unlike lspconfig.
-let g:go_fmt_autosave = 1
+let g:go_fmt_autosave = 0
 let g:go_autodetect_gopath = 1
 
 " Disable vim-go snippets
@@ -438,6 +438,7 @@ end
 
 nvim_lsp.gopls.setup({
   root_dir = nvim_lsp.util.root_pattern('go.mod');
+  on_attach=on_attach;
 })
 nvim_lsp.terraformls.setup({
   cmd = { "terraform-lsp" },
@@ -449,6 +450,18 @@ nvim_lsp.rust_analyzer.setup({
 nvim_lsp.bashls.setup({})
 nvim_lsp.yamlls.setup({})
 nvim_lsp.jsonls.setup({})
+nvim_lsp.rust_analyzer.setup({
+  on_attach=on_attach
+})
+nvim_lsp.bashls.setup({
+  on_attach=on_attach
+})
+nvim_lsp.yamlls.setup({
+  on_attach=on_attach
+})
+nvim_lsp.jsonls.setup({
+  on_attach=on_attach
+})
 EOF
 
 " Plugin: https://github.com/nvim-lua/diagnostic-nvim
