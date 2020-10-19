@@ -14,7 +14,7 @@ alias zoekt="zoekt -index_dir=$ZOEKT_INDEX_DIR -r"
 ## https://golang.org/doc/manage-install
 ## $ go get golang.org/dl/goX.Y.Z
 ## $ goX.Y.Z download
-alias go="go1.15.1"
+# alias go="go1.15.1"
 
 ## tree
 alias tree="tree --dirsfirst --noreport -ACF"
