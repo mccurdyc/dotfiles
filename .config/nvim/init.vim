@@ -27,12 +27,14 @@ Plug 'vim-scripts/colorizer' " highlight hex colors
 Plug 'mccurdyc/vim-base16-lightline'
 Plug 'mccurdyc/base16-vim'
 
+" Snippets
+Plug 'SirVer/ultisnips' " snippets engine
+Plug 'mccurdyc/vim-snippets' " snippets
+
 " General Plugins
 Plug 'junegunn/fzf.vim'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': { -> fzf#install() } }
 Plug 'dense-analysis/ale' " linting and general interation with language servers
-Plug 'SirVer/ultisnips' " snippets engine
-Plug 'honza/vim-snippets' "snippets
 Plug 'airblade/vim-rooter' " root of project
 Plug 'tomtom/tcomment_vim' " easy block commenting
 Plug 'ruanyl/vim-gh-line' " open in GitHub
@@ -613,7 +615,7 @@ let g:UltiSnipsJumpBackwardTrigger="<C-k>"
 let g:UltiSnipsExpandTrigger="<C-l>"
 
 " Snippets path
-" let g:UltiSnipsSnippetDirectories=[$HOME.'/.vim/nvim/UltiSnips']
+let g:UltiSnipsSnippetDirectories=[$HOME.'/dotfiles/vim-snippets/UltiSnips']
 
 " If you want :UltiSnipsEdit to split your window.
 let g:UltiSnipsEditSplit="horizontal"
