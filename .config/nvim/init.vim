@@ -21,6 +21,7 @@ Plug 'hashivim/vim-terraform' " terraform syntax highlighting
 " Styling / UI Plugins
 Plug 'edkolev/tmuxline.vim'
 Plug 'vim-scripts/colorizer' " highlight hex colors
+Plug 'itchyny/lightline.vim'
 
 " Colorscheme Plugins
 Plug 'mccurdyc/vim-base16-lightline'
@@ -299,7 +300,7 @@ nmap <leader>gs :FzfGFiles?<CR>
 " Plugin: https://github.com/edkolev/tmuxline.vim
 let g:tmuxline_powerline_separators = 0
 
-" Plugin: https://github.com/mccurdyc/lightline.vim
+" Plugin: https://github.com/itchyny/lightline.vim
 " Dependency: tpope/vim-fugitive (for branch info)
 
 " Do not display the standard status line
@@ -585,7 +586,7 @@ let g:ale_keep_list_window_open = 0 " close list windows when there aren't error
 " ALE supported tools - https://github.com/dense-analysis/ale/blob/master/supported-tools.md
 " :ALEInfo
 let g:ale_linters = {
-\ 'go': ['gopls'],
+\ 'go': ['gopls', 'staticcheck', 'gosimple'],
 \ 'rust': ['rustc', 'analyzer'],
 \ 'terraform': ['terraform', 'terraform_lsp', 'tflint'],
 \ }
