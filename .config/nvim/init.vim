@@ -19,7 +19,6 @@ Plug 'lervag/vimtex', {'for': 'tex'}
 Plug 'hashivim/vim-terraform' " terraform syntax highlighting
 
 " Styling / UI Plugins
-Plug 'itchyny/lightline.vim'   " light, configurable statusline
 Plug 'edkolev/tmuxline.vim'
 Plug 'vim-scripts/colorizer' " highlight hex colors
 
@@ -300,7 +299,7 @@ nmap <leader>gs :FzfGFiles?<CR>
 " Plugin: https://github.com/edkolev/tmuxline.vim
 let g:tmuxline_powerline_separators = 0
 
-" Plugin: https://github.com/itchyny/lightline.vim
+" Plugin: https://github.com/mccurdyc/lightline.vim
 " Dependency: tpope/vim-fugitive (for branch info)
 
 " Do not display the standard status line
