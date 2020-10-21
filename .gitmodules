@@ -10,3 +10,6 @@
 [submodule "vim-snippets"]
 	path = vim-snippets
 	url = git@github.com:mccurdyc/vim-snippets.git
+[submodule "colors/base16-vim"]
+	path = colors/base16-vim
+	url = git@github.com:mccurdyc/base16-vim.git
