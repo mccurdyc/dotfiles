@@ -102,8 +102,8 @@ srcgrphws() {
     --publish 127.0.0.1:3370:3370 \
     --volume ~/.sourcegraph/config:/etc/sourcegraph \
     --volume ~/.sourcegraph/data:/var/opt/sourcegraph \
-    sourcegraph/server:3.18.0 &
-  src-expose serve $SRC_DIR/mccurdyc &
+    sourcegraph/server:3.21.0
+  # src-expose serve $SRC_DIR/mccurdyc &
 }
 
 zktws() {
@@ -410,4 +410,8 @@ EOF
     --mount type=bind,source=${entrypoint},target=${entrypointpath},readonly \
     --entrypoint ${entrypointpath} \
     google/cloud-sdk /bin/bash
+}
+
+function whatsmyip() {
+  dig +short myip.opendns.com @resolver1.opendns.com
 }
