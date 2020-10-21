@@ -13,3 +13,6 @@
 [submodule "vim-base16-lightline"]
 	path = vim-base16-lightline
 	url = git@github.com:mccurdyc/vim-base16-lightline.git
+[submodule "base16-vim"]
+	path = base16-vim
+	url = git@github.com:mccurdyc/base16-vim.git
