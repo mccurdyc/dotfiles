@@ -606,6 +606,9 @@ let g:ale_terraform_terraform_executable = 'terraform'
 let g:ale_terraform_tflint_executable = 'tflint'
 let g:ale_terraform_tflint_options = ''
 
+let g:ale_go_staticcheck_lint_package = 1
+let g:ale_go_staticcheck_options = ''
+
 " Plugin: https://github.com/sirver/UltiSnips
 " Reference: https://github.com/SirVer/ultisnips/blob/master/doc/UltiSnips.txt
 let g:UltiSnipsJumpForwardTrigger="<C-j>"
