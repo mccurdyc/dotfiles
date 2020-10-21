@@ -74,8 +74,6 @@ source $HOME/.zsh/plugins/Aloxaf/fzf-tab/fzf-tab.plugin.zsh
 
 eval "$(hub alias -s)"
 
-eval "$(fastly --completion-script-zsh)"
-
 # asdf
 source /opt/asdf-vm/asdf.sh
 
