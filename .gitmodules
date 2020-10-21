@@ -4,9 +4,6 @@
 [submodule ".zsh/plugins/zsh-git-prompt"]
 	path = .zsh/plugins/zsh-git-prompt
 	url = git@github.com:mccurdyc/zsh-git-prompt.git
-[submodule "vim-snippets"]
-	path = vim-snippets
-	url = git@github.com:mccurdyc/vim-snippets.git
 [submodule "vim-base16-lightline"]
 	path = vim-base16-lightline
 	url = git@github.com:mccurdyc/vim-base16-lightline.git
