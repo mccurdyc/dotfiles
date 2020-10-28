@@ -415,3 +415,10 @@ EOF
 function whatsmyip() {
   dig +short myip.opendns.com @resolver1.opendns.com
 }
+
+function gogett() {
+(
+  d=$(mktemp -d) cd $d
+  go get -u -v $1
+)
+}
