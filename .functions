@@ -1,5 +1,14 @@
 #!/bin/bash
 
+function src() {
+  source $HOME/.zshrc
+  eval $(keychain --eval --quiet id_rsa ~/.ssh/id_rsa)
+}
+
+function qssh() {
+  ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null $@
+}
+
 profzsh() {
   shell=${1-$SHELL}
   ZPROF=true $shell -i -c exit

@@ -2,6 +2,8 @@
 [ -f ~/.Xmodmap ] && xmodmap ~/.Xmodmap
 [ -f ~/.xbindkeysrc ] && xbindkeysrc
 
+eval $(ssh-agent)
+
 # fix palm scrolling while typing
 synclient PalmMinZ=100
 
