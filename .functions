@@ -3,6 +3,8 @@
 function src() {
   source $HOME/.zshrc
   eval $(keychain --eval --quiet id_rsa ~/.ssh/id_rsa)
+  # Sign in to 1Password CLI
+  # eval $(op signin my)
 }
 
 function qssh() {
@@ -78,13 +80,13 @@ mkcd() {
 
 # Make a temporary directory and enter it
 tmpd() {
-	local dir
-	if [ $# -eq 0 ]; then
-		dir=$(mktemp -d)
-	else
-		dir=$(mktemp -d -t "${1}.XXXXXXXXXX")
-	fi
-	cd "$dir" || exit
+  local dir
+  if [ $# -eq 0 ]; then
+     dir=$(mktemp -d)
+  else
+     dir=$(mktemp -d -t "${1}.XXXXXXXXXX")
+  fi
+  cd "$dir" || exit
 }
 
 dlvs() {
@@ -430,4 +432,8 @@ function gogett() {
   d=$(mktemp -d) cd $d
   go get -u -v $1
 )
+}
+
+function pw {
+  op get item ${1} --fields password
 }
