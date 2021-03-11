@@ -171,7 +171,6 @@ no <silent><Leader>cs :nohls<CR>
 " I had it also in command and visual but caused delays and unexpected escape
 " calls.
 inoremap kj <Esc>
-nnoremap dg :q!<CR>
 
 " turn spell check on for markdown and tex files
 autocmd BufRead,BufNewFile *.md setlocal spell
@@ -233,19 +232,11 @@ endif
 
 " A nicer FzfFiles preview
 " docs - https://github.com/junegunn/fzf.vim#example-customizing-files-command
-" command! -bang -nargs=? -complete=dir Files
-"     \ call fzf#vim#files(<q-args>, fzf#vim#with_preview(), <bang>0)
 
 " advanced grep(faster with preview)
 " docs - https://github.com/junegunn/fzf.vim#example-advanced-ripgrep-integration
-function! RipgrepFzf(query, fullscreen)
-    let command_fmt = 'rg --column --no-ignore --line-number --no-heading --color=always --smart-case %s || true'
-    let initial_command = printf(command_fmt, shellescape(a:query))
-    let reload_command = printf(command_fmt, '{q}')
-    let spec = {'options': ['--phony', '--query', a:query, '--bind', 'change:reload:'.reload_command]}
-    call fzf#vim#grep(initial_command, 1, fzf#vim#with_preview(spec), a:fullscreen)
-endfunction
-command! -nargs=* -bang Rg call RipgrepFzf(<q-args>, <bang>0)
+command! -bang -nargs=? FilesCustom
+        \ call fzf#vim#files(<q-args>, {'dir': systemlist('git rev-parse --show-toplevel')[0], 'options': ['--layout=reverse', '--info=inline']}, <bang>0)
 
 " floating fzf window with borders
 function! CreateCenteredFloatingWindow()
@@ -294,7 +285,7 @@ nmap <leader>w :FzfWindows<CR>
 nmap <leader>c :FzfCommits<CR>
 nmap <leader>bc :FzfBCommits<CR>
 nmap <leader>f :FzfRg<CR>
-nmap <C-p> :FzfFiles<CR>
+nmap <C-p> :FilesCustom<CR>
 nmap <leader>gs :FzfGFiles?<CR>
 
 " Plugin: https://github.com/edkolev/tmuxline.vim
@@ -427,7 +418,7 @@ nnoremap <silent> g0    <cmd>lua vim.lsp.buf.document_symbol()<CR>
 nnoremap <silent> gW    <cmd>lua vim.lsp.buf.workspace_symbol()<CR>
 nnoremap <silent> gd    <cmd>lua vim.lsp.buf.declaration()<CR>
 lua << EOF
-local nvim_lsp = require('nvim_lsp')
+local nvim_lsp = require('lspconfig')
 
 -- https://www.reddit.com/r/neovim/comments/gtta9p/neovim_lsp_how_to_disable_diagnostics/fseat8a?utm_source=share&utm_medium=web2x&context=3
 -- Disable Diagnostcs globally.
@@ -449,19 +440,10 @@ nvim_lsp.terraformls.setup({
 nvim_lsp.rust_analyzer.setup({
   on_attach=on_attach
 })
-nvim_lsp.bashls.setup({})
-nvim_lsp.yamlls.setup({})
-nvim_lsp.jsonls.setup({})
 nvim_lsp.rust_analyzer.setup({
   on_attach=on_attach
 })
 nvim_lsp.bashls.setup({
-  on_attach=on_attach
-})
-nvim_lsp.yamlls.setup({
-  on_attach=on_attach
-})
-nvim_lsp.jsonls.setup({
   on_attach=on_attach
 })
 EOF
@@ -497,9 +479,6 @@ let g:completion_confirm_key = ""
 imap <expr> <cr>  pumvisible() ? complete_info()["selected"] != "-1" ?
 \ "\<Plug>(completion_confirm_completion)"  :
 \ "\<c-e>\<CR>" : "\<CR>"
-
-let g:completion_enable_auto_signature = 1
-let g:completion_enable_auto_paren = 1
 
 " Trigger completion with <Tab>
 inoremap <silent><expr> <TAB>
@@ -589,6 +568,7 @@ let g:ale_linters = {
 \ 'go': ['gopls', 'staticcheck', 'gosimple'],
 \ 'rust': ['rustc', 'analyzer'],
 \ 'terraform': ['terraform', 'terraform_lsp', 'tflint'],
+\ 'json': ['jsonlint'],
 \ }
 
 let g:ale_fixers = {
@@ -596,6 +576,7 @@ let g:ale_fixers = {
 \ 'go': ['gofmt', 'goimports'],
 \ 'rust': ['rustfmt'],
 \ 'terraform': ['terraform'],
+\ 'json': ['jq'],
 \}
 
 let g:ale_rust_cargo_check_all_targets = 1
@@ -629,6 +610,13 @@ let g:gh_line_blame_map_default = 0
 let g:gh_line_map = '<leader>gh'
 let g:gh_line_blame_map = '<leader>gb'
 let g:gh_open_command = 'xdg-open '
+
+" Plugin: https://github.com/tpope/vim-fugitive
+nnoremap <silent> gwq    <cmd>Gwq!<CR>
+
+" Plugin: https://github.com/airblade/vim-rooter
+let g:rooter_patterns = ['.git', 'Makefile']
+let g:rooter_change_directory_for_non_project_files = ''
 
 "----------------------------------------------
 " color settings
