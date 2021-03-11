@@ -63,12 +63,6 @@ PROMPT_COMMAND='echo -ne "\033]0;${USER}@${HOSTNAME}: ${PWD}\007"'
 # This is neccessary for fzf key-bindings to work
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
-# The next line updates PATH for the Google Cloud SDK.
-if [ -f '/home/mccurdyc/oss/google-cloud-sdk/path.zsh.inc' ]; then . '/home/mccurdyc/oss/google-cloud-sdk/path.zsh.inc'; fi
-
-# The next line enables shell command completion for gcloud.
-if [ -f '/home/mccurdyc/oss/google-cloud-sdk/completion.zsh.inc' ]; then . '/home/mccurdyc/oss/google-cloud-sdk/completion.zsh.inc'; fi
-
 # This has to be sourced late
 source $HOME/.zsh/plugins/Aloxaf/fzf-tab/fzf-tab.plugin.zsh
 
@@ -80,3 +74,9 @@ source /opt/asdf-vm/asdf.sh
 if [[ "$ZPROF" = true ]]; then
   zprof
 fi
+
+# The next line updates PATH for the Google Cloud SDK.
+if [ -f '/home/mccurdyc/src/oss/google-cloud-sdk/path.zsh.inc' ]; then . '/home/mccurdyc/src/oss/google-cloud-sdk/path.zsh.inc'; fi
+
+# The next line enables shell command completion for gcloud.
+if [ -f '/home/mccurdyc/src/oss/google-cloud-sdk/completion.zsh.inc' ]; then . '/home/mccurdyc/src/oss/google-cloud-sdk/completion.zsh.inc'; fi
