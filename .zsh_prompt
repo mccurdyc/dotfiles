@@ -90,7 +90,7 @@ NEWLINE='
 # https://www.liveinternet.ru/users/5110814/post347144493
 PROMPT='╔ [ %{$fg[white]%}$(date +"%H:%M:%S")%{$reset_color%} ] '
 PROMPT+="%F{white}"  ## primary coloring
-# PROMPT+="[ %n@%m ] " ## username@hostname
+PROMPT+="[ %n@%m ] " ## username@hostname
 # PROMPT+='[ chef_org:$(chef_block_prompt_string) ] '
 PROMPT+="[ %3~ ] "   ## trailing pwd dirs
 PROMPT+='$(git_prompt_string)'   ## make git branch bold and yellow (%B starts, %b stops)
