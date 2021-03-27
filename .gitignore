@@ -2,10 +2,10 @@
 .gitconfig
 bin/
 nvim/.netrwhist
-files/.config/**
-files/.config/nvim/.undodir
-files/.vim/plugged
-files/.vim/sessions
+files.headless/.config/**
+files.headless/.config/nvim/.undodir
+files.headless/.vim/plugged
+files.headless/.vim/sessions
 files/.local/share/*
 !.local/share/nvim/shada
 !.local/share/applications/

@@ -69,7 +69,7 @@ endif
 
 .PHONY: config-deps
 config-deps: install-tools ## Runs the necessary commands to configure the installed packages.
-	nvim +PlugInstall +UpdateRemotePlugins +qall > /dev/null
+	nvim +PlugInstall +UpdateRemotePlugins +qall
 	@ # TODO update - nvim --headless -c "CocInstall coc-snippets"
 	@# https://github.com/tmux-plugins/tpm/issues/6
 	$(HOME)/.tmux/plugins/tpm/scripts/install_plugins.sh

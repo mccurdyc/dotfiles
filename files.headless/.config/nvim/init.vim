@@ -423,7 +423,6 @@ local nvim_lsp = require('lspconfig')
 -- https://www.reddit.com/r/neovim/comments/gtta9p/neovim_lsp_how_to_disable_diagnostics/fseat8a?utm_source=share&utm_medium=web2x&context=3
 -- Disable Diagnostcs globally.
 -- This disables the in-line diagnostics.
-vim.lsp.callbacks["textDocument/publishDiagnostics"] = function() end
 
 local on_attach = function(client)
     require'completion'.on_attach(client)
