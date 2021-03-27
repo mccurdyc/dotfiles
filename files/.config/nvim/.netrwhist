@@ -1,0 +1,12 @@
+let g:netrw_dirhistmax  =10
+let g:netrw_dirhistcnt =0
+let g:netrw_dirhist_0='/home/mccurdyc/dotfiles/archlive/airootfs'
+let g:netrw_dirhist_9='/home/mccurdyc/dotfiles/archlive/work/x86_64/airootfs/etc/skel'
+let g:netrw_dirhist_8='/tmp/tmp.ZJqVRUc0jZ/modules/foo'
+let g:netrw_dirhist_7='/home/mccurdyc/src/github.com/fastly/eventbuffer/vendor'
+let g:netrw_dirhist_6='/etc/wireguard'
+let g:netrw_dirhist_5='/home/mccurdyc'
+let g:netrw_dirhist_4='/home/mccurdyc/.ssh'
+let g:netrw_dirhist_3='/home/mccurdyc/src/github.com/fastly/tf_dataeng_event_buffer/fastly_base_image'
+let g:netrw_dirhist_2='/home/mccurdyc/src/github.com/fastly/tf_dataeng_event_buffer/modules/jumpbox'
+let g:netrw_dirhist_1='/home/mccurdyc/.ssh/control'
