@@ -1,0 +1,134 @@
+##@## ~/.Xresources ##@##
+## purpose; catchall configuration place for programs writing to X.
+## reminder; this file requires double ## comments for some reason.
+## reminder; this file can be reloaded via "xrdb -load ~/.Xresources".
+## reminder; see "rofi -dump-xresources" for listing of all options.
+
+! Base16 Eighties (256)
+! Scheme: Chris Kempson (http://chriskempson.com)
+#define base00 #2d2d2d
+#define base01 #393939
+#define base02 #515151
+#define base03 #747369
+#define base04 #a09f93
+#define base05 #d3d0c8
+#define base06 #e8e6df
+#define base07 #f2f0ec
+#define base08 #f2777a
+#define base09 #f99157
+#define base0A #ffcc66
+#define base0B #99cc99
+#define base0C #66cccc
+#define base0D #6699cc
+#define base0E #cc99cc
+#define base0F #d27b53
+
+## rofi-settings;
+rofi.font: Iosevka Term 30
+rofi.lines: 5
+
+rofi.color-enabled: true
+rofi.color-window: base00, base0A, base0A
+rofi.color-normal: base00, #747369, base00, base0A, base00
+rofi.color-active: base00, #ffcc66, base00, base0A, base00
+rofi.color-urgent: base00, #cc99cc, base00, base0E, base00
+rofi.location: 5
+rofi.yoffset: 0
+rofi.xoffset: 0
+rofi.width: 100
+rofi.fixed_num_lines: 1
+rofi.hmode: false
+! Border width
+rofi.bw: 8
+rofi.separator-style: none
+rofi.hide-scrollbar: true
+
+
+*foreground:   base05
+#ifdef background_opacity
+*background:   [background_opacity]base00
+#else
+*background:   base00
+#endif
+*cursorColor:  base05
+
+*color0:       base00
+*color1:       base08
+*color2:       base0B
+*color3:       base0A
+*color4:       base0D
+*color5:       base0E
+*color6:       base0C
+*color7:       base05
+
+*color8:       base03
+*color9:       base08
+*color10:      base0B
+*color11:      base0A
+*color12:      base0D
+*color13:      base0E
+*color14:      base0C
+*color15:      base07
+
+! Note: colors beyond 15 might not be loaded (e.g., xterm, urxvt),
+! use 'shell' template to set these if necessary
+*color16:      base09
+*color17:      base0F
+*color18:      base01
+*color19:      base02
+*color20:      base04
+*color21:      base06
+
+!-- Xft settings -- !
+Xft.dpi:        200
+Xft.rgba:       rgb
+Xft.autohint:   0
+Xft.lcdfilter:  lcddefault
+Xft.hintstyle:  hintfull
+Xft.hinting:    1
+Xft.antialias:  1
+
+!! URxvt Appearance
+URxvt.font: xft:Iosevka Term:style=Regular:size=10
+URxvt.boldFont: xft:Iosevka Term:style=Bold:size=10
+URxvt.italicFont: xft:Iosevka Term:style=Italic:size=10
+URxvt.boldItalicFont: xft:Iosevka Term:style=Bold Italic:size=10
+URxvt.letterSpace: 0
+URxvt.lineSpace: 0
+URxvt.geometry: 92x24
+URxvt.internalBorder: 24
+URxvt.cursorBlink: true
+URxvt.cursorUnderline: false
+URxvt.saveline: 2048
+URxvt.scrollBar: false
+URxvt.scrollBar_right: false
+URxvt.urgentOnBell: true
+URxvt.depth: 24
+
+## https://wiki.archlinux.org/index.php/rxvt-unicode
+## pacman -S urxvt-perls
+URxvt.perl-ext-common: default,font-size,clipboard,matcher,url-select
+
+URxvt.copyCommand: xclip -i -selection clipboard
+URxvt.pasteCommand: xclip -o -selection clipboard
+
+## clipboard
+URxvt.keysym.Shift-Control-V: eval:paste_clipboard
+URxvt.keysym.Shift-Control-C: eval:selection_to_clipboard
+URxvt.iso14755: false
+URxvt.iso14755_52: false
+
+## Clickable URLs
+## https://wiki.archlinux.org/index.php/rxvt-unicode#Clickable_URLs
+URxvt.keysym.C-z: perl:matcher:list
+URxvt.matcher.rend.0: Uline Bold fg4
+
+URxvt.url-select.launcher: /usr/bin/xdg-open
+URxvt.url-select.underline: true
+URxvt.keysym.Control-u: perl:url-select:select_next
+
+## font-size
+URxvt.keysym.Control-equal: font-size:increase
+URxvt.keysym.Control-minus: font-size:decrease
+URxvt.keysym.Control-slash: font-size:show
+URxvt.font-size.step: 1
