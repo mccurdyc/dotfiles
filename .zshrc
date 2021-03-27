@@ -2,6 +2,9 @@ if [[ "$ZPROF" = true ]]; then
   zmodload zsh/zprof
 fi
 
+# allow shell comments
+setopt interactive_comments
+
 # purpose; zsh shell config; well integrated with vim and tmux.
 ## warning; zsh aliases require double quotes; bash aliases do not.
 
