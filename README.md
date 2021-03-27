@@ -7,7 +7,8 @@
 $ git clone --recursive https://github.com/mccurdyc/dotfiles.git
 $ cd dotfiles && git submodule update --init --recursive
 $ make help
-$ make run-minimal
+$ make run # idempotent
+$ make HEADLESS=false run # non-headless
 ```
 
 Please, whatever you do, do not just blindly copy and paste ANYONE's dotfiles, it will cause more harm than benefit and you will spend hours debugging! Take small bits at a time and make sure you understand what you are taking.
