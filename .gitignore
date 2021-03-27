@@ -2,6 +2,7 @@
 .gitconfig
 bin/
 nvim/.netrwhist
+files/.config/**
 files/.config/nvim/.undodir
 files/.vim/plugged
 files/.vim/sessions
