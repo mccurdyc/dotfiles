@@ -15,8 +15,12 @@ ifeq ($(HEADLESS),false)
 endif
 	@./scripts/replace-templated-text.sh -d $(DOTFILES)
 
+.PHONY: fetch-keys
+fetch-keys: install-aur-deps ## Fetches GPG, etc. keys.
+	@./scripts/fetch-keys.sh
+
 .PHONY: run
-run: install-aur-deps dotfiles config-deps asdf-tools replace-templated-text ## Runs the full necessary (not additional/optional) setup.
+run: install-aur-deps dotfiles config-deps asdf-tools replace-templated-text fetch-keys ## Runs the full necessary (not additional/optional) setup.
 
 .PHONY: create-files
 create-files: ## Creates required files that don't need to be symlinked to dotfiles
