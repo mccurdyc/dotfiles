@@ -1,12 +1,8 @@
 .extra
 .gitconfig
 bin/
-.config/**
-files/.config/**
-!files/.config/nvim/ultisnips
-files/.config/nvim/.undodir
-!files/.config/nvim
 nvim/.netrwhist
+files/.config/nvim/.undodir
 files/.vim/plugged
 files/.vim/sessions
 files/.local/share/*
