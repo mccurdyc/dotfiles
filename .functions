@@ -113,7 +113,7 @@ srcgrphws() {
     --publish 127.0.0.1:3370:3370 \
     --volume ~/.sourcegraph/config:/etc/sourcegraph \
     --volume ~/.sourcegraph/data:/var/opt/sourcegraph \
-    sourcegraph/server:3.21.0
+    sourcegraph/server:3.25.2
   # src-expose serve $SRC_DIR/mccurdyc &
 }
 
@@ -436,4 +436,8 @@ function gogett() {
 
 function pw {
   op get item ${1} --fields password
+}
+
+function hubpr {
+  hub pull-request --force --push --draft $@ -F - --edit < $HOME/.github/pullrequest-template.md
 }
