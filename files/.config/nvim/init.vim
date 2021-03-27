@@ -440,11 +440,10 @@ nvim_lsp.terraformls.setup({
 nvim_lsp.rust_analyzer.setup({
   on_attach=on_attach
 })
-nvim_lsp.bashls.setup({
+nvim_lsp.rust_analyzer.setup({
   on_attach=on_attach
 })
--- ruby LS
-nvim_lsp.solargraph.setup({
+nvim_lsp.bashls.setup({
   on_attach=on_attach
 })
 EOF

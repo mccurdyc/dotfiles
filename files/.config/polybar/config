@@ -1,0 +1,349 @@
+[colors]
+background = #2d2d2d
+background-alt = #393939
+foreground = #f2f0ec
+foreground-alt = #2d2d2d
+
+alternative = #f99157
+alert = #f2777a
+
+red = #f2777a
+orange = #f99157
+green = #99cc99
+blue = #6699cc
+cyan = #66cccc
+yellow = #ffcc66
+purple = #cc99cc
+white = #ffffff
+
+[bar/bottom]
+; https://github.com/reedrw/dotfiles/blob/2797be2284bd54597d29777f9a8f82a6f40307b7/config/polybar/config
+; https://github.com/polybar/polybar/issues/763
+monitor = ${env:MONITOR:}
+dpi = 120
+width = 100%
+height = 40
+radius = 0.0
+fixed-center = false
+bottom = true
+
+background = ${colors.background}
+foreground = ${colors.foreground}
+
+border-size = 7
+border-color = ${colors.background-alt}
+
+line-size = 3
+padding = 2
+module-margin = 1
+
+font-0 = "Iosevka Term:size=10;0"
+font-1 = FontAwesome5Free:style=Solid:size=10;0
+font-2 = FontAwesome5Free:style=Regular:size=10;0
+font-3 = FontAwesome5Brands:style=Regular:size=10;0
+
+modules-left = i3
+modules-center = xwindow
+modules-right = date time-et time-pt time-utc
+
+override-redirect = false
+
+[bar/top]
+; https://github.com/reedrw/dotfiles/blob/2797be2284bd54597d29777f9a8f82a6f40307b7/config/polybar/config
+; https://github.com/polybar/polybar/issues/763
+monitor = ${env:MONITOR:}
+dpi = 120
+width = 100%
+height = 40
+radius = 0.0
+fixed-center = true
+bottom = false
+
+background = ${colors.background}
+foreground = ${colors.foreground}
+
+border-size = 7
+border-color = ${colors.background-alt}
+
+line-size = 3
+padding = 2
+module-margin = 1
+
+font-0 = "Source Code Pro:size=10;0"
+font-1 = FontAwesome5Free:style=Solid:size=10;0
+font-2 = FontAwesome5Free:style=Regular:size=10;0
+font-3 = FontAwesome5Brands:style=Regular:size=10;0
+
+modules-left =
+modules-center = backlight pulseaudio network-wireless network-wired cpu memory battery
+modules-right =
+
+; hide bar when in full-screen mode
+; https://github.com/polybar/polybar/wiki#i3-make-the-bar-appear-below-windows
+override-redirect = false
+
+[module/i3]
+type = internal/i3
+
+; Only show workspaces defined on the same output as the bar
+;
+; Useful if you want to show monitor specific workspaces
+; on different bars
+;
+; Default: false
+pin-workspaces = true
+
+; This will split the workspace name on ':'
+; Default: false
+strip-wsnumbers = true
+
+; Create click handler used to focus workspace
+; Default: true
+enable-click = false
+
+; Create scroll handlers used to cycle workspaces
+; Default: true
+enable-scroll = false
+
+; Available tags:
+;   <label-state> (default) - gets replaced with <label-(focused|unfocused|visible|urgent)>
+;   <label-mode> (default)
+format = <label-state> <label-mode>
+
+label-mode = %mode%
+label-mode-padding = 2
+label-mode-background = #e60053
+
+label-focused = %index%
+label-focused-foreground = ${colors.foreground-alt}
+label-focused-background = ${colors.alternative}
+label-focused-underline = ${colors.alternative}
+label-focused-padding = 2
+
+label-unfocused = %index%
+label-unfocused-padding = 2
+
+label-visible = %index%
+label-visible-underline = #555555
+label-visible-padding = 2
+
+label-urgent = %index%
+label-urgent-foreground = ${colors.foreground}
+label-urgent-background = ${colors.alert}
+label-urgent-padding = 2
+
+; Separator in between workspaces
+label-separator-padding = 0
+label-separator-foreground = ${colors.alternative}
+
+[module/xwindow]
+type = internal/xwindow
+label = %title:0:40:...%
+
+[module/pulseaudio]
+type = internal/pulseaudio
+
+; Sink to be used, if it exists (find using `pacmd list-sinks`, name field)
+; If not, uses default sink
+sink = bluez_sink.04_52_C7_C2_95_56.a2dp_sink
+
+; Use PA_VOLUME_UI_MAX (~153%) if true, or PA_VOLUME_NORM (100%) if false
+; Default: true
+use-ui-max = true
+
+; Available tags:
+;   <label-muted> (default)
+;   <ramp-volume>
+;   <bar-volume>
+format-muted = <label-muted>
+
+; Available tokens:
+;   %percentage% (default)
+;   %decibels% (unreleased)
+label-volume =  %percentage%%
+
+; Available tokens:
+;   %percentage% (default)
+;   %decibels% (unreleased)
+label-muted =  muted
+label-muted-foreground = ${colors.red}
+
+; Interval for volume increase/decrease (in percent points)
+; Default: 5
+interval = 5
+
+; Right-click launches pavucontrol
+click-right = pavucontrol &
+
+[module/backlight]
+type = internal/backlight
+
+; Use the following command to list available cards:
+; $ ls -1 /sys/class/backlight/
+card = intel_backlight
+
+format = <label>
+
+; Available tokens:
+;   %percentage% (default)
+label =  %percentage%%
+
+[module/cpu]
+type = internal/cpu
+interval = 2
+format-prefix = "CPU "
+format-prefix-foreground = ${colors.foreground}
+format-underline = ${colors.alternative}
+label = %percentage:2%%
+
+[module/memory]
+type = internal/memory
+interval = 2
+format-prefix = "RAM "
+format-prefix-foreground = ${colors.foreground}
+format-underline = ${colors.alternative}
+label = %percentage_used:2%%
+
+; If you use both a wired and a wireless network, just add 2 module definitions. For example
+[module/network-wired]
+type = internal/network
+interface = ens8u2u4
+
+; Seconds to sleep between updates
+; Default: 1
+interval = 1.0
+
+; Accumulate values from all interfaces
+; when querying for up/downspeed rate
+; Default: false
+accumulate-stats = true
+
+; Consider an `UNKNOWN` interface state as up.
+; Some devices have an unknown state, even when they're running
+; Default: false
+unknown-as-up = true
+
+; Available tokens:
+;   %ifname%    [wireless+wired]
+;   %local_ip%  [wireless+wired]
+;   %local_ip6% [wireless+wired]
+;   %essid%     [wireless]
+;   %signal%    [wireless]
+;   %upspeed%   [wireless+wired]
+;   %downspeed% [wireless+wired]
+;   %linkspeed% [wired]
+; Default: %ifname% %local_ip%
+label-connected =  %ifname% %local_ip%  %upspeed:3%  %downspeed:3% %linkspeed%
+label-connected-foreground = ${colors.green}
+
+; Default: (none)
+label-disconnected =  
+label-disconnected-foreground = ${colors.red}
+
+; Normal Module
+[module/network-wireless]
+type = internal/network
+interface = wlp2s0
+
+; Seconds to sleep between updates
+; Default: 1
+interval = 1.0
+
+; Accumulate values from all interfaces
+; when querying for up/downspeed rate
+; Default: false
+accumulate-stats = true
+
+; Consider an `UNKNOWN` interface state as up.
+; Some devices have an unknown state, even when they're running
+; Default: false
+unknown-as-up = true
+
+; Available tokens:
+;   %ifname%    [wireless+wired]
+;   %local_ip%  [wireless+wired]
+;   %local_ip6% [wireless+wired]
+;   %essid%     [wireless]
+;   %signal%    [wireless]
+;   %upspeed%   [wireless+wired]
+;   %downspeed% [wireless+wired]
+;   %linkspeed% [wired]
+; Default: %ifname% %local_ip%
+label-connected =  %ifname% %local_ip% %essid%  %upspeed:3%  %downspeed:3%
+label-connected-foreground = ${colors.green}
+
+; Default: (none)
+label-disconnected =  
+label-disconnected-foreground = ${colors.red}
+
+[module/date]
+type = internal/date
+interval = 30
+
+date =  %A, %d %b
+date-alt = %a %d
+
+format-prefix = ""
+format-prefix-foreground = ${colors.foreground-alt}
+format-underline = ${colors.background}
+
+label = %date%
+
+[module/time-et]
+type = custom/script
+exec = TZ=America/New_York date +" %H:%M:%S ET"
+interval = 1
+format-underline = ${colors.alternative}
+
+[module/time-pt]
+type = custom/script
+exec = TZ=America/Los_Angeles date +" %H:%M PT"
+interval = 5
+
+[module/time-utc]
+type = custom/script
+exec = TZ=UTC date +" %H:%M UTC"
+interval = 5
+
+[module/battery]
+type = internal/battery
+
+; This is useful in case the battery never reports 100% charge
+full-at = 99
+
+; Use the following command to list batteries and adapters:
+; $ ls -1 /sys/class/power_supply/
+battery = BAT0
+adapter = AC
+
+; If an inotify event haven't been reported in this many
+; seconds, manually poll for new values.
+;
+; Needed as a fallback for systems that don't report events
+; on sysfs/procfs.
+;
+; Disable polling by setting the interval to 0.
+;
+; Default: 5
+poll-interval = 5
+
+; Available tokens:
+;   %percentage% (default) - is set to 100 if full-at is reached
+;   %percentage_raw%
+;   %time%
+;   %consumption% (shows current charge rate in watts)
+label-charging =  %percentage%%
+
+; Available tokens:
+;   %percentage% (default) - is set to 100 if full-at is reached
+;   %percentage_raw%
+;   %time%
+;   %consumption% (shows current discharge rate in watts)
+label-discharging =  %percentage%%
+
+label-full =  %percentage%%
+
+[settings]
+screenchange-reload = true
+
+; vim:ft=dosini

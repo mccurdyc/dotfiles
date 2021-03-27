@@ -1,0 +1,57 @@
+{
+  "languageserver": {
+    "golang": {
+      "command": "gopls",
+      "rootPatterns": ["go.mod"],
+      "filetypes": ["go"],
+      "settings": {
+        "usePlaceholders": true,
+        "completeUnimported": true,
+        "hoverKind": "FullDocumentation"
+      }
+    },
+    "rust": {
+      "command": "rust-analyzer",
+      "filetypes": ["rust"],
+      "rootPatterns": ["Cargo.toml"]
+    },
+    "dockerfile": {
+      "command": "docker-langserver",
+      "filetypes": ["dockerfile"],
+      "args": ["--stdio"]
+    },
+    "bash": {
+      "command": "bash-language-server",
+      "args": ["start"],
+      "filetypes": ["sh"],
+      "ignoredRootPaths": ["~"]
+    },
+    "terraform": {
+      "command": "terraform-lsp",
+      "filetypes": ["terraform"],
+      "initializationOptions": {}
+    }
+  },
+  "yaml.validate": true,
+  "yaml.format.enable": true,
+  "yaml.hover": true,
+  "yaml.completion": true,
+  "coc.preferences.colorSupport": true,
+  "coc.preferences.jumpCommand": "split",
+  "coc.preferences.formatOnSaveFiletypes": "rust",
+  "refactor.openCommand": "sp",
+  "diagnostic.displayByAle": true,
+  "diagnostic.maxWindowHeight": 100,
+  "suggest.maxPreviewWidth": 1000,
+  "suggest.labelMaxLength": 1000,
+  "suggest.detailMaxLength": 1000,
+  "codeLens.enable": true,
+  "coc.preferences.bracketEnterImprove": true,
+  "signature.maxWindowHeight": 15,
+  "signature.floatMaxWidth": 1000,
+  "signature.enable": true,
+  "snippets.ultisnips.directories": [
+    "UltiSnips",
+    "~/.config/nvim/coc/ultisnips/"
+  ]
+}
