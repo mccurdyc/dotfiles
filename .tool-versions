@@ -1,8 +1,0 @@
-terraform 0.13.6
-ruby 2.7.1
-bundler 1.16.1
-vault 1.4.3
-tflint 0.18.0
-golang 1.15.3
-packer 1.6.6
-python 3.8.3

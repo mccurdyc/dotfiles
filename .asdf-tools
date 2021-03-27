@@ -1,0 +1,3 @@
+terraform https://github.com/Banno/asdf-hashicorp.git
+vault https://github.com/Banno/asdf-hashicorp.git
+

@@ -1,42 +1,30 @@
 default: help
 
-TOOLS_DIR=$(HOME)/tools
+TOOLS_DIR=$(HOME)/.tools
+HEADLESS?=true
+DOTFILES=$(CURDIR)/files.headless
 
 .PHONY: install-tools
 install-tools: ## Installs the necessary tools for setup.
-	pip install j2cli
+	@./scripts/install-tools.sh
 
 .PHONY: replace-templated-text
 replace-templated-text: install-tools ## Replaces templated text.
-	j2 -f json .gitconfig.j2 templated-config.json -o .gitconfig
-	j2 -f json .config/zoomus.conf.j2 templated-config.json -o .config/zoomus.conf
+ifeq ($(HEADLESS),false)
+	DOTFILES=$(CURDIR)/files
+endif
+	@./scripts/replace-templated-text.sh -d $(DOTFILES)
 
-.PHONY: run-minimal
-run-minimal: install-official-deps dotstar symlink ## Runs the full necessary (not additional/optional) setup.
+.PHONY: fetch-keys
+fetch-keys: install-aur-deps ## Fetches GPG, etc. keys.
+	@./scripts/fetch-keys.sh
 
-.PHONY: run-full
-run-full: install-official-deps install-aur-pkg-mgr install-aur-deps dotstar symlink config-deps ## Runs the full setup (i.e., necessary plus optional).
+.PHONY: run
+run: install-aur-deps dotfiles config-deps asdf-tools replace-templated-text fetch-keys ## Runs the full necessary (not additional/optional) setup.
 
 .PHONY: create-files
 create-files: ## Creates required files that don't need to be symlinked to dotfiles
 	touch $(HOME)/.zsh_history
-
-.PHONY: install-aur-pkg-mgr
-install-aur-pkg-mgr: install-official-deps ## Installs the yay AUR package manager.
-	mkdir $(TOOLS_DIR)
-	git clone https://aur.archlinux.org/yay.git $(TOOLS_DIR)/yay
-	cd $(TOOLS_DIR)/yay
-	makepkg -si
-
-.PHONY: install-official-deps
-install-official-deps: ## Installs official packages.
-	@#https://superuser.com/questions/1061612/how-do-you-make-a-list-file-for-pacman-to-install-from
-	sudo pacman -S - < pkglist-official.txt
-
-.PHONY: install-aur-deps
-install-aur-deps: ## Installs AUR packages.
-	@#https://superuser.com/questions/1061612/how-do-you-make-a-list-file-for-pacman-to-install-from
-	sudo pacman -S - < pkglist-aur.txt
 
 .PHONY: dump-deps
 dump-deps: ## Creates a dump of your currently-installed dependencies.
@@ -44,21 +32,51 @@ dump-deps: ## Creates a dump of your currently-installed dependencies.
 	@pacman -Qqne > pkglist-official.txt
 	@pacman -Qqme > pkglist-aur.txt
 
+.PHONY: install-aur-pkg-mgr
+install-aur-pkg-mgr: install-official-deps ## Installs the yay AUR package manager.
+	./scripts/install-yay.sh $(TOOLS_DIR)
+
+.PHONY: install-official-deps
+install-official-deps: ## Installs official packages.
+ifeq ($(HEADLESS),true)
+	sudo pacman -S - < pkglist-official.txt.headless
+else
+	sudo pacman -S - < pkglist-official.txt
+endif
+
+.PHONY: recv-keys
+recv-keys: ## Downloads the necessary GPG keys for verifying packages.
+	@# 1password-cli - https://support.1password.com/getting-started-linux/#arch-linux
+	gpg --keyserver keyserver.ubuntu.com --recv-keys 3FEF9748469ADBE15DA7CA80AC2D62742012EA22
+
+.PHONY: install-aur-deps
+install-aur-deps: recv-keys ## Installs AUR packages.
+ifeq ($(HEADLESS),true)
+	yay -S - < pkglist-aur.txt.headless
+else
+	yay -S - < pkglist-aur.txt
+endif
+
+.PHONY: dotfiles
+dotfiles: ## Symlinks the dotfiles to $(HOME) (idempotent).
+ifeq ($(HEADLESS),false)
+	DOTFILES=$(CURDIR)/files
+endif
+	@./scripts/symlink.sh -v -d $(DOTFILES) -o $(HOME)
+	@./scripts/symlink.sh -d $(DOTFILES) -o $(HOME)
+
 .PHONY: config-deps
-config-deps: ## Runs the necessary commands to configure the installed packages.
+config-deps: install-tools ## Runs the necessary commands to configure the installed packages.
 	nvim +PlugInstall +UpdateRemotePlugins +qall > /dev/null
-	nvim --headless -c "CocInstall coc-snippets"
+	@ # TODO update - nvim --headless -c "CocInstall coc-snippets"
 	@# https://github.com/tmux-plugins/tpm/issues/6
 	$(HOME)/.tmux/plugins/tpm/scripts/install_plugins.sh
 	tmux source $(HOME)/.tmux.conf
-	sudo npm i -g bash-language-server
-
-.PHONY: dotstar
-dotstar: replace-templated-text ## Symlinks the dotfiles to $(HOME) (idempotent).
-	for file in $(shell find $(CURDIR) -maxdepth 1 -name ".*" -not -name ".gitignore" -not -name ".git" -not -name ".*.swp"); do \
-		f=$$(basename $$file); \
-		ln -sfn $$file $(HOME)/$$f; \
-	done; \
+	@# sudo npm i -g bash-language-server
+	
+.PHONY: asdf-tools
+asdf-tools: ## Installs tools managed via asdf-vm.
+	./scripts/asdf-tools.sh .asdf-tools
 
 .PHONY: chmod
 chmod: ## Makes necessary files executable.
@@ -75,7 +93,7 @@ symlink: chmod ## Creates the necessary symlinks.
 	ln -snf $(CURDIR)/.xinitrc $(HOME)/.xsessionrc;
 	ln -sfn $(CURDIR)/gitignore $(HOME)/.gitignore;
 	mkdir -p $(HOME)/Pictures/screenshots;
-	ln -snf $(CURDIR)/CustomCSSforFx/custom $(CURDIR)/.mozilla/firefox/99ijjp0g.default-release/chrome
+	# ln -snf $(CURDIR)/CustomCSSforFx/custom $(CURDIR)/.mozilla/firefox/99ijjp0g.default-release/chrome
 
 .PHONY: help
 help: ## Prints this help menu.
