@@ -1,1 +1,0 @@
-/home/mccurdyc/dotfiles/files/.vim

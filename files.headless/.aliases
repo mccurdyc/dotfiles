@@ -1,1 +1,65 @@
-/home/mccurdyc/dotfiles/files/.aliases
+#!/bin/bash
+
+## run `tfsec terraform plan` and not need to do any secrets stuff, so long as you’re in a directory with a name equal to the applicable amazon profile
+alias tfsec='eval $(AWS_PROFILE=${PWD##*/} sops --decrypt --input-type env secrets.env | egrep -v "^#" | xargs)'
+
+alias srvhttp='python3 -m http.server'
+
+alias python='/home/mccurdyc/.asdf/shims/python3.8'
+
+alias gpg='gpg2'
+
+alias diff='diff -u'
+
+alias zoekt="zoekt -index_dir=$ZOEKT_INDEX_DIR -r"
+
+## https://golang.org/doc/manage-install
+## $ go get golang.org/dl/goX.Y.Z
+## $ goX.Y.Z download
+# alias go="go1.15.1"
+
+## tree
+alias tree="tree --dirsfirst --noreport -ACF"
+alias treea="tree -a"                         ## tree all
+alias treed="tree -d"                         ## tree dirs
+alias tree1="tree -d -L 1"                    ## tree depth 1
+alias tree2="tree -d -L 2"                    ## tree depth 2
+alias tree3="tree -d -L 3"                    ## tree depth 3
+
+## grep
+alias grep="grep --color=auto --exclude=tags --exclude-dir=.git"
+alias fgrep="fgrep --color=auto"
+alias egrep="egrep --color=auto"
+
+## ls
+alias ls="exa -a"
+
+## tmux
+## see ~/.functions
+alias tl='tmux list-sessions'
+alias ta='tmux attach -t '
+
+## rm
+alias rm="rm -i"
+alias mv="mv -i"
+
+## mkdir
+## see ~/.functions
+alias mkdir="mkdir -p"
+
+## git
+alias gitc='nvim -c MagitOnly'
+alias gits="git status"
+
+# clean local and remote "dead" branches
+alias gitclean='git remote prune origin && git branch --merged | egrep -v "(^\*|master|dev)" | xargs git branch -d'
+alias gitpp='git push -u origin $(git branch | grep \* | cut -d ' ' -f2)'
+
+# Linux specific aliases
+if [ "$(uname 2> /dev/null)" = "Linux" ]; then
+  alias pbcopy='xclip -selection clipboard'
+  alias pbpaste='xclip -selection clipboard -o'
+fi
+
+# copy working directory
+alias cwd='pwd | tr -d "\r\n" | xclip -selection clipboard'

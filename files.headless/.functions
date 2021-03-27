@@ -1,1 +1,443 @@
-/home/mccurdyc/dotfiles/files/.functions
+#!/bin/bash
+
+function src() {
+  source $HOME/.zshrc
+  eval $(keychain --eval --quiet id_rsa ~/.ssh/id_rsa)
+  # Sign in to 1Password CLI
+  # eval $(op signin my)
+}
+
+function qssh() {
+  ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null $@
+}
+
+profzsh() {
+  shell=${1-$SHELL}
+  ZPROF=true $shell -i -c exit
+}
+
+timezsh() {
+  shell=${1-$SHELL}
+  for i in $(seq 1 10); do /usr/bin/time $shell -i -c exit; done
+}
+
+docker_force_clean_system() {
+  docker system prune --all --force
+}
+
+docker_force_clean_images() {
+  docker rmi --force $(docker images -a -q)
+}
+
+tree-rs() {
+  tree -f -I "bin|release|target" $@
+}
+
+plugupdate() {
+  eval `ssh-agent`
+  ssh-add
+  nvim +PlugUpdate +qall
+}
+
+dudir() {
+  sudo du -cha --max-depth=1 ${1} | sort -hr
+}
+
+btconnect() {
+  bluetoothctl power on
+  bluetoothctl agent on
+
+  for dev in $(bluetoothctl devices | awk '{print $2}'); do
+    bluetoothctl connect $dev
+  done
+
+  xmodmap ~/.Xmodmap
+  xbindkeys
+}
+
+tn() {
+  tmux new-session -s $1 \; \
+  split-window -v -p 15 \; \
+  select-pane -t 1
+}
+
+cdld() {
+  if [ -f ~/.last_dir ]; then
+    cd "`cat ~/.last_dir`"
+  fi
+}
+
+# Open new terminal in same directory as last terminal:
+cd() {
+        builtin cd $@
+        pwd > ~/.last_dir
+}
+
+mkcd() {
+  command mkdir -pv $1
+  cd $1
+}
+
+# Make a temporary directory and enter it
+tmpd() {
+  local dir
+  if [ $# -eq 0 ]; then
+     dir=$(mktemp -d)
+  else
+     dir=$(mktemp -d -t "${1}.XXXXXXXXXX")
+  fi
+  cd "$dir" || exit
+}
+
+dlvs() {
+  dlv debug $1 --headless --accept-multiclient -l $DLV_SERVER_HOST -- "${@:2}"
+}
+
+dlvts() {
+  dlv test $1 --headless --accept-multiclient -l $DLV_SERVER_HOST -- "${@:2}"
+}
+
+fstrg() {
+  rg $@ $SRC_DIR -g '!vendor' -g '!.git'
+}
+
+zkt() {
+    zoekt "$@ -vendor"
+}
+
+# install the src-expose tool - https://docs.sourcegraph.com/@v3.18.0/admin/external_service/non-git#serving-repositories
+srcgrphws() {
+  docker run \
+    --rm \
+    --publish 7080:7080 \
+    --publish 127.0.0.1:3370:3370 \
+    --volume ~/.sourcegraph/config:/etc/sourcegraph \
+    --volume ~/.sourcegraph/data:/var/opt/sourcegraph \
+    sourcegraph/server:3.25.2
+  # src-expose serve $SRC_DIR/mccurdyc &
+}
+
+zktws() {
+    zoekt-webserver -index=$ZOEKT_INDEX_DIR
+}
+
+zktidx() {
+    zoekt-indexserver -cpu_fraction=0.9 -index_timeout="3h0m0s" -mirror_config $XDG_CONFIG_HOME/zoekt/config.json -data_dir=$ZOEKT_DATA_DIR -git_index_flags='-require_ctags=true'
+}
+
+zktrepo() {
+  zoekt-mirror-github -dest ~/.zoekt/repos -token ~/.github/credentials -user ${1} -name ${2}
+  zoekt-git-index -index $ZOEKT_INDEX_DIR -branches master -prefix origin/ $ZOEKT_REPOS_DIR/github.com/${1}/${2}.git
+}
+
+tmpzkt() {
+  (
+    tmpd
+    dir="$(pwd)"
+    echo "$dir"
+    zoekt-git-clone --dest $dir "https://github.com/$1.git"
+    zoekt-git-index -branches master -prefix origin/ "$dir/github.com/$1.git"
+    zoekt-webserver -index $dir -listen :6071 &
+    xdg-open "http://localhost:6071/"
+  )
+}
+
+# Make a temporary directory and enter it
+tmpclone() {
+  if (( $# != 2 )); then
+    echo "Usage: tmpclone <repository> <remote:branch>"
+    return
+  fi
+
+  tmpd
+  repo="${1}"
+  remote="$(echo ${2} | awk -F ":" '{ print $1}')"
+  branch="$(echo ${2} | awk -F ":" '{ print $2}')"
+
+  git clone git@github.com:$remote/$repo .
+  git checkout $branch
+}
+
+# https://gist.github.com/fatih/11d752582c5bd508ffe18a2df57c6424
+switchgo() {
+  version=$1
+  if [ -z $version ]; then
+    echo "Usage: switchgo [version]"
+    return
+  fi
+
+  if ! command -v "go$version" > /dev/null 2>&1; then
+    echo "version does not exist, download with: "
+    echo "  go get golang.org/dl/go${version}"
+    echo "  go${version} download"
+    return
+  fi
+
+  go_bin_path=$(command -v "go$version")
+  ln -sfn "$go_bin_path" "$GOBIN/go"
+  echo "Switched to ${go_bin_path}"
+}
+
+display_extras() {
+  # these have to be loaded after resizing
+  wallpaper ${HOME}/dotfiles/imgs/wallpapers/astronaut.jpg
+  ${HOME}/dotfiles/.config/polybar/launch.sh
+}
+
+external_display_off() {
+  xrandr --output DP-2-2 --off --output DP-1 --off --output eDP-1 --mode 3840x2160 --scale 0.75x0.75
+  display_extras
+}
+
+dual_display() {
+  # scaling down resolution because the laptop can't handle full resolution.
+  xrandr --output eDP-1 --off
+  xrandr --output DP-2-2 --mode 2560x1440 --scale 1.5x1.5 --dpi 98 --pos 2600x0 --rotate right
+  xrandr --output DP-1 --mode 2560x1440 --scale 1.3x1.3 --dpi 98 --pos 4200x0 --rotate left
+
+  display_extras
+}
+
+triple_display() {
+  # scaling down resolution because the laptop can't handle full resolution.
+  xrandr --output eDP-1 --primary --mode 2560x1440 --scale 1x1 --pos 0x3000
+  xrandr --output DP-2-2 --mode 2560x1440 --scale 1.5x1.5 --dpi 98 --pos 2600x0 --rotate right
+  xrandr --output DP-1 --mode 2560x1440 --scale 1.3x1.3 --dpi 98 --pos 5000x0 --rotate left
+
+  display_extras
+}
+
+## smart extraction;
+extract() {
+  if [ -f "$1" ]; then
+    case "$1" in
+      *.tar.bz2) tar -jxvf "$1" ;;
+      *.tar.gz) tar -zxvf "$1" ;;
+      *.bz2) bunzip2 "$1" ;;
+      *.gz) gunzip "$1" ;;
+      *.tar) tar -xvf "$1" ;;
+      *.tbz2) tar -jxvf "$1" ;;
+      *.tgz) tar -zxvf "$1" ;;
+      *.zip) unzip "$1" ;;
+      *.ZIP) unzip "$1" ;;
+      *.Z) uncompress "$1" ;;
+      *) echo "{extraction-failed}" ;;
+    esac
+  else echo "{invalid-file}"; fi
+}
+
+wallpaper() {
+  feh --bg-fill $1
+}
+
+# Create a .tar.gz archive, using `zopfli`, `pigz` or `gzip` for compression
+targz() {
+	local tmpFile="${1%/}.tar"
+	tar -cvf "${tmpFile}" --exclude=".DS_Store" "${1}" || return 1
+
+	size=$(
+	stat -f"%z" "${tmpFile}" 2> /dev/null; # OS X `stat`
+	stat -c"%s" "${tmpFile}" 2> /dev/null # GNU `stat`
+	)
+
+	local cmd=""
+	if (( size < 52428800 )) && hash zopfli 2> /dev/null; then
+		# the .tar file is smaller than 50 MB and Zopfli is available; use it
+		cmd="zopfli"
+	else
+		if hash pigz 2> /dev/null; then
+			cmd="pigz"
+		else
+			cmd="gzip"
+		fi
+	fi
+
+	echo "Compressing .tar using \`${cmd}\`…"
+	"${cmd}" -v "${tmpFile}" || return 1
+	[ -f "${tmpFile}" ] && rm "${tmpFile}"
+	echo "${tmpFile}.gz created successfully."
+}
+
+# Determine size of a file or total size of a directory
+fs() {
+	if du -b /dev/null > /dev/null 2>&1; then
+		local arg=-sbh
+	else
+		local arg=-sh
+	fi
+	# shellcheck disable=SC2199
+	if [[ -n "$@" ]]; then
+		du $arg -- "$@"
+	else
+		du $arg -- .[^.]* *
+	fi
+}
+
+# Syntax-highlight JSON strings or files
+# Usage: `json '{"foo":42}'` or `echo '{"foo":42}' | json`
+json() {
+	if [ -t 0 ]; then # argument
+		python -mjson.tool <<< "$*" | pygmentize -l javascript
+	else # pipe
+		python -mjson.tool | pygmentize -l javascript
+	fi
+}
+
+# `tre` is a shorthand for `tree` with hidden files and color enabled, ignoring
+# the `.git` directory, listing directories first. The output gets piped into
+# `less` with options to preserve color and line numbers, unless the output is
+# small enough for one screen.
+tre() {
+	tree -aC -I '.git' --dirsfirst "$@" | less -FRNX
+}
+
+# Call from a local repo to open the repository on github/bitbucket in browser
+# Modified version of https://github.com/zeke/ghwd
+repo() {
+	# Figure out github repo base URL
+	local base_url
+	base_url=$(git config --get remote.origin.url)
+	base_url=${base_url%\.git} # remove .git from end of string
+
+	# Fix git@github.com: URLs
+	base_url=${base_url//git@github\.com:/https:\/\/github\.com\/}
+
+	# Fix git://github.com URLS
+	base_url=${base_url//git:\/\/github\.com/https:\/\/github\.com\/}
+
+	# Fix git@bitbucket.org: URLs
+	base_url=${base_url//git@bitbucket.org:/https:\/\/bitbucket\.org\/}
+
+	# Fix git@gitlab.com: URLs
+	base_url=${base_url//git@gitlab\.com:/https:\/\/gitlab\.com\/}
+
+	# Validate that this folder is a git folder
+	if ! git branch 2>/dev/null 1>&2 ; then
+		echo "Not a git repo!"
+		exit $?
+	fi
+
+	# Find current directory relative to .git parent
+	full_path=$(pwd)
+	git_base_path=$(cd "./$(git rev-parse --show-cdup)" || exit 1; pwd)
+	relative_path=${full_path#$git_base_path} # remove leading git_base_path from working directory
+
+	# If filename argument is present, append it
+	if [ "$1" ]; then
+		relative_path="$relative_path/$1"
+	fi
+
+	# Figure out current git branch
+	# git_where=$(command git symbolic-ref -q HEAD || command git name-rev --name-only --no-undefined --always HEAD) 2>/dev/null
+	git_where=$(command git name-rev --name-only --no-undefined --always HEAD) 2>/dev/null
+
+	# Remove cruft from branchname
+	branch=${git_where#refs\/heads\/}
+
+	[[ $base_url == *bitbucket* ]] && tree="src" || tree="tree"
+	url="$base_url/$tree/$branch$relative_path"
+
+
+	echo "Calling $(type open) for $url"
+
+	xdg-open "$url" &> /dev/null || (echo "Using $(type open) to open URL failed." && exit 1);
+}
+
+# Get colors in manual pages
+man() {
+	env \
+		LESS_TERMCAP_mb="$(printf '\e[1;31m')" \
+		LESS_TERMCAP_md="$(printf '\e[1;31m')" \
+		LESS_TERMCAP_me="$(printf '\e[0m')" \
+		LESS_TERMCAP_se="$(printf '\e[0m')" \
+		LESS_TERMCAP_so="$(printf '\e[1;44;33m')" \
+		LESS_TERMCAP_ue="$(printf '\e[0m')" \
+		LESS_TERMCAP_us="$(printf '\e[1;32m')" \
+		man "$@"
+}
+
+# fst-wrap 'tf' 'service-version deactivate' 'latest'
+fst-wrap() {
+  /home/mccurdyc/src/github.com/mccurdyc/fastly-scripts/fst-wrap/fst-wrap.sh $@
+}
+
+stopwatch() {
+  date1=`date +%s`;
+   while true; do
+    echo -ne "$(date -u --date @$((`date +%s` - $date1)) +%H:%M:%S)\r";
+    sleep 0.1
+   done
+}
+
+# https://unix.stackexchange.com/a/285956
+colorgrid() {
+    iter=16
+    while [ $iter -lt 52 ]
+    do
+        second=$[$iter+36]
+        third=$[$second+36]
+        four=$[$third+36]
+        five=$[$four+36]
+        six=$[$five+36]
+        seven=$[$six+36]
+        if [ $seven -gt 250 ];then seven=$[$seven-251]; fi
+
+        echo -en "\033[38;5;$(echo $iter)m█ "
+        printf "%03d" $iter
+        echo -en "   \033[38;5;$(echo $second)m█ "
+        printf "%03d" $second
+        echo -en "   \033[38;5;$(echo $third)m█ "
+        printf "%03d" $third
+        echo -en "   \033[38;5;$(echo $four)m█ "
+        printf "%03d" $four
+        echo -en "   \033[38;5;$(echo $five)m█ "
+        printf "%03d" $five
+        echo -en "   \033[38;5;$(echo $six)m█ "
+        printf "%03d" $six
+        echo -en "   \033[38;5;$(echo $seven)m█ "
+        printf "%03d" $seven
+
+        iter=$[$iter+1]
+        printf '\r\n'
+    done
+}
+
+function gcloud-docker() {
+  local key="${1}"
+  local credpath=/root/credentials.json
+  local entrypoint=$(mktemp)
+  local entrypointpath=/root/entrypoint.sh
+  cat <<-'EOF' > ${entrypoint}
+#!/bin/bash
+set -o errexit
+set -o xtrace
+gcloud auth activate-service-account --key-file=/root/credentials.json
+exec "$@"
+EOF
+  chmod 711 ${entrypoint}
+  docker run -it \
+    --rm \
+    --mount type=bind,source=${key},target=${credpath},readonly \
+    --mount type=bind,source=${entrypoint},target=${entrypointpath},readonly \
+    --entrypoint ${entrypointpath} \
+    google/cloud-sdk /bin/bash
+}
+
+function whatsmyip() {
+  dig +short myip.opendns.com @resolver1.opendns.com
+}
+
+function gogett() {
+(
+  d=$(mktemp -d) cd $d
+  go get -u -v $1
+)
+}
+
+function pw {
+  op get item ${1} --fields password
+}
+
+function hubpr {
+  hub pull-request --force --push --draft $@ -F - --edit < $HOME/.github/pullrequest-template.md
+}

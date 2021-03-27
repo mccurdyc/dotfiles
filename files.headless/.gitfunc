@@ -1,1 +1,31 @@
-/home/mccurdyc/dotfiles/files/.gitfunc
+#!/bin/bash
+
+gitup(){
+  git remote add upstream git@github.com:$1.git
+}
+
+gitd(){
+  ## sidestep lag with git plumbing; was using a simple oneliner
+  ## with `git status --porcelain` but found it laggy when working
+  ## with heavy repositories; this method is harder to understand
+  ## at first glance but has yet to show any lag.
+
+  ## check for changes in tracked files
+  git diff-index --quiet HEAD 2>/dev/null
+  if [ $? -eq 1 ]; then tr="~"; fi ## check exit code
+
+  ## check for untracked, unignored files
+  u="$(git ls-files --others --exclude-standard 2>/dev/null)"
+  [ -n "$u" ] && un="*" ## checking exit code does nothing
+
+  ## push flags
+  echo "$tr$un";
+}
+
+## fbr - checkout git branch
+fbr() {
+  local branches branch
+  branches=$(git branch) &&
+  branch=$(echo "$branches" | fzf-tmux -d 15 +m) &&
+  git checkout $(echo "$branch" | sed "s/.* //")
+}

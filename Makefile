@@ -59,11 +59,13 @@ endif
 
 .PHONY: dotfiles
 dotfiles: ## Symlinks the dotfiles to $(HOME) (idempotent).
-ifeq ($(HEADLESS),false)
-	DOTFILES=$(CURDIR)/files
-endif
 	@./scripts/symlink.sh -v -d $(DOTFILES) -o $(HOME)
 	@./scripts/symlink.sh -d $(DOTFILES) -o $(HOME)
+ifeq ($(HEADLESS),false)
+	DOTFILES=$(CURDIR)/files
+	@./scripts/symlink.sh -v -d $(DOTFILES) -o $(HOME)
+	@./scripts/symlink.sh -d $(DOTFILES) -o $(HOME)
+endif
 
 .PHONY: config-deps
 config-deps: install-tools ## Runs the necessary commands to configure the installed packages.
