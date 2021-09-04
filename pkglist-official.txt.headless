@@ -11,6 +11,7 @@ docker
 docker-compose
 exa
 fakeroot
+fasd
 fd
 file
 findutils
@@ -39,7 +40,10 @@ m4
 make
 man-db
 man-pages
+mosh
 mtr
+nmap
+net-tools
 openssh
 pacman
 patch
