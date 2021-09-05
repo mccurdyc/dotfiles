@@ -1,45 +1,4 @@
-call plug#begin('~/.vim/plugged')
-
-" Language Server Plugins
-Plug 'neovim/nvim-lspconfig' " required nvim 0.5 HEAD
-Plug 'nvim-lua/completion-nvim'
-Plug 'nvim-lua/diagnostic-nvim'
-
-" Git Plugins
-Plug 'tpope/vim-fugitive'
-Plug 'jreybert/vimagit' " additional git tools. cycle staged changes
-Plug 'tpope/vim-surround'
-Plug 'airblade/vim-gitgutter'
-
-" Language Plugins
-Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries', 'for': 'go' }
-Plug 'sebdah/vim-delve', { 'for': 'go' }        " debugger
-Plug 'rust-lang/rust.vim', {'for': 'rs' }
-Plug 'lervag/vimtex', {'for': 'tex'}
-Plug 'hashivim/vim-terraform' " terraform syntax highlighting
-
-" Styling / UI Plugins
-Plug 'edkolev/tmuxline.vim'
-Plug 'vim-scripts/colorizer' " highlight hex colors
-Plug 'itchyny/lightline.vim'
-
-" Colorscheme Plugins
-Plug 'mccurdyc/vim-base16-lightline'
-Plug 'mccurdyc/base16-vim'
-
-" Snippets
-Plug 'SirVer/ultisnips' " snippets engine
-Plug 'mccurdyc/vim-snippets' " snippets
-
-" General Plugins
-Plug 'junegunn/fzf.vim'
-Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': { -> fzf#install() } }
-Plug 'dense-analysis/ale' " linting and general interation with language servers
-Plug 'airblade/vim-rooter' " root of project
-Plug 'tomtom/tcomment_vim' " easy block commenting
-Plug 'ruanyl/vim-gh-line' " open in GitHub
-
-call plug#end()
+lua require('init')
 
 "----------------------------------------------
 " General Settings
@@ -303,7 +262,6 @@ let g:lightline = {
   \   'left': [ [ 'mode', 'paste' ],
   \             [ 'gitbranch'],
   \             [ 'filename'],
-  \             [ 'alestatus'],
   \             [ 'lspstatus'] ]
   \ },
   \ 'inactive': {
@@ -314,26 +272,12 @@ let g:lightline = {
   \ 'component_function': {
   \   'gitbranch': 'fugitive#head',
   \   'filename': 'LightlineFilename',
-  \   'alestatus': 'ALELinterStatus',
   \ },
 \ }
 
 " Show full path of filename
 function! LightlineFilename()
     return expand('%')
-endfunction
-
-function! ALELinterStatus() abort
-    let l:counts = ale#statusline#Count(bufnr(''))
-
-    let l:all_errors = l:counts.error + l:counts.style_error
-    let l:all_non_errors = l:counts.total - l:all_errors
-
-    return l:counts.total == 0 ? 'ALE: OK' : printf(
-    \   'ALE: [WARN: %d] [ERR: %d]',
-    \   all_non_errors,
-    \   all_errors
-    \)
 endfunction
 
 " Plugin: https://github.com/fatih/vim-go
