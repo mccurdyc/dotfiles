@@ -8,7 +8,7 @@ function src() {
 }
 
 function qssh() {
-  ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null $@
+  ssh -F /dev/null -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null $@
 }
 
 profzsh() {
