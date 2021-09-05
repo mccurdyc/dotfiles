@@ -1,10 +1,10 @@
 1password-cli
-asdf-vm
 autojump-git
 github-cli-git
 google-cloud-sdk
 hugo-git
-neovim-nightly-git
+neovim
 ngrok
 terraform-ls-bin
 yay
+mosh
