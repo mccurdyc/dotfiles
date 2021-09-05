@@ -24,7 +24,7 @@
 #define base0F #d27b53
 
 ## rofi-settings;
-rofi.font: Iosevka Term 30
+rofi.font: Source Code Pro 30
 rofi.lines: 5
 
 rofi.color-enabled: true
