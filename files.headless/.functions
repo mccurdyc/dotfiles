@@ -181,11 +181,18 @@ switchgo() {
 display_extras() {
   # these have to be loaded after resizing
   wallpaper ${HOME}/dotfiles/imgs/wallpapers/astronaut.jpg
-  ${HOME}/dotfiles/.config/polybar/launch.sh
+  ${HOME}/.config/polybar/launch.sh
 }
 
 external_display_off() {
   xrandr --output DP-2-2 --off --output DP-1 --off --output eDP-1 --mode 3840x2160 --scale 0.75x0.75
+  # xrandr --output DP-2-2 --off --output DP-1 --off --output eDP-1 --mode 3840x2160 --scale 0.75x0.75
+  display_extras
+}
+
+external_display_on() {
+  xrandr --output DP-2-2 --primary --mode 2560x1440 --scale 1.5x1.5
+  xrandr --output eDP-1 --mode 3840x2160 --left-of DP-2-2 --scale 0.75x0.75
   display_extras
 }
 
@@ -420,7 +427,7 @@ EOF
     --mount type=bind,source=${key},target=${credpath},readonly \
     --mount type=bind,source=${entrypoint},target=${entrypointpath},readonly \
     --entrypoint ${entrypointpath} \
-    google/cloud-sdk /bin/bash
+    gcr.io/google.com/cloudsdktool/cloud-sdk:latest /bin/bash
 }
 
 function whatsmyip() {
