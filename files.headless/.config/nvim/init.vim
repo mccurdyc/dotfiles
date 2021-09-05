@@ -597,7 +597,7 @@ let g:ale_linters = {
 \ }
 
 let g:ale_fixers = {
-\ '*': ['remove_trailing_lines', 'trim_whitespace'],
+\ '*': ['trim_whitespace'],
 \ 'go': ['gofmt', 'goimports'],
 \ 'rust': ['rustfmt'],
 \ 'terraform': ['terraform'],
