@@ -35,7 +35,7 @@ window:
   #
   #     - true: With borders and title bar
   #     - false: Without borders and title bar
-  decorations: none
+  decorations: full
 
   # Allow terminal applications to change Alacritty's window title.
   dynamic_title: true
@@ -63,7 +63,7 @@ font:
     # style: Italic
 
   # Point size of the font
-  size: 8.0
+  size: 11.0
 
   # Offset is the extra space around each character. `offset.y` can be thought of
   # as modifying the line spacing, and `offset.x` as modifying the letter spacing.
@@ -108,8 +108,12 @@ draw_bold_text_with_bright_colors: true
 colors:
   # Default colors
   primary:
+    # dark
     background: '0x2d2d2d'
     foreground: '0xd3d0c8'
+    # light
+    # background: '0xffffff'
+    # foreground: '0x2d2d2d'
 
   # Colors the cursor will use if `custom_cursor_colors` is true
   cursor:
@@ -368,7 +372,7 @@ key_bindings:
   - { key: Insert,   mods: Shift,         action: PasteSelection   }
   - { key: Key0,     mods: Control,       action: ResetFontSize    }
   - { key: Equals,   mods: Control,       action: IncreaseFontSize }
-  - { key: Subtract, mods: Control,       action: DecreaseFontSize }
+  - { key: NumpadSubtract, mods: Control,       action: DecreaseFontSize }
   #
   # (macOS only)
   #- { key: Key0,   mods: Command, action: ResetFontSize    }
