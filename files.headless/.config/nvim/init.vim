@@ -1,25 +1,29 @@
 call plug#begin('~/.vim/plugged')
 
 " Language Server Plugins
-Plug 'neovim/nvim-lspconfig' " required nvim 0.5 HEAD
+Plug 'neovim/nvim-lspconfig'
+Plug 'glepnir/lspsaga.nvim'
 Plug 'nvim-lua/completion-nvim'
 Plug 'nvim-lua/diagnostic-nvim'
+Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 
 " Git Plugins
 Plug 'tpope/vim-fugitive'
 Plug 'jreybert/vimagit' " additional git tools. cycle staged changes
 Plug 'tpope/vim-surround'
 Plug 'airblade/vim-gitgutter'
+Plug 'iberianpig/tig-explorer.vim'
 
 " Language Plugins
 Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries', 'for': 'go' }
 Plug 'sebdah/vim-delve', { 'for': 'go' }        " debugger
 Plug 'rust-lang/rust.vim', {'for': 'rs' }
-Plug 'lervag/vimtex', {'for': 'tex'}
+" Plug 'lervag/vimtex', {'for': 'tex'}
 Plug 'hashivim/vim-terraform' " terraform syntax highlighting
+Plug 'pedrohdz/vim-yaml-folds', {'for': 'yaml'}
 
 " Styling / UI Plugins
-Plug 'edkolev/tmuxline.vim'
+" Plug 'edkolev/tmuxline.vim'
 Plug 'vim-scripts/colorizer' " highlight hex colors
 Plug 'itchyny/lightline.vim'
 
