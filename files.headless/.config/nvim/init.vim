@@ -154,35 +154,6 @@ let g:gitgutter_sign_added = '+'
 let g:gitgutter_sign_modified = '~'
 let g:gitgutter_sign_removed = '-'
 
-" Plugin: https://github.com/junegunn/fzf.vim
-let g:fzf_command_prefix = 'Fzf'
-
-" https://github.com/Blacksuan19/init.nvim/blob/master/init.vim
-" let g:fzf_layout = { 'window': 'call CreateCenteredFloatingWindow()' }
-
-let g:fzf_preview_window = ''
-
-" Open Fzf in window below.
-let g:fzf_layout = { 'down': '~20%' }
-
-let g:fzf_colors =
-\ { 'fg':      ['fg', 'Normal'],
-  \ 'bg':      ['bg', 'Normal'],
-  \ 'hl':      ['fg', 'Comment'],
-  \ 'fg+':     ['fg', 'CursorLine', 'CursorColumn', 'Normal'],
-  \ 'bg+':     ['bg', 'CursorLine', 'CursorColumn'],
-  \ 'hl+':     ['fg', 'Statement'],
-  \ 'info':    ['fg', 'PreProc'],
-  \ 'prompt':  ['fg', 'Conditional'],
-  \ 'pointer': ['fg', 'Exception'],
-  \ 'marker':  ['fg', 'Keyword'],
-  \ 'spinner': ['fg', 'Label'],
-  \ 'header':  ['fg', 'Comment'] }
-
-au FileType fzf set nonu nornu
-
-let $FZF_DEFAULT_OPTS='-m --layout=reverse'
-
 " use rg by default
 if executable('rg')
   let $FZF_DEFAULT_COMMAND = 'rg --files --no-ignore --hidden --follow --glob "!.git/*"'
@@ -197,46 +168,6 @@ endif
 command! -bang -nargs=? FilesCustom
         \ call fzf#vim#files(<q-args>, {'dir': systemlist('git rev-parse --show-toplevel')[0], 'options': ['--layout=reverse', '--info=inline']}, <bang>0)
 
-" floating fzf window with borders
-function! CreateCenteredFloatingWindow()
-    let width = min([&columns - 4, max([80, &columns - 20])])
-    let height = min([&lines - 4, max([20, &lines - 10])])
-    let top = ((&lines - height) / 2) - 1
-    let left = (&columns - width) / 2
-    let opts = {'relative': 'editor', 'row': top, 'col': left, 'width': width, 'height': height, 'style': 'minimal'}
-
-    let top = "╭" . repeat("─", width - 2) . "╮"
-    let mid = "│" . repeat(" ", width - 2) . "│"
-    let bot = "╰" . repeat("─", width - 2) . "╯"
-    let lines = [top] + repeat([mid], height - 2) + [bot]
-    let s:buf = nvim_create_buf(v:false, v:true)
-    call nvim_buf_set_lines(s:buf, 0, -1, v:true, lines)
-    call nvim_open_win(s:buf, v:true, opts)
-    set winhl=Normal:Floating
-    let opts.row += 1
-    let opts.height -= 2
-    let opts.col += 2
-    let opts.width -= 4
-    call nvim_open_win(nvim_create_buf(v:false, v:true), v:true, opts)
-    au BufWipeout <buffer> exe 'bw '.s:buf
-endfunction
-
-" Enable per-command history.
-" CTRL-N and CTRL-P will be automatically bound to next-history and
-" previous-history instead of down and up. If you don't like the change,
-" explicitly bind the keys to down and up in your $FZF_DEFAULT_OPTS.
-let g:fzf_history_dir = '~/.local/share/fzf-history'
-
-" docs - https://github.com/junegunn/fzf.vim#command-local-options
-" [Buffers] Jump to the existing window if possible
-let g:fzf_buffers_jump = 1
-
-" [[B]Commits] Customize the options used by 'git log':
-let g:fzf_commits_log_options = '--graph --color=always --format="%C(auto)%h%d %s %C(black)%C(bold)%cr"'
-
-" [Tags] Command to generate tags file
-let g:fzf_tags_command = 'ctags -R'
-
 " Define key combinations
 nmap <leader>ls :FzfSnippets<CR>
 nmap <leader>m :FzfMarks<CR>
@@ -244,7 +175,7 @@ nmap <leader>w :FzfWindows<CR>
 nmap <leader>c :FzfCommits<CR>
 nmap <leader>bc :FzfBCommits<CR>
 nmap <leader>f :FzfRg<CR>
-nmap <C-p> :FilesCustom<CR>
+nmap <C-p> :FzfLua files<CR>
 nmap <leader>gs :FzfGFiles?<CR>
 
 " Plugin: https://github.com/edkolev/tmuxline.vim

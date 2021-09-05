@@ -18,23 +18,49 @@ return require('packer').startup({function()
 
   use 'wbthomason/packer.nvim'
 
+  -- General
+  use 'tpope/vim-surround'
+  use 'airblade/vim-gitgutter'
+  use 'SirVer/ultisnips'
+  use 'mccurdyc/vim-snippets'
+  use 'airblade/vim-rooter'
+  use 'tomtom/tcomment_vim'
+  use 'nvim-lua/plenary.nvim'
+  use 'vijaymarupudi/nvim-fzf'
+  use { 'ibhagwan/fzf-lua',
+    requires = {
+      'vijaymarupudi/nvim-fzf',
+      'kyazdani42/nvim-web-devicons'
+    },
+    config = [[require('config.fzf')]],
+  }
+
   -- NeoVim LSP
   use 'neovim/nvim-lspconfig'
   use 'nvim-lua/completion-nvim'
   use 'nvim-lua/diagnostic-nvim'
+  use 'nvim-lua/lsp-status.nvim'
 
   -- Linting
   use {
     'w0rp/ale',
     ft = { 'sh', 'zsh', 'bash', 'html', 'markdown', 'racket', 'vim', 'go', 'rs', 'tf' },
     cmd = 'ALEEnable',
-    config = 'vim.cmd[[ALEEnable]]'
+    config = 'vim.cmd[[ALEEnable]]',
   }
 
   -- Git
   use 'tpope/vim-fugitive'
   use 'jreybert/vimagit'
   use 'ruanyl/vim-gh-line'
+  -- use { 'lewis6991/gitsigns.nvim',
+  --   requires = { 'nvim-lua/plenary.nvim' },
+  --   config = [[require('config.gitsigns')]],
+  -- }
+  -- use { 'TimUntersberger/neogit',
+  --   cmd = 'Neogit',
+  --   config = [[require('config.neogit')]],
+  -- }
 
   -- Go
   use { 'fatih/vim-go',
@@ -52,24 +78,19 @@ return require('packer').startup({function()
 
   -- Terraform
   use { 'hashivim/vim-terraform',
-    ft = { 'tf', 'hcl' }
+    ft = { 'tf', 'hcl' },
   }
 
-  -- General
-  use 'tpope/vim-surround'
-  use 'airblade/vim-gitgutter'
-  use 'SirVer/ultisnips'
-  use 'mccurdyc/vim-snippets'
-  use 'airblade/vim-rooter'
-  use 'tomtom/tcomment_vim'
-  use { 'junegunn/fzf', run = './install --bin', }
-
-  -- Themes / Colors
-  use 'edkolev/tmuxline.vim'
-  use 'vim-scripts/colorizer'
-  use 'itchyny/lightline.vim'
-  use 'mccurdyc/vim-base16-lightline'
+  -- Styling
   use 'mccurdyc/base16-vim'
+  use 'kyazdani42/nvim-web-devicons'
+
+  -- Profiling
+  -- usage: nvim --startuptime and then :StartupTime
+  use { 'dstein64/vim-startuptime',
+    cmd = 'StartupTime',
+    config = [[vim.g.startuptime_tries = 10]],
+  }
 end,
 -- Use a floating window
 -- https://github.com/wbthomason/packer.nvim#using-a-floating-window
@@ -78,4 +99,3 @@ config = {
     open_fn = require('packer.util').float,
   }
 }})
-
