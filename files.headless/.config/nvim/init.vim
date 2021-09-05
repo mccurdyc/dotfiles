@@ -99,6 +99,9 @@ set list
 " Go uses tabs, so disable the highlighting for Go
 au Filetype go set nolist
 
+" Show first two levels of folds by default.
+set foldlevelstart=2
+
 " Allow vim to set a custom font or color for a word
 syntax enable
 filetype plugin indent on
