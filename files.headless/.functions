@@ -33,10 +33,10 @@ tree-rs() {
   tree -f -I "bin|release|target" $@
 }
 
-plugupdate() {
+update_nvim_plugins() {
   eval `ssh-agent`
   ssh-add
-  nvim +PlugUpdate +qall
+  nvim --headless -c 'autocmd User PackerComplete quitall' -c 'PackerSync'
 }
 
 dudir() {
