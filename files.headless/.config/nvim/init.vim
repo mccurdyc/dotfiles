@@ -419,12 +419,14 @@ let g:vimtex_compiler_progname = 'nvr'
 " Resource(s)
 " * https://teukka.tech/luanvim.html
 " * https://neovim.io/doc/user/lsp.html
+" * https://blog.inkdrop.info/how-to-set-up-neovim-0-5-modern-plugins-lsp-treesitter-etc-542c3d9c9887
 
 " lspconfig Keybindings
+inoremap <silent> <C-k> <cmd>Lspsaga signature_help<CR>
 nnoremap <silent> <C-]> <cmd>lua vim.lsp.buf.definition()<CR>
-nnoremap <silent> K     <cmd>lua vim.lsp.buf.hover()<CR>
+nnoremap <silent> K     <cmd>Lspsaga hover_doc<CR>
+nnoremap <silent> gh    <cmd>Lspsaga lsp_finder<CR>
 nnoremap <silent> gD    <cmd>lua vim.lsp.buf.implementation()<CR>
-nnoremap <silent> <c-k> <cmd>lua vim.lsp.buf.signature_help()<CR>
 nnoremap <silent> 1gD   <cmd>lua vim.lsp.buf.type_definition()<CR>
 nnoremap <silent> gr    <cmd>lua vim.lsp.buf.references()<CR>
 nnoremap <silent> g0    <cmd>lua vim.lsp.buf.document_symbol()<CR>
