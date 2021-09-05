@@ -20,7 +20,7 @@ fetch-keys: install-aur-deps ## Fetches GPG, etc. keys.
 	@./scripts/fetch-keys.sh
 
 .PHONY: run
-run: install-aur-deps dotfiles config-deps asdf-tools replace-templated-text fetch-keys ## Runs the full necessary (not additional/optional) setup.
+run: install-official-deps install-aur-deps dotfiles config-deps fetch-keys ## Runs the full necessary (not additional/optional) setup.
 
 .PHONY: create-files
 create-files: ## Creates required files that don't need to be symlinked to dotfiles
@@ -39,9 +39,9 @@ install-aur-pkg-mgr: install-official-deps ## Installs the yay AUR package manag
 .PHONY: install-official-deps
 install-official-deps: ## Installs official packages.
 ifeq ($(HEADLESS),true)
-	sudo pacman -S - < pkglist-official.txt.headless
+	sudo pacman -S --noconfirm - < pkglist-official.txt.headless
 else
-	sudo pacman -S - < pkglist-official.txt
+	sudo pacman -S --noconfirm - < pkglist-official.txt
 endif
 
 .PHONY: recv-keys
@@ -52,9 +52,9 @@ recv-keys: ## Downloads the necessary GPG keys for verifying packages.
 .PHONY: install-aur-deps
 install-aur-deps: recv-keys ## Installs AUR packages.
 ifeq ($(HEADLESS),true)
-	yay -S - < pkglist-aur.txt.headless
+	yay -S --answerclean All --answerdiff None --removemake --noconfirm - < pkglist-aur.txt.headless
 else
-	yay -S - < pkglist-aur.txt
+	yay -S --answerclean All --answerdiff None --removemake --noconfirm - < pkglist-aur.txt
 endif
 
 .PHONY: dotfiles
@@ -73,10 +73,8 @@ config-deps: install-tools ## Runs the necessary commands to configure the insta
 	nvim +PlugInstall +UpdateRemotePlugins +qall
 	@ # TODO update - nvim --headless -c "CocInstall coc-snippets"
 	@# https://github.com/tmux-plugins/tpm/issues/6
-	$(HOME)/.tmux/plugins/tpm/scripts/install_plugins.sh
-	tmux source $(HOME)/.tmux.conf
 	@# sudo npm i -g bash-language-server
-	
+
 .PHONY: asdf-tools
 asdf-tools: ## Installs tools managed via asdf-vm.
 	./scripts/asdf-tools.sh .asdf-tools

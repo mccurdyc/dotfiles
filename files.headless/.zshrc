@@ -87,5 +87,6 @@ if [ -f '/home/mccurdyc/src/oss/google-cloud-sdk/path.zsh.inc' ]; then . '/home/
 # The next line enables shell command completion for gcloud.
 if [ -f '/home/mccurdyc/src/oss/google-cloud-sdk/completion.zsh.inc' ]; then . '/home/mccurdyc/src/oss/google-cloud-sdk/completion.zsh.inc'; fi
 
-# yay -S fasd
 eval "$(fasd --init auto)"
+
+[ -z "$TMUX" ] && export TERM=xterm-256color

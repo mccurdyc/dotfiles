@@ -658,6 +658,7 @@ endif
 " color settings
 "----------------------------------------------
 " set termguicolors
+set t_Co=256
 let base16colorspace=256  " Access colors present in 256 colorspace
 colorscheme base16-eighties-minimal
 " autocmd FileType go colorscheme base16-eighties-minimal
