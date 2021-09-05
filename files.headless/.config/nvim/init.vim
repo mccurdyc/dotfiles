@@ -42,6 +42,8 @@ Plug 'dense-analysis/ale' " linting and general interation with language servers
 Plug 'airblade/vim-rooter' " root of project
 Plug 'tomtom/tcomment_vim' " easy block commenting
 Plug 'ruanyl/vim-gh-line' " open in GitHub
+Plug 'mileszs/ack.vim'
+Plug 'tpope/vim-unimpaired'
 
 call plug#end()
 
