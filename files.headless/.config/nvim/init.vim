@@ -57,6 +57,10 @@ set ttyfast
 
 set clipboard=unnamedplus      " copy and paste to system clipboard
 set smarttab                   " indents instead of tabs at the beginning of a line
+
+autocmd FileType yaml setlocal ts=2 sts=2 sw=2 expandtab
+autocmd BufNewFile,BufRead Jenkinsfile set syntax=groovy
+
 set autoread
 au CursorHold * checktime
 set encoding=utf-8
