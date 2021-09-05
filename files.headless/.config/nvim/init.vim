@@ -144,8 +144,8 @@ let mapleader = ","
 
 " Quickfix keybindings
 " Also see ALE ale_next, ale_previous
-nnoremap <silent> [q :cprevious<CR>
-nnoremap <silent> ]q :cnext<CR>
+" nnoremap <silent> [q :cprevious<CR>
+" nnoremap <silent> ]q :cnext<CR>
 
 " Navigation
 " https://thoughtbot.com/blog/vim-splits-move-faster-and-more-naturally
@@ -248,8 +248,10 @@ endif
 
 " advanced grep(faster with preview)
 " docs - https://github.com/junegunn/fzf.vim#example-advanced-ripgrep-integration
-command! -bang -nargs=? FilesCustom
-        \ call fzf#vim#files(<q-args>, {'dir': systemlist('git rev-parse --show-toplevel')[0], 'options': ['--layout=reverse', '--info=inline']}, <bang>0)
+" command! -bang -nargs=? FilesCustom
+"         \ call fzf#vim#files(<q-args>, {'dir': systemlist('git rev-parse --show-toplevel')[0], 'options': ['--layout=reverse', '--info=inline']}, <bang>0)
+command! -bang -nargs=? -complete=dir FilesCustom
+    \ call fzf#vim#files(<q-args>, {'options': ['--layout=reverse', '--info=inline']}, <bang>0)
 
 " floating fzf window with borders
 function! CreateCenteredFloatingWindow()
