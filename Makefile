@@ -61,10 +61,11 @@ endif
 dotfiles: ## Symlinks the dotfiles to $(HOME) (idempotent).
 	@./scripts/symlink.sh -v -d $(DOTFILES) -o $(HOME)
 	@./scripts/symlink.sh -d $(DOTFILES) -o $(HOME)
+	@echo HEADLESS=$(HEADLESS)
 ifeq ($(HEADLESS),false)
 	DOTFILES=$(CURDIR)/files
-	@./scripts/symlink.sh -v -d $(DOTFILES) -o $(HOME)
-	@./scripts/symlink.sh -d $(DOTFILES) -o $(HOME)
+	@./scripts/symlink.sh -v -d $(CURDIR)/files -o $(HOME)
+	@./scripts/symlink.sh -d $(CURDIR)/files -o $(HOME)
 endif
 
 .PHONY: config-deps
