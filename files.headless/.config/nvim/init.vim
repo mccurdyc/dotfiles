@@ -440,21 +440,30 @@ local nvim_lsp = require('lspconfig')
 -- https://www.reddit.com/r/neovim/comments/gtta9p/neovim_lsp_how_to_disable_diagnostics/fseat8a?utm_source=share&utm_medium=web2x&context=3
 -- Disable Diagnostcs globally.
 -- This disables the in-line diagnostics.
+vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
+  vim.lsp.diagnostic.on_publish_diagnostics, {
+    underline = false,
+    virtual_text = false,
+    update_in_insert = false,
+    signs = false,
+  }
+)
 
 local on_attach = function(client)
     require'completion'.on_attach(client)
 end
 
+local saga = require 'lspsaga'
+saga.init_lsp_saga {
+  border_style = "round",
+}
 nvim_lsp.gopls.setup({
-  root_dir = nvim_lsp.util.root_pattern('go.mod');
-  on_attach=on_attach;
+  filetypes = { "go", "gomod" },
+  on_attach=on_attach
 })
 nvim_lsp.terraformls.setup({
-  cmd = { "terraform-lsp" },
+  cmd = { "terraform-ls" },
   filetypes = { "terraform" },
-})
-nvim_lsp.rust_analyzer.setup({
-  on_attach=on_attach
 })
 nvim_lsp.rust_analyzer.setup({
   on_attach=on_attach
