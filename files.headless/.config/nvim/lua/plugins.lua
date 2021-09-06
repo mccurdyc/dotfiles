@@ -38,7 +38,7 @@ return require('packer').startup({function()
 
   -- NeoVim LSP
   use {
-    'nvim-lua/completion-nvim',
+    -- 'nvim-lua/completion-nvim',
     'nvim-lua/diagnostic-nvim',
     'folke/trouble.nvim',
     'onsails/lspkind-nvim',
@@ -50,10 +50,11 @@ return require('packer').startup({function()
   -- Completion
   use { 'hrsh7th/nvim-cmp',
     requires = {
-      { 'hrsh7th/cmp-nvim-lsp', after = 'nvim-cmp' },
       { 'hrsh7th/cmp-buffer', after = 'nvim-cmp' },
-      { 'hrsh7th/cmp-path', after = 'nvim-cmp' },
+      { 'hrsh7th/cmp-nvim-lsp', after = 'nvim-cmp' },
       { 'hrsh7th/cmp-nvim-lua', after = 'nvim-cmp' },
+      { 'hrsh7th/cmp-path', after = 'nvim-cmp' },
+      { 'L3MON4D3/LuaSnip' },
     },
     config = [[require('config.completion')]],
     event = 'InsertEnter *',
