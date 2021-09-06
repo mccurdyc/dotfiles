@@ -88,11 +88,6 @@ endfunction
 let maplocalleader = ","
 let mapleader = ","
 
-" Quickfix keybindings
-" Also see ALE ale_next, ale_previous
-nnoremap <silent> [q :cprevious<CR>
-nnoremap <silent> ]q :cnext<CR>
-
 " Navigation
 " https://thoughtbot.com/blog/vim-splits-move-faster-and-more-naturally
 set splitbelow " default horizontal split below instead of above
@@ -101,20 +96,6 @@ set splitright " default vertical split right
 nnoremap <C-s> :sp <CR>
 " Autosave buffers before leaving them
 autocmd BufLeave * silent! :wa
-
-" To use `ALT+{h,j,k,l}` to navigate windows from any mode:
-tnoremap <A-h> <C-\><C-N><C-w>h
-tnoremap <A-j> <C-\><C-N><C-w>j
-tnoremap <A-k> <C-\><C-N><C-w>k
-tnoremap <A-l> <C-\><C-N><C-w>l
-inoremap <A-h> <C-\><C-N><C-w>h
-inoremap <A-j> <C-\><C-N><C-w>j
-inoremap <A-k> <C-\><C-N><C-w>k
-inoremap <A-l> <C-\><C-N><C-w>l
-nnoremap <A-h> <C-w>h
-nnoremap <A-j> <C-w>j
-nnoremap <A-k> <C-w>k
-nnoremap <A-l> <C-w>l
 
 " replace visual selection globally, confirm.
 vnoremap <C-r> "hy:%s/<C-r>h//gc<left><left><left>
@@ -130,10 +111,6 @@ no <silent><Leader>cs :nohls<CR>
 " I had it also in command and visual but caused delays and unexpected escape
 " calls.
 inoremap kj <Esc>
-
-" turn spell check on for markdown and tex files
-autocmd BufRead,BufNewFile *.md setlocal spell
-autocmd BufRead,BufNewFile *.tex setlocal spell
 
 set nohlsearch
 
@@ -158,38 +135,8 @@ nmap <leader>f :FzfRg<CR>
 nmap <C-p> :FzfLua files<CR>
 nmap <leader>gs :FzfGFiles?<CR>
 
-" Plugin: https://github.com/edkolev/tmuxline.vim
-let g:tmuxline_powerline_separators = 0
-
-" Plugin: https://github.com/itchyny/lightline.vim
-" Dependency: tpope/vim-fugitive (for branch info)
-
 " Do not display the standard status line
 set noshowmode
-
-let g:lightline = {
-  \ 'colorscheme': 'base16',
-  \ 'active': {
-  \   'left': [ [ 'mode', 'paste' ],
-  \             [ 'gitbranch'],
-  \             [ 'filename'],
-  \             [ 'lspstatus'] ]
-  \ },
-  \ 'inactive': {
-  \   'left': [ [ 'filename' ] ],
-  \   'right': [ [ 'lineinfo' ],
-  \            [ 'percent' ] ]
-  \},
-  \ 'component_function': {
-  \   'gitbranch': 'fugitive#head',
-  \   'filename': 'LightlineFilename',
-  \ },
-\ }
-
-" Show full path of filename
-function! LightlineFilename()
-    return expand('%')
-endfunction
 
 " Plugin: https://github.com/fatih/vim-go
 " https://github.com/fatih/vim-go/blob/master/doc/vim-go.txt
@@ -242,14 +189,6 @@ let g:delve_new_command = "new"
 nmap <leader>dc :DlvConnect $DLV_SERVER_HOST<CR>
 nmap <leader>ca :DlvClearAll <CR>
 nmap <leader>dt :DlvToggleBreakpoint <CR>
-
-" Plugin: https://github.com/lervag/vimtexhttps://github.com/lervag/vimtex
-let g:vimtex_fold_enabled = 0
-let g:vimtex_quickfix_open_on_warning = 0
-let g:vimtex_index_show_help = 0
-let g:vimtex_view_method = 'mupdf'
-let g:vimtex_view_mupdf_options = '-r 250'
-let g:vimtex_compiler_progname = 'nvr'
 
 " Plugin: https://github.com/neovim/nvim-lspconfig
 "
