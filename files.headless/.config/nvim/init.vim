@@ -84,33 +84,13 @@ function! AdjustWindowHeight(minheight, maxheight)
 endfunction
 " https://gist.github.com/juanpabloaj/5845848
 
-" General Keybindings
-let maplocalleader = ","
-let mapleader = ","
-
 " Navigation
 " https://thoughtbot.com/blog/vim-splits-move-faster-and-more-naturally
 set splitbelow " default horizontal split below instead of above
 set splitright " default vertical split right
 
-nnoremap <C-s> :sp <CR>
 " Autosave buffers before leaving them
 autocmd BufLeave * silent! :wa
-
-" replace visual selection globally, confirm.
-vnoremap <C-r> "hy:%s/<C-r>h//gc<left><left><left>
-
-" https://mokagio.github.io/tech-journal/2015/02/12/vim-copy-and-paste-multiple-times.html
-" be able to paste more than once
-xnoremap p pgvy
-
-" clear search highlights
-no <silent><Leader>cs :nohls<CR>
-
-" map kj to escape key only in insert mode.
-" I had it also in command and visual but caused delays and unexpected escape
-" calls.
-inoremap kj <Esc>
 
 set nohlsearch
 
@@ -124,16 +104,6 @@ let g:netrw_browsex_viewer= "xdg-open"
 " Plugin:https://github.com/jreybert/vimagit
 " enable deletion of untracked files
 let g:magit_discard_untracked_do_delete = 1
-
-" Define key combinations
-nmap <leader>ls :FzfSnippets<CR>
-nmap <leader>m :FzfMarks<CR>
-nmap <leader>w :FzfWindows<CR>
-nmap <leader>c :FzfCommits<CR>
-nmap <leader>bc :FzfBCommits<CR>
-nmap <leader>f :FzfRg<CR>
-nmap <C-p> :FzfLua files<CR>
-nmap <leader>gs :FzfGFiles?<CR>
 
 " Do not display the standard status line
 set noshowmode
@@ -167,79 +137,14 @@ let g:go_fmt_options = {
   \ 'gofmt': '-s',
   \ }
 
-au FileType go nmap <leader>gta <Plug>(go-alternate-split)
-au FileType go nmap <leader>gtt <Plug>(go-test)
-au FileType go nmap <leader>gtf :GoTestFunc!<cr>
-au FileType go nmap <leader>gtc <Plug>(go-coverage-toggle)
-au FileType go nmap <leader>gcb <Plug>(go-cover-browser)
-" List functions in current file.
-au FileType go nmap <leader>lf :g/^func /#<CR>
-
 let g:go_term_enabled = 1
 let g:go_term_height = 20
 let g:go_term_mode = "split"
 
-au FileType go nmap <leader>gg <Plug>(go-doc)
-au FileType go nmap <leader>gv <Plug>(go-doc-vertical)
-au FileType go nmap <leader>gdb <Plug>(go-doc-browser)
-
 " Plugin: https://github.com/sebdah/vim-delve
 " open Delve with a horizontal split rather than a vertical split.
 let g:delve_new_command = "new"
-nmap <leader>dc :DlvConnect $DLV_SERVER_HOST<CR>
-nmap <leader>ca :DlvClearAll <CR>
-nmap <leader>dt :DlvToggleBreakpoint <CR>
 
-" Plugin: https://github.com/neovim/nvim-lspconfig
-"
-" Autocompletion via language server and go-to-definition.
-"
-" This is what display errors from the LS in-line (I don't like this).
-" * https://github.com/neovim/nvim-lspconfig/issues/69
-"
-" Resource(s)
-" * https://teukka.tech/luanvim.html
-" * https://neovim.io/doc/user/lsp.html
-
-" lspconfig Keybindings
-nnoremap <silent> <C-]> <cmd>lua vim.lsp.buf.definition()<CR>
-nnoremap <silent> K     <cmd>lua vim.lsp.buf.hover()<CR>
-nnoremap <silent> gD    <cmd>lua vim.lsp.buf.implementation()<CR>
-nnoremap <silent> <c-k> <cmd>lua vim.lsp.buf.signature_help()<CR>
-nnoremap <silent> 1gD   <cmd>lua vim.lsp.buf.type_definition()<CR>
-nnoremap <silent> gr    <cmd>lua vim.lsp.buf.references()<CR>
-nnoremap <silent> g0    <cmd>lua vim.lsp.buf.document_symbol()<CR>
-nnoremap <silent> gW    <cmd>lua vim.lsp.buf.workspace_symbol()<CR>
-nnoremap <silent> gd    <cmd>lua vim.lsp.buf.declaration()<CR>
-lua << EOF
-local nvim_lsp = require('lspconfig')
-
--- https://www.reddit.com/r/neovim/comments/gtta9p/neovim_lsp_how_to_disable_diagnostics/fseat8a?utm_source=share&utm_medium=web2x&context=3
--- Disable Diagnostcs globally.
--- This disables the in-line diagnostics.
-
-local on_attach = function(client)
-    require'completion'.on_attach(client)
-end
-
-nvim_lsp.gopls.setup({
-  root_dir = nvim_lsp.util.root_pattern('go.mod');
-  on_attach=on_attach;
-})
-nvim_lsp.terraformls.setup({
-  cmd = { "terraform-lsp" },
-  filetypes = { "terraform" },
-})
-nvim_lsp.rust_analyzer.setup({
-  on_attach=on_attach
-})
-nvim_lsp.rust_analyzer.setup({
-  on_attach=on_attach
-})
-nvim_lsp.bashls.setup({
-  on_attach=on_attach
-})
-EOF
 
 " Plugin: https://github.com/nvim-lua/diagnostic-nvim
 let g:diagnostic_enable_virtual_text = 0 " disable in-line diagnostics
@@ -269,16 +174,6 @@ set completeopt=menuone,noinsert,noselect
 set shortmess+=c
 
 let g:completion_confirm_key = ""
-imap <expr> <cr>  pumvisible() ? complete_info()["selected"] != "-1" ?
-\ "\<Plug>(completion_confirm_completion)"  :
-\ "\<c-e>\<CR>" : "\<CR>"
-
-" Trigger completion with <Tab>
-inoremap <silent><expr> <TAB>
-  \ pumvisible() ? "\<C-n>" :
-  \ <SID>check_back_space() ? "\<TAB>" :
-  \ completion#trigger_completion()
-
 function! s:check_back_space() abort
     let col = col('.') - 1
     return !col || getline('.')[col - 1]  =~ '\s'
@@ -299,18 +194,6 @@ let g:completion_matching_strategy_list = ['exact', 'substring', 'fuzzy', 'all']
 let g:completion_matching_ignore_case = 1
 let g:completion_enable_auto_signature = 1
 let g:completion_enable_auto_paren = 1
-
-" Plugin: https://github.com/dense-analysis/ale
-" Resource(s)
-" * https://github.com/dense-analysis/ale/blob/master/doc/ale.txt
-" * https://www.vimfromscratch.com/articles/vim-and-language-server-protocol/
-
-" Keybindings
-" Navigate to the next linting warning/error
-nmap <silent> <C-k> <Plug>(ale_previous)
-nmap <silent> <C-j> <Plug>(ale_next)
-nmap <leader>rn :ALERename<CR>
-nmap <leader>ss :ALESymbolSearch
 
 " Colors handled by colorscheme
 highlight link ALEWarningSign String
@@ -403,9 +286,6 @@ let g:gh_line_blame_map_default = 0
 let g:gh_line_map = '<leader>gh'
 let g:gh_line_blame_map = '<leader>gb'
 let g:gh_open_command = 'xdg-open '
-
-" Plugin: https://github.com/tpope/vim-fugitive
-nnoremap <silent> gwq    <cmd>Gwq!<CR>
 
 " Plugin: https://github.com/airblade/vim-rooter
 let g:rooter_patterns = ['.git', 'Makefile']
