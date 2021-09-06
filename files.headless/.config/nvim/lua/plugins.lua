@@ -20,7 +20,6 @@ return require('packer').startup({function()
 
   -- General
   use 'tpope/vim-surround'
-  use 'airblade/vim-gitgutter'
   use 'SirVer/ultisnips'
   use 'mccurdyc/vim-snippets'
   use 'airblade/vim-rooter'
@@ -52,14 +51,14 @@ return require('packer').startup({function()
   use 'tpope/vim-fugitive'
   use 'jreybert/vimagit'
   use 'ruanyl/vim-gh-line'
-  -- use { 'lewis6991/gitsigns.nvim',
-  --   requires = { 'nvim-lua/plenary.nvim' },
-  --   config = [[require('config.gitsigns')]],
-  -- }
-  -- use { 'TimUntersberger/neogit',
-  --   cmd = 'Neogit',
-  --   config = [[require('config.neogit')]],
-  -- }
+  use { 'lewis6991/gitsigns.nvim',
+    requires = { 'nvim-lua/plenary.nvim' },
+    config = [[require('config.gitsigns')]],
+  }
+  use { 'TimUntersberger/neogit',
+    cmd = 'Neogit',
+    config = [[require('config.neogit')]],
+  }
 
   -- Go
   use { 'fatih/vim-go',

@@ -148,12 +148,6 @@ let g:netrw_browsex_viewer= "xdg-open"
 " enable deletion of untracked files
 let g:magit_discard_untracked_do_delete = 1
 
-" Plugin: https://github.com/airblade/vim-gitgutter
-" remove background from git gutter
-let g:gitgutter_sign_added = '+'
-let g:gitgutter_sign_modified = '~'
-let g:gitgutter_sign_removed = '-'
-
 " Define key combinations
 nmap <leader>ls :FzfSnippets<CR>
 nmap <leader>m :FzfMarks<CR>
