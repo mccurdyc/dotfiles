@@ -3,6 +3,7 @@
 bin/
 nvim/.netrwhist
 files.headless/.config/**
+!files.headless/.config/nvim
 files.headless/.config/nvim/.undodir
 files.headless/.vim/plugged
 files.headless/.vim/sessions
