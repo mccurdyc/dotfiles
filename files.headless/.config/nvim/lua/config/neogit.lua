@@ -27,7 +27,7 @@ require('neogit').setup {
     --   }
     -- }
     --
-    diffview = false  
+    diffview = true
   },
   -- override/add mappings
   mappings = {

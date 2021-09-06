@@ -55,8 +55,15 @@ return require('packer').startup({function()
     requires = { 'nvim-lua/plenary.nvim' },
     config = [[require('config.gitsigns')]],
   }
+  use { 'sindrets/diffview.nvim',
+    config = [[require('config.diffview')]],
+  }
   use { 'TimUntersberger/neogit',
     cmd = 'Neogit',
+    requires = {
+      'nvim-lua/plenary.nvim',
+      'sindrets/diffview.nvim'
+    },
     config = [[require('config.neogit')]],
   }
 
