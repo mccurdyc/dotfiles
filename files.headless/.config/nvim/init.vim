@@ -145,7 +145,6 @@ let g:go_term_mode = "split"
 " open Delve with a horizontal split rather than a vertical split.
 let g:delve_new_command = "new"
 
-
 " Plugin: https://github.com/nvim-lua/diagnostic-nvim
 let g:diagnostic_enable_virtual_text = 0 " disable in-line diagnostics
 let g:diagnostic_virtual_text_prefix = '■'
@@ -162,8 +161,6 @@ call sign_define("LspDiagnosticsInformationSign", {"text" : "I", "texthl" : "Lsp
 call sign_define("LspDiagnosticsHintSign", {"text" : "H", "texthl" : "LspDiagnosticsHint"})
 
 " Plugin: https://github.com/nvim-lua/completion-nvim
-" autocmd BufEnter * if &ft != "md" | lua require'completion'.on_attach()
-
 let g:completion_enable_auto_popup = 1
 
 " http://vimdoc.sourceforge.net/htmldoc/options.html#'complete'
@@ -172,28 +169,6 @@ set completeopt=menuone,noinsert,noselect
 
 " Avoid showing message extra message when using completion
 set shortmess+=c
-
-let g:completion_confirm_key = ""
-function! s:check_back_space() abort
-    let col = col('.') - 1
-    return !col || getline('.')[col - 1]  =~ '\s'
-endfunction
-
-" Remove snippets b/c it uses the wrong snippets use FzfSnippets instead.
-let g:completion_chain_complete_list = {
-\ 'default': [
-\   {'complete_items': ['lsp', 'snippet', 'path']},
-\   {'mode': '<c-p>'},
-\   {'mode': '<c-n>'}
-\]
-\}
-
-let g:completion_enable_snippet = 'UltiSnips'
-let g:completion_enable_auto_hover = 0 " don't print hover details because it doesn't look good.
-let g:completion_matching_strategy_list = ['exact', 'substring', 'fuzzy', 'all']
-let g:completion_matching_ignore_case = 1
-let g:completion_enable_auto_signature = 1
-let g:completion_enable_auto_paren = 1
 
 " Colors handled by colorscheme
 highlight link ALEWarningSign String
@@ -298,4 +273,3 @@ let g:rooter_change_directory_for_non_project_files = ''
 set t_Co=256
 let base16colorspace=256  " Access colors present in 256 colorspace
 colorscheme base16-eighties-minimal
-" autocmd FileType go colorscheme base16-eighties-minimal
