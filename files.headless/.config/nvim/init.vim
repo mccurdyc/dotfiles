@@ -154,20 +154,6 @@ let g:gitgutter_sign_added = '+'
 let g:gitgutter_sign_modified = '~'
 let g:gitgutter_sign_removed = '-'
 
-" use rg by default
-if executable('rg')
-  let $FZF_DEFAULT_COMMAND = 'rg --files --no-ignore --hidden --follow --glob "!.git/*"'
-  set grepprg=rg\ --vimgrep
-endif
-
-" A nicer FzfFiles preview
-" docs - https://github.com/junegunn/fzf.vim#example-customizing-files-command
-
-" advanced grep(faster with preview)
-" docs - https://github.com/junegunn/fzf.vim#example-advanced-ripgrep-integration
-command! -bang -nargs=? FilesCustom
-        \ call fzf#vim#files(<q-args>, {'dir': systemlist('git rev-parse --show-toplevel')[0], 'options': ['--layout=reverse', '--info=inline']}, <bang>0)
-
 " Define key combinations
 nmap <leader>ls :FzfSnippets<CR>
 nmap <leader>m :FzfMarks<CR>
