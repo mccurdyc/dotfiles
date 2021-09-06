@@ -39,7 +39,6 @@ return require('packer').startup({function()
   use 'neovim/nvim-lspconfig'
   use 'nvim-lua/completion-nvim'
   use 'nvim-lua/diagnostic-nvim'
-  use 'nvim-lua/lsp-status.nvim'
 
   -- Linting
   use {
@@ -84,6 +83,11 @@ return require('packer').startup({function()
   -- Styling
   use 'mccurdyc/base16-vim'
   use 'kyazdani42/nvim-web-devicons'
+  use { 'hoob3rt/lualine.nvim',
+    requires = {'kyazdani42/nvim-web-devicons', opt = true},
+    config = [[require('config.statusline')]],
+    options = {theme = 'gruvbox'},
+  }
 
   -- Profiling
   -- usage: nvim --startuptime and then :StartupTime
@@ -92,6 +96,7 @@ return require('packer').startup({function()
     config = [[vim.g.startuptime_tries = 10]],
   }
 end,
+
 -- Use a floating window
 -- https://github.com/wbthomason/packer.nvim#using-a-floating-window
 config = {
