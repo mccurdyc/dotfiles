@@ -19,38 +19,59 @@ return require('packer').startup({function()
   use 'wbthomason/packer.nvim'
 
   -- General
-  use 'tpope/vim-surround'
-  use 'SirVer/ultisnips'
-  use 'mccurdyc/vim-snippets'
-  use 'airblade/vim-rooter'
-  use 'tomtom/tcomment_vim'
-  use 'nvim-lua/plenary.nvim'
-  use 'vijaymarupudi/nvim-fzf'
+  use {
+    'tpope/vim-surround',
+    'SirVer/ultisnips',
+    'mccurdyc/vim-snippets',
+    'airblade/vim-rooter',
+    'tomtom/tcomment_vim',
+    'nvim-lua/plenary.nvim',
+    'vijaymarupudi/nvim-fzf',
+  }
   use { 'ibhagwan/fzf-lua',
-    requires = {
-      'vijaymarupudi/nvim-fzf',
-      'kyazdani42/nvim-web-devicons'
-    },
-    config = [[require('config.fzf')]],
+      requires = {
+        'vijaymarupudi/nvim-fzf',
+        'kyazdani42/nvim-web-devicons'
+      },
+      config = [[require('config.fzf')]],
   }
 
   -- NeoVim LSP
-  use 'neovim/nvim-lspconfig'
-  use 'nvim-lua/completion-nvim'
-  use 'nvim-lua/diagnostic-nvim'
+  use {
+    'nvim-lua/completion-nvim',
+    'nvim-lua/diagnostic-nvim',
+    'folke/trouble.nvim',
+    'onsails/lspkind-nvim',
+  }
+  use { 'neovim/nvim-lspconfig',
+    config = [[require('config.lsp')]],
+  }
+
+  -- Completion
+  use { 'hrsh7th/nvim-cmp',
+    requires = {
+      { 'hrsh7th/cmp-nvim-lsp', after = 'nvim-cmp' },
+      { 'hrsh7th/cmp-buffer', after = 'nvim-cmp' },
+      { 'hrsh7th/cmp-path', after = 'nvim-cmp' },
+      { 'hrsh7th/cmp-nvim-lua', after = 'nvim-cmp' },
+    },
+    config = [[require('config.completion')]],
+    event = 'InsertEnter *',
+  }
 
   -- Linting
-  use {
-    'w0rp/ale',
+  use { 'w0rp/ale',
     ft = { 'sh', 'zsh', 'bash', 'html', 'markdown', 'racket', 'vim', 'go', 'rs', 'tf' },
     cmd = 'ALEEnable',
     config = 'vim.cmd[[ALEEnable]]',
   }
 
   -- Git
-  use 'tpope/vim-fugitive'
-  use 'jreybert/vimagit'
-  use 'ruanyl/vim-gh-line'
+  use {
+    'tpope/vim-fugitive',
+    'jreybert/vimagit',
+    'ruanyl/vim-gh-line',
+  }
   use { 'lewis6991/gitsigns.nvim',
     requires = { 'nvim-lua/plenary.nvim' },
     config = [[require('config.gitsigns')]],
@@ -69,16 +90,16 @@ return require('packer').startup({function()
 
   -- Go
   use { 'fatih/vim-go',
-      ft = 'go',
-      run = ':GoUpdateBinaries',
+    ft = 'go',
+    run = ':GoUpdateBinaries',
   }
   use { 'sebdah/vim-delve',
-      ft ='go',
+    ft ='go',
   }
 
   -- Rust
   use { 'rust-lang/rust.vim',
-      ft = 'rs',
+    ft = 'rs',
   }
 
   -- Terraform
@@ -87,8 +108,10 @@ return require('packer').startup({function()
   }
 
   -- Styling
-  use 'mccurdyc/base16-vim'
-  use 'kyazdani42/nvim-web-devicons'
+  use {
+    'mccurdyc/base16-vim',
+    'kyazdani42/nvim-web-devicons',
+  }
   use { 'hoob3rt/lualine.nvim',
     requires = {'kyazdani42/nvim-web-devicons', opt = true},
     config = [[require('config.statusline')]],
