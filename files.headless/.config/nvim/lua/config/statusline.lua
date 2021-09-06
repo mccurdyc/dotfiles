@@ -1,6 +1,6 @@
 require('lualine').setup {
   options = {
-    icons_enabled = true,
+    icons_enabled = false,
     theme = 'modus_vivendi',
     component_separators = '',
     section_separators = '',
