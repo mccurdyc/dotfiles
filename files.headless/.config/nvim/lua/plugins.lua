@@ -104,15 +104,14 @@ return require('packer').startup({function()
     ft = 'rs',
   }
 
-  -- Terraform
-  use { 'hashivim/vim-terraform',
-    ft = { 'tf', 'hcl' },
-  }
-
   -- Styling
   use {
     'mccurdyc/base16-vim',
     'kyazdani42/nvim-web-devicons',
+  }
+  use { 'nvim-treesitter/nvim-treesitter',
+    config = [[require('config.treesitter')]],
+    run = ':TSUpdate',
   }
   use { 'hoob3rt/lualine.nvim',
     requires = {'kyazdani42/nvim-web-devicons', opt = true},
