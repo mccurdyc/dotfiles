@@ -131,6 +131,11 @@ _G.packer_plugins = {
     loaded = true,
     path = "/home/mccurdyc/.local/share/nvim/site/pack/packer/start/diffview.nvim"
   },
+  ["formatter.nvim"] = {
+    config = { "require('config.formatter')" },
+    loaded = true,
+    path = "/home/mccurdyc/.local/share/nvim/site/pack/packer/start/formatter.nvim"
+  },
   ["fzf-lua"] = {
     config = { "require('config.fzf')" },
     loaded = true,
@@ -154,7 +159,7 @@ _G.packer_plugins = {
     commands = { "Neogit" },
     config = { "require('config.neogit')" },
     loaded = false,
-    needs_bufread = false,
+    needs_bufread = true,
     path = "/home/mccurdyc/.local/share/nvim/site/pack/packer/opt/neogit"
   },
   ["nvim-cmp"] = {
@@ -251,6 +256,10 @@ _G.packer_plugins = {
 }
 
 time([[Defining packer_plugins]], false)
+-- Config for: formatter.nvim
+time([[Config for formatter.nvim]], true)
+require('config.formatter')
+time([[Config for formatter.nvim]], false)
 -- Config for: nvim-treesitter
 time([[Config for nvim-treesitter]], true)
 require('config.treesitter')

@@ -35,6 +35,9 @@ return require('packer').startup({function()
       },
       config = [[require('config.fzf')]],
   }
+  use { 'mhartington/formatter.nvim',
+      config = [[require('config.formatter')]],
+  }
 
   -- NeoVim LSP
   use {
