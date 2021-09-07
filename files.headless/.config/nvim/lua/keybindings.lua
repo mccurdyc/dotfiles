@@ -25,15 +25,12 @@ map('n', '<c-Right>', '<cmd>tabnext<cr>', opts)
 -- }}
 
 -- FZF
--- TODO these need updated for FzfLua
-map('n', '<leader>ls', ':FzfSnippets<CR>', opts)
-map('n', '<leader>m', ':FzfMarks<CR>', opts)
-map('n', '<leader>w', ':FzfWindows<CR>', opts)
-map('n', '<leader>c', ':FzfCommits<CR>', opts)
-map('n', '<leader>bc', ':FzfBCommits<CR>', opts)
-map('n', '<leader>f', ':FzfRg<CR>', opts)
+map('n', '<leader>m', ':FzfLua marks<CR>', opts)
+map('n', '<leader>c', ':FzfLua git_commits<CR>', opts)
+map('n', '<leader>bc', ':FzfLua git_bcommits<CR>', opts)
+map('n', '<leader>f', ':FzfLua live_grep<CR>', opts)
 map('n', '<C-p>', ':FzfLua files<CR>', opts)
-map('n', '<leader>gs', ':FzfGFiles?<CR>', opts)
+map('n', '<leader>gs', ':FzfLua git_files<CR>', opts)
 
 -- Completion
 map('i', '<tab>', '<Plug>(completion_smart_tab)', opts)
