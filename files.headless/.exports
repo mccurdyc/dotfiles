@@ -63,3 +63,5 @@ export PGPASSWORD=sourcegraph
 export PGDATABASE=sourcegraph
 export PGSSLMODE=disable
 export PGDATA_DIR=$HOME/.postgres/data
+
+export GITHUB_TOKEN="$(cat $HOME/.github/credentials)"

@@ -9,6 +9,8 @@ files.headless/.config/*
 files.headless/.vim/plugged
 files.headless/.vim/sessions
 files/.local/share/*
+files/.local/lib/*
+files/.config/*
 !.local/share/nvim/shada
 !.local/share/applications/
 .local/lib

@@ -7,7 +7,7 @@ DEBUG='false'
 OUT='out'
 
 print_usage () {
-  printf "Usage: $0 -d <DIRECTORY> -o <DIRECTORY> [-v]" 
+  printf "Usage: $0 -d <DIRECTORY> -o <DIRECTORY> [-v]"
 }
 
 run () {

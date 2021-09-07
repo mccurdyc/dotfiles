@@ -1,3 +1,7 @@
+# purpose; zsh shell config; well integrated with vim and tmux.
+## warning; zsh aliases require double quotes; bash aliases do not.
+
+#!/bin/bash
 if [[ "$ZPROF" = true ]]; then
   zmodload zsh/zprof
 fi
@@ -8,11 +12,6 @@ setopt interactive_comments
 # Necessary for git commit signing on iPad.
 export GPG_TTY=$(tty)
 
-# purpose; zsh shell config; well integrated with vim and tmux.
-## warning; zsh aliases require double quotes; bash aliases do not.
-
-#!/bin/bash
-
 # Autostart X at login
 # if you don't have this, i3 won't be started
 # https://wiki.archlinux.org/index.php/Xinit
@@ -20,7 +19,7 @@ if [[ ! $DISPLAY && $XDG_VTNR -eq 1 ]]; then
   exec startx
 fi
 
-# Load files...
+# Load files.
 for file in ~/.{zsh_prompt,aliases,aliases_work,fzf.zsh,functions,path,gitfunc,exports,exports_work}; do
 	if [[ -r "$file" ]] && [[ -f "$file" ]]; then
 		# shellcheck source=/dev/null
@@ -36,6 +35,7 @@ setopt clobber
 # Don't write duplicates to history.
 setopt HIST_IGNORE_ALL_DUPS
 setopt HIST_FIND_NO_DUPS
+setopt HIST_IGNORE_SPACE
 setopt extendedglob
 # Don't wait to write to history.
 setopt inc_append_history
