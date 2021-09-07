@@ -2,6 +2,8 @@
 .gitconfig
 bin/
 nvim/.netrwhist
+files/.config/*
+files/.local/lib
 files.headless/.config/*
 !files.headless/.config/nvim/*
 files.headless/.vim/plugged
