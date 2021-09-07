@@ -35,6 +35,10 @@ map('n', '<leader>f', ':FzfRg<CR>', opts)
 map('n', '<C-p>', ':FzfLua files<CR>', opts)
 map('n', '<leader>gs', ':FzfGFiles?<CR>', opts)
 
+-- Completion
+map('i', '<tab>', '<Plug>(completion_smart_tab)', opts)
+map('i', '<s-tab>', '<Plug>(completion_smart_s_tab)', opts)
+
 -- ALE
 map('n', '<silent> <C-k>', '<Plug>(ale_previous)', opts)
 map('n', '<silent> <C-j>', '<Plug>(ale_next)', opts)

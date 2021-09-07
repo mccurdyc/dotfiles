@@ -41,7 +41,7 @@ end
 
 local g = vim.g
 
--- Plugin: https://github.com/nvim-lua/diagnostic-nvim
+-- https://github.com/nvim-lua/diagnostic-nvim
 g.diagnostic_enable_virtual_text = 0
 g.diagnostic_virtual_text_prefix = '■'
 g.diagnostic_trimmed_virtual_text = '30'
