@@ -73,13 +73,6 @@ _G.packer_plugins = {
     loaded = true,
     path = "/home/mccurdyc/.local/share/nvim/site/pack/packer/start/LuaSnip"
   },
-  ale = {
-    commands = { "ALEEnable" },
-    config = { "vim.cmd[[ALEEnable]]" },
-    loaded = false,
-    needs_bufread = true,
-    path = "/home/mccurdyc/.local/share/nvim/site/pack/packer/opt/ale"
-  },
   ["base16-vim"] = {
     loaded = true,
     path = "/home/mccurdyc/.local/share/nvim/site/pack/packer/start/base16-vim"
@@ -281,26 +274,18 @@ time([[Config for gitsigns.nvim]], false)
 
 -- Command lazy-loads
 time([[Defining lazy-load commands]], true)
-pcall(vim.cmd, [[command -nargs=* -range -bang -complete=file StartupTime lua require("packer.load")({'vim-startuptime'}, { cmd = "StartupTime", l1 = <line1>, l2 = <line2>, bang = <q-bang>, args = <q-args> }, _G.packer_plugins)]])
-pcall(vim.cmd, [[command -nargs=* -range -bang -complete=file ALEEnable lua require("packer.load")({'ale'}, { cmd = "ALEEnable", l1 = <line1>, l2 = <line2>, bang = <q-bang>, args = <q-args> }, _G.packer_plugins)]])
 pcall(vim.cmd, [[command -nargs=* -range -bang -complete=file Neogit lua require("packer.load")({'neogit'}, { cmd = "Neogit", l1 = <line1>, l2 = <line2>, bang = <q-bang>, args = <q-args> }, _G.packer_plugins)]])
+pcall(vim.cmd, [[command -nargs=* -range -bang -complete=file StartupTime lua require("packer.load")({'vim-startuptime'}, { cmd = "StartupTime", l1 = <line1>, l2 = <line2>, bang = <q-bang>, args = <q-args> }, _G.packer_plugins)]])
 time([[Defining lazy-load commands]], false)
 
 vim.cmd [[augroup packer_load_aucmds]]
 vim.cmd [[au!]]
   -- Filetype lazy-loads
 time([[Defining lazy-load filetype autocommands]], true)
-vim.cmd [[au FileType html ++once lua require("packer.load")({'ale'}, { ft = "html" }, _G.packer_plugins)]]
-vim.cmd [[au FileType zsh ++once lua require("packer.load")({'ale'}, { ft = "zsh" }, _G.packer_plugins)]]
-vim.cmd [[au FileType go ++once lua require("packer.load")({'ale', 'vim-go', 'vim-delve'}, { ft = "go" }, _G.packer_plugins)]]
-vim.cmd [[au FileType tf ++once lua require("packer.load")({'ale', 'vim-terraform'}, { ft = "tf" }, _G.packer_plugins)]]
-vim.cmd [[au FileType rs ++once lua require("packer.load")({'ale', 'rust.vim'}, { ft = "rs" }, _G.packer_plugins)]]
-vim.cmd [[au FileType markdown ++once lua require("packer.load")({'ale'}, { ft = "markdown" }, _G.packer_plugins)]]
-vim.cmd [[au FileType vim ++once lua require("packer.load")({'ale'}, { ft = "vim" }, _G.packer_plugins)]]
+vim.cmd [[au FileType rs ++once lua require("packer.load")({'rust.vim'}, { ft = "rs" }, _G.packer_plugins)]]
+vim.cmd [[au FileType tf ++once lua require("packer.load")({'vim-terraform'}, { ft = "tf" }, _G.packer_plugins)]]
 vim.cmd [[au FileType hcl ++once lua require("packer.load")({'vim-terraform'}, { ft = "hcl" }, _G.packer_plugins)]]
-vim.cmd [[au FileType bash ++once lua require("packer.load")({'ale'}, { ft = "bash" }, _G.packer_plugins)]]
-vim.cmd [[au FileType sh ++once lua require("packer.load")({'ale'}, { ft = "sh" }, _G.packer_plugins)]]
-vim.cmd [[au FileType racket ++once lua require("packer.load")({'ale'}, { ft = "racket" }, _G.packer_plugins)]]
+vim.cmd [[au FileType go ++once lua require("packer.load")({'vim-go', 'vim-delve'}, { ft = "go" }, _G.packer_plugins)]]
 time([[Defining lazy-load filetype autocommands]], false)
   -- Event lazy-loads
 time([[Defining lazy-load event autocommands]], true)

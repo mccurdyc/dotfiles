@@ -62,11 +62,11 @@ return require('packer').startup({function()
   }
 
   -- Linting
-  use { 'w0rp/ale',
-    ft = { 'sh', 'zsh', 'bash', 'html', 'markdown', 'racket', 'vim', 'go', 'rs', 'tf' },
-    cmd = 'ALEEnable',
-    config = 'vim.cmd[[ALEEnable]]',
-  }
+  -- use { 'w0rp/ale',
+  --   ft = { 'sh', 'zsh', 'bash', 'html', 'markdown', 'racket', 'vim', 'go', 'rs', 'tf' },
+  --   cmd = 'ALEEnable',
+  --   config = [[require('config.ale')]],
+  -- }
 
   -- Git
   use {
