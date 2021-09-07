@@ -26,17 +26,21 @@ return require('packer').startup({function()
     'airblade/vim-rooter',
     'tomtom/tcomment_vim',
     'nvim-lua/plenary.nvim',
-    'vijaymarupudi/nvim-fzf',
   }
-  use { 'ibhagwan/fzf-lua',
-      requires = {
-        'vijaymarupudi/nvim-fzf',
-        'kyazdani42/nvim-web-devicons'
-      },
-      config = [[require('config.fzf')]],
-  }
+  -- use { 'ibhagwan/fzf-lua',
+  --     requires = {
+  --       'vijaymarupudi/nvim-fzf',
+  --       'kyazdani42/nvim-web-devicons'
+  --     },
+  --     config = [[require('config.fzf')]],
+  -- }
   use { 'mhartington/formatter.nvim',
       config = [[require('config.formatter')]],
+  }
+  use {
+    'nvim-telescope/telescope.nvim',
+    requires = { {'nvim-lua/plenary.nvim'} },
+    config = [[require('config.telescope')]],
   }
 
   -- NeoVim LSP

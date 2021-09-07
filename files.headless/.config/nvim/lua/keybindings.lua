@@ -24,13 +24,10 @@ map('n', '<c-Right>', '<cmd>tabnext<cr>', opts)
 
 -- }}
 
--- FZF
-map('n', '<leader>m', ':FzfLua marks<CR>', opts)
-map('n', '<leader>c', ':FzfLua git_commits<CR>', opts)
-map('n', '<leader>bc', ':FzfLua git_bcommits<CR>', opts)
-map('n', '<leader>f', ':FzfLua live_grep<CR>', opts)
-map('n', '<C-p>', ':FzfLua files<CR>', opts)
-map('n', '<leader>gs', ':FzfLua git_files<CR>', opts)
+-- Telescope
+map('n', '<leader>f', ':Telescope live_grep<CR>', opts)
+map('n', '<C-p>', ':Telescope find_files<CR>', opts)
+map('n', '<leader>gs', ':Telescope git_files<CR>', opts)
 
 -- Completion
 map('i', '<tab>', '<Plug>(completion_smart_tab)', opts)

@@ -136,11 +136,6 @@ _G.packer_plugins = {
     loaded = true,
     path = "/home/mccurdyc/.local/share/nvim/site/pack/packer/start/formatter.nvim"
   },
-  ["fzf-lua"] = {
-    config = { "require('config.fzf')" },
-    loaded = true,
-    path = "/home/mccurdyc/.local/share/nvim/site/pack/packer/start/fzf-lua"
-  },
   ["gitsigns.nvim"] = {
     config = { "require('config.gitsigns')" },
     loaded = true,
@@ -163,15 +158,11 @@ _G.packer_plugins = {
     path = "/home/mccurdyc/.local/share/nvim/site/pack/packer/opt/neogit"
   },
   ["nvim-cmp"] = {
-    after = { "cmp-nvim-lsp", "cmp-nvim-lua", "cmp-buffer", "cmp_luasnip", "cmp-path" },
+    after = { "cmp-nvim-lsp", "cmp-nvim-lua", "cmp_luasnip", "cmp-path", "cmp-buffer" },
     config = { "require('config.completion')" },
     loaded = false,
     needs_bufread = false,
     path = "/home/mccurdyc/.local/share/nvim/site/pack/packer/opt/nvim-cmp"
-  },
-  ["nvim-fzf"] = {
-    loaded = true,
-    path = "/home/mccurdyc/.local/share/nvim/site/pack/packer/start/nvim-fzf"
   },
   ["nvim-lspconfig"] = {
     config = { "require('config.lsp')" },
@@ -203,6 +194,11 @@ _G.packer_plugins = {
   tcomment_vim = {
     loaded = true,
     path = "/home/mccurdyc/.local/share/nvim/site/pack/packer/start/tcomment_vim"
+  },
+  ["telescope.nvim"] = {
+    config = { "require('config.telescope')" },
+    loaded = true,
+    path = "/home/mccurdyc/.local/share/nvim/site/pack/packer/start/telescope.nvim"
   },
   ["trouble.nvim"] = {
     loaded = true,
@@ -264,14 +260,14 @@ time([[Config for formatter.nvim]], false)
 time([[Config for nvim-treesitter]], true)
 require('config.treesitter')
 time([[Config for nvim-treesitter]], false)
--- Config for: fzf-lua
-time([[Config for fzf-lua]], true)
-require('config.fzf')
-time([[Config for fzf-lua]], false)
--- Config for: nvim-lspconfig
-time([[Config for nvim-lspconfig]], true)
-require('config.lsp')
-time([[Config for nvim-lspconfig]], false)
+-- Config for: gitsigns.nvim
+time([[Config for gitsigns.nvim]], true)
+require('config.gitsigns')
+time([[Config for gitsigns.nvim]], false)
+-- Config for: telescope.nvim
+time([[Config for telescope.nvim]], true)
+require('config.telescope')
+time([[Config for telescope.nvim]], false)
 -- Config for: lualine.nvim
 time([[Config for lualine.nvim]], true)
 require('config.statusline')
@@ -280,10 +276,10 @@ time([[Config for lualine.nvim]], false)
 time([[Config for diffview.nvim]], true)
 require('config.diffview')
 time([[Config for diffview.nvim]], false)
--- Config for: gitsigns.nvim
-time([[Config for gitsigns.nvim]], true)
-require('config.gitsigns')
-time([[Config for gitsigns.nvim]], false)
+-- Config for: nvim-lspconfig
+time([[Config for nvim-lspconfig]], true)
+require('config.lsp')
+time([[Config for nvim-lspconfig]], false)
 
 -- Command lazy-loads
 time([[Defining lazy-load commands]], true)
