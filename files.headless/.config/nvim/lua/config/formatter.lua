@@ -38,6 +38,16 @@ require('formatter').setup({
          }
        end,
    },
+    lua = {
+        -- luafmt
+        function()
+          return {
+            exe = "luafmt",
+            args = {"--indent-count", 2, "--stdin"},
+            stdin = true
+          }
+        end
+    },
   },
 })
 
@@ -45,6 +55,6 @@ require('formatter').setup({
 vim.api.nvim_exec([[
 augroup FormatAutogroup
   autocmd!
-  autocmd BufWritePost *.tf,*.hcl,*.rs,*.sh FormatWrite
+  autocmd BufWritePost *.tf,*.hcl,*.rs,*.sh,*.lua FormatWrite
 augroup END
 ]], true)
