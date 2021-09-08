@@ -151,10 +151,10 @@ return require("packer").startup(
     end
     -- Use a floating window
     -- https://github.com/wbthomason/packer.nvim#using-a-floating-window
-    config = {
-      display = {
-        open_fn = require("packer.util").float
-      }
-    }
+    -- config = {
+    --   display = {
+    --     open_fn = require("packer.util").float
+    --   }
+    -- }
   }
 )
