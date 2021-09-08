@@ -16,7 +16,6 @@ require('config.magit')
 -- require('config.ale')
 
 autocmd('misc_aucmds', {
-  [[BufWinEnter * checktime]],
   [[TextYankPost * silent! lua vim.highlight.on_yank()]],
   [[FileType qf set nobuflisted ]],
   [[BufLeave * silent! :wa]],
