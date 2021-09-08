@@ -70,6 +70,7 @@ return require("packer").startup(
         branch = "coq",
         run = ":COQdeps"
       }
+      use {"ms-jpq/coq.artifacts", branch = "artifacts"} -- 9000+ Snippets
       -- use {
       --   "hrsh7th/nvim-cmp",
       --   requires = {

@@ -41,7 +41,9 @@ local g = vim.g
 -- https://github.com/ms-jpq/coq_nvim#autostart-coq
 g.coq_settings = {
   ["auto_start"] = "shut-up",
-  ["display.icons.mode"] = "none"
+  ["display.icons.mode"] = "long",
+  ["display.ghost_text.context"] = {"[", "]"},
+  ["display.pum.source_context"] = {"[", "]"}
 }
 
 require("coq")
