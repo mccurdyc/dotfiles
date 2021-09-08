@@ -1,12 +1,30 @@
-require('telescope').setup{
-  pickers = {
-    buffers = {
-      sort_lastused = true,
-      theme = "dropdown",
+local no_preview = function()
+  return require("telescope.themes").get_dropdown(
+    {
+      borderchars = {
+        {"─", "│", "─", "│", "┌", "┐", "┘", "└"},
+        prompt = {"─", "│", " ", "│", "┌", "┐", "│", "│"},
+        results = {"─", "│", "─", "│", "├", "┤", "┘", "└"},
+        preview = {"─", "│", "─", "│", "┌", "┐", "┘", "└"}
+      },
+      width = 0.8,
       previewer = false,
-    },
-    find_files = {
-      theme = "dropdown"
+      prompt_title = false
     }
-  },
+  )
+end
+
+require("telescope").setup {
+  defaults = {
+    vimgrep_arguments = {
+      "rg",
+      "--hidden",
+      "--color=never",
+      "--no-heading",
+      "--with-filename",
+      "--line-number",
+      "--column",
+      "--smart-case"
+    }
+  }
 }
