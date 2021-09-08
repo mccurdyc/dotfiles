@@ -26,7 +26,7 @@ map("n", "<c-Right>", "<cmd>tabnext<cr>", opts)
 
 -- Telescope
 map("n", "<leader>f", ":Telescope live_grep<CR>", opts)
-map("n", "<C-p>", ':lua require("telescope.builtin").find_files(require("telescope.themes").get_ivy())<CR>', opts)
+map("n", "<C-p>", ':lua require("telescope.builtin").find_files()<CR>', opts)
 map("n", "<leader>gs", ":Telescope git_files<CR>", opts)
 
 -- Completion

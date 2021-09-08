@@ -43,6 +43,10 @@ return require("packer").startup(
         config = [[require('config.formatter')]]
       }
       use {
+        "nvim-telescope/telescope-fzf-native.nvim",
+        run = "make"
+      }
+      use {
         "nvim-telescope/telescope.nvim",
         requires = {{"nvim-lua/plenary.nvim"}},
         config = [[require('config.telescope')]]
