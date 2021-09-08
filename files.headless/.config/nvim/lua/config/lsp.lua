@@ -43,7 +43,9 @@ g.coq_settings = {
   ["auto_start"] = "shut-up",
   ["display.icons.mode"] = "long",
   ["display.ghost_text.context"] = {"[", "]"},
-  ["display.pum.source_context"] = {"[", "]"}
+  ["display.pum.source_context"] = {"[", "]"},
+  ["match.exact_matches"] = 5,
+  ["weights.prefix_matches"] = 3.0
 }
 
 require("coq")
