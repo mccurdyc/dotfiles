@@ -93,19 +93,19 @@ return require("packer").startup(
         requires = {"nvim-lua/plenary.nvim"},
         config = [[require('config.gitsigns')]]
       }
-      use {
-        "sindrets/diffview.nvim",
-        config = [[require('config.diffview')]]
-      }
-      use {
-        "TimUntersberger/neogit",
-        cmd = "Neogit",
-        requires = {
-          "nvim-lua/plenary.nvim",
-          "sindrets/diffview.nvim"
-        },
-        config = [[require('config.neogit')]]
-      }
+      -- use {
+      --   "sindrets/diffview.nvim",
+      --   config = [[require('config.diffview')]]
+      -- }
+      -- use {
+      --   "TimUntersberger/neogit",
+      --   cmd = "Neogit",
+      --   requires = {
+      --     "nvim-lua/plenary.nvim",
+      --     "sindrets/diffview.nvim"
+      --   },
+      --   config = [[require('config.neogit')]]
+      -- }
 
       -- Go
       use {
@@ -148,7 +148,7 @@ return require("packer").startup(
         cmd = "StartupTime",
         config = [[vim.g.startuptime_tries = 10]]
       }
-    end,
+    end
     -- Use a floating window
     -- https://github.com/wbthomason/packer.nvim#using-a-floating-window
     config = {

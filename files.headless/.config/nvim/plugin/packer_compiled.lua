@@ -81,11 +81,6 @@ _G.packer_plugins = {
     loaded = true,
     path = "/home/mccurdyc/.local/share/nvim/site/pack/packer/start/diagnostic-nvim"
   },
-  ["diffview.nvim"] = {
-    config = { "require('config.diffview')" },
-    loaded = true,
-    path = "/home/mccurdyc/.local/share/nvim/site/pack/packer/start/diffview.nvim"
-  },
   ["formatter.nvim"] = {
     config = { "require('config.formatter')" },
     loaded = true,
@@ -104,13 +99,6 @@ _G.packer_plugins = {
     config = { "require('config.statusline')" },
     loaded = true,
     path = "/home/mccurdyc/.local/share/nvim/site/pack/packer/start/lualine.nvim"
-  },
-  neogit = {
-    commands = { "Neogit" },
-    config = { "require('config.neogit')" },
-    loaded = false,
-    needs_bufread = true,
-    path = "/home/mccurdyc/.local/share/nvim/site/pack/packer/opt/neogit"
   },
   ["nvim-lspconfig"] = {
     config = { "require('config.lsp')" },
@@ -212,6 +200,10 @@ time([[Config for nvim-lspconfig]], false)
 time([[Config for lualine.nvim]], true)
 require('config.statusline')
 time([[Config for lualine.nvim]], false)
+-- Config for: nvim-treesitter
+time([[Config for nvim-treesitter]], true)
+require('config.treesitter')
+time([[Config for nvim-treesitter]], false)
 -- Config for: gitsigns.nvim
 time([[Config for gitsigns.nvim]], true)
 require('config.gitsigns')
@@ -220,18 +212,9 @@ time([[Config for gitsigns.nvim]], false)
 time([[Config for telescope.nvim]], true)
 require('config.telescope')
 time([[Config for telescope.nvim]], false)
--- Config for: diffview.nvim
-time([[Config for diffview.nvim]], true)
-require('config.diffview')
-time([[Config for diffview.nvim]], false)
--- Config for: nvim-treesitter
-time([[Config for nvim-treesitter]], true)
-require('config.treesitter')
-time([[Config for nvim-treesitter]], false)
 
 -- Command lazy-loads
 time([[Defining lazy-load commands]], true)
-pcall(vim.cmd, [[command -nargs=* -range -bang -complete=file Neogit lua require("packer.load")({'neogit'}, { cmd = "Neogit", l1 = <line1>, l2 = <line2>, bang = <q-bang>, args = <q-args> }, _G.packer_plugins)]])
 pcall(vim.cmd, [[command -nargs=* -range -bang -complete=file StartupTime lua require("packer.load")({'vim-startuptime'}, { cmd = "StartupTime", l1 = <line1>, l2 = <line2>, bang = <q-bang>, args = <q-args> }, _G.packer_plugins)]])
 time([[Defining lazy-load commands]], false)
 
