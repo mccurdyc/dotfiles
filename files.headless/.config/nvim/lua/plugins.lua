@@ -150,6 +150,10 @@ return require("packer").startup(
         config = [[require('config.statusline')]],
         options = {theme = "gruvbox"}
       }
+      use {
+        "p00f/nvim-ts-rainbow",
+        config = [[require('config.rainbow')]],
+      }
 
       -- Profiling
       -- usage: nvim --startuptime and then :StartupTime
