@@ -27,7 +27,6 @@ return require("packer").startup(
         "tpope/vim-surround",
         "SirVer/ultisnips",
         "mccurdyc/vim-snippets",
-        "airblade/vim-rooter",
         "tomtom/tcomment_vim",
         "nvim-lua/plenary.nvim"
       }

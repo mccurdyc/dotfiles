@@ -180,10 +180,6 @@ _G.packer_plugins = {
     needs_bufread = true,
     path = "/home/mccurdyc/.local/share/nvim/site/pack/packer/opt/vim-go"
   },
-  ["vim-rooter"] = {
-    loaded = true,
-    path = "/home/mccurdyc/.local/share/nvim/site/pack/packer/start/vim-rooter"
-  },
   ["vim-snippets"] = {
     loaded = true,
     path = "/home/mccurdyc/.local/share/nvim/site/pack/packer/start/vim-snippets"
