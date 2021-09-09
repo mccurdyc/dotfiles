@@ -131,6 +131,11 @@ _G.packer_plugins = {
     loaded = true,
     path = "/home/mccurdyc/.local/share/nvim/site/pack/packer/start/plenary.nvim"
   },
+  ["project.nvim"] = {
+    config = { "require('config.project-nvim')" },
+    loaded = true,
+    path = "/home/mccurdyc/.local/share/nvim/site/pack/packer/start/project.nvim"
+  },
   ["rust.vim"] = {
     loaded = false,
     needs_bufread = true,
@@ -229,6 +234,10 @@ time([[Config for telescope.nvim]], false)
 time([[Config for nvim-treesitter]], true)
 require('config.treesitter')
 time([[Config for nvim-treesitter]], false)
+-- Config for: project.nvim
+time([[Config for project.nvim]], true)
+require('config.project-nvim')
+time([[Config for project.nvim]], false)
 
 -- Command lazy-loads
 time([[Defining lazy-load commands]], true)

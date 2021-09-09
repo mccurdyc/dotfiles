@@ -51,6 +51,10 @@ return require("packer").startup(
         requires = {{"nvim-lua/plenary.nvim"}},
         config = [[require('config.telescope')]]
       }
+      use {
+        "ahmedkhalf/project.nvim",
+        config = [[require('config.project-nvim')]]
+      }
 
       -- NeoVim LSP
       use {
@@ -152,7 +156,7 @@ return require("packer").startup(
       }
       use {
         "p00f/nvim-ts-rainbow",
-        config = [[require('config.rainbow')]],
+        config = [[require('config.rainbow')]]
       }
 
       -- Profiling
