@@ -89,11 +89,12 @@ return require("packer").startup(
       -- }
 
       -- Linting
-      -- use { 'w0rp/ale',
-      --   ft = { 'sh', 'zsh', 'bash', 'html', 'markdown', 'racket', 'vim', 'go', 'rs', 'tf' },
-      --   cmd = 'ALEEnable',
-      --   config = [[require('config.ale')]],
-      -- }
+      use {
+        "w0rp/ale",
+        ft = {"sh", "go", "rs", "tf", "yaml", "json"},
+        cmd = "ALEEnable",
+        config = [[require('config.ale')]]
+      }
 
       -- Git
       use {
