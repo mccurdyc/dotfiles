@@ -50,7 +50,7 @@ g.coq_settings = {
 
 require("coq")
 
-local servers = {"rust_analyzer", "gopls"}
+local servers = {"rust_analyzer", "gopls", "bashls", "dockerls", "terraformls", "tflint", "yamlls"}
 for _, lsp in ipairs(servers) do
   nvim_lsp[lsp].setup {
     on_attach = on_attach
