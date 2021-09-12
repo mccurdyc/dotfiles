@@ -13,6 +13,7 @@ nvim-packer-git
 repoctl
 subnetcalc
 terraform-ls-bin
+terraform-lsp-bin
 tflint-bin
 yaml-language-server-bin
 yay
