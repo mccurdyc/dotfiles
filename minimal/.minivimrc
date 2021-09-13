@@ -1,0 +1,42 @@
+set noswapfile
+set nowrap
+set number
+set linebreak
+set showbreak=━━
+set breakindent
+set tabstop=2
+set shiftwidth=2
+set expandtab
+set shiftround
+set colorcolumn=80
+set hidden
+set list
+
+syntax enable
+filetype plugin indent on
+syntax manual
+au Filetype * setlocal syntax=ON
+autocmd Filetype * if getfsize(@%) > 1000000 | setlocal syntax=OFF | endif
+
+" quickfix styling
+aug QuickFix
+  au FileType qf setlocal nonumber colorcolumn=
+  " wrap long lines in quickfix - https://github.com/fatih/vim-go/issues/1271
+  autocmd FileType qf setlocal wrap
+aug END
+
+" General Keybindings
+let maplocalleader = ","
+let mapleader = ","
+
+" Navigation
+" https://thoughtbot.com/blog/vim-splits-move-faster-and-more-naturally
+set splitbelow
+set splitright
+
+nnoremap <C-s> :sp <CR>
+" Autosave buffers before leaving them
+autocmd BufLeave * silent! :wa
+
+no <silent><Leader>cs :nohls<CR>
+inoremap kj <Esc>
