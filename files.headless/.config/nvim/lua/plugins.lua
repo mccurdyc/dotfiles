@@ -38,6 +38,10 @@ return require("packer").startup(
       --     config = [[require('config.fzf')]],
       -- }
       use {
+        "kevinhwang91/nvim-bqf",
+        config = [[require('config.quickfix')]]
+      }
+      use {
         "mhartington/formatter.nvim",
         config = [[require('config.formatter')]]
       }

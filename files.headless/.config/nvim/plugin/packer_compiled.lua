@@ -111,6 +111,11 @@ _G.packer_plugins = {
     loaded = true,
     path = "/home/mccurdyc/.local/share/nvim/site/pack/packer/start/lualine.nvim"
   },
+  ["nvim-bqf"] = {
+    config = { "require('config.quickfix')" },
+    loaded = true,
+    path = "/home/mccurdyc/.local/share/nvim/site/pack/packer/start/nvim-bqf"
+  },
   ["nvim-lspconfig"] = {
     config = { "require('config.lsp')" },
     loaded = true,
@@ -217,14 +222,18 @@ time([[Config for formatter.nvim]], false)
 time([[Config for nvim-lspconfig]], true)
 require('config.lsp')
 time([[Config for nvim-lspconfig]], false)
--- Config for: lualine.nvim
-time([[Config for lualine.nvim]], true)
-require('config.statusline')
-time([[Config for lualine.nvim]], false)
 -- Config for: nvim-ts-rainbow
 time([[Config for nvim-ts-rainbow]], true)
 require('config.rainbow')
 time([[Config for nvim-ts-rainbow]], false)
+-- Config for: nvim-bqf
+time([[Config for nvim-bqf]], true)
+require('config.quickfix')
+time([[Config for nvim-bqf]], false)
+-- Config for: lualine.nvim
+time([[Config for lualine.nvim]], true)
+require('config.statusline')
+time([[Config for lualine.nvim]], false)
 -- Config for: gitsigns.nvim
 time([[Config for gitsigns.nvim]], true)
 require('config.gitsigns')

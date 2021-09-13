@@ -1,7 +1,30 @@
+require("bqf").setup(
+  {
+    auto_enable = true,
+    preview = {
+      win_height = 12,
+      win_vheight = 12,
+      delay_syntax = 80,
+      border_chars = {"┃", "┃", "━", "━", "┏", "┓", "┗", "┛", "█"}
+    },
+    func_map = {
+      vsplit = "",
+      ptogglemode = "z,",
+      stoggleup = ""
+    },
+    filter = {
+      fzf = {
+        action_for = {["ctrl-s"] = "split"},
+        extra_opts = {"--bind", "ctrl-o:toggle-all", "--prompt", "> "}
+      }
+    }
+  }
+)
+
 -- TODO - convert to Lua
 -- aug QuickFix
 --   au FileType qf setlocal nonumber colorcolumn=
---   " wrap long lines in quickfix - https://github.com/fatih/vim-go/issues/1271
+--   -- wrap long lines in quickfix - https://github.com/fatih/vim-go/issues/1271
 --   autocmd FileType qf setlocal wrap
 -- aug END
 --
@@ -25,4 +48,4 @@
 --     endw
 --     exe max([min([n_lines, a:maxheight]), a:minheight]) . "wincmd _"
 -- endfunction
--- " https://gist.github.com/juanpabloaj/5845848
+-- -- https://gist.github.com/juanpabloaj/5845848
