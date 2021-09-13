@@ -63,6 +63,7 @@ rsync
 rust-analyzer
 samba
 sed
+shfmt
 speedtest-cli
 sudo
 tailscale
