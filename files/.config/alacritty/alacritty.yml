@@ -48,19 +48,19 @@ scrolling:
   multiplier: 3
 
 # Font configuration (changes require restart)
+# $ fc-list | rg -i 'sauce'
 font:
   normal:
-    family: Source Code Pro
-    # https://github.com/adobe-fonts/source-code-pro/blob/b47764205aa316b2c172dc37921526dc45153e0a/FontMenuNameDB
+    family: SauceCodePro Nerd Font Mono
     style: Regular
 
   bold:
-    family: Source Code Pro Black
-    # style: Bold
+    family: SauceCodePro Nerd Font Mono
+    style: Bold
 
   italic:
-    family: Source Code Pro Medium Semibold Italic
-    # style: Italic
+    family: SauceCodePro Nerd Font Mono
+    style: Italic
 
   # Point size of the font
   size: 11.0
