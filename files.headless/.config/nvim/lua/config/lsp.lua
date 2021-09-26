@@ -55,7 +55,7 @@ for _, lsp in ipairs(servers) do
   nvim_lsp[lsp].setup {
     on_attach = on_attach
   }
-  -- nvim_lsp[lsp].setup(coq.lsp_ensure_capabilities())
+  nvim_lsp[lsp].setup(coq.lsp_ensure_capabilities())
 end
 
 -- https://github.com/nvim-lua/diagnostic-nvim
