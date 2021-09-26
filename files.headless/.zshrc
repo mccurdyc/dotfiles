@@ -72,8 +72,6 @@ PROMPT_COMMAND='echo -ne "\033]0;${USER}@${HOSTNAME}: ${PWD}\007"'
 # This has to be sourced late
 source $HOME/.zsh/plugins/Aloxaf/fzf-tab/fzf-tab.plugin.zsh
 
-eval "$(hub alias -s)"
-
 # asdf
 source /opt/asdf-vm/asdf.sh
 
