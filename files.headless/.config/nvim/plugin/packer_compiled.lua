@@ -121,6 +121,11 @@ _G.packer_plugins = {
     loaded = true,
     path = "/home/mccurdyc/.local/share/nvim/site/pack/packer/start/nvim-lspconfig"
   },
+  ["nvim-tree.lua"] = {
+    config = { "require('config.nvim-tree')" },
+    loaded = true,
+    path = "/home/mccurdyc/.local/share/nvim/site/pack/packer/start/nvim-tree.lua"
+  },
   ["nvim-treesitter"] = {
     config = { "require('config.treesitter')" },
     loaded = true,
@@ -234,6 +239,10 @@ time([[Config for nvim-bqf]], false)
 time([[Config for lualine.nvim]], true)
 require('config.statusline')
 time([[Config for lualine.nvim]], false)
+-- Config for: nvim-tree.lua
+time([[Config for nvim-tree.lua]], true)
+require('config.nvim-tree')
+time([[Config for nvim-tree.lua]], false)
 -- Config for: gitsigns.nvim
 time([[Config for gitsigns.nvim]], true)
 require('config.gitsigns')
@@ -261,7 +270,7 @@ vim.cmd [[augroup packer_load_aucmds]]
 vim.cmd [[au!]]
   -- Filetype lazy-loads
 time([[Defining lazy-load filetype autocommands]], true)
-vim.cmd [[au FileType rs ++once lua require("packer.load")({'ale', 'rust.vim'}, { ft = "rs" }, _G.packer_plugins)]]
+vim.cmd [[au FileType rs ++once lua require("packer.load")({'rust.vim', 'ale'}, { ft = "rs" }, _G.packer_plugins)]]
 vim.cmd [[au FileType sh ++once lua require("packer.load")({'ale'}, { ft = "sh" }, _G.packer_plugins)]]
 vim.cmd [[au FileType go ++once lua require("packer.load")({'ale', 'vim-go', 'vim-delve'}, { ft = "go" }, _G.packer_plugins)]]
 vim.cmd [[au FileType tf ++once lua require("packer.load")({'ale'}, { ft = "tf" }, _G.packer_plugins)]]

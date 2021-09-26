@@ -57,6 +57,11 @@ return require("packer").startup(
         "ahmedkhalf/project.nvim",
         config = [[require('config.project-nvim')]]
       }
+      use {
+        "kyazdani42/nvim-tree.lua",
+        requires = "kyazdani42/nvim-web-devicons",
+        config = [[require('config.nvim-tree')]]
+      }
 
       -- NeoVim LSP
       use {
