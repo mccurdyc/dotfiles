@@ -39,6 +39,9 @@ map("n", "<silent> <C-j>", "<Plug>(ale_next)", opts)
 map("n", "<leader>rn", ":ALERename<CR>", opts)
 map("n", "<leader>ss", ":ALESymbolSearch", opts)
 
+-- Nvim-Tree
+map("n", "<C-n>", ':lua require("nvim-tree").toggle()<CR>', opts)
+
 -- Go
 local go_keybindings = function()
   map("n", "<leader>gg", "<Plug>(go-doc)", opts)
