@@ -19,7 +19,6 @@ return require("packer").startup(
   {
     function()
       -- https://github.com/wbthomason/packer.nvim/blob/daec6c759f95cd8528e5dd7c214b18b4cec2658c/doc/packer.txt#L534
-
       use "wbthomason/packer.nvim"
 
       -- General
@@ -171,12 +170,5 @@ return require("packer").startup(
         config = [[vim.g.startuptime_tries = 10]]
       }
     end
-    -- Use a floating window
-    -- https://github.com/wbthomason/packer.nvim#using-a-floating-window
-    -- config = {
-    --   display = {
-    --     open_fn = require("packer.util").float
-    --   }
-    -- }
   }
 )
