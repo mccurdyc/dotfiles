@@ -52,7 +52,8 @@ g.ale_linters = {
   ["go"] = {"gopls", "staticcheck", "gosimple"},
   ["rust"] = {"rustc", "analyzer"},
   ["terraform"] = {"terraform", "terraform_lsp", "tflint"},
-  ["json"] = {"jsonlint"}
+  ["json"] = {"jsonlint"},
+  ["md"] = {"markdownlint"}
 }
 
 g.ale_fixers = {
@@ -60,5 +61,6 @@ g.ale_fixers = {
   ["go"] = {"gofmt", "goimports"},
   ["rust"] = {"rustfmt"},
   ["terraform"] = {"terraform"},
-  ["json"] = {"jq"}
+  ["json"] = {"jq"},
+  ["md"] = {"markdownlint"}
 }
