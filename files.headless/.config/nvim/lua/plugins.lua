@@ -53,13 +53,12 @@ return require("packer").startup(
         requires = {{"nvim-lua/plenary.nvim"}},
         config = [[require('config.telescope')]]
       }
-      use {
-        "ahmedkhalf/project.nvim",
-        config = [[require('config.project-nvim')]]
-      }
+      -- use {
+      --   "ahmedkhalf/project.nvim",
+      --   config = [[require('config.project-nvim')]]
+      -- }
       use {
         "kyazdani42/nvim-tree.lua",
-        requires = "kyazdani42/nvim-web-devicons",
         config = [[require('config.nvim-tree')]]
       }
 
@@ -67,8 +66,7 @@ return require("packer").startup(
       use {
         -- 'nvim-lua/completion-nvim',
         "nvim-lua/diagnostic-nvim",
-        "folke/trouble.nvim",
-        "onsails/lspkind-nvim"
+        "folke/trouble.nvim"
       }
       use {
         "neovim/nvim-lspconfig",
@@ -76,25 +74,27 @@ return require("packer").startup(
       }
 
       -- Completion
-      use {
-        "ms-jpq/coq_nvim",
-        branch = "coq",
-        run = ":COQdeps"
-      }
-      use {"ms-jpq/coq.artifacts", branch = "artifacts"} -- 9000+ Snippets
       -- use {
-      --   "hrsh7th/nvim-cmp",
-      --   requires = {
-      --     "L3MON4D3/LuaSnip",
-      --     {"hrsh7th/cmp-buffer", after = "nvim-cmp"},
-      --     {"hrsh7th/cmp-nvim-lsp", after = "nvim-cmp"},
-      --     {"hrsh7th/cmp-nvim-lua", after = "nvim-cmp"},
-      --     {"hrsh7th/cmp-path", after = "nvim-cmp"},
-      --     {"saadparwaiz1/cmp_luasnip", after = "nvim-cmp"}
-      --   },
-      --   config = [[require('config.completion')]],
-      --   event = "InsertEnter *"
+      --   "ms-jpq/coq_nvim",
+      --   branch = "coq",
+      --   run = ":COQdeps"
       -- }
+      -- use {"ms-jpq/coq.artifacts", branch = "artifacts"} -- 9000+ Snippets
+      use {
+        "hrsh7th/nvim-cmp",
+        config = [[require('config.completion')]]
+      }
+      use {
+        "hrsh7th/cmp-buffer",
+        "hrsh7th/cmp-nvim-lsp",
+        "hrsh7th/cmp-nvim-lua",
+        "hrsh7th/cmp-path"
+      }
+      -- Completion (Snippets)
+      use {
+        "L3MON4D3/LuaSnip",
+        "saadparwaiz1/cmp_luasnip"
+      }
 
       -- Linting
       use {

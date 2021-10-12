@@ -23,23 +23,25 @@ map("n", "]d", "<cmd>lua vim.lsp.diagnostic.goto_next()<CR>", opts)
 local g = vim.g
 
 -- https://github.com/ms-jpq/coq_nvim#autostart-coq
-g.coq_settings = {
-  ["auto_start"] = "shut-up",
-  ["display.icons.mode"] = "long",
-  ["display.ghost_text.context"] = {"[", "]"},
-  ["display.pum.source_context"] = {"[", "]"},
-  ["match.exact_matches"] = 5,
-  ["weights.prefix_matches"] = 3.0
-}
-
-require("coq")
+-- g.coq_settings = {
+--   ["auto_start"] = "shut-up",
+--   ["display.icons.mode"] = "long",
+--   ["display.ghost_text.context"] = {"[", "]"},
+--   ["display.pum.source_context"] = {"[", "]"},
+--   ["match.exact_matches"] = 5,
+--   ["weights.prefix_matches"] = 3.0
+-- }
+--
+-- require("coq")
 
 local servers = {"rust_analyzer", "gopls", "bashls", "dockerls", "terraformls", "tflint", "yamlls"}
 for _, lsp in ipairs(servers) do
   nvim_lsp[lsp].setup {
-    on_attach = on_attach
+    on_attach = on_attach,
+    capabilities = require("cmp_nvim_lsp").update_capabilities(vim.lsp.protocol.make_client_capabilities())
   }
-  nvim_lsp[lsp].setup(coq.lsp_ensure_capabilities())
+
+  -- nvim_lsp[lsp].setup(coq.lsp_ensure_capabilities())
 end
 
 -- https://github.com/nvim-lua/diagnostic-nvim

@@ -1,4 +1,4 @@
-require('general')
-require('keybindings')
-require('plugins')
-require('colors')
+require("general")
+require("keybindings")
+require("plugins")
+require("colors")
