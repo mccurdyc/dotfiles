@@ -69,10 +69,6 @@ end
 time([[try_loadstring definition]], false)
 time([[Defining packer_plugins]], true)
 _G.packer_plugins = {
-  LuaSnip = {
-    loaded = true,
-    path = "/home/mccurdyc/.local/share/nvim/site/pack/packer/start/LuaSnip"
-  },
   ale = {
     commands = { "ALEEnable" },
     config = { "require('config.ale')" },
@@ -96,13 +92,13 @@ _G.packer_plugins = {
     loaded = true,
     path = "/home/mccurdyc/.local/share/nvim/site/pack/packer/start/cmp-nvim-lua"
   },
+  ["cmp-nvim-ultisnips"] = {
+    loaded = true,
+    path = "/home/mccurdyc/.local/share/nvim/site/pack/packer/start/cmp-nvim-ultisnips"
+  },
   ["cmp-path"] = {
     loaded = true,
     path = "/home/mccurdyc/.local/share/nvim/site/pack/packer/start/cmp-path"
-  },
-  cmp_luasnip = {
-    loaded = true,
-    path = "/home/mccurdyc/.local/share/nvim/site/pack/packer/start/cmp_luasnip"
   },
   ["diagnostic-nvim"] = {
     loaded = true,
@@ -243,10 +239,10 @@ time([[Config for nvim-treesitter]], false)
 time([[Config for nvim-cmp]], true)
 require('config.completion')
 time([[Config for nvim-cmp]], false)
--- Config for: nvim-ts-rainbow
-time([[Config for nvim-ts-rainbow]], true)
-require('config.rainbow')
-time([[Config for nvim-ts-rainbow]], false)
+-- Config for: nvim-tree.lua
+time([[Config for nvim-tree.lua]], true)
+require('config.nvim-tree')
+time([[Config for nvim-tree.lua]], false)
 -- Config for: nvim-bqf
 time([[Config for nvim-bqf]], true)
 require('config.quickfix')
@@ -259,10 +255,6 @@ time([[Config for gitsigns.nvim]], false)
 time([[Config for nvim-lspconfig]], true)
 require('config.lsp')
 time([[Config for nvim-lspconfig]], false)
--- Config for: nvim-tree.lua
-time([[Config for nvim-tree.lua]], true)
-require('config.nvim-tree')
-time([[Config for nvim-tree.lua]], false)
 -- Config for: lualine.nvim
 time([[Config for lualine.nvim]], true)
 require('config.statusline')
@@ -271,6 +263,10 @@ time([[Config for lualine.nvim]], false)
 time([[Config for telescope.nvim]], true)
 require('config.telescope')
 time([[Config for telescope.nvim]], false)
+-- Config for: nvim-ts-rainbow
+time([[Config for nvim-ts-rainbow]], true)
+require('config.rainbow')
+time([[Config for nvim-ts-rainbow]], false)
 
 -- Command lazy-loads
 time([[Defining lazy-load commands]], true)
