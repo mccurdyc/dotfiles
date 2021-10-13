@@ -7,7 +7,6 @@ vim.g.mapleader = ","
 
 -- Split horizontally.
 map("n", "<C-s>", ":sp<CR>", opts)
-map("i", "kj", "<Esc>", opts)
 
 -- replace visual selection globally, confirm.
 map("v", "<C-r>", '"hy:%s/<C-r>h//gc<left><left><left>', opts)
