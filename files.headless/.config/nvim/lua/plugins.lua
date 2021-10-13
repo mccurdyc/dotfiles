@@ -24,7 +24,6 @@ return require("packer").startup(
       -- General
       use {
         "tpope/vim-surround",
-        "SirVer/ultisnips",
         "mccurdyc/vim-snippets",
         "tomtom/tcomment_vim",
         "nvim-lua/plenary.nvim"
@@ -63,11 +62,6 @@ return require("packer").startup(
       }
 
       -- NeoVim LSP
-      use {
-        -- 'nvim-lua/completion-nvim',
-        "nvim-lua/diagnostic-nvim",
-        "folke/trouble.nvim"
-      }
       use {
         "neovim/nvim-lspconfig",
         config = [[require('config.lsp')]]
