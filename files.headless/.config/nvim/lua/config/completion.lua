@@ -18,9 +18,9 @@ cmp.setup {
     )
   },
   sources = {
-    {name = "buffer"},
     {name = "nvim_lsp"},
     {name = "nvim_lua"},
+    {name = "buffer"},
     {name = "path"},
     {name = "ultisnips"}
   }
