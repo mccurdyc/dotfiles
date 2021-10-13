@@ -44,38 +44,6 @@ for _, lsp in ipairs(servers) do
   -- nvim_lsp[lsp].setup(coq.lsp_ensure_capabilities())
 end
 
--- https://github.com/nvim-lua/diagnostic-nvim
--- g.diagnostic_enable_virtual_text = 0
--- g.diagnostic_virtual_text_prefix = "■"
--- g.diagnostic_trimmed_virtual_text = "30"
--- g.space_before_virtual_text = 10
--- g.diagnostic_show_sign = 1
--- g.diagnostic_enable_underline = 0
--- g.diagnostic_auto_popup_while_jump = 0
--- g.diagnostic_insert_delay = 1
-vim.lsp.handlers["textDocument/publishDiagnostics"] =
-  vim.lsp.with(
-  vim.lsp.diagnostic.on_publish_diagnostics,
-  {
-    -- Enable underline, use default values
-    underline = false,
-    -- Enable virtual text, override spacing to 4
-    virtual_text = {
-      spacing = 4,
-      prefix = "■"
-    },
-    -- Use a function to dynamically turn signs off
-    -- and on, using buffer local variables
-    signs = function(bufnr, client_id)
-      local ok, result = pcall(vim.api.nvim_buf_get_var, bufnr, "show_signs")
-      -- No buffer local variable set, so just enable by default
-      if not ok then
-        return true
-      end
-
-      return result
-    end,
-    -- Disable a feature
-    update_in_insert = false
-  }
-)
+-- Disable diagnostics inline.
+vim.lsp.handlers["textDocument/publishDiagnostics"] = function()
+end
