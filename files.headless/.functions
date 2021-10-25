@@ -414,7 +414,7 @@ function gcloud-docker() {
   local credpath=/root/credentials.json
   local entrypoint=$(mktemp)
   local entrypointpath=/root/entrypoint.sh
-  cat <<-'EOF' > ${entrypoint}
+  cat <<'EOF' > ${entrypoint}
 #!/bin/bash
 set -o errexit
 set -o xtrace
@@ -422,12 +422,14 @@ gcloud auth activate-service-account --key-file=/root/credentials.json
 exec "$@"
 EOF
   chmod 711 ${entrypoint}
-  docker run -it \
-    --rm \
-    --mount type=bind,source=${key},target=${credpath},readonly \
-    --mount type=bind,source=${entrypoint},target=${entrypointpath},readonly \
-    --entrypoint ${entrypointpath} \
-    gcr.io/google.com/cloudsdktool/cloud-sdk:latest /bin/bash
+  touch ${HOME}/.gcloud-docker-bash_history
+  chmod 600 ${HOME}/.gcloud-docker-bash_history
+  docker run -it --rm -w "/root" \
+    -v ${HOME}/.gcloud-docker-bash_history:/root/.bash_history \
+    -v ${HOME}/.ssh:/root/.ssh:ro \
+    -v ${key}:${credpath}:ro \
+    -v ${entrypoint}:${entrypointpath}:ro \
+    --entrypoint ${entrypointpath} google/cloud-sdk /bin/bash
 }
 
 function whatsmyip() {
@@ -445,6 +447,6 @@ function pw {
   op get item ${1} --fields password
 }
 
-function hubpr {
-  hub pull-request --force --push --draft $@ -F - --edit < $HOME/.github/pullrequest-template.md
+function ghpr {
+  gh pr create --fill --draft $@
 }
