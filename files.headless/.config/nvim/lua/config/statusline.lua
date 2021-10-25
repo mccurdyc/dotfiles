@@ -1,7 +1,7 @@
 require('lualine').setup {
   options = {
     icons_enabled = false,
-    theme = 'modus_vivendi',
+    theme = 'wombat',
     component_separators = '',
     section_separators = '',
     disabled_filetypes = {}

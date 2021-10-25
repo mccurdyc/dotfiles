@@ -74,6 +74,7 @@ _G.packer_plugins = {
     config = { "require('config.ale')" },
     loaded = false,
     needs_bufread = true,
+    only_cond = false,
     path = "/home/mccurdyc/.local/share/nvim/site/pack/packer/opt/ale"
   },
   ["base16-vim"] = {
@@ -160,6 +161,7 @@ _G.packer_plugins = {
   ["rust.vim"] = {
     loaded = false,
     needs_bufread = true,
+    only_cond = false,
     path = "/home/mccurdyc/.local/share/nvim/site/pack/packer/opt/rust.vim"
   },
   tcomment_vim = {
@@ -182,6 +184,7 @@ _G.packer_plugins = {
   ["vim-delve"] = {
     loaded = false,
     needs_bufread = false,
+    only_cond = false,
     path = "/home/mccurdyc/.local/share/nvim/site/pack/packer/opt/vim-delve"
   },
   ["vim-fugitive"] = {
@@ -195,6 +198,7 @@ _G.packer_plugins = {
   ["vim-go"] = {
     loaded = false,
     needs_bufread = true,
+    only_cond = false,
     path = "/home/mccurdyc/.local/share/nvim/site/pack/packer/opt/vim-go"
   },
   ["vim-snippets"] = {
@@ -206,6 +210,7 @@ _G.packer_plugins = {
     config = { "vim.g.startuptime_tries = 10" },
     loaded = false,
     needs_bufread = false,
+    only_cond = false,
     path = "/home/mccurdyc/.local/share/nvim/site/pack/packer/opt/vim-startuptime"
   },
   ["vim-surround"] = {
