@@ -5,8 +5,6 @@ alias tfsec='eval $(AWS_PROFILE=${PWD##*/} sops --decrypt --input-type env secre
 
 alias srvhttp='python3 -m http.server'
 
-alias python='/home/mccurdyc/.asdf/shims/python3.8'
-
 alias gpg='gpg2'
 
 alias diff='diff -u'
