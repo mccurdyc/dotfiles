@@ -152,6 +152,15 @@ return require("packer").startup(
         config = [[require('config.rainbow')]]
       }
 
+      -- Debugging
+      use {
+        "rcarriga/nvim-dap-ui"
+      }
+      use {
+        "mfussenegger/nvim-dap",
+        config = [[require('config.dap')]]
+      }
+
       -- Profiling
       -- usage: nvim --startuptime and then :StartupTime
       use {

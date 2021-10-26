@@ -41,6 +41,11 @@ map("n", "<leader>ss", ":ALESymbolSearch", opts)
 -- Nvim-Tree
 map("n", "<C-n>", ':lua require("nvim-tree").toggle()<CR>', opts)
 
+-- DAP
+map("n", "<leader>bp", ':lua require("dap").toggle_breakpoint()<CR>', opts)
+map("n", "<leader>dap", ':lua require("dap").continue()<CR>', opts)
+map("n", "<leader>dui", ':lua require("dapui").toggle()<CR>', opts)
+
 -- Go
 local go_keybindings = function()
   map("n", "<leader>gg", "<Plug>(go-doc)", opts)
