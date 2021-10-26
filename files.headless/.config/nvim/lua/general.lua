@@ -1,33 +1,35 @@
 local g = vim.g
 local cmd = vim.cmd
 local o, wo, bo = vim.o, vim.wo, vim.bo
-local utils = require('config.utils')
+local utils = require("config.utils")
 local opt = utils.opt
 local autocmd = utils.autocmd
 local map = utils.map
 
 -- Language Settings
-require('config.go')
+require("config.go")
 
 -- Other
-require('config.git')
-require('config.magit')
--- require('config.ultisnips')
--- require('config.ale')
+require("config.git")
+require("config.magit")
 
-autocmd('misc_aucmds', {
-  [[TextYankPost * silent! lua vim.highlight.on_yank()]],
-  [[FileType qf set nobuflisted ]],
-  [[BufLeave * silent! :wa]],
-}, true)
+autocmd(
+  "misc_aucmds",
+  {
+    [[TextYankPost * silent! lua vim.highlight.on_yank()]],
+    [[FileType qf set nobuflisted ]],
+    [[BufLeave * silent! :wa]]
+  },
+  true
+)
 
 g.loaded_python_provider = 0
-g.python_host_prog = '/usr/bin/python2'
-g.python3_host_prog = '/usr/bin/python'
-g.netrw_browsex_viewer = 'xdg-open'
+g.python_host_prog = "/usr/bin/python2"
+g.python3_host_prog = "/usr/bin/python"
+g.netrw_browsex_viewer = "xdg-open"
 
-local buffer = { o, bo }
-local window = { o, wo }
+local buffer = {o, bo}
+local window = {o, wo}
 
 -- These are the default values
 -- opt('cursorcolumn', false, window)
@@ -46,24 +48,24 @@ local window = { o, wo }
 -- undofile
 -- filetype plugin indent on
 
-opt('clipboard', 'unnamedplus')
-opt('swapfile', false, buffer)
-opt('title', true)
-opt('wrap', false, window)
-opt('number', true, window) -- TODO confirm
-opt('linebreak', true, window)
-opt('showbreak', '━━')
-opt('breakindent', true, window)
-opt('tabstop', 2, buffer)
-opt('shiftwidth', 2)
-opt('expandtab', true, buffer)
-opt('shiftround', true)
-opt('lazyredraw', true)
-opt('colorcolumn', '80', window)
-opt('hidden', true)
-opt('list', true)
-opt('syntax', 'enable')
-opt('hlsearch', false)
-opt('splitbelow', true)
-opt('splitright', true)
-opt('showmode', false)
+opt("clipboard", "unnamedplus")
+opt("swapfile", false, buffer)
+opt("title", true)
+opt("wrap", false, window)
+opt("number", true, window) -- TODO confirm
+opt("linebreak", true, window)
+opt("showbreak", "━━")
+opt("breakindent", true, window)
+opt("tabstop", 2, buffer)
+opt("shiftwidth", 2)
+opt("expandtab", true, buffer)
+opt("shiftround", true)
+opt("lazyredraw", true)
+opt("colorcolumn", "80", window)
+opt("hidden", true)
+opt("list", true)
+opt("syntax", "enable")
+opt("hlsearch", false)
+opt("splitbelow", true)
+opt("splitright", true)
+opt("showmode", false)

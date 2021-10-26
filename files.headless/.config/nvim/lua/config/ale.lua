@@ -46,11 +46,15 @@ g.ale_lint_on_save = 1
 g.ale_fix_on_save = 1
 g.ale_lint_on_enter = 0
 
+-- Rust
+g.ale_rust_cargo_use_clippy = 1
+g.ale_rust_rustfmt_options = "--edition=2018"
+
 -- -- ALE supported tools - https://github.com/dense-analysis/ale/blob/master/supported-tools.md
 -- -- :ALEInfo
 g.ale_linters = {
   ["go"] = {"gopls", "staticcheck", "gosimple"},
-  ["rust"] = {"rustc", "analyzer"},
+  ["rust"] = {"rustc", "analyzer", "cargo"},
   ["terraform"] = {"terraform", "terraform_lsp", "tflint"},
   ["json"] = {"jsonlint"},
   ["md"] = {"markdownlint"}

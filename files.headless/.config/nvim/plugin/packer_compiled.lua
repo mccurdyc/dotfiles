@@ -70,12 +70,9 @@ time([[try_loadstring definition]], false)
 time([[Defining packer_plugins]], true)
 _G.packer_plugins = {
   ale = {
-    commands = { "ALEEnable" },
     config = { "require('config.ale')" },
-    loaded = false,
-    needs_bufread = true,
-    only_cond = false,
-    path = "/home/mccurdyc/.local/share/nvim/site/pack/packer/opt/ale"
+    loaded = true,
+    path = "/home/mccurdyc/.local/share/nvim/site/pack/packer/start/ale"
   },
   ["base16-vim"] = {
     loaded = true,
@@ -159,10 +156,8 @@ _G.packer_plugins = {
     path = "/home/mccurdyc/.local/share/nvim/site/pack/packer/start/plenary.nvim"
   },
   ["rust.vim"] = {
-    loaded = false,
-    needs_bufread = true,
-    only_cond = false,
-    path = "/home/mccurdyc/.local/share/nvim/site/pack/packer/opt/rust.vim"
+    loaded = true,
+    path = "/home/mccurdyc/.local/share/nvim/site/pack/packer/start/rust.vim"
   },
   tcomment_vim = {
     loaded = true,
@@ -180,12 +175,6 @@ _G.packer_plugins = {
   ultisnips = {
     loaded = true,
     path = "/home/mccurdyc/.local/share/nvim/site/pack/packer/start/ultisnips"
-  },
-  ["vim-delve"] = {
-    loaded = false,
-    needs_bufread = false,
-    only_cond = false,
-    path = "/home/mccurdyc/.local/share/nvim/site/pack/packer/opt/vim-delve"
   },
   ["vim-fugitive"] = {
     loaded = true,
@@ -217,6 +206,11 @@ _G.packer_plugins = {
     loaded = true,
     path = "/home/mccurdyc/.local/share/nvim/site/pack/packer/start/vim-surround"
   },
+  ["vim-terraform"] = {
+    config = { "require('config.terraform')" },
+    loaded = true,
+    path = "/home/mccurdyc/.local/share/nvim/site/pack/packer/start/vim-terraform"
+  },
   vimagit = {
     loaded = true,
     path = "/home/mccurdyc/.local/share/nvim/site/pack/packer/start/vimagit"
@@ -240,6 +234,10 @@ time([[Config for nvim-cmp]], false)
 time([[Config for nvim-ts-rainbow]], true)
 require('config.rainbow')
 time([[Config for nvim-ts-rainbow]], false)
+-- Config for: ale
+time([[Config for ale]], true)
+require('config.ale')
+time([[Config for ale]], false)
 -- Config for: nvim-bqf
 time([[Config for nvim-bqf]], true)
 require('config.quickfix')
@@ -248,18 +246,22 @@ time([[Config for nvim-bqf]], false)
 time([[Config for gitsigns.nvim]], true)
 require('config.gitsigns')
 time([[Config for gitsigns.nvim]], false)
--- Config for: lualine.nvim
-time([[Config for lualine.nvim]], true)
-require('config.statusline')
-time([[Config for lualine.nvim]], false)
--- Config for: nvim-tree.lua
-time([[Config for nvim-tree.lua]], true)
-require('config.nvim-tree')
-time([[Config for nvim-tree.lua]], false)
 -- Config for: nvim-treesitter
 time([[Config for nvim-treesitter]], true)
 require('config.treesitter')
 time([[Config for nvim-treesitter]], false)
+-- Config for: lualine.nvim
+time([[Config for lualine.nvim]], true)
+require('config.statusline')
+time([[Config for lualine.nvim]], false)
+-- Config for: vim-terraform
+time([[Config for vim-terraform]], true)
+require('config.terraform')
+time([[Config for vim-terraform]], false)
+-- Config for: nvim-tree.lua
+time([[Config for nvim-tree.lua]], true)
+require('config.nvim-tree')
+time([[Config for nvim-tree.lua]], false)
 -- Config for: telescope.nvim
 time([[Config for telescope.nvim]], true)
 require('config.telescope')
@@ -267,7 +269,6 @@ time([[Config for telescope.nvim]], false)
 
 -- Command lazy-loads
 time([[Defining lazy-load commands]], true)
-pcall(vim.cmd, [[command -nargs=* -range -bang -complete=file ALEEnable lua require("packer.load")({'ale'}, { cmd = "ALEEnable", l1 = <line1>, l2 = <line2>, bang = <q-bang>, args = <q-args>, mods = "<mods>" }, _G.packer_plugins)]])
 pcall(vim.cmd, [[command -nargs=* -range -bang -complete=file StartupTime lua require("packer.load")({'vim-startuptime'}, { cmd = "StartupTime", l1 = <line1>, l2 = <line2>, bang = <q-bang>, args = <q-args>, mods = "<mods>" }, _G.packer_plugins)]])
 time([[Defining lazy-load commands]], false)
 
@@ -275,18 +276,10 @@ vim.cmd [[augroup packer_load_aucmds]]
 vim.cmd [[au!]]
   -- Filetype lazy-loads
 time([[Defining lazy-load filetype autocommands]], true)
-vim.cmd [[au FileType rs ++once lua require("packer.load")({'rust.vim', 'ale'}, { ft = "rs" }, _G.packer_plugins)]]
-vim.cmd [[au FileType sh ++once lua require("packer.load")({'ale'}, { ft = "sh" }, _G.packer_plugins)]]
-vim.cmd [[au FileType go ++once lua require("packer.load")({'ale', 'vim-go', 'vim-delve'}, { ft = "go" }, _G.packer_plugins)]]
-vim.cmd [[au FileType tf ++once lua require("packer.load")({'ale'}, { ft = "tf" }, _G.packer_plugins)]]
-vim.cmd [[au FileType yaml ++once lua require("packer.load")({'ale'}, { ft = "yaml" }, _G.packer_plugins)]]
-vim.cmd [[au FileType json ++once lua require("packer.load")({'ale'}, { ft = "json" }, _G.packer_plugins)]]
+vim.cmd [[au FileType go ++once lua require("packer.load")({'vim-go'}, { ft = "go" }, _G.packer_plugins)]]
 time([[Defining lazy-load filetype autocommands]], false)
 vim.cmd("augroup END")
 vim.cmd [[augroup filetypedetect]]
-time([[Sourcing ftdetect script at: /home/mccurdyc/.local/share/nvim/site/pack/packer/opt/rust.vim/ftdetect/rust.vim]], true)
-vim.cmd [[source /home/mccurdyc/.local/share/nvim/site/pack/packer/opt/rust.vim/ftdetect/rust.vim]]
-time([[Sourcing ftdetect script at: /home/mccurdyc/.local/share/nvim/site/pack/packer/opt/rust.vim/ftdetect/rust.vim]], false)
 time([[Sourcing ftdetect script at: /home/mccurdyc/.local/share/nvim/site/pack/packer/opt/vim-go/ftdetect/gofiletype.vim]], true)
 vim.cmd [[source /home/mccurdyc/.local/share/nvim/site/pack/packer/opt/vim-go/ftdetect/gofiletype.vim]]
 time([[Sourcing ftdetect script at: /home/mccurdyc/.local/share/nvim/site/pack/packer/opt/vim-go/ftdetect/gofiletype.vim]], false)

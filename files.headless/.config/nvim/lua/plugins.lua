@@ -28,13 +28,6 @@ return require("packer").startup(
         "tomtom/tcomment_vim",
         "nvim-lua/plenary.nvim"
       }
-      -- use { 'ibhagwan/fzf-lua',
-      --     requires = {
-      --       'vijaymarupudi/nvim-fzf',
-      --       'kyazdani42/nvim-web-devicons'
-      --     },
-      --     config = [[require('config.fzf')]],
-      -- }
       use {
         "kevinhwang91/nvim-bqf",
         config = [[require('config.quickfix')]]
@@ -92,9 +85,7 @@ return require("packer").startup(
 
       -- Linting
       use {
-        "w0rp/ale",
-        ft = {"sh", "go", "rs", "tf", "yaml", "json"},
-        cmd = "ALEEnable",
+        "dense-analysis/ale",
         config = [[require('config.ale')]]
       }
 
@@ -129,15 +120,16 @@ return require("packer").startup(
         ft = "go",
         run = ":GoUpdateBinaries"
       }
-      use {
-        "sebdah/vim-delve",
-        ft = "go"
-      }
 
       -- Rust
       use {
-        "rust-lang/rust.vim",
-        ft = "rs"
+        "rust-lang/rust.vim"
+      }
+
+      -- Terraform
+      use {
+        "hashivim/vim-terraform",
+        config = [[require('config.terraform')]]
       }
 
       -- Styling
@@ -153,8 +145,7 @@ return require("packer").startup(
       use {
         "hoob3rt/lualine.nvim",
         requires = {"kyazdani42/nvim-web-devicons", opt = true},
-        config = [[require('config.statusline')]],
-        options = {theme = "gruvbox"}
+        config = [[require('config.statusline')]]
       }
       use {
         "p00f/nvim-ts-rainbow",
