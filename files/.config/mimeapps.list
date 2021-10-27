@@ -1,6 +1,9 @@
 [Added Associations]
+text/plain=code-oss.desktop;
+
 [Removed Associations]
 application/html=firefox.desktop
+
 [Default Applications]
 application/pdf=mupdf.desktop
 text/html=firefox.desktop
