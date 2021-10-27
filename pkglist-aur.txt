@@ -1,6 +1,5 @@
 1password-cli
 asciinema-git
-asdf-vm
 bluez-hciconfig
 bluez-hcitool
 brave-bin
@@ -22,6 +21,7 @@ obsidian-appimage
 paman
 pdsh
 polybar-git
+pop-bin
 python-grip
 qrencode-git
 rxvt-unicode-256xresources
@@ -31,10 +31,12 @@ subnetcalc
 surfshark-vpn
 terraform-ls-bin
 tflint-bin
+tfswitch-bin
 tig-git
 trivy
 wpa_supplicant_gui
 xorg-grandr
+yaml-language-server-bin
 yay
 zeal-git
 zoom

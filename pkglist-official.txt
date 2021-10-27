@@ -23,6 +23,7 @@ bpf
 bpftrace
 chromium
 cmake
+code
 colordiff
 dhcpcd
 dialog
@@ -97,6 +98,7 @@ nano
 nemo
 neofetch
 neovim
+net-tools
 netctl
 netperf
 networkmanager
@@ -110,6 +112,7 @@ osquery
 pacman
 patch
 pavucontrol
+picom
 pkgconf
 poppler
 prometheus
