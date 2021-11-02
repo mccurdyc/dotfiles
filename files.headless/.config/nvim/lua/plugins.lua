@@ -24,6 +24,7 @@ return require("packer").startup(
       -- General
       use {
         "tpope/vim-surround",
+        "tpope/vim-unimpaired",
         "mccurdyc/vim-snippets",
         "tomtom/tcomment_vim",
         "nvim-lua/plenary.nvim"
