@@ -3,7 +3,7 @@ local g = vim.g
 -- Open NvimTree on Vim open.
 -- vim.cmd [[autocmd VimEnter * NvimTreeOpen]]
 
-g.nvim_tree_ignore = {".git", "node_modules", ".cache"}
+-- g.nvim_tree_ignore = {".git", "node_modules", ".cache"}
 g.nvim_tree_window_picker_exclude = {
   filetype = {
     "notify",
