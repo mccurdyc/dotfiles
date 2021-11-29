@@ -1,0 +1,39 @@
+configuration {
+  font: "Source Code Pro 24";
+  display-ssh: "ssh";
+  display-run: "run";
+  display-drun: "drun";
+  display-window: "window";
+  display-combi: "combi";
+  modi: "window,run,ssh";
+  fixed-num-lines: true;
+  show-icons: false;
+  terminal: "alacritty";
+  ssh-client: "ssh";
+  ssh-command: "{terminal} -e {ssh-client} {host} [-p {port}]";
+  run-command: "{cmd}";
+  run-list-command: "";
+  run-shell-command: "{terminal} -e {cmd}";
+  drun-url-launcher: "xdg-open";
+  sort: false;
+  sorting-method: "normal";
+  case-sensitive: false;
+  cycle: true;
+  normalize-match: false;
+  steal-focus: true;
+  kb-accept-entry: "Control+j,Control+m,Return,KP_Enter";
+  kb-mode-next: "Shift+Right,Control+Tab";
+  kb-mode-previous: "Shift+Left,Control+ISO_Left_Tab";
+  kb-mode-complete: "Control+l";
+  kb-row-up: "Up,Control+p,ISO_Left_Tab";
+  kb-row-down: "Down,Control+n";
+  timeout {
+      action: "kb-cancel";
+      delay:  0;
+  }
+  filebrowser {
+      directories-first: true;
+      sorting-method:    "name";
+  }
+}
+@theme "mccurdyc-theme"
