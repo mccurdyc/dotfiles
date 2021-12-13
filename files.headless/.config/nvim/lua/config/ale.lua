@@ -56,8 +56,13 @@ g.ale_linters = {
   ["go"] = {"gopls", "staticcheck", "gosimple"},
   ["rust"] = {"rustc", "analyzer", "cargo"},
   ["terraform"] = {"terraform", "terraform_lsp", "tflint"},
+  ["docker"] = {"hadolint"},
   ["json"] = {"jsonlint"},
   ["md"] = {"markdownlint"}
+}
+
+g.ale_linters_ignore = {
+  ["docker"] = {"dockerfile_lint"}
 }
 
 g.ale_fixers = {
