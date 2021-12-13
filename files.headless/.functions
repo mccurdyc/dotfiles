@@ -426,10 +426,22 @@ EOF
   chmod 600 ${HOME}/.gcloud-docker-bash_history
   docker run -it --rm -w "/root" \
     -v ${HOME}/.gcloud-docker-bash_history:/root/.bash_history \
-    -v ${HOME}/.ssh:/root/.ssh:ro \
     -v ${key}:${credpath}:ro \
     -v ${entrypoint}:${entrypointpath}:ro \
     --entrypoint ${entrypointpath} google/cloud-sdk /bin/bash
+}
+
+function gcloud-ansible() {
+  touch ${HOME}/.gcloud-ansible-bash_history
+  chmod 600 ${HOME}/.gcloud-ansible-bash_history
+  docker run -it --rm \
+    -v ${HOME}/.gcloud-ansible-bash_history:/home/root/.bash_history \
+    -v ${SSH_AUTH_SOCK}:${SSH_AUTH_SOCK} \
+    -e SSH_AUTH_SOCK="${SSH_AUTH_SOCK}" \
+    -v $HOME/.config/gcloud:/home/root/.config/gcloud:ro \
+    -v $HOME/.ssh:/home/root/.ssh \
+    --name ansible \
+    mccurdyc/ansible:latest "$@"
 }
 
 function whatsmyip() {
