@@ -13,12 +13,16 @@ require("config.go")
 require("config.git")
 require("config.magit")
 
+cmd("filetype plugin indent on")
+
 autocmd(
   "misc_aucmds",
   {
     [[TextYankPost * silent! lua vim.highlight.on_yank()]],
     [[FileType qf set nobuflisted ]],
-    [[BufLeave * silent! :wa]]
+    [[BufLeave * silent! :wa]],
+    [[FileType yaml setlocal ts=2 sts=2 sw=2 expandtab]],
+    [[FileType yaml setl indentkeys-=<:>]]
   },
   true
 )
