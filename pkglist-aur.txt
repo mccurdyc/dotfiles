@@ -9,6 +9,7 @@ dive
 downgrade
 github-cli-git
 google-cloud-sdk
+hadolint-bin
 hugo-git
 kubectl-bin
 mimeo
@@ -16,6 +17,7 @@ mkdocs
 mmv
 nerd-fonts-source-code-pro
 ngrok-bin
+nomad-bin
 nvim-packer-git
 obsidian-appimage
 paman
@@ -24,6 +26,7 @@ polybar-git
 pop-bin
 python-grip
 qrencode-git
+rbenv
 rxvt-unicode-256xresources
 slack-desktop
 spotify

@@ -2,6 +2,7 @@ ack
 adobe-source-code-pro-fonts
 alacritty
 alsa-utils
+ansible
 arc-solid-gtk-theme
 archiso
 aurpublish
@@ -27,6 +28,8 @@ code
 colordiff
 dhcpcd
 dialog
+dmidecode
+dnsmasq
 docker
 docker-compose
 edk2-ovmf
@@ -47,7 +50,6 @@ gdb
 gettext
 git
 git-delta
-gnu-netcat
 go
 graphviz
 grep
@@ -65,6 +67,7 @@ i3status
 imagemagick
 intel-ucode
 iperf
+iptables-nft
 iw
 jdk-openjdk
 jq
@@ -107,8 +110,10 @@ nodejs
 npm
 ntp
 opam
+openbsd-netcat
 openssh
 osquery
+packer
 pacman
 patch
 pavucontrol
@@ -120,7 +125,7 @@ pulseaudio-bluetooth
 python-bcc
 python-pip
 python-pynvim
-qemu
+qemu-headless
 qmk
 ranger
 redis
@@ -128,6 +133,7 @@ rhash
 ripgrep
 rofi
 rsync
+ruby
 rust-analyzer
 scrot
 sed
