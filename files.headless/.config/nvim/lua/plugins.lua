@@ -62,27 +62,27 @@ return require("packer").startup(
       }
 
       -- Completion
+      use {
+        "ms-jpq/coq_nvim",
+        branch = "coq",
+        run = ":COQdeps"
+      }
+      use {"ms-jpq/coq.artifacts", branch = "artifacts"} -- 9000+ Snippets
       -- use {
-      --   "ms-jpq/coq_nvim",
-      --   branch = "coq",
-      --   run = ":COQdeps"
+      --   "hrsh7th/nvim-cmp",
+      --   config = [[require('config.completion')]]
       -- }
-      -- use {"ms-jpq/coq.artifacts", branch = "artifacts"} -- 9000+ Snippets
-      use {
-        "hrsh7th/nvim-cmp",
-        config = [[require('config.completion')]]
-      }
-      use {
-        "hrsh7th/cmp-buffer",
-        "hrsh7th/cmp-nvim-lsp",
-        "hrsh7th/cmp-nvim-lua",
-        "hrsh7th/cmp-path"
-      }
+      -- use {
+      --   "hrsh7th/cmp-buffer",
+      --   "hrsh7th/cmp-nvim-lsp",
+      --   "hrsh7th/cmp-nvim-lua",
+      --   "hrsh7th/cmp-path"
+      -- }
       -- Completion (Snippets)
-      use {
-        "SirVer/ultisnips",
-        "quangnguyen30192/cmp-nvim-ultisnips"
-      }
+      -- use {
+      --   "SirVer/ultisnips",
+      --   "quangnguyen30192/cmp-nvim-ultisnips"
+      -- }
 
       -- Linting
       use {
