@@ -412,7 +412,15 @@ colorgrid() {
 function gcloud() {
   docker run --rm -ti \
     -v "$HOME/.config/gcloud:/root/.config/gcloud" \
+    -w "/root" \
     google/cloud-sdk gcloud "$@"
+}
+
+function gsutil() {
+  docker run --rm -ti \
+    -v "$HOME/.config/gcloud:/root/.config/gcloud" \
+    -w "/root" \
+    google/cloud-sdk gsutil "$@"
 }
 
 function gcloud-docker() {
