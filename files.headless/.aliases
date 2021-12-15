@@ -10,9 +10,6 @@ alias gpg='gpg2'
 alias diff='diff -u'
 
 alias zoekt="zoekt -index_dir=$ZOEKT_INDEX_DIR -r"
-alias gcloud="docker run --rm -ti \
--v \"$HOME/.config/gcloud:/root/.config/gcloud\
-google/cloud-sdk gcloud"
 
 ## https://golang.org/doc/manage-install
 ## $ go get golang.org/dl/goX.Y.Z

@@ -409,6 +409,12 @@ colorgrid() {
     done
 }
 
+function gcloud() {
+  docker run --rm -ti \
+    -v "$HOME/.config/gcloud:/root/.config/gcloud" \
+    google/cloud-sdk gcloud "$@"
+}
+
 function gcloud-docker() {
   local key="${1}"
   local credpath=/root/credentials.json
@@ -448,4 +454,8 @@ function pw {
 
 function ghpr {
   gh pr create --fill --draft $@
+}
+
+function pyj2() {
+  python -c "from jinja2 import Template; template = Template('$1'); print(template.render($2));"
 }
