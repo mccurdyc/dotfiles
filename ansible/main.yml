@@ -13,7 +13,7 @@
       package_manager: pacman
       packages:
       - git
-      - github-cli 
+      - github-cli
       - expect
       - keychain
 
@@ -44,19 +44,17 @@
     tags: ['yay', 'mccurdyc']
     vars:
       user: mccurdyc
-      passphrase: "{{ secret.git.mccurdyc.passphrase }}"
 
   # Minimal packages (for headless hosts)
   - role: packages
     tags: ['packages', 'mccurdyc']
     vars:
+      user: mccurdyc
       package_manager: yay
       packages:
         - 1password-cli
         - ack
         - adobe-source-code-pro-fonts
-        - alacritty
-        - alsa-utils
         - ansible
         - bash-language-server
         - bat
@@ -152,7 +150,6 @@
         - tree
         - trivy
         - ttf-font-awesome
-        - ttf-nerd-fonts-symbols
         - unzip
         - vim
         - wget
@@ -160,8 +157,8 @@
         - whois
         - xclip
         - yamllint
-        - yaml-language-server-bin
-        - yay
+        - yaml-language-server
+        - yay-bin
         - zip
         - zsh
 
@@ -169,6 +166,7 @@
   - role: packages
     tags: ['packages', 'mccurdyc', 'extra']
     vars:
+      user: mccurdyc
       package_manager: yay
       packages:
         - firecracker-bin
@@ -182,8 +180,11 @@
   - role: packages
     tags: ['packages', 'mccurdyc', 'head']
     vars:
+      user: mccurdyc
       package_manager: yay
       packages:
+        - alacritty
+        - alsa-utils
         - chromium
         - code
         - feh
@@ -216,6 +217,7 @@
   - role: packages
     tags: ['packages', 'mccurdyc', 'work']
     vars:
+      user: mccurdyc
       package_manager: yay
       packages:
         - helm

@@ -1,8 +1,43 @@
 ---
+- name: add root ssh key to ssh-agent
+  become: yes
+  become_user: root
+  shell: |
+    eval $(keychain --clear --eval --quiet)
+
+    expect <<EOF
+      spawn keychain --quiet id_ed25519 /root/.ssh/id_ed25519
+      expect "Enter passphrase for /root/.ssh/id_ed25519"
+      send "{{ passphrase }}\r"
+      expect eof
+    EOF
+  when: package_manager == 'pacman'
+
+- name: add {{ user }} ssh key to ssh-agent
+  become: yes
+  become_user: "{{ user }}"
+  shell: |
+    eval $(keychain --clear --eval --quiet)
+
+    expect <<EOF
+      spawn keychain --quiet id_ed25519 /home/{{ user }}/.ssh/id_ed25519
+      expect "Enter passphrase for /home/{{ user }}/.ssh/id_ed25519"
+      send "{{ passphrase }}\r"
+      expect eof
+    EOF
+  when: user != 'root'
+
 - name: install pacman packages
+  become: yes
+  become_user: root
   command: "pacman -Sq --noconfirm {{ ' '.join(packages) }}"
   when: package_manager == 'pacman'
 
 - name: install yay packages
-  command: "yay -Sq --noconfirm {{ ' '.join(packages) }}"
+  kewlfft.aur.aur:
+    use: yay
+    name: "{{ packages }}"
+    extra_args: '--mflags "--skippgpcheck"'
+  become: yes
+  become_user: "{{ user }}"
   when: package_manager == 'yay'

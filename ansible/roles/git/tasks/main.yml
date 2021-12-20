@@ -1,4 +1,10 @@
 ---
+- name: create /root/.ssh directory
+  file:
+    path: /root/.ssh
+    state: directory
+    mode: 0700
+
 - name: generate root ssh key
   community.crypto.openssh_keypair:
     mode: 0600
@@ -17,17 +23,14 @@
   command: gh ssh-key add /root/.ssh/id_ed25519.pub --title "ansible-root"
   when: user == 'root'
 
-- name: add root ssh key agent
-  shell: |
-    eval $(ssh-agent -s)
-
-    expect <<EOF
-      spawn ssh-add /root/.ssh/id_ed25519
-      expect "Enter passphrase for /root/.ssh/id_ed25519"
-      send "{{ passphrase }}\r"
-      expect eof
-    EOF
-  when: user == 'root'
+- name: create /home/{{ user }}/.ssh directory
+  file:
+    owner: "{{ user }}"
+    group: "{{ user }}"
+    recurse: true
+    path: "/home/{{ user }}/.ssh"
+    state: directory
+    mode: 0700
 
 - name: generate {{ user }} user ssh key
   community.crypto.openssh_keypair:
@@ -48,34 +51,28 @@
   command: "gh ssh-key add /home/{{ user }}/.ssh/id_ed25519.pub --title 'ansible-{{ user }}'"
   when: user != 'root'
 
-- name: add {{ user }} ssh key agent
-  become: yes
-  become_user: "{{ user }}"
-  shell: |
-    eval $(ssh-agent -s)
-
-    expect <<EOF
-      spawn ssh-add /home/{{ user }}/.ssh/id_ed25519
-      expect "Enter passphrase for /home/{{ user }}/.ssh/id_ed25519"
-      send "{{ passphrase }}\r"
-      expect eof
-    EOF
-  when: user != 'root'
-
-- name: start ssh-agent in bashrc for {{ user }}
-  template:
-    src: bashrc.j2
-    dest: "/home/{{ user }}/.bashrc"
-  when: user != 'root'
-
 - name: place gitconfig file
   template:
     src: gitconfig.j2
     dest: "/home/{{ user }}/.gitconfig"
+    owner: "{{ user }}"
+    group: "{{ user }}"
   when: user != 'root'
 
 - name: place gitignore_global
   copy:
     src: gitignore_global
     dest: "/home/{{ user }}/.gitignore_global"
+    owner: "{{ user }}"
+    group: "{{ user }}"
   when: user != 'root'
+
+- name: ensure github.com is a known host
+  lineinfile:
+    dest: "/home/{{ user }}/.ssh/known_hosts"
+    owner: "{{ user }}"
+    group: "{{ user }}"
+    create: yes
+    state: present
+    line: "{{ lookup('pipe', 'ssh-keyscan -t rsa github.com') }}"
+    regexp: "^github\\.com"
