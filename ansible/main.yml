@@ -1,0 +1,228 @@
+---
+- hosts: all
+  connection: local
+  gather_facts: false
+  vars_files:
+    - config.yml
+    - defaults/secrets.yml
+
+  roles:
+  - role: packages
+    tags: ['packages']
+    vars:
+      package_manager: pacman
+      packages:
+      - git
+      - github-cli 
+      - expect
+      - keychain
+
+  - role: git
+    tags: ['git']
+    vars:
+      user: root
+      passphrase: "{{ secret.git.root.passphrase }}"
+      github_token: "{{ secret.git.github_token }}"
+
+  - role: user
+    tags: ['user', 'mccurdyc']
+    vars:
+      username: "mccurdyc"
+      password: "{{ secret.password }}"
+      shell: "/bin/bash"
+      user_groups: wheel
+      ssh_key_passphrase: "{{ secret.ssh_key_passphrase }}"
+
+  - role: git
+    tags: ['git', 'mccurdyc']
+    vars:
+      user: mccurdyc
+      passphrase: "{{ secret.git.mccurdyc.passphrase }}"
+      github_token: "{{ secret.git.github_token }}"
+
+  - role: yay
+    tags: ['yay', 'mccurdyc']
+    vars:
+      user: mccurdyc
+      passphrase: "{{ secret.git.mccurdyc.passphrase }}"
+
+  # Minimal packages (for headless hosts)
+  - role: packages
+    tags: ['packages', 'mccurdyc']
+    vars:
+      package_manager: yay
+      packages:
+        - 1password-cli
+        - ack
+        - adobe-source-code-pro-fonts
+        - alacritty
+        - alsa-utils
+        - ansible
+        - bash-language-server
+        - bat
+        - bc
+        - bcc-tools
+        - binutils
+        - colordiff
+        - dhcpcd
+        - dive
+        - docker
+        - dockerfile-language-server
+        - docker-compose
+        - exa
+        - fasd
+        - fd
+        - file
+        - fzf
+        - gawk
+        - gdb
+        - git
+        - github-cli
+        - git-crypt
+        - go
+        - grep
+        - gzip
+        - htop
+        - hadolint-bin
+        - hugo-git
+        - iw
+        - jq
+        - keybase
+        - keychain
+        - linux
+        - linux-firmware
+        - linux-headers
+        - lldb
+        - llvm
+        - lsb-release
+        - lsof
+        - make
+        - man-db
+        - man-pages
+        - mkcert
+        - mosh
+        - mtr
+        - nano
+        - neofetch
+        - neovim
+        - netctl
+        - nerd-fonts-complete
+        - nerd-fonts-source-code-pro
+        - netperf
+        - net-tools
+        - networkmanager
+        - nftables
+        - ngrok-bin
+        - nmap
+        - nodejs
+        - nodejs-lua-fmt
+        - nodejs-markdownlint-cli
+        - npm
+        - nvim-packer-git
+        - openbsd-netcat
+        - openssh
+        - pacman
+        - parted
+        - polybar-git
+        - python-bcc
+        - python-pip
+        - python-pynvim
+        - qemu-headless
+        - ripgrep
+        - rsync
+        - ruby
+        - rust-analyzer
+        - sed
+        - shellcheck
+        - shfmt
+        - speedtest-cli
+        - strace
+        - subnetcalc
+        - sudo
+        - tailscale
+        - tcpdump
+        - terraform-ls-bin
+        - terraform-lsp-bin
+        - tflint-bin
+        - tfswitch-bin
+        - the_silver_searcher
+        - tig
+        - tmux
+        - traceroute
+        - tree
+        - trivy
+        - ttf-font-awesome
+        - ttf-nerd-fonts-symbols
+        - unzip
+        - vim
+        - wget
+        - which
+        - whois
+        - xclip
+        - yamllint
+        - yaml-language-server-bin
+        - yay
+        - zip
+        - zsh
+
+  # Extra packages (for headless hosts)
+  - role: packages
+    tags: ['packages', 'mccurdyc', 'extra']
+    vars:
+      package_manager: yay
+      packages:
+        - firecracker-bin
+        - hugo-git
+        - ignite-bin
+        - libvirt
+        - vagrant
+    when: 'packages.extra == true'
+
+  # Minimal packages (for headed hosts)
+  - role: packages
+    tags: ['packages', 'mccurdyc', 'head']
+    vars:
+      package_manager: yay
+      packages:
+        - chromium
+        - code
+        - feh
+        - firefox
+        - graphviz
+        - i3blocks
+        - i3-gaps
+        - i3lock
+        - i3status
+        - imagemagick
+        - light
+        - mupdf
+        - nemo
+        - networkmanager
+        - obsidian-appimage
+        - pavucontrol
+        - pulseaudio-bluetooth
+        - python-grip
+        - ranger
+        - rofi
+        - scrot
+        - signal-desktop
+        - simplescreenrecorder
+        - spotify
+        - vifm
+        - w3m
+    when: 'packages.headless == false'
+
+  # Work packages
+  - role: packages
+    tags: ['packages', 'mccurdyc', 'work']
+    vars:
+      package_manager: yay
+      packages:
+        - helm
+        - kubectl-bin
+        - kubectx
+        - osquery
+        - prometheus
+        - slack-desktop
+        - zoom
+    when: 'profile == work && packages.headless == false'

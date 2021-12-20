@@ -1,0 +1,36 @@
+---
+- name: checking if yay binary exists
+  stat:
+    path: /usr/bin/yay
+  register: stat_yay
+
+- name: clone jguer/yay
+  ansible.builtin.git:
+    repo: https://aur.archlinux.org/yay-bin.git
+    dest: "/home/{{ user }}/yay-bin"
+    clone: yes
+    update: yes
+  when: not stat_yay.stat.exists
+
+- name: recursively change ownership of yay directory
+  ansible.builtin.file:
+    path: "/home/{{ user }}/yay-bin"
+    state: directory
+    recurse: yes
+    owner: "{{ user }}"
+    group: "{{ user }}"
+    mode: '0755'
+  when: not stat_yay.stat.exists
+
+- name: build yay
+  become: yes
+  become_user: "{{ user }}"
+  command: makepkg -si --noconfirm --noprogressbar
+  args:
+    chdir: "/home/{{ user }}/yay-bin"
+  when: not stat_yay.stat.exists
+
+- name: remove yay directory
+  ansible.builtin.file:
+    path: "/home/{{ user }}/yay-bin"
+    state: absent

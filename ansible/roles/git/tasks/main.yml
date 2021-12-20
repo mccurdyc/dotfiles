@@ -1,0 +1,81 @@
+---
+- name: generate root ssh key
+  community.crypto.openssh_keypair:
+    mode: 0600
+    owner: root
+    path: /root/.ssh/id_ed25519
+    type: ed25519
+    passphrase: "{{ passphrase }}"
+    comment: ansible-root
+  when: user == 'root'
+
+- name: add root ssh key to GitHub
+  # Fails if key has already been added to GitHub.
+  ignore_errors: yes
+  environment:
+    GITHUB_TOKEN: "{{ github_token }}"
+  command: gh ssh-key add /root/.ssh/id_ed25519.pub --title "ansible-root"
+  when: user == 'root'
+
+- name: add root ssh key agent
+  shell: |
+    eval $(ssh-agent -s)
+
+    expect <<EOF
+      spawn ssh-add /root/.ssh/id_ed25519
+      expect "Enter passphrase for /root/.ssh/id_ed25519"
+      send "{{ passphrase }}\r"
+      expect eof
+    EOF
+  when: user == 'root'
+
+- name: generate {{ user }} user ssh key
+  community.crypto.openssh_keypair:
+    mode: 0600
+    owner: "{{ user }}"
+    group: "{{ user }}"
+    path: "/home/{{ user }}/.ssh/id_ed25519"
+    type: ed25519
+    passphrase: "{{ passphrase }}"
+    comment: "ansible-{{ user }}"
+  when: user != 'root'
+
+- name: add {{ user }} ssh key to GitHub
+  # Fails if key has already been added to GitHub.
+  ignore_errors: yes
+  environment:
+    GITHUB_TOKEN: "{{ github_token }}"
+  command: "gh ssh-key add /home/{{ user }}/.ssh/id_ed25519.pub --title 'ansible-{{ user }}'"
+  when: user != 'root'
+
+- name: add {{ user }} ssh key agent
+  become: yes
+  become_user: "{{ user }}"
+  shell: |
+    eval $(ssh-agent -s)
+
+    expect <<EOF
+      spawn ssh-add /home/{{ user }}/.ssh/id_ed25519
+      expect "Enter passphrase for /home/{{ user }}/.ssh/id_ed25519"
+      send "{{ passphrase }}\r"
+      expect eof
+    EOF
+  when: user != 'root'
+
+- name: start ssh-agent in bashrc for {{ user }}
+  template:
+    src: bashrc.j2
+    dest: "/home/{{ user }}/.bashrc"
+  when: user != 'root'
+
+- name: place gitconfig file
+  template:
+    src: gitconfig.j2
+    dest: "/home/{{ user }}/.gitconfig"
+  when: user != 'root'
+
+- name: place gitignore_global
+  copy:
+    src: gitignore_global
+    dest: "/home/{{ user }}/.gitignore_global"
+  when: user != 'root'
