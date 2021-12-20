@@ -1,0 +1,8 @@
+---
+- name: install pacman packages
+  command: "pacman -Sq --noconfirm {{ ' '.join(packages) }}"
+  when: package_manager == 'pacman'
+
+- name: install yay packages
+  command: "yay -Sq --noconfirm {{ ' '.join(packages) }}"
+  when: package_manager == 'yay'

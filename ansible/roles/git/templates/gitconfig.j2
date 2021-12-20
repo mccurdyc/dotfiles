@@ -1,0 +1,80 @@
+[user]
+  email = mccurdyc22@gmail.com
+  name = Colton J. McCurdy
+  signingkey = 9CD9D30EBB7B1EEC
+[url "git@github.com:"]
+  insteadOf = https://github.com/
+[core]
+  excludesfile = /home/mccurdyc/.gitignore_global
+  editor = nvim
+[alias]
+  # https://github.com/gitalias/gitalias#examples
+  dd = diff --check --dirstat --find-copies --find-renames --histogram --color
+  l = log --graph --topo-order --abbrev-commit --date=short --decorate --all --boundary
+  ll = log --graph --all  --decorate --oneline
+  cam = commit --amend --message
+  rbi = rebase --interactive @{upstream}
+  log-my-week = !git log --author $(git config user.email) --since \"1 week ago\"
+  uncommit = reset --soft HEAD~1
+  cleanout = !git clean -df && git checkout -- .
+  ls = log --pretty=format:\"%C(green)%h %C(yellow)[%ad]%Cred%d %Creset%s%Cblue [%cn]\" --decorate --date=relative
+  ld = log --all --graph --abbrev-commit --decorate --pretty=format:\"%C(bold blue)%h%C(reset) - %C(bold cyan)%aD%C(reset) %C(bold green)(%ar)%C(reset)%C(bold yellow)%d%C(reset)%n %C(white)%s%C(reset) %C(dim white)- %an%C(reset)\"
+  d = difftool
+  m = mergetool
+[branch]
+  # autosetuprebase = always
+[gpg]
+  program = gpg2
+[commit]
+  gpgsign = true
+
+[mergetool]
+  prompt = false
+  keepBackup = false
+
+[merge]
+  tool = nvimmerge
+  conflictStyle = diff3
+
+[mergetool "nvimmerge"]
+  name = nvimmerge
+  trustExitCode = true
+  cmd = nvim -f -c Ghdiffsplit! $MERGED
+
+[difftool]
+  prompt = false
+
+[diff]
+  tool = nvimdiff
+
+[difftool "nvimdiff"]
+  cmd = nvim -d $LOCAL $REMOTE
+[hub]
+  user = mccurdyc
+
+[pager]
+  diff = delta
+  log = delta
+  reflog = delta
+  show = delta
+
+[delta]
+  features = side-by-side line-numbers decorations
+  syntax-theme = none
+  plus-style = green bold "#ccffcc"
+  minus-style = red bold "#ffcccc"
+
+[delta "decorations"]
+  commit-decoration-style = bold yellow box ul
+  file-style = bold yellow ul
+  file-decoration-style = none
+  hunk-header-decoration-style = yellow box ul
+
+[delta "line-numbers"]
+  line-numbers-left-style = yellow
+  line-numbers-right-style = yellow
+  line-numbers-minus-style = 124
+  line-numbers-plus-style = 28
+
+[interactive]
+  diffFilter = delta

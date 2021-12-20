@@ -1,0 +1,8 @@
+---
+- name: "Create user {{ username }}"
+  ansible.builtin.user:
+    name: "{{ username }}"
+    password: "{{ password }}"
+    shell: "{{ shell }}"
+    groups: "{{ user_groups }}"
+    create_home: true

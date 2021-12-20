@@ -1,0 +1,9 @@
+- name: fetch gpg public key from 1password
+  become: yes
+  become_user: "{{ user }}"
+  shell: |
+
+- name: fetch gpg private key from 1password
+  become: yes
+  become_user: "{{ user }}"
+  shell: |

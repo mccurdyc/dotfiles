@@ -1,0 +1,5 @@
+---
+profile: home
+packages:
+  headless: true
+  extra: true
