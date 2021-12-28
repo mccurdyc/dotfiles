@@ -8,7 +8,7 @@
     ssh_key_type: "ed25519"
     ssh_key_file: "/root/.ssh/id_ed25519"
     ssh_key_passphrase: "{{ ssh_key_passphrase }}"
-  when: user == 'root'
+  when: user == "root"
 
 - name: "Create user {{ user }} with ssh key"
   ansible.builtin.user:
@@ -22,7 +22,7 @@
     ssh_key_type: "ed25519"
     ssh_key_file: "/home/{{ user }}/.ssh/id_ed25519"
     ssh_key_passphrase: "{{ ssh_key_passphrase }}"
-  when: user != 'root'
+  when: user != "root"
 
 # TODO: This is pretty disgusting. Also, we can't assume bashrc is used.
 # Should try forwarding ssh agent instead.
@@ -32,5 +32,5 @@
     dest: "/home/{{ user }}/.bashrc"
     owner: "{{ user }}"
     mode: '0644'
-  when: user != 'root'
+  when: user != "root"
 

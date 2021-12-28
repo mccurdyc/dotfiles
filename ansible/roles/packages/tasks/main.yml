@@ -2,7 +2,8 @@
 - name: install pacman packages
   become: yes
   become_user: root
-  command: "pacman -Sq --noconfirm {{ ' '.join(packages) }}"
+  command: "pacman -Sq --noconfirm {{ item }}"
+  loop: "{{ packages }}"
   when: package_manager == 'pacman'
 
 - name: install yay packages
