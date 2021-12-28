@@ -1,0 +1,8 @@
+eval $(keychain --clear --eval --quiet)
+
+expect <<EOF
+  spawn keychain --quiet id_ed25519 /home/{{ user }}/.ssh/id_ed25519
+  expect "Enter passphrase for /home/{{ user }}/.ssh/id_ed25519"
+  send "{{ ssh_key_passphrase }}\r"
+  expect eof
+EOF

@@ -1,5 +1,6 @@
 ---
-profile: home
-packages:
-  headless: true
-  extra: true
+config:
+  profile: home
+  packages:
+    headless: true
+    extra: true

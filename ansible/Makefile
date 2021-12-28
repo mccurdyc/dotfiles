@@ -2,7 +2,7 @@ default: help
 
 .PHONY: run
 run:
-	@ansible-playbook main.yml --ask-vault-password --verbose
+	@ansible-playbook main.yml
 
 .PHONY: help
 help: ## Prints this help menu.

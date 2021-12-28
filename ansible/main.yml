@@ -7,8 +7,24 @@
     - defaults/secrets.yml
 
   roles:
+  - role: user
+    tags: ['root', 'user']
+    vars:
+      user: "root"
+      password: "{{ root.password }}"
+      ssh_key_passphrase: "{{ root.ssh_key_passphrase }}"
+
+  - role: user
+    tags: ['mccurdyc', 'user']
+    vars:
+      user: "mccurdyc"
+      password: "{{ mccurdyc.password }}"
+      shell: "/bin/bash"
+      user_groups: wheel
+      ssh_key_passphrase: "{{ mccurdyc.ssh_key_passphrase }}"
+
   - role: packages
-    tags: ['packages']
+    tags: ['root', 'packages']
     vars:
       package_manager: pacman
       packages:
@@ -18,41 +34,31 @@
       - keychain
 
   - role: git
-    tags: ['git']
+    tags: ['root', 'git']
     vars:
       user: root
-      passphrase: "{{ secret.git.root.passphrase }}"
-      github_token: "{{ secret.git.github_token }}"
-
-  - role: user
-    tags: ['user', 'mccurdyc']
-    vars:
-      username: "mccurdyc"
-      password: "{{ secret.password }}"
-      shell: "/bin/bash"
-      user_groups: wheel
-      ssh_key_passphrase: "{{ secret.ssh_key_passphrase }}"
+      github_token: "{{ git.github_token }}"
 
   - role: git
-    tags: ['git', 'mccurdyc']
+    tags: ['mccurdyc', 'git']
     vars:
       user: mccurdyc
-      passphrase: "{{ secret.git.mccurdyc.passphrase }}"
-      github_token: "{{ secret.git.github_token }}"
+      github_token: "{{ git.github_token }}"
 
   - role: yay
-    tags: ['yay', 'mccurdyc']
+    tags: ['mccurdyc', 'yay']
     vars:
       user: mccurdyc
 
   # Minimal packages (for headless hosts)
   - role: packages
-    tags: ['packages', 'mccurdyc']
+    tags: ['mccurdyc', 'packages', 'minimal']
     vars:
       user: mccurdyc
       package_manager: yay
       packages:
-        - 1password-cli
+        - nvim-packer-git
+        # - 1password-cli
         - ack
         - adobe-source-code-pro-fonts
         - ansible
@@ -82,7 +88,6 @@
         - gzip
         - htop
         - hadolint-bin
-        - hugo-git
         - iw
         - jq
         - keybase
@@ -104,7 +109,7 @@
         - neofetch
         - neovim
         - netctl
-        - nerd-fonts-complete
+        # - nerd-fonts-complete
         - nerd-fonts-source-code-pro
         - netperf
         - net-tools
@@ -121,7 +126,6 @@
         - openssh
         - pacman
         - parted
-        - polybar-git
         - python-bcc
         - python-pip
         - python-pynvim
@@ -164,7 +168,7 @@
 
   # Extra packages (for headless hosts)
   - role: packages
-    tags: ['packages', 'mccurdyc', 'extra']
+    tags: ['mccurdyc', 'packages', 'extra']
     vars:
       user: mccurdyc
       package_manager: yay
@@ -174,11 +178,11 @@
         - ignite-bin
         - libvirt
         - vagrant
-    when: 'packages.extra == true'
+    when: 'config.packages.extra == true'
 
   # Minimal packages (for headed hosts)
   - role: packages
-    tags: ['packages', 'mccurdyc', 'head']
+    tags: ['mccurdyc', 'packages', 'headed']
     vars:
       user: mccurdyc
       package_manager: yay
@@ -201,6 +205,7 @@
         - networkmanager
         - obsidian-appimage
         - pavucontrol
+        - polybar-git
         - pulseaudio-bluetooth
         - python-grip
         - ranger
@@ -211,11 +216,11 @@
         - spotify
         - vifm
         - w3m
-    when: 'packages.headless == false'
+    when: 'config.packages.headless == false'
 
   # Work packages
   - role: packages
-    tags: ['packages', 'mccurdyc', 'work']
+    tags: ['mccurdyc', 'packages', 'work']
     vars:
       user: mccurdyc
       package_manager: yay
@@ -227,4 +232,4 @@
         - prometheus
         - slack-desktop
         - zoom
-    when: 'profile == work && packages.headless == false'
+    when: 'config.profile == "work" and config.packages.headless|bool == false'

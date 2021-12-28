@@ -1,20 +1,4 @@
 ---
-- name: create /root/.ssh directory
-  file:
-    path: /root/.ssh
-    state: directory
-    mode: 0700
-
-- name: generate root ssh key
-  community.crypto.openssh_keypair:
-    mode: 0600
-    owner: root
-    path: /root/.ssh/id_ed25519
-    type: ed25519
-    passphrase: "{{ passphrase }}"
-    comment: ansible-root
-  when: user == 'root'
-
 - name: add root ssh key to GitHub
   # Fails if key has already been added to GitHub.
   ignore_errors: yes
@@ -22,26 +6,6 @@
     GITHUB_TOKEN: "{{ github_token }}"
   command: gh ssh-key add /root/.ssh/id_ed25519.pub --title "ansible-root"
   when: user == 'root'
-
-- name: create /home/{{ user }}/.ssh directory
-  file:
-    owner: "{{ user }}"
-    group: "{{ user }}"
-    recurse: true
-    path: "/home/{{ user }}/.ssh"
-    state: directory
-    mode: 0700
-
-- name: generate {{ user }} user ssh key
-  community.crypto.openssh_keypair:
-    mode: 0600
-    owner: "{{ user }}"
-    group: "{{ user }}"
-    path: "/home/{{ user }}/.ssh/id_ed25519"
-    type: ed25519
-    passphrase: "{{ passphrase }}"
-    comment: "ansible-{{ user }}"
-  when: user != 'root'
 
 - name: add {{ user }} ssh key to GitHub
   # Fails if key has already been added to GitHub.
