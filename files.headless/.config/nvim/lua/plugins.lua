@@ -1,20 +1,3 @@
--- Bootstrapping to ensure packer is installed
-local fn = vim.fn
-if fn.empty(fn.glob(install_path)) > 0 then
-  fn.system({"yay", "-S", "nvim-packer-git"})
-  vim.cmd "packadd packer.nvim"
-end
-
--- Run PackerCompile when plugins.lua is written.
-vim.cmd(
-  [[
-  augroup packer_user_config
-    autocmd!
-    autocmd BufWritePost plugins.lua source <afile> | PackerCompile
-  augroup end
-]]
-)
-
 return require("packer").startup(
   {
     function()
