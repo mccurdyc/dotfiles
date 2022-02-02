@@ -6,7 +6,7 @@ killall -q polybar
 # Wait until the processes have been shut down
 while pgrep -u $UID -x polybar >/dev/null; do sleep 1; done
 
-POLYBAR_CONFIG=$XDG_CONFIG_HOME/polybar/config
+POLYBAR_CONFIG=$XDG_CONFIG_HOME/polybar/config.ini
 
 # https://github.com/polybar/polybar/issues/763
 # I couldn't use 'polybar --list-monitors'.
