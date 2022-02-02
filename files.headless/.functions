@@ -180,7 +180,7 @@ switchgo() {
 
 display_extras() {
   # these have to be loaded after resizing
-  wallpaper ${HOME}/dotfiles/imgs/wallpapers/astronaut.jpg
+  wallpaper ${HOME}/dotfiles/imgs/wallpapers/arch-wallpaper.png
   ${HOME}/.config/polybar/launch.sh
 }
 
@@ -414,13 +414,6 @@ function gcloud() {
     -v "$HOME/.config/gcloud:/root/.config/gcloud" \
     -w "/root" \
     google/cloud-sdk gcloud "$@"
-}
-
-function gsutil() {
-  docker run --rm -ti \
-    -v "$HOME/.config/gcloud:/root/.config/gcloud" \
-    -w "/root" \
-    google/cloud-sdk gsutil "$@"
 }
 
 function gcloud-docker() {
