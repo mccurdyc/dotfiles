@@ -409,13 +409,6 @@ colorgrid() {
     done
 }
 
-function gcloud() {
-  docker run --rm -ti \
-    -v "$HOME/.config/gcloud:/root/.config/gcloud" \
-    -w "/root" \
-    google/cloud-sdk gcloud "$@"
-}
-
 function gcloud-docker() {
   local key="${1}"
   local credpath=/root/credentials.json

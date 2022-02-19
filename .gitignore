@@ -12,6 +12,8 @@ files.headless/.config/gcloud
 files.headless/.config/op
 files.headless/.config/perkeep
 files.headless/.config/repoctl
+files.headless/.config/gh/hosts.yml
+files.headless/.config/fastly/
 !.local/share/nvim/shada
 !.local/share/applications/
 .local/lib

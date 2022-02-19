@@ -53,6 +53,7 @@ require("telescope").setup {
     },
     find_files = {
       hidden = true,
+      --- no_ignore = true,
       previewer = false,
       layout_config = {prompt_position = "top"}
     }
