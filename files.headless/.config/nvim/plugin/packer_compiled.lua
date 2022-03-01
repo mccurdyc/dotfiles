@@ -240,6 +240,10 @@ _G.packer_plugins = {
 }
 
 time([[Defining packer_plugins]], false)
+-- Config for: nvim-ts-rainbow
+time([[Config for nvim-ts-rainbow]], true)
+require('config.rainbow')
+time([[Config for nvim-ts-rainbow]], false)
 -- Config for: nvim-dap
 time([[Config for nvim-dap]], true)
 require('config.dap')
@@ -284,10 +288,6 @@ time([[Config for nvim-treesitter]], false)
 time([[Config for nvim-bqf]], true)
 require('config.quickfix')
 time([[Config for nvim-bqf]], false)
--- Config for: nvim-ts-rainbow
-time([[Config for nvim-ts-rainbow]], true)
-require('config.rainbow')
-time([[Config for nvim-ts-rainbow]], false)
 
 -- Command lazy-loads
 time([[Defining lazy-load commands]], true)

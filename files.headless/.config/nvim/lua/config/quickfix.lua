@@ -2,6 +2,7 @@ require("bqf").setup(
   {
     auto_enable = true,
     magic_window = false,
+    auto_resize_height = true,
     preview = {
       auto_preview = false
     },

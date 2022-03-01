@@ -3,18 +3,18 @@ local g = vim.g
 -- Open NvimTree on Vim open.
 -- vim.cmd [[autocmd VimEnter * NvimTreeOpen]]
 
-g.nvim_tree_window_picker_exclude = {
-  filetype = {
-    "notify",
-    "packer",
-    "qf"
-  },
-  buftype = {
-    "terminal"
-  }
-}
-
 require "nvim-tree".setup {
+  actions = {
+    open_file = {
+      window_picker = {
+        enable = true,
+        exclude = {
+          filetype = {"notify", "packer", "qf"},
+          buftype = {"terminal"}
+        }
+      }
+    }
+  },
   filters_custom = {".git", "node_modules", ".cache"},
   -- closes neovim automatically when the tree is the last **WINDOW** in the view
   auto_close = true,
