@@ -6,21 +6,11 @@ local opt = utils.opt
 local autocmd = utils.autocmd
 local map = utils.map
 
--- Language Settings
-require("config.go")
-
--- Other
-require("config.git")
-require("config.magit")
-
 cmd("filetype plugin indent on")
 
 autocmd(
   "misc_aucmds",
   {
-    [[TextYankPost * silent! lua vim.highlight.on_yank()]],
-    [[FileType qf set nobuflisted ]],
-    [[BufLeave * silent! :wa]],
     [[FileType yaml setlocal ts=2 sts=2 sw=2 expandtab]],
     [[FileType yaml setl indentkeys-=<:>]]
   },
@@ -35,28 +25,11 @@ g.netrw_browsex_viewer = "xdg-open"
 local buffer = {o, bo}
 local window = {o, wo}
 
--- These are the default values
--- opt('cursorcolumn', false, window)
--- opt('cursorline' false, window)
--- opt('smarttab', true)
--- opt('autoread', true)
--- opt('errorbells' false)
--- opt('visualbell' false)
--- opt('belloff', 'all')
--- opt('smarttab', true)
-
--- TODO consider deleting
--- opt('timeoutlen', 500)
--- opt('ttimeoutlen', 500)
--- opt(undodir=~/.config/nvim/.undodir
--- undofile
--- filetype plugin indent on
-
 opt("clipboard", "unnamedplus")
 opt("swapfile", false, buffer)
 opt("title", true)
 opt("wrap", false, window)
-opt("number", true, window) -- TODO confirm
+opt("number", true, window)
 opt("linebreak", true, window)
 opt("showbreak", "━━")
 opt("breakindent", true, window)

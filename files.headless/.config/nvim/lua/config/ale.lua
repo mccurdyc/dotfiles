@@ -16,7 +16,7 @@ g.ale_completion_autoimport = 1
 g.ale_sign_column_always = 1
 g.ale_sign_error = "▸"
 g.ale_sign_warning = "▸"
-g.ale_open_list = 1
+g.ale_open_list = 0
 g.ale_keep_list_window_open = 0
 
 -- Rust

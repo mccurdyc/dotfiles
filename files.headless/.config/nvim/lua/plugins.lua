@@ -76,8 +76,11 @@ return require("packer").startup(
       -- Git
       use {
         "tpope/vim-fugitive",
-        "jreybert/vimagit",
         "ruanyl/vim-gh-line"
+      }
+      use {
+        "jreybert/vimagit",
+        config = [[require('config.magit')]]
       }
       use {
         "lewis6991/gitsigns.nvim",
@@ -137,21 +140,21 @@ return require("packer").startup(
       }
 
       -- Debugging
-      use {
-        "rcarriga/nvim-dap-ui"
-      }
-      use {
-        "mfussenegger/nvim-dap",
-        config = [[require('config.dap')]]
-      }
+      -- use {
+      --   "rcarriga/nvim-dap-ui"
+      -- }
+      -- use {
+      --   "mfussenegger/nvim-dap",
+      --   config = [[require('config.dap')]]
+      -- }
 
       -- Profiling
       -- usage: nvim --startuptime and then :StartupTime
-      use {
-        "dstein64/vim-startuptime",
-        cmd = "StartupTime",
-        config = [[vim.g.startuptime_tries = 10]]
-      }
+      -- use {
+      --   "dstein64/vim-startuptime",
+      --   cmd = "StartupTime",
+      --   config = [[vim.g.startuptime_tries = 10]]
+      -- }
     end
   }
 )
