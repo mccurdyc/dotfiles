@@ -41,11 +41,29 @@ require("packer").startup(
       -- https://github.com/wbthomason/packer.nvim/blob/daec6c759f95cd8528e5dd7c214b18b4cec2658c/doc/packer.txt#L534
       use "wbthomason/packer.nvim"
 
-      use {'kevinhwang91/nvim-bqf'}
+      use {
+        "kevinhwang91/nvim-bqf"
+      }
     end
   }
 )
-require('bqf').setup({
-        auto_enable = true,
-        auto_resize_height = true,
+
+require("bqf").setup({
+  auto_enable = true,
+  magic_window = false,
+  auto_resize_height = true,
+  preview = {
+    auto_preview = false
+  },
+  func_map = {
+    vsplit = "",
+    ptogglemode = "z,",
+    stoggleup = ""
+  },
+  filter = {
+    fzf = {
+      action_for = {["ctrl-s"] = "split"},
+      extra_opts = {"--bind", "ctrl-o:toggle-all", "--prompt", "> "}
+    }
+  }
 })
