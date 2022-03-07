@@ -450,6 +450,12 @@ function ghpr {
   gh pr create --fill --draft $@
 }
 
+function aws_instances {
+  aws ec2 describe-instances \
+    --filter Name=instance-state-name,Values=running Name=instance.group-name,Values=*$1* | \
+        jq '.Reservations[].Instances[] | {name: (.Tags[] | select(.Key == "Name") | .Value ), id: .InstanceId}' | jq -s
+}
+
 function pyj2() {
   python -c "from jinja2 import Template; template = Template('$1'); print(template.render($2));"
 }
