@@ -221,74 +221,50 @@ _G.packer_plugins = {
 }
 
 time([[Defining packer_plugins]], false)
--- Config for: nvim-ts-rainbow
-time([[Config for nvim-ts-rainbow]], true)
-require('config.rainbow')
-time([[Config for nvim-ts-rainbow]], false)
--- Config for: lualine.nvim
-time([[Config for lualine.nvim]], true)
-require('config.statusline')
-time([[Config for lualine.nvim]], false)
-<<<<<<< HEAD
--- Config for: telescope.nvim
-time([[Config for telescope.nvim]], true)
-require('config.telescope')
-time([[Config for telescope.nvim]], false)
-||||||| parent of a74a7d5 ([nvim] ale open qf)
--- Config for: nvim-bqf
-time([[Config for nvim-bqf]], true)
-require('config.quickfix')
-time([[Config for nvim-bqf]], false)
--- Config for: telescope.nvim
-time([[Config for telescope.nvim]], true)
-require('config.telescope')
-time([[Config for telescope.nvim]], false)
-=======
--- Config for: nvim-bqf
-time([[Config for nvim-bqf]], true)
-require('config.quickfix')
-time([[Config for nvim-bqf]], false)
->>>>>>> a74a7d5 ([nvim] ale open qf)
--- Config for: nvim-lspconfig
-time([[Config for nvim-lspconfig]], true)
-require('config.lsp')
-time([[Config for nvim-lspconfig]], false)
--- Config for: vim-terraform
-time([[Config for vim-terraform]], true)
-require('config.terraform')
-time([[Config for vim-terraform]], false)
-<<<<<<< HEAD
--- Config for: nvim-bqf
-time([[Config for nvim-bqf]], true)
-require('config.quickfix')
-time([[Config for nvim-bqf]], false)
-||||||| parent of a74a7d5 ([nvim] ale open qf)
-=======
 -- Config for: vimagit
 time([[Config for vimagit]], true)
 require('config.magit')
 time([[Config for vimagit]], false)
->>>>>>> a74a7d5 ([nvim] ale open qf)
--- Config for: nvim-tree.lua
-time([[Config for nvim-tree.lua]], true)
-require('config.nvim-tree')
-time([[Config for nvim-tree.lua]], false)
--- Config for: formatter.nvim
-time([[Config for formatter.nvim]], true)
-require('config.formatter')
-time([[Config for formatter.nvim]], false)
--- Config for: telescope.nvim
-time([[Config for telescope.nvim]], true)
-require('config.telescope')
-time([[Config for telescope.nvim]], false)
 -- Config for: nvim-treesitter
 time([[Config for nvim-treesitter]], true)
 require('config.treesitter')
 time([[Config for nvim-treesitter]], false)
+-- Config for: vim-terraform
+time([[Config for vim-terraform]], true)
+require('config.terraform')
+time([[Config for vim-terraform]], false)
+-- Config for: nvim-lspconfig
+time([[Config for nvim-lspconfig]], true)
+require('config.lsp')
+time([[Config for nvim-lspconfig]], false)
+-- Config for: lualine.nvim
+time([[Config for lualine.nvim]], true)
+require('config.statusline')
+time([[Config for lualine.nvim]], false)
 -- Config for: gitsigns.nvim
 time([[Config for gitsigns.nvim]], true)
 require('config.gitsigns')
 time([[Config for gitsigns.nvim]], false)
+-- Config for: telescope.nvim
+time([[Config for telescope.nvim]], true)
+require('config.telescope')
+time([[Config for telescope.nvim]], false)
+-- Config for: formatter.nvim
+time([[Config for formatter.nvim]], true)
+require('config.formatter')
+time([[Config for formatter.nvim]], false)
+-- Config for: nvim-bqf
+time([[Config for nvim-bqf]], true)
+require('config.quickfix')
+time([[Config for nvim-bqf]], false)
+-- Config for: nvim-ts-rainbow
+time([[Config for nvim-ts-rainbow]], true)
+require('config.rainbow')
+time([[Config for nvim-ts-rainbow]], false)
+-- Config for: nvim-tree.lua
+time([[Config for nvim-tree.lua]], true)
+require('config.nvim-tree')
+time([[Config for nvim-tree.lua]], false)
 -- Config for: ale
 time([[Config for ale]], true)
 require('config.ale')
