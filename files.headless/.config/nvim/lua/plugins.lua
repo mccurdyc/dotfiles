@@ -12,10 +12,10 @@ return require("packer").startup(
         "tomtom/tcomment_vim",
         "nvim-lua/plenary.nvim"
       }
-      use {
-        "windwp/nvim-autopairs",
-        config = [[require('config.autopairs')]]
-      }
+      -- use {
+      --   "windwp/nvim-autopairs",
+      --   config = [[require('config.autopairs')]]
+      -- }
       use {
         "kevinhwang91/nvim-bqf",
         config = [[require('config.quickfix')]]
