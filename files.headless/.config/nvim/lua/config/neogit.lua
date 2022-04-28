@@ -1,5 +1,5 @@
 require('neogit').setup {
-  disable_signs = false,
+  disable_signs = true,
   disable_context_highlighting = false,
   disable_commit_confirmation = false,
   auto_refresh = true,
@@ -19,11 +19,11 @@ require('neogit').setup {
     -- The diffview integration enables the diff popup, which is a wrapper around `sindrets/diffview.nvim`.
     --
     -- Requires you to have `sindrets/diffview.nvim` installed.
-    -- use { 
-    --   'TimUntersberger/neogit', 
-    --   requires = { 
+    -- use {
+    --   'TimUntersberger/neogit',
+    --   requires = {
     --     'nvim-lua/plenary.nvim',
-    --     'sindrets/diffview.nvim' 
+    --     'sindrets/diffview.nvim'
     --   }
     -- }
     --

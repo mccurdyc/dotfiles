@@ -90,6 +90,12 @@ _G.packer_plugins = {
     path = "/home/mccurdyc/.local/share/nvim/site/pack/packer/start/coq_nvim",
     url = "https://github.com/ms-jpq/coq_nvim"
   },
+  ["diffview.nvim"] = {
+    config = { "require('config.diffview')" },
+    loaded = true,
+    path = "/home/mccurdyc/.local/share/nvim/site/pack/packer/start/diffview.nvim",
+    url = "https://github.com/sindrets/diffview.nvim"
+  },
   ["formatter.nvim"] = {
     config = { "require('config.formatter')" },
     loaded = true,
@@ -107,6 +113,21 @@ _G.packer_plugins = {
     loaded = true,
     path = "/home/mccurdyc/.local/share/nvim/site/pack/packer/start/lualine.nvim",
     url = "https://github.com/hoob3rt/lualine.nvim"
+  },
+  neogit = {
+    commands = { "Neogit" },
+    config = { "require('config.neogit')" },
+    loaded = false,
+    needs_bufread = true,
+    only_cond = false,
+    path = "/home/mccurdyc/.local/share/nvim/site/pack/packer/opt/neogit",
+    url = "https://github.com/TimUntersberger/neogit"
+  },
+  ["nvim-autopairs"] = {
+    config = { "require('config.autopairs')" },
+    loaded = true,
+    path = "/home/mccurdyc/.local/share/nvim/site/pack/packer/start/nvim-autopairs",
+    url = "https://github.com/windwp/nvim-autopairs"
   },
   ["nvim-bqf"] = {
     config = { "require('config.quickfix')" },
@@ -221,30 +242,54 @@ _G.packer_plugins = {
 }
 
 time([[Defining packer_plugins]], false)
--- Config for: vimagit
-time([[Config for vimagit]], true)
-require('config.magit')
-time([[Config for vimagit]], false)
--- Config for: nvim-treesitter
-time([[Config for nvim-treesitter]], true)
-require('config.treesitter')
-time([[Config for nvim-treesitter]], false)
--- Config for: vim-terraform
-time([[Config for vim-terraform]], true)
-require('config.terraform')
-time([[Config for vim-terraform]], false)
 -- Config for: nvim-lspconfig
 time([[Config for nvim-lspconfig]], true)
 require('config.lsp')
 time([[Config for nvim-lspconfig]], false)
+-- Config for: vim-terraform
+time([[Config for vim-terraform]], true)
+require('config.terraform')
+time([[Config for vim-terraform]], false)
+-- Config for: ale
+time([[Config for ale]], true)
+require('config.ale')
+time([[Config for ale]], false)
+-- Config for: nvim-tree.lua
+time([[Config for nvim-tree.lua]], true)
+require('config.nvim-tree')
+time([[Config for nvim-tree.lua]], false)
 -- Config for: lualine.nvim
 time([[Config for lualine.nvim]], true)
 require('config.statusline')
 time([[Config for lualine.nvim]], false)
+-- Config for: nvim-treesitter
+time([[Config for nvim-treesitter]], true)
+require('config.treesitter')
+time([[Config for nvim-treesitter]], false)
+-- Config for: vimagit
+time([[Config for vimagit]], true)
+require('config.magit')
+time([[Config for vimagit]], false)
+-- Config for: nvim-ts-rainbow
+time([[Config for nvim-ts-rainbow]], true)
+require('config.rainbow')
+time([[Config for nvim-ts-rainbow]], false)
+-- Config for: diffview.nvim
+time([[Config for diffview.nvim]], true)
+require('config.diffview')
+time([[Config for diffview.nvim]], false)
+-- Config for: nvim-autopairs
+time([[Config for nvim-autopairs]], true)
+require('config.autopairs')
+time([[Config for nvim-autopairs]], false)
 -- Config for: gitsigns.nvim
 time([[Config for gitsigns.nvim]], true)
 require('config.gitsigns')
 time([[Config for gitsigns.nvim]], false)
+-- Config for: nvim-bqf
+time([[Config for nvim-bqf]], true)
+require('config.quickfix')
+time([[Config for nvim-bqf]], false)
 -- Config for: telescope.nvim
 time([[Config for telescope.nvim]], true)
 require('config.telescope')
@@ -253,22 +298,12 @@ time([[Config for telescope.nvim]], false)
 time([[Config for formatter.nvim]], true)
 require('config.formatter')
 time([[Config for formatter.nvim]], false)
--- Config for: nvim-bqf
-time([[Config for nvim-bqf]], true)
-require('config.quickfix')
-time([[Config for nvim-bqf]], false)
--- Config for: nvim-ts-rainbow
-time([[Config for nvim-ts-rainbow]], true)
-require('config.rainbow')
-time([[Config for nvim-ts-rainbow]], false)
--- Config for: nvim-tree.lua
-time([[Config for nvim-tree.lua]], true)
-require('config.nvim-tree')
-time([[Config for nvim-tree.lua]], false)
--- Config for: ale
-time([[Config for ale]], true)
-require('config.ale')
-time([[Config for ale]], false)
+
+-- Command lazy-loads
+time([[Defining lazy-load commands]], true)
+pcall(vim.cmd, [[command -nargs=* -range -bang -complete=file Neogit lua require("packer.load")({'neogit'}, { cmd = "Neogit", l1 = <line1>, l2 = <line2>, bang = <q-bang>, args = <q-args>, mods = "<mods>" }, _G.packer_plugins)]])
+time([[Defining lazy-load commands]], false)
+
 vim.cmd [[augroup packer_load_aucmds]]
 vim.cmd [[au!]]
   -- Filetype lazy-loads

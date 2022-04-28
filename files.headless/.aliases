@@ -43,7 +43,7 @@ alias mv="mv -i"
 alias mkdir="mkdir -p"
 
 ## git
-alias gitc='nvim -c MagitOnly'
+alias gitc='nvim -c Neogit'
 alias gits="git status"
 
 # clean local and remote "dead" branches

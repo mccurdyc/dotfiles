@@ -10,7 +10,8 @@ fi
 setopt interactive_comments
 
 # Necessary for git commit signing on iPad.
-export GPG_TTY=$(tty)
+GPG_TTY=$(tty)
+export GPG_TTY
 
 # Autostart X at login
 # if you don't have this, i3 won't be started

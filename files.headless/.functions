@@ -113,7 +113,7 @@ srcgrphws() {
     --publish 127.0.0.1:3370:3370 \
     --volume ~/.sourcegraph/config:/etc/sourcegraph \
     --volume ~/.sourcegraph/data:/var/opt/sourcegraph \
-    sourcegraph/server:3.25.2
+    sourcegraph/server:3.37.0
   # src-expose serve $SRC_DIR/mccurdyc &
 }
 
@@ -451,9 +451,26 @@ function ghpr {
 }
 
 function aws_instances {
-  aws ec2 describe-instances \
-    --filter Name=instance-state-name,Values=running Name=instance.group-name,Values=*$1* | \
-        jq '.Reservations[].Instances[] | {name: (.Tags[] | select(.Key == "Name") | .Value ), id: .InstanceId}' | jq -s
+  aws \
+    --profile "$2" \
+    --output json \
+    ec2 describe-instances \
+    --filter "Name=instance-state-name,Values=running" "Name=tag:Name,Values=*$1*" \
+    --query Reservations[].Instances[] | \
+        jq '.[] | {name: (.Tags[] | select(.Key == "Name") | .Value ), id: .InstanceId}' | \
+        jq -s '. |= sort_by(.name)'
+}
+
+function aws_instances_terminate {
+  aws --profile "$2" ec2 terminate-instances --instance-ids $(aws_instances "$1" "$2" | jq -r '[ .[].id ] | join(" ")')
+}
+
+function aws_ssm {
+  aws --profile "$2" ssm start-session --target "$(aws_instances "$1" "$2" | jq -r "nth($3; .[]) | .id")"
+}
+
+function aws_console_logs {
+  aws --profile "$2" --color on --output text ec2 get-console-output --instance-id "$(aws_instances "$1" "$2" | jq -r "nth($3; .[]) | .id")" --latest
 }
 
 function pyj2() {

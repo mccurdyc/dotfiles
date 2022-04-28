@@ -2,12 +2,16 @@ local g = vim.g
 
 -- Open NvimTree on Vim open.
 -- vim.cmd [[autocmd VimEnter * NvimTreeOpen]]
+--
 
 require "nvim-tree".setup {
   actions = {
     open_file = {
+      quit_on_open = false,
+      resize_window = false,
       window_picker = {
         enable = true,
+        chars = "1234567890",
         exclude = {
           filetype = {"notify", "packer", "qf"},
           buftype = {"terminal"}
@@ -15,11 +19,13 @@ require "nvim-tree".setup {
       }
     }
   },
-  filters_custom = {".git", "node_modules", ".cache"},
-  -- closes neovim automatically when the tree is the last **WINDOW** in the view
-  auto_close = true,
+  filters = {
+    dotfiles = false,
+    custom = {".git", "node_modules", ".cache"},
+    exclude = {}
+  },
   -- updates the root directory of the tree on `DirChanged` (when your run `:cd` usually)
-  update_cwd = true,
+  update_cwd = false,
   -- update the focused file on `BufEnter`, un-collapses the folders recursively until it finds the file
   update_focused_file = {
     -- enables the feature
@@ -40,15 +46,20 @@ require "nvim-tree".setup {
   },
   git = {
     enable = true,
-    ignore = false
+    ignore = false,
+    timeout = 300
   },
   view = {
     -- width of the window, can be either a number (columns) or a string in `%`
     width = 30,
+    height = 30,
     -- side of the tree, can be one of 'left' | 'right' | 'top' | 'bottom'
     side = "left",
-    -- if true the tree will resize itself after opening a file
-    auto_resize = false,
+    hide_root_folder = false,
+    preserve_window_proportions = false,
+    number = false,
+    relativenumber = false,
+    signcolumn = "yes",
     mappings = {
       -- custom only false will merge the list with the default mappings
       -- if true, it will only use your list to set the mappings

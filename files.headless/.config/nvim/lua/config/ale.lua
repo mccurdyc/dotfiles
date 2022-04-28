@@ -26,7 +26,7 @@ g.ale_rust_cargo_check_all_targets = 1
 g.ale_terraform_langserver_executable = "terraform-lsp"
 g.ale_terraform_langserver_options = ""
 g.ale_terraform_terraform_executable = "terraform"
-g.ale_terraform_tflint_executable = "tflint"
+g.ale_terraform_tflint_executable = "" -- disable tflint
 g.ale_terraform_tflint_options = ""
 
 -- Go

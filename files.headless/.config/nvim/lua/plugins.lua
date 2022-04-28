@@ -13,6 +13,10 @@ return require("packer").startup(
         "nvim-lua/plenary.nvim"
       }
       use {
+        "windwp/nvim-autopairs",
+        config = [[require('config.autopairs')]]
+      }
+      use {
         "kevinhwang91/nvim-bqf",
         config = [[require('config.quickfix')]]
       }
@@ -79,27 +83,19 @@ return require("packer").startup(
         "ruanyl/vim-gh-line"
       }
       use {
-        "jreybert/vimagit",
-        config = [[require('config.magit')]]
-      }
-      use {
         "lewis6991/gitsigns.nvim",
         requires = {"nvim-lua/plenary.nvim"},
         config = [[require('config.gitsigns')]]
       }
-      -- use {
-      --   "sindrets/diffview.nvim",
-      --   config = [[require('config.diffview')]]
-      -- }
-      -- use {
-      --   "TimUntersberger/neogit",
-      --   cmd = "Neogit",
-      --   requires = {
-      --     "nvim-lua/plenary.nvim",
-      --     "sindrets/diffview.nvim"
-      --   },
-      --   config = [[require('config.neogit')]]
-      -- }
+      use {
+        "sindrets/diffview.nvim",
+        config = [[require('config.diffview')]]
+      }
+      use {
+        "TimUntersberger/neogit",
+        cmd = "Neogit",
+        config = [[require('config.neogit')]]
+      }
 
       -- Go
       use {
