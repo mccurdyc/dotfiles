@@ -21,7 +21,7 @@ require "nvim-tree".setup {
   },
   filters = {
     dotfiles = false,
-    custom = {".git", "node_modules", ".cache"},
+    custom = {".git", "node_modules"},
     exclude = {}
   },
   -- updates the root directory of the tree on `DirChanged` (when your run `:cd` usually)
