@@ -230,6 +230,10 @@ _G.packer_plugins = {
 }
 
 time([[Defining packer_plugins]], false)
+-- Config for: nvim-lspconfig
+time([[Config for nvim-lspconfig]], true)
+require('config.lsp')
+time([[Config for nvim-lspconfig]], false)
 -- Config for: gitsigns.nvim
 time([[Config for gitsigns.nvim]], true)
 require('config.gitsigns')
@@ -250,18 +254,18 @@ time([[Config for nvim-treesitter]], false)
 time([[Config for nvim-ts-rainbow]], true)
 require('config.rainbow')
 time([[Config for nvim-ts-rainbow]], false)
--- Config for: telescope.nvim
-time([[Config for telescope.nvim]], true)
-require('config.telescope')
-time([[Config for telescope.nvim]], false)
--- Config for: diffview.nvim
-time([[Config for diffview.nvim]], true)
-require('config.diffview')
-time([[Config for diffview.nvim]], false)
 -- Config for: ale
 time([[Config for ale]], true)
 require('config.ale')
 time([[Config for ale]], false)
+-- Config for: diffview.nvim
+time([[Config for diffview.nvim]], true)
+require('config.diffview')
+time([[Config for diffview.nvim]], false)
+-- Config for: telescope.nvim
+time([[Config for telescope.nvim]], true)
+require('config.telescope')
+time([[Config for telescope.nvim]], false)
 -- Config for: nvim-bqf
 time([[Config for nvim-bqf]], true)
 require('config.quickfix')
@@ -274,10 +278,6 @@ time([[Config for formatter.nvim]], false)
 time([[Config for vim-terraform]], true)
 require('config.terraform')
 time([[Config for vim-terraform]], false)
--- Config for: nvim-lspconfig
-time([[Config for nvim-lspconfig]], true)
-require('config.lsp')
-time([[Config for nvim-lspconfig]], false)
 
 -- Command lazy-loads
 time([[Defining lazy-load commands]], true)
