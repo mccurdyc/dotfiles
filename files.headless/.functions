@@ -40,7 +40,7 @@ update_nvim_plugins() {
 }
 
 dudir() {
-  sudo du -cha --max-depth=1 ${1} | sort -hr
+  sudo du -cha --max-depth=1 --exclude=/{proc,sys,dev,run} --threshold=1 "${1}" | sort -hr
 }
 
 btconnect() {
@@ -185,8 +185,7 @@ display_extras() {
 }
 
 external_display_off() {
-  xrandr --output DP-2-2 --off --output DP-1 --off --output eDP-1 --mode 3840x2160 --scale 0.75x0.75
-  # xrandr --output DP-2-2 --off --output DP-1 --off --output eDP-1 --mode 3840x2160 --scale 0.75x0.75
+  xrandr --output DP-2-2 --off --output eDP-1 --mode 3840x2160 --scale 0.75x0.75
   display_extras
 }
 
