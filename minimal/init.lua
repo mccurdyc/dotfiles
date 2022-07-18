@@ -3,7 +3,9 @@ local o, wo, bo = vim.o, vim.wo, vim.bo
 
 local function opt(o, v, scopes)
   scopes = scopes or {o_s}
-  for _, s in ipairs(scopes) do s[o] = v end
+  for _, s in ipairs(scopes) do
+    s[o] = v
+  end
 end
 
 local buffer = {o, bo}
@@ -48,7 +50,9 @@ require("packer").startup(
   }
 )
 
-require("bqf").setup({
-  auto_enable = true,
-  auto_resize_height = true,
-})
+require("bqf").setup(
+  {
+    auto_enable = true,
+    auto_resize_height = true
+  }
+)
