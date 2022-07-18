@@ -16,9 +16,9 @@ export GPG_TTY
 # Autostart X at login
 # if you don't have this, i3 won't be started
 # https://wiki.archlinux.org/index.php/Xinit
-if [[ ! $DISPLAY && $XDG_VTNR -eq 1 ]]; then
-  exec startx
-fi
+# if [[ ! $DISPLAY && $XDG_VTNR -eq 1 ]]; then
+#   exec startx
+# fi
 
 # Load files.
 for file in ~/.{zsh_prompt,aliases,aliases_work,fzf.zsh,functions,functions_work,path,gitfunc,exports,exports_work}; do
