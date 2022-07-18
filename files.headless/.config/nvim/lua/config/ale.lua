@@ -48,7 +48,10 @@ g.ale_lint_on_enter = 0
 
 -- Rust
 g.ale_rust_cargo_use_clippy = 1
-g.ale_rust_rustfmt_options = "--edition=2018"
+g.ale_rust_rustfmt_options = "--edition=2021"
+
+-- YAML
+g.ale_yaml_yamllint_options = "{extends: default, rules: {line-length: disable}}"
 
 -- -- ALE supported tools - https://github.com/dense-analysis/ale/blob/master/supported-tools.md
 -- -- :ALEInfo
