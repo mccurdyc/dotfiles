@@ -33,3 +33,4 @@ x-scheme-handler/zoomphonecall=Zoom.desktop
 application/x-zoom=Zoom.desktop
 inode/directory=nemo.desktop
 application/x-gnome-saved-search=nemo.desktop
+x-scheme-handler/postman=Postman.desktop
