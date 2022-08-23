@@ -23,9 +23,7 @@ configuration {
   steal-focus: true;
   kb-accept-entry: "Control+j,Control+m,Return,KP_Enter";
   kb-mode-next: "Shift+Right,Control+Tab";
-  kb-mode-previous: "Shift+Left,Control+ISO_Left_Tab";
   kb-mode-complete: "Control+l";
-  kb-row-up: "Up,Control+p,ISO_Left_Tab";
   kb-row-down: "Down,Control+n";
   timeout {
       action: "kb-cancel";
