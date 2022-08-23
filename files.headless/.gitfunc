@@ -29,3 +29,8 @@ fbr() {
   branch=$(echo "$branches" | fzf-tmux -d 15 +m) &&
   git checkout $(echo "$branch" | sed "s/.* //")
 }
+
+## gitfc - git first commit of a branch
+gitfc() {
+  git log --pretty=format:"%h" origin/$1..$(git branch --show-current)
+}
