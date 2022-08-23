@@ -475,3 +475,7 @@ function aws_console_logs {
 function pyj2() {
   python -c "from jinja2 import Template; template = Template('$1'); print(template.render($2));"
 }
+
+function kubectl_pods_containers() {
+  kubectl get pods -o jsonpath='{range .items[*]}{"\n"}{.metadata.name}{":\t"}{range .spec.containers[*]}{.name}{", "}{end}{end}' | sort
+}
