@@ -70,3 +70,4 @@ require("telescope").setup {
 
 -- load extensions after calling setup function
 require("telescope").load_extension("fzf")
+require("telescope").load_extension("dap")

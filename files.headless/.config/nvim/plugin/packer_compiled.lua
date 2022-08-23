@@ -129,6 +129,17 @@ _G.packer_plugins = {
     path = "/home/mccurdyc/.local/share/nvim/site/pack/packer/start/nvim-bqf",
     url = "https://github.com/kevinhwang91/nvim-bqf"
   },
+  ["nvim-dap"] = {
+    config = { "require('config.dap')" },
+    loaded = true,
+    path = "/home/mccurdyc/.local/share/nvim/site/pack/packer/start/nvim-dap",
+    url = "https://github.com/mfussenegger/nvim-dap"
+  },
+  ["nvim-dap-ui"] = {
+    loaded = true,
+    path = "/home/mccurdyc/.local/share/nvim/site/pack/packer/start/nvim-dap-ui",
+    url = "https://github.com/rcarriga/nvim-dap-ui"
+  },
   ["nvim-lspconfig"] = {
     config = { "require('config.lsp')" },
     loaded = true,
@@ -177,6 +188,11 @@ _G.packer_plugins = {
     loaded = true,
     path = "/home/mccurdyc/.local/share/nvim/site/pack/packer/start/tcomment_vim",
     url = "https://github.com/tomtom/tcomment_vim"
+  },
+  ["telescope-dap.nvim"] = {
+    loaded = true,
+    path = "/home/mccurdyc/.local/share/nvim/site/pack/packer/start/telescope-dap.nvim",
+    url = "https://github.com/nvim-telescope/telescope-dap.nvim"
   },
   ["telescope-fzf-native.nvim"] = {
     loaded = true,
@@ -230,38 +246,6 @@ _G.packer_plugins = {
 }
 
 time([[Defining packer_plugins]], false)
--- Config for: ale
-time([[Config for ale]], true)
-require('config.ale')
-time([[Config for ale]], false)
--- Config for: nvim-lspconfig
-time([[Config for nvim-lspconfig]], true)
-require('config.lsp')
-time([[Config for nvim-lspconfig]], false)
--- Config for: gitsigns.nvim
-time([[Config for gitsigns.nvim]], true)
-require('config.gitsigns')
-time([[Config for gitsigns.nvim]], false)
--- Config for: nvim-tree.lua
-time([[Config for nvim-tree.lua]], true)
-require('config.nvim-tree')
-time([[Config for nvim-tree.lua]], false)
--- Config for: lualine.nvim
-time([[Config for lualine.nvim]], true)
-require('config.statusline')
-time([[Config for lualine.nvim]], false)
--- Config for: nvim-treesitter
-time([[Config for nvim-treesitter]], true)
-require('config.treesitter')
-time([[Config for nvim-treesitter]], false)
--- Config for: vim-terraform
-time([[Config for vim-terraform]], true)
-require('config.terraform')
-time([[Config for vim-terraform]], false)
--- Config for: nvim-ts-rainbow
-time([[Config for nvim-ts-rainbow]], true)
-require('config.rainbow')
-time([[Config for nvim-ts-rainbow]], false)
 -- Config for: diffview.nvim
 time([[Config for diffview.nvim]], true)
 require('config.diffview')
@@ -274,10 +258,46 @@ time([[Config for nvim-bqf]], false)
 time([[Config for telescope.nvim]], true)
 require('config.telescope')
 time([[Config for telescope.nvim]], false)
+-- Config for: ale
+time([[Config for ale]], true)
+require('config.ale')
+time([[Config for ale]], false)
+-- Config for: nvim-dap
+time([[Config for nvim-dap]], true)
+require('config.dap')
+time([[Config for nvim-dap]], false)
+-- Config for: nvim-tree.lua
+time([[Config for nvim-tree.lua]], true)
+require('config.nvim-tree')
+time([[Config for nvim-tree.lua]], false)
 -- Config for: formatter.nvim
 time([[Config for formatter.nvim]], true)
 require('config.formatter')
 time([[Config for formatter.nvim]], false)
+-- Config for: lualine.nvim
+time([[Config for lualine.nvim]], true)
+require('config.statusline')
+time([[Config for lualine.nvim]], false)
+-- Config for: nvim-treesitter
+time([[Config for nvim-treesitter]], true)
+require('config.treesitter')
+time([[Config for nvim-treesitter]], false)
+-- Config for: gitsigns.nvim
+time([[Config for gitsigns.nvim]], true)
+require('config.gitsigns')
+time([[Config for gitsigns.nvim]], false)
+-- Config for: vim-terraform
+time([[Config for vim-terraform]], true)
+require('config.terraform')
+time([[Config for vim-terraform]], false)
+-- Config for: nvim-ts-rainbow
+time([[Config for nvim-ts-rainbow]], true)
+require('config.rainbow')
+time([[Config for nvim-ts-rainbow]], false)
+-- Config for: nvim-lspconfig
+time([[Config for nvim-lspconfig]], true)
+require('config.lsp')
+time([[Config for nvim-lspconfig]], false)
 
 -- Command lazy-loads
 time([[Defining lazy-load commands]], true)

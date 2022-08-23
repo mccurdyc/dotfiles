@@ -29,6 +29,9 @@ return require("packer").startup(
         run = "make"
       }
       use {
+        "nvim-telescope/telescope-dap.nvim"
+      }
+      use {
         "nvim-telescope/telescope.nvim",
         requires = {{"nvim-lua/plenary.nvim"}},
         config = [[require('config.telescope')]]
@@ -136,13 +139,11 @@ return require("packer").startup(
       }
 
       -- Debugging
-      -- use {
-      --   "rcarriga/nvim-dap-ui"
-      -- }
-      -- use {
-      --   "mfussenegger/nvim-dap",
-      --   config = [[require('config.dap')]]
-      -- }
+      use "rcarriga/nvim-dap-ui"
+      use {
+        "mfussenegger/nvim-dap",
+        config = [[require('config.dap')]]
+      }
 
       -- Profiling
       -- usage: nvim --startuptime and then :StartupTime

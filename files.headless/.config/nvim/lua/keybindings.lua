@@ -54,3 +54,8 @@ local go_keybindings = function()
   map("n", "<leader>ca", ":DlvClearAll <CR>", opts)
   map("n", "<leader>dt", ":DlvToggleBreakpoint <CR>", opts)
 end
+
+-- LSP
+-- https://github.com/neovim/nvim-lspconfig/blob/da7461b596d70fa47b50bf3a7acfaef94c47727d/doc/lspconfig.txt#L444
+-- https://neovim.discourse.group/t/jump-to-definition-in-vertical-horizontal-split/2605/14
+map("n", "<leader>gd", ':lua require"telescope.builtin".lsp_definitions({jump_type="vsplit"})<CR>', opts)
